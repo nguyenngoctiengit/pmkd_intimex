@@ -1,0 +1,50 @@
+﻿@model Nhom_hang_hoa
+@{
+    ViewData["Title"] = "themnhomhang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .input-validation-error {
+        border-color: red; 
+</style>
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form role="form" method="post">
+            <div class="form-group">
+                <label asp-for="Manhom">Mã nhóm hàng</label>
+                <input type="text" class="form-control" asp-for="Manhom" placeholder="Mã nhóm hàng">
+                <span asp-validation-for="Manhom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Manhom">Tên nhóm hàng</label>
+                <input type="text" class="form-control" asp-for="TenNhom" placeholder="Tên nhóm hàng">
+                <span asp-validation-for="TenNhom" class="text-danger"></span>
+
+            </div>
+            <button type="submit" name="createnhomhang" class="btn btn-info">Thêm nhóm hàng</button>
+        </form>
+        @*</div>*@
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <!-- Row -->
+        <!-- Row -->
+        <!-- ============================================================== -->
+        <!-- End PAge Content -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+</div>
+

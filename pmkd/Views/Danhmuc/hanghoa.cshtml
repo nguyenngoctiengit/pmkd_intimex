@@ -1,0 +1,96 @@
+﻿@*@using MultipleModelInOneView;*@
+@model danhmucModel
+@{
+    ViewData["Title"] = "hanghoa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    if (TempData["alertMessage"] != null)
+    {
+        <div class="alert alert-success  alert-dismissable">
+            @TempData["alertMessage"].ToString()
+        </div>
+    }
+}
+
+<div class="row">
+    <!-- Column -->
+    <div class="col-lg-2 col-xlg-3 col-md-5">
+        <div class="card">
+            <div class="card-body">
+                <center class="m-t-30">
+                    <table class="table table-striped b-t b-light">
+                        <thead>
+                            <tr>
+                                <th>Mã nhóm</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var nhh in Model._nhomhanghoa)
+                                {
+                                    <tr>
+                                        <td><a asp-action="hanghoa" asp-route-id="@nhh.Manhom" asp-controller="danhmuc">@nhh.Manhom</a></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                    <a asp-action="themnhomhang" asp-controller="Danhmuc"><button>Thêm nhóm hàng</button></a>
+                </center>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+    <!-- Column -->
+    <div class="col-lg-10 col-xlg-9 col-md-7">
+        <div class="card">
+            <!-- Tab panes -->
+            <div class="card-body">
+                <table class="table table-striped b-t b-light">
+                    <thead>
+                        <tr>
+                            <th>ID hàng hóa</th>
+                            <th>Mã hàng</th>
+                            <th>Tên hàng</th>
+                            <th>Thông tin</th>
+                            <th>Xóa</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var hh in Model._hanghoa)
+                            {
+                                <tr>
+
+
+                                    <td>@hh.Idhanghoa</td>
+                                    <td>@hh.Mahang</td>
+                                    <td>@hh.Tenhang</td>
+                                    <td>
+                                        <a asp-action="detailhanghoa" asp-route-id="@hh.Idhanghoa" asp-controller="danhmuc">
+                                            <i class="fa fa-info" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a asp-action="deletehanghoa" asp-route-id="@hh.Idhanghoa" asp-controller="danhmuc">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div>
+        <button><a asp-action="createhanghoa" asp-controller="danhmuc"> Thêm hàng hóa </a></button><div>
+            <!-- Column -->
+        </div>
+

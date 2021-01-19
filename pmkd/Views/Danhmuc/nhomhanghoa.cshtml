@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewData["Title"] = "hanghoa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model IEnumerable<Nhom_hang_hoa>
+
+
+
+@{
+    if (TempData["alertMessage"] != null)
+    {
+    <div class="alert alert-success  alert-dismissable">
+        @TempData["alertMessage"].ToString()
+    </div>
+        }
+        }
+<div class="row"  >
+    <!-- Column -->
+    <div class="col-lg-2 col-xlg-3 col-md-5" >
+        <div class="card">
+            <div class="card-body" style=" background-color: #FFF8DC">
+                <center class="m-t-30">
+                    <table class="table table-striped b-t b-light">
+                        <thead>
+                            <tr>
+                                <th>Mã nhóm</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (Nhom_hang_hoa nhh in Model)
+                                {
+                                    <tr>
+                                        <td><a class="examp1"  style="color:black" asp-action="hanghoa" asp-route-id="@nhh.Manhom" asp-controller="danhmuc"><ins>@nhh.Manhom</ins></a></td>
+
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                    <a asp-action="themnhomhang" asp-controller="Danhmuc"><button>Thêm nhóm hàng</button></a>
+                </center>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+    <!-- Column -->
+    <div class="col-lg-10 col-xlg-9 col-md-7">
+        <div class="card">
+            <!-- Tab panes -->
+            <div class="card-body">
+                <table class="table table-striped b-t b-light">
+                    <thead>
+                        <tr>
+                            <th>ID hàng hóa</th>
+                            <th>Mã hàng</th>
+                            <th>Tên hàng</th>
+                            <th>Thông tin</th>
+                            <th>Xóa</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+</div>
+

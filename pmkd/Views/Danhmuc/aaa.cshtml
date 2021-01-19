@@ -1,0 +1,123 @@
+﻿@model Hanghoa
+@{
+    ViewData["Title"] = "createhanghoa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    if (TempData["alertMessage"] != null)
+    {
+        <div class="alert alert-success  alert-dismissable">
+            @TempData["alertMessage"].ToString()
+        </div>
+    }
+}
+<div class="container-contact100">
+    <div class="wrap-contact100">
+        <form class="contact100-form validate-form" asp-action="createhanghoa" asp-controller="danhmuc" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <span class="contact100-form-title">
+                Create hàng hóa
+            </span>
+
+            <div class="wrap-input100 validate-input bg1" data-validate="Làm ơn nhập ID hàng hóa">
+                <span class="label-input100">ID hàng hóa *</span>
+                <input class="input100" asp-for="Idhanghoa" type="text" name="name" placeholder="ID hàng">
+            </div>
+
+            <div class="wrap-input100 bg1 rs1-wrap-input100" data-validate="Làm ơn mã hàng hàng">
+                <span class="label-input100">Mã hàng</span>
+                <input class="input100" asp-for="Mahang" type="text" name="phone" placeholder="Tên hàng">
+            </div>
+
+            <div class="wrap-input100 bg1 rs1-wrap-input100" data-validate="Làm ơn nhập tên hàng">
+                <span class="label-input100">Tên hàng</span>
+                <input class="input100" asp-for="Tenhang" type="text" name="phone" placeholder="Tên hàng">
+            </div>
+            <div class="wrap-input100 validate-input bg1" data-validate="Làm ơn nhập tên hàng VAT">
+                <span class="label-input100">Tên hàng VAT *</span>
+                <input class="input100" asp-for="Tenhangvat" type="text" name="name" placeholder="Tên hàng VAT">
+            </div>
+
+            <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+                <span class="label-input100">VAT *</span>
+                <div>
+                    <select asp-for="Vat" class="js-select2" name="service">
+                        <option value="0">0</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                    </select>
+                    <div class="dropDownSelect2"></div>
+                </div>
+            </div>
+
+            <div class="wrap-input100 bg1 rs1-wrap-input100">
+                <span class="label-input100">DVT</span>
+                <div>
+                    <select asp-for="Dvt" class="js-select2" name="service">
+                        <option value="KGS">KGS</option>
+                        <option value="TAN">TAN</option>
+                        <option value="CAI">CAI</option>
+                    </select>
+                    <div class="dropDownSelect2"></div>
+                </div>
+            </div>
+
+            <div class="wrap-input100 input100-select bg1">
+                <span class="label-input100">Mã nhóm *</span>
+                <div>
+                    <select class="js-select2" asp-for="MaNhom" name="service">
+                        @{
+                            foreach (var item in ViewBag._nhomhanghoa)
+                            {
+                                <option value="@item.Manhom">@item.TenNhom</option>
+                            }
+                        }
+                    </select>
+                    <div class="dropDownSelect2"></div>
+                </div>
+            </div>
+            <div class="wrap-input100 validate-input bg0 rs1-alert-validate">
+                <span class="label-input100">Tên đầy đủ mặt hàng</span>
+                <textarea class="input100" asp-for="Fullname" placeholder="Tên đầy đủ mặt hàng"></textarea>
+            </div>
+            <div class="wrap-input100 validate-input bg0 rs1-alert-validate">
+                <span class="label-input100">Qui cách</span>
+                <textarea class="input100" asp-for="Quicach" placeholder="Qui cách"></textarea>
+            </div>
+            <div class="wrap-input100 validate-input bg0 rs1-alert-validate">
+                <span class="label-input100">Bao bì</span>
+                <textarea class="input100" asp-for="Baobi" placeholder="Bao bì"></textarea>
+            </div>
+
+
+            <div class="wrap-input100 validate-input bg0 rs1-alert-validate">
+                <span class="label-input100">Kiểm định</span>
+                <textarea class="input100" asp-for="Kiemdinh" placeholder="Kiểm định"></textarea>
+            </div>
+            <div class="wrap-input100 input100-select bg1">
+                <span class="label-input100">Nhóm hàng *</span>
+                <div>
+                    <select asp-for="OrderNhom" class="js-select2" name="service">
+                        @{
+                            foreach (var odn in ViewBag._nhomhang)
+                            {
+                                <option value="@odn.Id">@odn.TenNhom</option>
+                            }
+                        }
+                    </select>
+                    <div class="dropDownSelect2"></div>
+                </div>
+            </div>
+
+            <div class="container-contact100-form-btn">
+                <button class="contact100-form-btn" name="createhanghoa">
+                    <span>
+                        Submit
+                        <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+                    </span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+

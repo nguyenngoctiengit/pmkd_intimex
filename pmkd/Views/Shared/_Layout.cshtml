@@ -1,0 +1,436 @@
+﻿@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords"
+          content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 4 admin, bootstrap 4, css3 dashboard, bootstrap 4 dashboard, AdminWrap lite admin bootstrap 4 dashboard, frontend, responsive bootstrap 4 admin template, Elegant admin lite design, Elegant admin lite dashboard bootstrap 4 dashboard template">
+    <meta name="description"
+          content="Elegant Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Công ty CP Tập đoàn Intimex - Intimex Group</title>
+    <link rel="canonical" href="https://www.wrappixel.com/templates/elegant-admin-lite/" />
+    <!-- Favicon icon -->
+    <link rel="icon" href="~/public/images/icon_main.ico" type="image/png">
+    <!-- This page CSS -->
+    <!-- chartist CSS -->
+    <link href="~/public/morrisjs/morris.css" rel="stylesheet">
+    <!--c3 plugins CSS -->
+    <link href="~/public/c3-master/c3.min.css" rel="stylesheet">
+    <link href="~/public/css/style.css" rel="stylesheet">
+    <link href="dist/css/pages/icon-page.css" rel="stylesheet">
+    <link href="~/public/css/pages/icon-page.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="~/public/css/style.css" rel="stylesheet">
+    <!-- Dashboard 1 Page CSS -->
+    <link href="~/public/css/pages/dashboard1.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!--form-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/public/form/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/public/form/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/public/form/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/public/form/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/public/form/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/public/form/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/public/form/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/public/form/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/public/form/vendor/noui/nouislider.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/public/form/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/public/form/css/main.css">
+    <!--==============================================================-->
+    </head>
+    <!-->
+    <style>
+        .examp1:hover {
+            color: red;
+        }
+    </style>
+    <body class="skin-default-dark fixed-layout">
+        <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">Elegant admin</p>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="">
+                        <!-- Logo icon --><b>
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <!-- Dark Logo icon -->
+                            <img src="~/public/images/intimex.png" alt="homepage" class="dark-logo" />
+                            <!-- Light Logo icon -->
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text -->
+                        <span>
+                            <!-- dark Logo text -->
+                            <!-- Light Logo text -->
+                            <img src="~/public/images/logo" class="light-logo" alt="homepage" />
+                        </span>
+                    </a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    @{
+                        var userId = Context.Session.GetString("userId");
+                        var name = Context.Session.GetString("FullName1");
+                        if (userId != null)
+                        {
+
+                            <div class="media align-items-center">
+                                <a asp-action="logout" asp-controller="Account">
+                                    <span class="avatar avatar-sm rounded-circle" style="width: 50px;height: 50px">
+                                        <img src="~/public/images/4_16.png">
+                                    </span>
+                                </a>
+                                <div class="media-body  ml-2  d-none d-lg-block">
+                                    Chào mừng @name đã đăng nhập
+                                </div>
+                            </div>
+                        }
+                    }
+                    <a href="/danhmuc" class="nav-link">
+                        <div class="media align-items-center">
+                            <span class="avatar avatar-sm rounded-circle">
+
+                            </span>
+                            <div class="media-body  ml-2  d-none d-lg-block">
+
+                            </div>
+                        </div>
+                    </a>
+                    <a href="/hopdong" class="nav-link">
+                        <div class="media align-items-center">
+                            <span class="avatar avatar-sm rounded-circle">
+
+                            </span>
+                            <div class="media-body  ml-2  d-none d-lg-block">
+
+                            </div>
+                        </div>
+                    </a>
+                    <a href="/chungtu" class="nav-link">
+                        <div class="media align-items-center">
+                            <span class="avatar avatar-sm rounded-circle">
+
+                            </span>
+                            <div class="media-body  ml-2  d-none d-lg-block">
+
+                            </div>
+                        </div>
+                    </a>
+                    <a href="vanphongdientu" class="nav-link">
+                        <div class="media align-items-center">
+                            <span class="avatar avatar-sm rounded-circle">
+
+                            </span>
+                            <div class="media-body  ml-2  d-none d-lg-block">
+
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="/quanlinhansu" class="nav-link">
+                        <div class="media align-items-center">
+                            <span class="avatar avatar-sm rounded-circle">
+
+
+                            </span>
+                            <div class="media-body  ml-2  d-none d-lg-block">
+
+                            </div>
+                        </div>
+                    </a>
+                    <a href="/baocaogiaoban" class="nav-link">
+                        <div class="media align-items-center">
+                            <span class="avatar avatar-sm rounded-circle">
+
+                            </span>
+                            <div class="media-body  ml-2  d-none d-lg-block">
+
+                            </div>
+                        </div>
+                    </a>
+                    <a href="/about" class="nav-link">
+                        <div class="media align-items-center">
+                            <span class="avatar avatar-sm rounded-circle">
+
+                            </span>
+                            <div class="media-body  ml-2  d-none d-lg-block">
+
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar">
+            <div class="d-flex no-block nav-text-box align-items-center">
+                <span><img src="~/public/images/intimex.png" alt="elegant admin template"></span>
+                <a class="waves-effect waves-dark  ml-auto hidden-sm-down" href="javascript:void(0)">
+                    <i class="ti-menu"></i>
+                </a>
+                <a class="nav-toggler waves-effect waves-dark  ml-auto hidden-sm-up" href="javascript:void(0)">
+                    <i class="ti-menu ti-close"></i>
+                </a>
+            </div>
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li>
+                            <a href="/hethong" class="waves-effect waves-dark  " aria-expanded="false"><i class="fa fa-cubes"></i><span class="hide-menu">Hệ thống</span></a>
+
+                        </li>
+                        <li>
+                            <a href="/danhmuc" class="waves-effect waves-dark " aria-expanded="false"><i class="fa fa-file-text"></i><span class="hide-menu">Danh mục</span></a>
+
+                        </li>
+                        <li>
+                            <a class="waves-effect waves-dark " href="/hopdong" aria-expanded="false">
+                                <i class="fa fa-book"></i><span class="hide-menu"></span>Hợp đồng
+                            </a>
+
+                        </li>
+                        <li>
+                            <a class="waves-effect waves-dark " href="/chungtu" aria-expanded="false">
+                                <i class="fa fa-id-card-o"></i><span class="hide-menu"></span>Chứng từ
+                            </a>
+
+                        </li>
+                        <li>
+                            <a class="waves-effect waves-dark " href="vanphongdientu" aria-expanded="false">
+                                <i class="fa fa-desktop"></i><span class="hide-menu"></span>Văn phòng điện tử
+                            </a>
+
+                        </li>
+                        <li>
+                            <a class="waves-effect waves-dark " href="/quanlinhansu" aria-expanded="false">
+                                <i class="fa fa-male"></i><span class="hide-menu"></span>Quản lí nhân sự
+                            </a>
+
+                        </li>
+                        <li>
+                            <a class="waves-effect waves-dark " href="/baocaogiaoban" aria-expanded="false">
+                                <i class="fa fa-folder-open"></i><span class="hide-menu"></span>Báo cáo giao ban
+                            </a>
+
+                        </li>
+                        <li>
+                            <a class="waves-effect waves-dark " href="/about" aria-expanded="false">
+                                <i class="fa fa-question-circle"></i><span class="hide-menu"></span>About
+                            </a>
+
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- End Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Yearly Sales -->
+                <!-- ============================================================== -->
+                @RenderBody()
+                <!-- ============================================================== -->
+                <!-- To do chat and message -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- End Container fluid  -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- End Page wrapper  -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- footer -->
+                <!-- ============================================================== -->
+                <footer class="footer">
+                    Design by <a href="">Tiến Nguyễn</a>
+                </footer>
+                <!-- ============================================================== -->
+                <!-- End footer -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Wrapper -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- All Jquery -->
+            <!-- ============================================================== -->
+            <script src="~/public/jquery/jquery-3.2.1.min.js"></script>
+            <!-- Bootstrap popper Core JavaScript -->
+            <script src="~/public/popper/popper.min.js"></script>
+            <script src="~/public/bootstrap/dist/js/bootstrap.min.js"></script>
+            <!-- slimscrollbar scrollbar JavaScript -->
+            <script src="~/public/js/perfect-scrollbar.jquery.min.js"></script>
+            <!--Wave Effects -->
+            <script src="~/public/js/waves.js"></script>
+            <!--Menu sidebar -->
+            <script src="dist/js/sidebarmenu.js"></script>
+            <script src="~/public/js/sidebarmenu.js"></script>
+            <!--Custom JavaScript -->
+            <script src="/public/js/custom.min.js"></script>
+            <!-- ============================================================== -->
+            <!-- This page plugins -->
+            <!-- ============================================================== -->
+            <!--morris JavaScript -->
+            <script src="~/public/raphael/raphael-min.js"></script>
+            <script src="~/public/morrisjs/morris.min.js"></script>
+            <script src="~/assets/node_modules/jquery-sparkline/jquery.sparkline.min.js"></script>
+            <script src="~/public/jquery-sparkline/jquery.sparkline.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+            <!--c3 JavaScript -->
+            <script src="~/public/d3/d3.min.js"></script>
+            <script src="~/public/c3-master/c3.min.js"></script>
+            <!-- Chart JS -->
+            <script src="~/public/js/dashboard1.js"></script>
+
+
+            <!--========================================form=======================================================-->
+            <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+            <script src="~/public/form/vendor/jquery/jquery-3.2.1.min.js"></script>
+            <!--===============================================================================================-->
+            <script src="~/public/form/vendor/animsition/js/animsition.min.js"></script>
+            <!--===============================================================================================-->
+            <script src="~/public/form/vendor/bootstrap/js/popper.js"></script>
+            <script src="~/public/form/vendor/bootstrap/js/bootstrap.min.js"></script>
+            <!--===============================================================================================-->
+            <script src="~/public/form/vendor/select2/select2.min.js"></script>
+            <script>
+                $(".js-select2").each(function () {
+                    $(this).select2({
+                        minimumResultsForSearch: 20,
+                        dropdownParent: $(this).next('.dropDownSelect2')
+                    });
+
+
+                    $(".js-select2").each(function () {
+                        $(this).on('select2:close', function (e) {
+                            if ($(this).val() == "Please chooses") {
+                                $('.js-show-service').slideUp();
+                            }
+                            else {
+                                $('.js-show-service').slideUp();
+                                $('.js-show-service').slideDown();
+                            }
+                        });
+                    });
+                })
+            </script>
+            <!--===============================================================================================-->
+            <script src="~/public/form/vendor/daterangepicker/moment.min.js"></script>
+            <script src="~/public/form/vendor/daterangepicker/daterangepicker.js"></script>
+            <!--===============================================================================================-->
+            <script src="~/public/form/vendor/countdowntime/countdowntime.js"></script>
+            <!--===============================================================================================-->
+            <script src="~/public/form/vendor/noui/nouislider.min.js"></script>
+            <script>
+                var filterBar = document.getElementById('filter-bar');
+
+                noUiSlider.create(filterBar, {
+                    start: [1500, 3900],
+                    connect: true,
+                    range: {
+                        'min': 1500,
+                        'max': 7500
+                    }
+                });
+
+                var skipValues = [
+                    document.getElementById('value-lower'),
+                    document.getElementById('value-upper')
+                ];
+
+                filterBar.noUiSlider.on('update', function (values, handle) {
+                    skipValues[handle].innerHTML = Math.round(values[handle]);
+                    $('.contact100-form-range-value input[name="from-value"]').val($('#value-lower').html());
+                    $('.contact100-form-range-value input[name="to-value"]').val($('#value-upper').html());
+                });
+            </script>
+            <!--===============================================================================================-->
+            <script src="~/public/form/js/main.js"></script>
+
+            <!-- Global site tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag() { dataLayer.push(arguments); }
+                gtag('js', new Date());
+
+                gtag('config', 'UA-23581568-13');
+            </script>
+
+
+
+</body>
+
+</html>

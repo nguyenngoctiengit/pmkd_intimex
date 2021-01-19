@@ -1,0 +1,125 @@
+﻿@model pmkd.Models.Hanghoa
+
+@{
+    ViewData["Title"] = "detailhanghoa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    if (TempData["alertMessage"] != null)
+    {
+        <div class="alert alert-success  alert-dismissable">
+            @TempData["alertMessage"].ToString()
+        </div>
+    }
+}
+<style>
+    .input-validation-error {
+        border-color: red;
+</style>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Mã hàng hóa</label>
+                <input asp-for="Idhanghoa" class="form-control" />
+                <span asp-validation-for="Idhanghoa" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputEmail1">Tên hàng hóa</label>
+                <input asp-for="Mahang" class="form-control" />
+                <span asp-validation-for="Mahang" class="text-danger"></span>
+            </div>
+            <nav>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Tên hàng hóa</label>
+                    <input asp-for="Tenhang" class="form-control" />
+                    <span asp-validation-for="Tenhang" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Tên hàng VAT</label>
+                    <input asp-for="Tenhangvat" class="form-control" />
+                    <span asp-validation-for="Tenhangvat" class="text-danger"></span>
+                </div>
+            </nav>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Mã nhóm</label>
+                <select asp-for="MaNhom" class="form-control" />
+                @{
+                    foreach (var item in ViewBag._nhomhanghoa)
+                    {
+                        <option value="@item.Manhom">@item.TenNhom</option>
+                    }
+                }
+                </select>
+
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">VAT</label>
+                <select asp-for="Dvt" class="form-control input-sm m-bot15">
+                    <option value="KGS">KGS</option>
+                    <option value="TAN">TAN</option>
+                    <option value="CAI">CAI</option>
+
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">VAT</label>
+                <select asp-for="Vat" class="form-control input-sm m-bot15">
+                    <option value="0">0</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Sử dụng</label>
+                <input asp-for="Sudung" class="form-control" />
+                <span asp-validation-for="Sudung" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Tên đầy đủ mặt hàng</label>
+                <textarea asp-for="Fullname" rows="5" style="height:120px; width:1200px" class="form-control"></textarea>
+                <span asp-validation-for="Fullname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Qui cách</label>
+                <textarea asp-for="Quicach" style="height:120px; width:1200px" class="form-control"></textarea>
+                <span asp-validation-for="Quicach" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Bao bì</label>
+                <textarea asp-for="Baobi" style="height:120px; width:1200px" class="form-control"></textarea>
+                <span asp-validation-for="Baobi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Kiểm định</label>
+                <textarea asp-for="Kiemdinh" style="height:120px; width:1200px" class="form-control"></textarea>
+                <span asp-validation-for="Kiemdinh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Mã nhóm</label>
+                <select asp-for="OrderNhom" class="form-control" />
+                @{
+                    foreach (var odn in ViewBag._nhomhang)
+                    {
+                        <option value="@odn.Id">@odn.TenNhom</option>
+                    }
+                }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="createhanghoa" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@{
+    var nhh = ViewBag.nhh;
+    <div>
+        <a asp-action="nhomhanghoa">Back to List</a>
+    </div>
+}
+

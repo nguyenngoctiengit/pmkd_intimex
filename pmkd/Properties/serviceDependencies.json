@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "type": "secrets"
+    },
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "Logging/connectionStrings/tradingsystem_blConnection"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "tradingsystem_blConnection"
+    }
+  }
+}
