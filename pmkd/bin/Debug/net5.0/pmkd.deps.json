@@ -40,6 +40,7 @@
           "Microsoft.Extensions.Options.ConfigurationExtensions": "5.0.0",
           "Microsoft.Extensions.Options.DataAnnotations": "5.0.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "5.0.1",
+          "Microsoft.jQuery.Unobtrusive.Validation": "3.2.11",
           "System.Configuration.ConfigurationManager": "5.0.0",
           "System.Security.Claims": "4.3.0",
           "jQuery.Validation": "1.19.2",
@@ -383,10 +384,10 @@
           }
         }
       },
-      "jQuery/1.4.4": {},
+      "jQuery/1.8.0": {},
       "jQuery.Validation/1.19.2": {
         "dependencies": {
-          "jQuery": "1.4.4"
+          "jQuery": "1.8.0"
         }
       },
       "Microsoft.AspNet.Identity.Core/2.2.3": {
@@ -1193,6 +1194,12 @@
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.IdentityModel.Tokens.dll": {}
+        }
+      },
+      "Microsoft.jQuery.Unobtrusive.Validation/3.2.11": {
+        "dependencies": {
+          "jQuery": "1.8.0",
+          "jQuery.Validation": "1.19.2"
         }
       },
       "Microsoft.Net.Http.Headers/2.2.0": {
@@ -3818,12 +3825,12 @@
       "path": "humanizer.core/2.8.26",
       "hashPath": "humanizer.core.2.8.26.nupkg.sha512"
     },
-    "jQuery/1.4.4": {
+    "jQuery/1.8.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-kexCeYIZehR5fRjo8CK1sngN5SZEQRFNfCYZHMS1RxwEEiSKetBw/gliYJcLJdJEBB+e9aHqleLCjuaSI7u23g==",
-      "path": "jquery/1.4.4",
-      "hashPath": "jquery.1.4.4.nupkg.sha512"
+      "sha512": "sha512-laDFQRJrIRHT0Z0GVYklMt3bE0iu0MZFJwHwg21kt3SHb7Bj8TdNiM3K+ZdK1DzB8ZxKy8z7NkJvwMas+dmHBw==",
+      "path": "jquery/1.8.0",
+      "hashPath": "jquery.1.8.0.nupkg.sha512"
     },
     "jQuery.Validation/1.19.2": {
       "type": "package",
@@ -4272,6 +4279,13 @@
       "sha512": "sha512-C3OqR3QfBQ7wcC7yAsdMQqay87OsV6yWPYG/Ai3n7dvmWIGkouQhXoVxRP0xz3cAFL4hxZBXyw4aLTC421PaMg==",
       "path": "microsoft.identitymodel.tokens/5.6.0",
       "hashPath": "microsoft.identitymodel.tokens.5.6.0.nupkg.sha512"
+    },
+    "Microsoft.jQuery.Unobtrusive.Validation/3.2.11": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8qGe1q3vV5Fwbpb0OSI8SxSiIBeFt9sgAvFvPwgZuuL+PZ+z0VsPB5yeqT+SrvPKpyVpN33MLhgvSW5Zf07IsQ==",
+      "path": "microsoft.jquery.unobtrusive.validation/3.2.11",
+      "hashPath": "microsoft.jquery.unobtrusive.validation.3.2.11.nupkg.sha512"
     },
     "Microsoft.Net.Http.Headers/2.2.0": {
       "type": "package",

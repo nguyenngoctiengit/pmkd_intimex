@@ -13,13 +13,12 @@ namespace pmkd.Controllers
 {
     public class DanhmucController : Controller
     {
-        public IEnumerable<Hanghoa> hanghoas { get; set; }
         public tradingsystem_blContext _context;
         public tradingsystem_blContext db = new tradingsystem_blContext();
         public DanhmucController (tradingsystem_blContext context)
         {
             _context = context;
-        }
+        }   
 
 
         public IActionResult Index()
@@ -33,11 +32,9 @@ namespace pmkd.Controllers
         [HttpGet]
         public IActionResult hanghoa(string id)
         {
-            var model = new danhmucModel();
-            Hanghoa hanghoa = new Hanghoa();
-            model._nhomhanghoa = _context.Nhom_hang_hoas.ToList();
-            model._hanghoa = _context.Hanghoas.Where(a => a.MaNhom == id).ToList();
-            return View(model);
+            ViewBag.listproduct = _context.CtHdmbs.ToList();
+            ViewBag._nhomhanghoa = _context.Nhom_hang_hoas.ToList();
+            return View(_context.Hanghoas.Where(a => a.MaNhom == id).ToList());
 
         }
         public IActionResult themnhomhang()
@@ -56,21 +53,34 @@ namespace pmkd.Controllers
             }
             else return View("themnhomhang");
         }
-        public IActionResult delete(string id)
-        {
-            var nhh = _context.Nhom_hang_hoas.Where(a => a.Manhom == id).FirstOrDefault();
-            _context.Nhom_hang_hoas.Remove(nhh);
-            _context.SaveChanges();
-            TempData["alertMessage"] = "Xóa nhóm hàng thành công";
-            return RedirectToAction("nhomhanghoa");
-        }
         public IActionResult deletehanghoa(string id)
         {
+            
+            var flag = false;
+            var list_product = _context.CtHdmbs.ToList();
             var hh = _context.Hanghoas.Where(a => a.Idhanghoa == id).FirstOrDefault();
-            _context.Hanghoas.Remove(hh);
-            _context.SaveChanges();
-            TempData["alertMessage"] = "Xóa hàng hóa thành công";
-            return RedirectToAction("hanghoa");
+            {
+                foreach (var a in list_product)
+                {
+                    if (a.Mahang == hh.Mahang)
+                    {
+                        flag = true;
+                    }
+                }
+                if (flag == true)
+                {
+                    TempData["alertMessage"] = "Không được xóa, hàng hóa có chứa trong hợp đồng";
+                    return RedirectToAction("nhomhanghoa");
+                }
+                else
+                {
+                   
+                    _context.Hanghoas.Remove(hh);
+                    _context.SaveChanges();
+                    TempData["alertMessage"] = "Xóa hàng hóa thành công";
+                    return RedirectToAction("nhomhanghoa");
+                }
+            }
         }
         public IActionResult createhanghoa()
         {
@@ -81,16 +91,14 @@ namespace pmkd.Controllers
         [HttpPost]
         public IActionResult createhanghoa(Hanghoa hanghoa)
         {
-            ViewBag._nhomhanghoa = _context.Nhom_hang_hoas.ToList();
-            ViewBag._nhomhang = _context.Nhomhangs.ToList();
+            _context.Hanghoas.Add(hanghoa);
+            _context.SaveChanges();
+            TempData["alertMessage"] = "Thêm hàng hóa thành công";
+            return RedirectToAction("nhomhanghoa");
 
-                _context.Hanghoas.Add(hanghoa);
-                _context.SaveChanges();
-                TempData["alertMessage"] = "Thêm hàng hóa thành công";
-                return RedirectToAction("hanghoa");
-            
 
         }
+   
         public IActionResult detailhanghoa(string id)
         {
             ViewBag._nhomhang = _context.Nhomhangs.ToList();
@@ -103,16 +111,11 @@ namespace pmkd.Controllers
         [ActionName("Update")]
         public IActionResult Update_Post(Hanghoa hh)
         {
-            _context.Hanghoas.Update(hh);
+            var aaa = _context.Hanghoas.FirstOrDefault(a => a.Idhanghoa == hh.Idhanghoa);
+            _context.Hanghoas.Update(aaa);
             _context.SaveChanges();
-            return RedirectToAction("hanghoa");
-        }
-        [Route("aaa")]
-        public IActionResult aaa()
-        {
-            ViewBag._nhomhanghoa = _context.Nhom_hang_hoas.ToList();
-            ViewBag._nhomhang = _context.Nhomhangs.ToList();
-            return View();
+            TempData["alertMessage"] = "Cập nhật hàng hóa thành công";
+            return RedirectToAction("nhomhanghoa");
         }
 
 

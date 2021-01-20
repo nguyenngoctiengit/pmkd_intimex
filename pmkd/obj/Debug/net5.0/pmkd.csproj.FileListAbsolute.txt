@@ -278,4 +278,3 @@ C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\System.Diagnostics.Diag
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\themnhomhang.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\detailhanghoa.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\createhanghoa.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\aaa.cshtml.g.cs

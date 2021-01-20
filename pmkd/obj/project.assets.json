@@ -51,7 +51,7 @@
           "lib/netstandard2.0/Humanizer.dll": {}
         }
       },
-      "jQuery/1.4.4": {
+      "jQuery/1.8.0": {
         "type": "package"
       },
       "jQuery.Validation/1.19.2": {
@@ -1076,6 +1076,13 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.IdentityModel.Tokens.dll": {}
+        }
+      },
+      "Microsoft.jQuery.Unobtrusive.Validation/3.2.11": {
+        "type": "package",
+        "dependencies": {
+          "jQuery": "1.8.0",
+          "jQuery.Validation": "1.8.0.1"
         }
       },
       "Microsoft.Net.Http.Headers/2.2.0": {
@@ -2557,17 +2564,22 @@
         "logo.png"
       ]
     },
-    "jQuery/1.4.4": {
-      "sha512": "kexCeYIZehR5fRjo8CK1sngN5SZEQRFNfCYZHMS1RxwEEiSKetBw/gliYJcLJdJEBB+e9aHqleLCjuaSI7u23g==",
+    "jQuery/1.8.0": {
+      "sha512": "laDFQRJrIRHT0Z0GVYklMt3bE0iu0MZFJwHwg21kt3SHb7Bj8TdNiM3K+ZdK1DzB8ZxKy8z7NkJvwMas+dmHBw==",
       "type": "package",
-      "path": "jquery/1.4.4",
+      "path": "jquery/1.8.0",
+      "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "Content/Scripts/jquery-1.4.4-vsdoc.js",
-        "Content/Scripts/jquery-1.4.4.js",
-        "Content/Scripts/jquery-1.4.4.min.js",
-        "jquery.1.4.4.nupkg.sha512",
+        "Content/Scripts/jquery-1.8.0-vsdoc.js",
+        "Content/Scripts/jquery-1.8.0.js",
+        "Content/Scripts/jquery-1.8.0.min.js",
+        "Tools/common.ps1",
+        "Tools/install.ps1",
+        "Tools/jquery-1.8.0.intellisense.js",
+        "Tools/uninstall.ps1",
+        "jquery.1.8.0.nupkg.sha512",
         "jquery.nuspec"
       ]
     },
@@ -3952,6 +3964,19 @@
         "lib/netstandard2.0/Microsoft.IdentityModel.Tokens.xml",
         "microsoft.identitymodel.tokens.5.6.0.nupkg.sha512",
         "microsoft.identitymodel.tokens.nuspec"
+      ]
+    },
+    "Microsoft.jQuery.Unobtrusive.Validation/3.2.11": {
+      "sha512": "8qGe1q3vV5Fwbpb0OSI8SxSiIBeFt9sgAvFvPwgZuuL+PZ+z0VsPB5yeqT+SrvPKpyVpN33MLhgvSW5Zf07IsQ==",
+      "type": "package",
+      "path": "microsoft.jquery.unobtrusive.validation/3.2.11",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Content/Scripts/jquery.validate.unobtrusive.js",
+        "Content/Scripts/jquery.validate.unobtrusive.min.js",
+        "microsoft.jquery.unobtrusive.validation.3.2.11.nupkg.sha512",
+        "microsoft.jquery.unobtrusive.validation.nuspec"
       ]
     },
     "Microsoft.Net.Http.Headers/2.2.0": {
@@ -8339,6 +8364,7 @@
       "Microsoft.Extensions.Options.ConfigurationExtensions >= 5.0.0",
       "Microsoft.Extensions.Options.DataAnnotations >= 5.0.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 5.0.1",
+      "Microsoft.jQuery.Unobtrusive.Validation >= 3.2.11",
       "System.Configuration.ConfigurationManager >= 5.0.0",
       "System.Security.Claims >= 4.3.0",
       "jQuery.Validation >= 1.19.2"
@@ -8451,6 +8477,10 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
             "version": "[5.0.1, )"
+          },
+          "Microsoft.jQuery.Unobtrusive.Validation": {
+            "target": "Package",
+            "version": "[3.2.11, )"
           },
           "System.Configuration.ConfigurationManager": {
             "target": "Package",

@@ -108,6 +108,10 @@
               "target": "Package",
               "version": "[5.0.1, )"
             },
+            "Microsoft.jQuery.Unobtrusive.Validation": {
+              "target": "Package",
+              "version": "[3.2.11, )"
+            },
             "System.Configuration.ConfigurationManager": {
               "target": "Package",
               "version": "[5.0.0, )"
