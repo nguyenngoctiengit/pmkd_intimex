@@ -309,6 +309,7 @@ namespace pmkd.Models
                    .Build();
                 var connectionString = Configuration.GetConnectionString("tradingsystem_blConnection");
                 optionsBuilder.UseSqlServer(connectionString);
+                
             }
         }
 
@@ -4551,7 +4552,9 @@ namespace pmkd.Models
                     .IsRequired()
                     .HasMaxLength(50);
             });
-
+            modelBuilder.Entity<Hanghoa>()
+                .HasIndex(u => u.Mahang)
+                .IsUnique();
             modelBuilder.Entity<Hanghoa>(entity =>
             {
                 entity.HasKey(e => e.Mahang)
@@ -4561,7 +4564,8 @@ namespace pmkd.Models
 
                 entity.Property(e => e.Mahang)
                     .HasMaxLength(50)
-                    .HasColumnName("mahang");
+                    .HasColumnName("mahang")
+                    ;
 
                 entity.Property(e => e.Baobi)
                     .HasColumnType("ntext")

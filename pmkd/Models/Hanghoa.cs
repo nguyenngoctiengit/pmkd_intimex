@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -10,6 +11,7 @@ namespace pmkd.Models
     {
         [Required]
         public string Idhanghoa { get; set; }
+        [Key]
         public string Mahang { get; set; }
         [Required]
         public string Tenhang { get; set; }

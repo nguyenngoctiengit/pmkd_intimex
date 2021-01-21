@@ -15,7 +15,7 @@
 
 <div class="row">
     <!-- Column -->
-    <div class="col-lg-2 col-xlg-3 col-md-5">
+    <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card">
             <div class="card-body" style="background-color: #FFF8DC">
                 <center class="m-t-30">
@@ -23,6 +23,7 @@
                         <thead>
                             <tr>
                                 <th>Mã nhóm</th>
+                                <th>Delelte</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -31,6 +32,7 @@
                                 {
                                     <tr>
                                         <td><a asp-action="hanghoa" style="color:black" asp-route-id="@nhh.Manhom" asp-controller="danhmuc"><ins>@nhh.Manhom</ins></a></td>
+                                        <td><a asp-action="delete" style="color:black" asp-route-id="@nhh.Manhom" asp-controller="danhmuc"><i class="fa fa-trash"></a></td>
                                     </tr>
                                 }
                             }
@@ -52,7 +54,7 @@
     </div>
     <!-- Column -->
     <!-- Column -->
-    <div class="col-lg-10 col-xlg-9 col-md-7">
+    <div class="col-lg-9 col-xlg-9 col-md-7">
         <div class="card">
             <!-- Tab panes -->
             <div class="card-body">

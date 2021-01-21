@@ -14,10 +14,12 @@
         "outputPath": "C:\\Users\\User\\Desktop\\pmkd_project\\pmkd\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "D:\\DevExpress\\Components\\Offline Packages",
           "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
           "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 20.2.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -26,6 +28,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\DevExpress\\Components\\System\\Components\\Packages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -112,9 +115,17 @@
               "target": "Package",
               "version": "[3.2.11, )"
             },
+            "ServiceStack.Interfaces.Core": {
+              "target": "Package",
+              "version": "[5.10.4, )"
+            },
             "System.Configuration.ConfigurationManager": {
               "target": "Package",
               "version": "[5.0.0, )"
+            },
+            "System.Linq.Dynamic": {
+              "target": "Package",
+              "version": "[1.0.8, )"
             },
             "System.Security.Claims": {
               "target": "Package",
