@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Data;
 using Microsoft.AspNetCore.Http;
+using ServiceStack;
 
 namespace pmkd.Controllers
 {
@@ -15,27 +16,21 @@ namespace pmkd.Controllers
     {
         public tradingsystem_blContext _context;
         public tradingsystem_blContext db = new tradingsystem_blContext();
-
-        public object JsonRequestBehavior { get; private set; }
-
         public DanhmucController(tradingsystem_blContext context)
         {
             _context = context;
         }
-/*        public JsonResult IsUserExists(string Mahang)
-        {
-            //check if any of the UserName matches the UserName specified in the Parameter using the ANY extension method.  
-            return Json(!_context.Hanghoas.Any(x => x.Mahang == Mahang), JsonRequestBehavior.AllowGet);
-        }*/
-
+        //Index
         public IActionResult Index()
         {
             return View();
         }
+        //list nhóm hàng hóa
         public IActionResult nhomhanghoa()
         {
             return View(_context.Nhom_hang_hoas);
         }
+        //list hàng hóa
         [HttpGet]
         public IActionResult hanghoa(string id)
         {
@@ -44,10 +39,12 @@ namespace pmkd.Controllers
             return View(_context.Hanghoas.Where(a => a.MaNhom == id).ToList());
 
         }
+        //view thêm nhóm hàng hóa
         public IActionResult themnhomhang()
         {
             return View("themnhomhang");
         }
+        //hàm thêm nhóm hàng hóa
         [HttpPost]
         public IActionResult themnhomhang(Nhom_hang_hoa nhh)
         {
@@ -65,6 +62,7 @@ namespace pmkd.Controllers
             }    
 
         }
+        //xóa nhóm hàng hóa
         public IActionResult delete(string id)
         {
             var flag = false;
@@ -92,6 +90,7 @@ namespace pmkd.Controllers
             }
             return RedirectToAction("nhomhanghoa");
         }
+        //xóa hàng hóa
         public IActionResult deletehanghoa(string id)
         {
 
@@ -121,12 +120,14 @@ namespace pmkd.Controllers
                 }
             }
         }
+        //view tạo hàng hóa
         public IActionResult createhanghoa()
         {
             ViewBag._nhomhanghoa = _context.Nhom_hang_hoas.ToList();
             ViewBag._nhomhang = _context.Nhomhangs.ToList();
             return View("createhanghoa");
         }
+        //hàm tạo hàng hóa
         [HttpPost]
         public IActionResult createhanghoa(Hanghoa hanghoa)
         {
@@ -143,10 +144,8 @@ namespace pmkd.Controllers
                 return RedirectToAction("nhomhanghoa");
             }
             
-
-
         }
-
+        //Chi tiết hàng hóa
         public IActionResult detailhanghoa(string id)
         {
             ViewBag._nhomhang = _context.Nhomhangs.ToList();
@@ -155,6 +154,7 @@ namespace pmkd.Controllers
             var detail = _context.Hanghoas.Where(a => a.Idhanghoa == id).FirstOrDefault();
             return View(detail);
         }
+        //cập nhật hàng hóa
         [HttpPost]
         [ActionName("Update")]
         public IActionResult Update_Post(Hanghoa hh)
@@ -183,14 +183,34 @@ namespace pmkd.Controllers
                     return RedirectToAction("nhomhanghoa");
                 }
             }
-
-
-
-
-
-
-
-            }
+        }
+        public IActionResult khuvuc()
+        {
+            ViewBag.quocgia = (from a in _context.Quocgia
+                             join b in _context.KhachHangs
+                                on a.Name equals b.TenQg where a.Name != "VIETNAM" select a).Distinct();
+            ViewBag.khuvuc = (from a in _context.Khuvucs 
+                              join b in _context.KhachHangs 
+                              on a.MaKhuvuc equals b.MaKhuvuc where b.TenQg == "VIETNAM" select a).Distinct();
+            return View("khuvuc");
+        }
+        public IActionResult khachhang(string id)
+        {
+            ViewBag.listkh = _context.KhachHangs.ToList();
+            ViewBag.khuvuc = (from a in _context.Khuvucs
+                              join b in _context.KhachHangs
+                              on a.MaKhuvuc equals b.MaKhuvuc
+                              where b.TenQg == "VIETNAM"
+                              select a).Distinct();
+            ViewBag.quocgia = (from a in _context.Quocgia
+                               join b in _context.KhachHangs
+                                  on a.Name equals b.TenQg
+                               where b.TenQg != "VIETNAM"
+                               select a).Distinct();
+            ViewBag.item = _context.KhachHangs.Where(a => a.MaKhuvuc == id);
+            ViewBag.item1 = _context.KhachHangs.Where(a => a.TenQg == id).ToList();
+            return View("khachhang");
+        }
     }
 }
 

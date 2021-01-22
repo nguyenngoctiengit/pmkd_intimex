@@ -280,3 +280,5 @@ C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\det
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\createhanghoa.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\ServiceStack.Interfaces.dll
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\System.Linq.Dynamic.dll
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khuvuc.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang.cshtml.g.cs

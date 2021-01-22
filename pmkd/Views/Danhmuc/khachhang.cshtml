@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewData["Title"] = "khachhang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    if (TempData["alertMessage"] != null)
+    {
+        <div class="alert alert-success  alert-dismissable">
+            @TempData["alertMessage"].ToString()
+        </div>
+    }
+}
+
+<div class="row">
+    <!-- Column -->
+    <div class="col-lg-3 col-xlg-3 col-md-5">
+        <div class="card">
+            <div class="card-body" style="background-color: #FFF8DC">
+                <center class="m-t-30">
+                    <label for="khuvuc">Việt nam</label>
+                    <div>
+                        <select name="cars" id="cars" onchange="location = this.value">
+                            @{
+                                <option selected>-- Chọn một khu vực --</option>
+                                foreach (var item in ViewBag.khuvuc)
+                                {
+                                    <option value="@item.MaKhuvuc">@item.TenKhuvuc</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <label for="quocgia">Quốc tế</label>
+                    <div>
+                        <select name="cars" id="cars" onchange="location = this.value">
+                            @{
+
+                                <option selected>-- Chọn một quốc gia --</option>
+                                foreach (var item in ViewBag.quocgia)
+                                {
+                                    <option value="@item.Name">@item.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>                    
+                </center>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+    <!-- Column -->
+    <div class="col-lg-9 col-xlg-9 col-md-7">
+        <div class="card">
+            <!-- Tab panes -->
+            <div class="card-body">
+                <table class="table table-striped b-t b-light">
+                    <thead>
+                        <tr>
+                            <th>ID khách hàng</th>
+                            <th>Mã khách hàng</th>
+                            <th>Tên khách hàng</th>
+                            <th>Thông tin || Edit</th>
+                            <th>Xóa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var a in ViewBag.listkh)
+                            {
+                                if (a.TenQg == "VIETNAM")
+                                {
+                                    foreach (var item in ViewBag.item)
+                                    {
+                                        <tr>
+                                            <td>@item.Idkhach</td>
+                                            <td>@item.MaKhach</td>
+                                            <td>@item.TenKhach</td>
+                                            <td>
+                                                <a asp-action="detailhanghoa" asp-route-id="@item.Idkhach" asp-controller="danhmuc">
+                                                    <i class="fa fa-info" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a asp-action="deletehanghoa" asp-route-id="@item.Idkhach" asp-controller="danhmuc">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    foreach (var item in ViewBag.item1)
+                                    {
+                                        <tr>
+                                            <td>@item.Idkhach</td>
+                                            <td>@item.MaKhach</td>
+                                            <td>@item.TenKhach</td>
+                                            <td>
+                                                <a asp-action="detailhanghoa" asp-route-id="@item.Idkhach" asp-controller="danhmuc">
+                                                    <i class="fa fa-info" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a asp-action="deletehanghoa" asp-route-id="@item.Idkhach" asp-controller="danhmuc">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        }
+                                    }
+                                        }
+                                    }
+                                }
+
+
+                            }
+                        </tbody>
+                </table>
+
+
+                <div class="container-contact100-form-btn">
+                    <a asp-action="createhanghoa" asp-controller="danhmuc">
+                        <button class="contact100-form-btn">
+                            <span>
+                                Thêm hàng hóa
+                                <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+</div>
+
+
+
+

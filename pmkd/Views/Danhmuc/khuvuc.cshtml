@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewData["Title"] = "khuvuc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    if (TempData["alertMessage"] != null)
+    {
+        <div class="alert alert-success  alert-dismissable">
+            @TempData["alertMessage"].ToString()
+        </div>
+    }
+}
+
+<div class="row">
+    <!-- Column -->
+    <div class="col-lg-3 col-xlg-3 col-md-5">
+        <div class="card">
+            <div class="card-body" style="background-color: #FFF8DC">
+                <center class="m-t-30">
+                    <label for="khuvuc">Việt nam</label>
+                    <div>
+                        <select name="cars" id="cars" onchange="location = this.value">
+                            @{
+                                <option selected>-- Chọn một khu vực --</option>
+                                foreach (var item in ViewBag.khuvuc)
+                                {
+                                    <option value="khachhang/@item.MaKhuvuc">@item.TenKhuvuc</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <label for="quocgia">Quốc tế</label>
+                    <div>
+                        <select name="cars" id="cars" onchange="location = this.value">
+                            @{
+                                <option selected>-- Chọn một quốc gia --</option>
+                                foreach (var item in ViewBag.quocgia)
+                                {
+                                    <option value="khachhang/@item.Name"><a asp-action="khachhang" asp-controller="danhmuc" asp-route-id="@item.Name">@item.Name</a></option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="container-contact100-form-btn">
+                        <a asp-action="themnhomhang" asp-controller="danhmuc">
+                            <button class="contact100-form-btn">
+                                <span>
+                                    Thêm hàng hóa
+                                    <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+                                </span>
+                            </button>
+                        </a>
+                    </div>
+                </center>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+    <!-- Column -->
+    <div class="col-lg-9 col-xlg-9 col-md-7">
+        <div class="card">
+            <!-- Tab panes -->
+            <div class="card-body">
+                <table class="table table-striped b-t b-light">
+                    <thead>
+                        <tr>
+                            <th>ID hàng hóa</th>
+                            <th>Mã hàng</th>
+                            <th>Tên hàng</th>
+                            <th>Thông tin || Edit</th>
+                            <th>Xóa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+</div>
+
+
