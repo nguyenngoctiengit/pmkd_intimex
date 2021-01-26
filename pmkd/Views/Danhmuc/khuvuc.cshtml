@@ -24,8 +24,10 @@
                         <select name="cars" id="cars" onchange="location = this.value">
                             @{
                                 <option selected>-- Chọn một khu vực --</option>
+                                <option value="khachhang/">     </option>
                                 foreach (var item in ViewBag.khuvuc)
                                 {
+
                                     <option value="khachhang/@item.MaKhuvuc">@item.TenKhuvuc</option>
                                 }
                             }
@@ -71,7 +73,6 @@
                             <th>Mã hàng</th>
                             <th>Tên hàng</th>
                             <th>Thông tin || Edit</th>
-                            <th>Xóa</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -10,6 +11,7 @@ namespace pmkd.Models
         public string Makhach { get; set; }
         public string Nhomhang { get; set; }
         public string Macn { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:C}")]
         public decimal ValueNorm { get; set; }
         public decimal ValueDmgh { get; set; }
         public string Ghichu { get; set; }

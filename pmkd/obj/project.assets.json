@@ -8423,7 +8423,6 @@
   },
   "packageFolders": {
     "C:\\Users\\User\\.nuget\\packages\\": {},
-    "D:\\DevExpress\\Components\\Offline Packages": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
@@ -8436,12 +8435,10 @@
       "outputPath": "C:\\Users\\User\\Desktop\\pmkd_project\\pmkd\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "D:\\DevExpress\\Components\\Offline Packages",
         "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 20.2.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -8450,7 +8447,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "D:\\DevExpress\\Components\\System\\Components\\Packages": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

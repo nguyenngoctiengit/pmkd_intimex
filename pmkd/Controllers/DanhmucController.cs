@@ -207,9 +207,19 @@ namespace pmkd.Controllers
                                   on a.Name equals b.TenQg
                                where b.TenQg != "VIETNAM"
                                select a).Distinct();
-            ViewBag.item = _context.KhachHangs.Where(a => a.MaKhuvuc == id);
-            ViewBag.item1 = _context.KhachHangs.Where(a => a.TenQg == id).ToList();
+            ViewBag.nullquocgia = _context.KhachHangs.Where(a => a.TenQg == "").ToList();
+            ViewBag.nulltinhthanh = _context.KhachHangs.Where(a => a.TenQg == "VIETNAM" && a.MaKhuvuc == "").ToList();
+            ViewBag.item = (from a in _context.KhachHangs where a.MaKhuvuc == id select a).Distinct();
+            ViewBag.item1 = (from b in _context.KhachHangs where b.TenQg == id select b).Distinct(); 
             return View("khachhang");
+        }
+        public IActionResult detailKH(string id)
+        {
+            ViewBag.signer = from kh in _context.KhachHangs join sn in _context.Signers on kh.MaKhach equals sn.MaKhach where kh.Idkhach == id select sn;
+            ViewBag.customerNorm = from a in _context.KhachHangs join b in _context.CustomerNorms on a.MaKhach equals b.Makhach where a.Idkhach == id select b;
+            ViewBag.list_qg = _context.Quocgia.ToList();
+            var ct_kh = _context.KhachHangs.Where(a => a.Idkhach == id).FirstOrDefault();
+            return View(ct_kh);
         }
     }
 }

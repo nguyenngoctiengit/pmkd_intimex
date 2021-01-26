@@ -1,0 +1,687 @@
+﻿@model pmkd.Models.KhachHang
+@{
+    ViewData["Title"] = "detailKH";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    if (TempData["alertMessage"] != null)
+    {
+        <div class="alert alert-success  alert-dismissable">
+            @TempData["alertMessage"].ToString()
+        </div>
+    }
+}
+
+<div class="container-contact100">
+    <div class="wrap-contact100" style="width:1500px;padding-bottom:10px">
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="inputEmail4">Mã khách</label>
+                    <input type="text" class="form-control" asp-for="MaKhach" placeholder="Mã khách">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4">Tên tắt</label>
+                    <input type="text" class="form-control" asp-for="TenKhach" placeholder="Tên tắt">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="inputPassword4">MST/CMND</label>
+                    <input type="text" class="form-control" asp-for="MaSoThue" placeholder="MST / CMND">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-9">
+                    <label for="inputEmail4">Tên khách</label>
+                    <input type="text" class="form-control" asp-for="TenFull" placeholder="Tên khách">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="inputPassword4">Điện thoại</label>
+                    <input type="text" class="form-control" asp-for="DienThoai" placeholder="Tên tắt">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-9">
+                    <label for="inputEmail4">Địa chỉ</label>
+                    <input type="text" class="form-control" asp-for="DiaChi" placeholder="Địa chỉ">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="inputPassword4">FAX</label>
+                    <input type="text" class="form-control" asp-for="Fax" placeholder="FAX">
+                </div>
+            </div>
+            <div class="form-row">
+                <label for="inputState">Loại khách  || 0-MB lâu dài, 1-MB theo từng PA, 2-MB theo ủy thác, 3-Khách lập bảng kê</label>
+                <label for="inputZip" style="margin-left:230px">Email</label>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <select asp-for="LoaiKhach" class="form-control">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3" style="margin-left:657px">
+                    <input type="text" class="form-control" asp-for="Email">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="inputEmail4">Tài khoản</label>
+                    <input type="text" class="form-control" asp-for="TaiKhoan" placeholder="Tài khoản">
+                </div>
+                <div class="form-group col-md-9">
+                    <label for="inputPassword4">Ngân hàng</label>
+                    <input type="text" class="form-control" asp-for="NganHang" placeholder="Ngân hàng">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="inputEmail4">Giấy phép</label>
+                    <input type="text" class="form-control" asp-for="GiayPhep" placeholder="Giấy phép">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4">Ngày cấp</label>
+                    <input type="date" class="form-control" asp-for="NgayCap" placeholder="ngày cấp">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="inputPassword4">Tỉnh / TP</label>
+                    <input type="text" class="form-control" asp-for="MaKhuvuc" placeholder="Tỉnh / TP">
+                </div>
+            </div>
+            <div>
+                <label>Ghi chú</label>
+                <textarea class="form-control" asp-for="GhiChu"></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Quốc gia</label>
+                    <select asp-for="TenQg" class="form-control">
+                        @{
+                            foreach (var listqg in ViewBag.list_qg)
+                            {
+                                <option value="@listqg.Name">@listqg.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Tòa kinh tế</label>
+                    <input type="text" class="form-control" asp-for="ToaKinhTe" placeholder="Tòa kinh tế">
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Bốc xếp</label>
+                    <input type="text" class="form-control" asp-for="Bocxep" placeholder="Bốc xếp">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Vận chuyển</label>
+                    <input type="text" class="form-control" asp-for="Vanchuyen" placeholder="Vận chuyển">
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Diện tích(m2)</label>
+                    <input type="text" class="form-control" asp-for="Dientich" placeholder="Diện tích">
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Sản lượng(kg)</label>
+                    <input type="text" class="form-control" asp-for="Sanluong" placeholder="Sản lượng">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    @{
+                        if (Model.CheckItem == true)
+                        {
+                            <input class="form-check-input" type="checkbox" checked>
+                            <label class="form-check-label">
+                                Kiểm tra định mức HH chưa giao
+                            </label>
+                        }
+                        else
+                        {
+                            <input class="form-check-input" type="checkbox">
+                            <label class="form-check-label">
+                                Kiểm tra định mức HH chưa giao
+                            </label>
+                        }
+
+                    }
+
+                </div>
+            </div>
+            <div class="form-row">
+                <label>Giao dịch || 0-Chờ duyệt, 1- Đang giao dịch, 2-Ngừng giao dịch</label>
+                <label style="margin-left:230px">Giao dịch</label>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+
+                    <select asp-for="GiaoDich" class="form-control">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                </div>
+                <div class="custom-control custom-checkbox" style="margin-left:450px">
+                    @{
+                        if (Model.GiaoDichMua == true)
+                        {
+                            <input type="checkbox" id="customRadio1" name="customRadio" class="custom-control-input" checked>
+                            <label class="custom-control-label" for="customRadio1">Thanh toán mua</label>
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="customRadio1" name="customRadio" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio1">Thanh toán mua</label>
+                        }
+                    }
+                </div>
+                <div class="custom-control custom-checkbox">
+                    @{
+                        if (Model.GiaoDichBan == true)
+                        {
+                            <input type="checkbox" id="customRadio2" name="customRadio" class="custom-control-input" checked>
+                            <label class="custom-control-label" for="customRadio2">Thanh toán bán</label>
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="customRadio2" name="customRadio" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio2">Thanh toán bán</label>
+                        }
+                    }
+                </div>
+            </div>
+            @{
+                if (Model.GiaoDichMua == true && Model.ThanhToanMua == true && Model.GiaoDichBan == false && Model.ThanhToanBan == false)
+                {
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                                Ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:53px">
+                            <input class="form-check-input" type="radio" name="2" id="exampleRadios2" value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:5px">
+                            <input class="form-check-input " type="radio" name="2" id="exampleRadios2" value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                }
+                else if (Model.GiaoDichMua == false && Model.ThanhToanMua == false && Model.GiaoDichBan == true && Model.ThanhToanBan == true)
+                {
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:53px">
+                            <input class="form-check-input" type="radio" name="2" id="exampleRadios2" value="option2" checked>
+                            <label class="form-check-label" for="exampleRadios2">
+                                Ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:5px">
+                            <input class="form-check-input " type="radio" name="2" id="exampleRadios2" value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                }
+                else if (Model.GiaoDichMua == true && Model.ThanhToanMua == false && Model.GiaoDichBan == false && Model.ThanhToanBan == false)
+                {
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:53px">
+                            <input class="form-check-input" type="radio" name="2" id="exampleRadios2" value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:5px">
+                            <input class="form-check-input " type="radio" name="2" id="exampleRadios2" value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                }
+                else if (Model.GiaoDichMua == false && Model.ThanhToanMua == false && Model.GiaoDichBan == true && Model.ThanhToanBan == false)
+                {
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:53px">
+                            <input class="form-check-input" type="radio" name="2" id="exampleRadios2" value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:5px">
+                            <input class="form-check-input " type="radio" name="2" id="exampleRadios2" value="option2" checked>
+                            <label class="form-check-label" for="exampleRadios2">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                }
+                else if (Model.GiaoDichMua == true && Model.ThanhToanMua == true && Model.GiaoDichBan == true && Model.ThanhToanBan == true)
+                {
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                                Ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:53px">
+                            <input class="form-check-input" type="radio" name="2" id="exampleRadios2" value="option2" checked>
+                            <label class="form-check-label" for="exampleRadios2">
+                                Ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:5px">
+                            <input class="form-check-input " type="radio" name="2" id="exampleRadios2" value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                }
+                else if (Model.GiaoDichMua == true && Model.ThanhToanMua == true && Model.GiaoDichBan == true && Model.ThanhToanBan == false)
+                {
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                                Ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:53px">
+                            <input class="form-check-input" type="radio" name="2" id="exampleRadios2" value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:5px">
+                            <input class="form-check-input " type="radio" name="2" id="exampleRadios2" value="option2" checked>
+                            <label class="form-check-label" for="exampleRadios2">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                }
+                else if (Model.GiaoDichMua == true && Model.ThanhToanMua == false && Model.GiaoDichBan == true && Model.ThanhToanBan == false)
+                {
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:53px">
+                            <input class="form-check-input" type="radio" name="2" id="exampleRadios2" value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:5px">
+                            <input class="form-check-input " type="radio" name="2" id="exampleRadios2" value="option2" checked>
+                            <label class="form-check-label" for="exampleRadios2">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                }
+                else if (Model.GiaoDichMua == true && Model.ThanhToanMua == false && Model.GiaoDichBan == true && Model.ThanhToanBan == true)
+                {
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:53px">
+                            <input class="form-check-input" type="radio" name="2" id="exampleRadios2" value="option2" checked>
+                            <label class="form-check-label" for="exampleRadios2">
+                                Ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:5px">
+                            <input class="form-check-input " type="radio" name="2" id="exampleRadios2" value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                }
+                else if (Model.GiaoDichMua == true && Model.ThanhToanMua == true)
+                {
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                                Ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:53px">
+                            <input class="form-check-input" type="radio" name="2" id="exampleRadios2" value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:5px">
+                            <input class="form-check-input " type="radio" name="2" id="exampleRadios2" value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                }
+                else if (Model.GiaoDichMua == true && Model.ThanhToanMua == false)
+                {
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1" >
+                            <label class="form-check-label" for="exampleRadios1">
+                                Ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:53px">
+                            <input class="form-check-input" type="radio" name="2" id="exampleRadios2" value="option2" >
+                            <label class="form-check-label" for="exampleRadios2">
+                                Ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:5px">
+                            <input class="form-check-input " type="radio" name="2" id="exampleRadios2" value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                }
+                else if (Model.GiaoDichBan == true && Model.ThanhToanBan == true)
+                {
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:53px">
+                            <input class="form-check-input" type="radio" name="2" id="exampleRadios2" value="option2" checked>
+                            <label class="form-check-label" for="exampleRadios2">
+                                Ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:5px">
+                            <input class="form-check-input " type="radio" name="2" id="exampleRadios2" value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                }
+                else if (Model.GiaoDichBan == true && Model.ThanhToanBan == false)
+                {
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:53px">
+                            <input class="form-check-input" type="radio" name="2" id="exampleRadios2" value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin-left:635px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="1" id="exampleRadios1" value="option1">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left:5px">
+                            <input class="form-check-input " type="radio" name="2" id="exampleRadios2" value="option2" checked>
+                            <label class="form-check-label" for="exampleRadios2">
+                                Không ứng tiền
+                            </label>
+                        </div>
+                    </div>
+                }
+            }
+            @*<div class="form-group row" style="margin-left:635px">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+                <label class="form-check-label" for="exampleRadios1">
+                    Ứng tiền
+                </label>
+            </div>
+            <div class="form-check form-check-inline" style="margin-left:53px">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                <label class="form-check-label" for="exampleRadios2">
+                    Ứng tiền
+                </label>
+            </div>
+        </div>
+        <div class="form-group row" style="margin-left:635px">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+                <label class="form-check-label" for="exampleRadios1">
+                    Không ứng tiền
+                </label>
+            </div>
+            <div class="form-check form-check-inline" style="margin-left:5px">
+                <input class="form-check-input " type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                <label class="form-check-label" for="exampleRadios2">
+                    Không ứng tiền
+                </label>
+            </div>
+        </div>*@
+        </form>
+    </div>
+
+    <table class="table table-bordered" border="1" style="width:70%; float:left;background-color:white;margin-top:5px;border-color:black">
+        <thead>
+            <tr>
+                <th scope="col" style="border-color:black">Nhóm hàng</th>
+                <th scope="col" style="border-color:black">ĐM HH chưa giao(KGS)</th>
+                <th scope="col" style="border-color:black">Đơn vị</th>
+                <th scope="col" style="border-color:black">Người GD</th>
+                <th scope="col" style="border-color:black">QH với DN</th>
+                <th scope="col" style="border-color:black">Ghi chú</th>
+                <th scope="col" style="border-color:black">Người tạo</th>
+                <th scope="col" style="border-color:black">Ngày tạo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach(var item in ViewBag.customerNorm)
+                {
+                        <tr>
+                            <td style="border-color:black">@item.Nhomhang</td>
+                            <td style="border-color:black">@item.ValueNorm</td>
+                            <td style="border-color:black">@item.Macn</td>
+                            <td style="border-color:black">@item.NguoiGd</td>
+                            <td style="border-color:black">@item.ChucvuNguoigd</td>
+                            <td style="border-color:black">@item.Ghichu</td>
+                            <td style="border-color:black">@item.UserCreate</td>
+                            <td style="border-color:black">@item.DateCreate</td>
+                        </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <table class="table table-bordered" border="1px" style="width:28%; float:left;background-color:white;margin-left:20px;margin-top:5px; border-color:black">
+        <thead>
+            <tr>
+                <th scope="col">Nhóm hàng</th>
+                <th scope="col">Tổng SL</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th></th>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-bordered" style="width:20%; float:left;background-color:white">
+        <thead>
+            <tr>
+                <th>Người đại diện</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var a in ViewBag.signer)
+                {
+                    <tr>
+                        <a asp-route-id="@a.Id"><th>@a.Nguoiky</th></a>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+    <form style="float:right;width:80%">
+        <div class="form-row">
+            <div class="form-group col-md-4" style="margin-left:15px">
+                <label for="inputEmail4">Người đại diện</label>
+                <input type="text" class="form-control" id="inputEmail4" placeholder="Mã khách">
+            </div>
+            <div class="form-group col-md-4" style="float:right">
+                <label for="inputPassword4">Chức vụ</label>
+                <input type="text" class="form-control" id="inputPassword4" placeholder="Tên tắt">
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label for="inputEmail4">Ủy quyền</label>
+            <input type="text" class="form-control" id="inputEmail4" placeholder="Mã khách">
+        </div>
+    </form>
+</div>
+
+
+
+
