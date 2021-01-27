@@ -48,18 +48,23 @@ namespace pmkd.Controllers
         [HttpPost]
         public IActionResult themnhomhang(Nhom_hang_hoa nhh)
         {
-            if (_context.Nhom_hang_hoas.Any(x => x.Manhom == nhh.Manhom))
+            if (ModelState.IsValid)
             {
-                TempData["alertMessage1"] = "Mã nhóm hàng bị trùng thành công";
-                return RedirectToAction("nhomhanghoa");
-            }    
+                if (_context.Nhom_hang_hoas.Any(x => x.Manhom == nhh.Manhom))
+                {
+                    TempData["alertMessage1"] = "Mã nhóm hàng bị trùng thành công";
+                    return RedirectToAction("nhomhanghoa");
+                }
+                else
+                {
+                    _context.Nhom_hang_hoas.Add(nhh);
+                    _context.SaveChanges();
+                    TempData["alertMessage"] = "Thêm nhóm hàng thành công";
+                    return RedirectToAction("nhomhanghoa");
+                }
+            }
             else
-            {
-                _context.Nhom_hang_hoas.Add(nhh);
-                _context.SaveChanges();
-                TempData["alertMessage"] = "Thêm nhóm hàng thành công";
-                return RedirectToAction("nhomhanghoa");
-            }    
+                return View("themnhomhang");
 
         }
         //xóa nhóm hàng hóa
@@ -196,7 +201,6 @@ namespace pmkd.Controllers
         }
         public IActionResult khachhang(string id)
         {
-            ViewBag.listkh = _context.KhachHangs.ToList();
             ViewBag.khuvuc = (from a in _context.Khuvucs
                               join b in _context.KhachHangs
                               on a.MaKhuvuc equals b.MaKhuvuc
@@ -220,6 +224,39 @@ namespace pmkd.Controllers
             ViewBag.list_qg = _context.Quocgia.ToList();
             var ct_kh = _context.KhachHangs.Where(a => a.Idkhach == id).FirstOrDefault();
             return View(ct_kh);
+        }
+        public IActionResult themkhachhang()
+        {
+            ViewBag.khuvuc = _context.Khuvucs.ToList();
+            ViewBag.list_qg = _context.Quocgia.ToList();
+            return View("themkhachhang");
+        }
+        [HttpPost]
+        public IActionResult themkhachhang(KhachHang kh)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_context.KhachHangs.Any(a => a.Idkhach == kh.Idkhach) || _context.KhachHangs.Any(a => a.MaKhach == kh.MaKhach))
+                {
+                    TempData["alertMessage1"] = "Mã khách hàng hoặc ID khách hàng bị trùng";
+                    return RedirectToAction("khuvuc");
+                }
+                else
+                {
+                    _context.KhachHangs.Add(kh);
+                    _context.SaveChanges();
+
+                    TempData["alertMessage"] = "thêm khách hàng thành công";
+                    return RedirectToAction("khuvuc");
+                }
+            }
+            else
+            {
+                ViewBag.khuvuc = _context.Khuvucs.ToList();
+                ViewBag.list_qg = _context.Quocgia.ToList();
+                return View("themkhachhang");
+            }
+
         }
     }
 }

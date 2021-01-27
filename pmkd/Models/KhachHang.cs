@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -7,11 +8,17 @@ namespace pmkd.Models
 {
     public partial class KhachHang
     {
+        [Required(ErrorMessage ="Nhập ID khách hàng")]
         public string Idkhach { get; set; }
+        [Required(ErrorMessage = "Nhập mã khách hàng")]
         public string MaKhach { get; set; }
+        [Required(ErrorMessage = "Nhập tên khách hàng")]
         public string TenKhach { get; set; }
+        [Required(ErrorMessage = "Nhập tên đầy đủ khách hàng")]
         public string TenFull { get; set; }
+        [EmailAddress(ErrorMessage = "Vui lòng nhập đúng địa chỉ email")][Required(ErrorMessage = "Nhập email")]
         public string Email { get; set; }
+        [Required(ErrorMessage ="Nhập địa chỉ khách hàng")]
         public string DiaChi { get; set; }
         public string DienThoai { get; set; }
         public string Fax { get; set; }
