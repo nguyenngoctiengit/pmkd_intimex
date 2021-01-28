@@ -258,6 +258,47 @@ namespace pmkd.Controllers
             }
 
         }
+        public async Task<IActionResult> AddOrEdit(int id = 0)
+        {
+            ViewBag.kh = _context.KhachHangs.ToList();
+            if (id == 0)
+                return View(new Signer());
+            else
+            {
+                
+                var signer = await _context.Signers.FindAsync(id);
+                if (signer == null)
+                {
+                    return NotFound();
+                }
+                return View(signer);
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddOrEdit(int id, [Bind("Id,MaKhach,Nguoiky,Chucvu,Uyquyen")] Signer signer)
+        {
+            if (ModelState.IsValid)
+            {
+                //Insert
+                if (id == 0)
+                {
+                    signer.Visible = true;
+                    _context.Add(signer);
+                    await _context.SaveChangesAsync();
+
+                }
+                //Update
+                else
+                {
+                    _context.Update(signer);
+                    await _context.SaveChangesAsync();
+                    return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "khuvuc", _context.Signers.ToList()) });
+                }
+            }
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", signer) });
+        }
+
     }
 }
 
