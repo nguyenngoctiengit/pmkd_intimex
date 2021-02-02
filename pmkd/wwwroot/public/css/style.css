@@ -46,8 +46,9 @@ File: scss
     color: rgba(255, 255, 255, 0.8); }
   .skin-default-dark .topbar .top-navbar .navbar-header .navbar-brand .light-logo {
     display: none; }
-  .skin-default-dark .left-sidebar {
-    background: #2b2f3a; }
+    .skin-default-dark .left-sidebar {
+        background: #0037ff;
+    }
     .skin-default-dark .left-sidebar .user-pro-body a.link {
       color: #8991a9; }
     .skin-default-dark .left-sidebar .nav-text-box {

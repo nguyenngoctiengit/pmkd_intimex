@@ -21,7 +21,7 @@
     <link href="~/public/morrisjs/morris.css" rel="stylesheet">
     <!--c3 plugins CSS -->
     <link href="~/public/c3-master/c3.min.css" rel="stylesheet">
-    <link href="~/public/css/style.css" rel="stylesheet">
+    <link href="~/public/css/style.css" rel="stylesheet" asp-append-version="true">
     <link href="~/public/css/pages/icon-page.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="~/public/css/style.css" rel="stylesheet">
@@ -36,37 +36,15 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <!--form-->
-    <!--===============================================================================================-->
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/public/form/vendor/bootstrap/css/bootstrap.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/public/form/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/public/form/fonts/iconic/css/material-design-iconic-font.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/public/form/vendor/animate/animate.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/public/form/vendor/css-hamburgers/hamburgers.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/public/form/vendor/animsition/css/animsition.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/public/form/vendor/select2/select2.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/public/form/vendor/daterangepicker/daterangepicker.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/public/form/vendor/noui/nouislider.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/public/form/css/util.css">
-    <link rel="stylesheet" type="text/css" href="~/public/form/css/main.css">
-    <!--==============================================================-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-    <!-->
+    <!-->-->
     <style>
         .examp1:hover {
-            color: red;
+            color: black;
         }
     </style>
-    <body class="skin-default-dark fixed-layout">
+    <!--<body class="skin-default-dark fixed-layout">
         <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
@@ -130,7 +108,7 @@
                             </div>
                         }
                     }
-                    <a href="/danhmuc" class="nav-link">
+                    <a href="/danhmuc"  class="nav-link examp1">
                         <div class="media align-items-center">
                             <span class="avatar avatar-sm rounded-circle">
 
@@ -211,8 +189,8 @@
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-        <aside class="left-sidebar">
-            <div class="d-flex no-block nav-text-box align-items-center">
+        <aside class="left-sidebar" style=" background-color: #0037ff">
+            <div class="d-flex no-block nav-text-box align-items-center" style=" background-color: #0037ff">
                 <span><img src="~/public/images/intimex.png" alt="elegant admin template"></span>
                 <a class="waves-effect waves-dark  ml-auto hidden-sm-down" href="javascript:void(0)">
                     <i class="ti-menu"></i>
@@ -222,7 +200,7 @@
                 </a>
             </div>
             <!-- Sidebar scroll-->
-            <div class="scroll-sidebar">
+            <div class="scroll-sidebar" style="color:white">
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
@@ -369,14 +347,6 @@
             <!-- Chart JS -->
             <script src="~/public/js/dashboard1.js"></script>
 
-
-            <!--========================================form=======================================================-->
-            <script src="~/public/form/vendor/jquery/jquery-3.2.1.min.js"></script>
-            <!--===============================================================================================-->
-            <script src="~/public/form/vendor/animsition/js/animsition.min.js"></script>
-            <!--===============================================================================================-->
-            <script src="~/public/form/vendor/bootstrap/js/popper.js"></script>
-            <script src="~/public/form/vendor/bootstrap/js/bootstrap.min.js"></script>
             <script src="~/js/site.js"></script>
             <!--===============================================================================================-->
             <script src="~/public/form/vendor/select2/select2.min.js"></script>
@@ -402,12 +372,6 @@
                 })
             </script>
             <!--===============================================================================================-->
-            <script src="~/public/form/vendor/daterangepicker/moment.min.js"></script>
-            <script src="~/public/form/vendor/daterangepicker/daterangepicker.js"></script>
-            <!--===============================================================================================-->
-            <script src="~/public/form/vendor/countdowntime/countdowntime.js"></script>
-            <!--===============================================================================================-->
-            <script src="~/public/form/vendor/noui/nouislider.min.js"></script>
             <script>
                 var filterBar = document.getElementById('filter-bar');
 
@@ -443,9 +407,7 @@
 
                 gtag('config', 'UA-23581568-13');
             </script>
-
-
-
-            </body>
+        </div>
+    </div>
 
 </html>

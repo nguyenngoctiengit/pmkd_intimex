@@ -587,16 +587,48 @@
                     </div>
                 }
             }
-            <div class="form-row"> 
+            <div class="form-row">
                 <a asp-action="dinhmuc" asp-controller="danhmuc" asp-route-id="@Model.Idkhach">
-                <button type="button" class="btn btn-primary">Định mức</button>
+                    <button type="button" class="btn btn-primary">Định mức</button>
                 </a>
                 <a asp-action="nguoidaidien" asp-controller="danhmuc" asp-route-id="@Model.Idkhach">
-                <button type="button" class="btn btn-primary" style="margin-left:30px">Người đại diện</button>
+                    <button type="button" class="btn btn-primary" style="margin-left:30px">Người đại diện</button>
                 </a>
             </div>
         </form>
     </div>
+    <table class="table table-bordered" border="1" style="border-color:black">
+        <thead>
+            <tr>
+                <th border="1" style="border-color:black">Người đại diện</th>
+                <th border="1" style="border-color:black">Chức vụ</th>
+                <th border="1" style="border-color:black">Ủy quyền</th>
+                <th border="1" style="border-color:black">Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var a in ViewBag.signer)
+                {
+                    <tr>
+                        <td border="1" style="border-color:black">@a.Nguoiky</td>
+                        <td border="1" style="border-color:black">@a.Chucvu</td>
+                        <td border="1" style="border-color:black">@a.Uyquyen</td>
+                        <td border="1" style="border-color:black">
+                            <a asp-action="updateSigner" asp-controller="danhmuc" asp-route-id="@a.Id">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+    <div>
+        <a asp-action="themnguoidaidien" asp-controller="danhmuc" asp-route-id="@Model.Idkhach"><button type="button" class="btn btn-primary">Thêm người đại diện</button></a>
+    </div>
+
 </div>
 
 

@@ -587,18 +587,64 @@
                     </div>
                 }
             }
-            <div class="form-row"> 
+            <div class="form-row">
                 <a asp-action="dinhmuc" asp-controller="danhmuc" asp-route-id="@Model.Idkhach">
-                <button type="button" class="btn btn-primary">Định mức</button>
+                    <button type="button" class="btn btn-primary">Định mức</button>
                 </a>
                 <a asp-action="nguoidaidien" asp-controller="danhmuc" asp-route-id="@Model.Idkhach">
-                <button type="button" class="btn btn-primary" style="margin-left:30px">Người đại diện</button>
+                    <button type="button" class="btn btn-primary" style="margin-left:30px">Người đại diện</button>
                 </a>
             </div>
         </form>
     </div>
+
+    <table class="table table-bordered" border="1" style="width:70%; float:left;background-color:white;margin-top:5px;border-color:black">
+        <thead>
+            <tr>
+                <th scope="col" style="border-color:black">Nhóm hàng</th>
+                <th scope="col" style="border-color:black">ĐM HH chưa giao(KGS)</th>
+                <th scope="col" style="border-color:black">Đơn vị</th>
+                <th scope="col" style="border-color:black">Người GD</th>
+                <th scope="col" style="border-color:black">QH với DN</th>
+                <th scope="col" style="border-color:black">Ghi chú</th>
+                <th scope="col" style="border-color:black">Người tạo</th>
+                <th scope="col" style="border-color:black">Ngày tạo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in ViewBag.customerNorm)
+                {
+                    <tr>
+                        <td style="border-color:black">@item.Nhomhang</td>
+                        <td style="border-color:black">@item.ValueNorm.ToString("N")</td>
+                        <td style="border-color:black">@item.Macn</td>
+                        <td style="border-color:black">@item.NguoiGd</td>
+                        <td style="border-color:black">@item.ChucvuNguoigd</td>
+                        <td style="border-color:black">@item.Ghichu</td>
+                        <td style="border-color:black">@item.UserCreate</td>
+                        <td style="border-color:black">@item.DateCreate</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <table class="table table-bordered" border="1px" style="width:28%; float:left;background-color:white;margin-left:20px;margin-top:5px; border-color:black">
+        <thead>
+            <tr>
+                <th scope="col">Nhóm hàng</th>
+                <th scope="col">Tổng SL</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th></th>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <a asp-action="themdinhmuc" asp-controller="danhmuc" asp-route-id="@Model.Idkhach"><button type="button" class="btn btn-primary">Thêm định mức khách hàng</button></a>
+    </div>
 </div>
-
-
-
 

@@ -13800,9 +13800,8 @@ namespace pmkd.Models
             modelBuilder.Entity<Signer>(entity =>
             {
                 entity.HasKey(e => new { e.Stt, e.MaKhach });
-
+                entity.Property(e => e.Stt).ValueGeneratedNever();
                 entity.ToTable("signer");
-
                 entity.Property(e => e.MaKhach)
                     .HasMaxLength(50)
                     .HasColumnName("ma_khach");

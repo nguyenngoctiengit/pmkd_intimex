@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Data;
 using Microsoft.AspNetCore.Http;
 using ServiceStack;
+using RouteAttribute = ServiceStack.RouteAttribute;
+using System.Web;
 
 namespace pmkd.Controllers
 {
@@ -73,17 +75,17 @@ namespace pmkd.Controllers
             var flag = false;
             var list_product = _context.Hanghoas.ToList();
             var list_nhomhang = _context.Nhom_hang_hoas.Where(a => a.Manhom == id).FirstOrDefault();
-            foreach(var a in list_product)
+            foreach (var a in list_product)
             {
                 if (a.MaNhom == list_nhomhang.Manhom)
                 {
                     flag = true;
-                }    
+                }
                 if (flag == true)
                 {
                     TempData["alertMessage1"] = "Không được xóa, nhóm hàng này đã chứa hàng hóa";
                     return RedirectToAction("nhomhanghoa");
-                }    
+                }
                 else
                 {
                     _context.Nhom_hang_hoas.Remove(list_nhomhang);
@@ -91,7 +93,7 @@ namespace pmkd.Controllers
                     TempData["alertMessage"] = "Xóa nhóm hàng thành công";
                     return RedirectToAction("nhomhanghoa");
                 }
-                
+
             }
             return RedirectToAction("nhomhanghoa");
         }
@@ -148,7 +150,7 @@ namespace pmkd.Controllers
                 TempData["alertMessage"] = "Thêm hàng hóa thành công";
                 return RedirectToAction("nhomhanghoa");
             }
-            
+
         }
         //Chi tiết hàng hóa
         public IActionResult detailhanghoa(string id)
@@ -192,15 +194,16 @@ namespace pmkd.Controllers
         public IActionResult khuvuc()
         {
             ViewBag.quocgia = (from a in _context.Quocgia
-                             join b in _context.KhachHangs
-                                on a.Name equals b.TenQg where a.Name != "VIETNAM" select a).Distinct();
-            ViewBag.khuvuc = (from a in _context.Khuvucs 
-                              join b in _context.KhachHangs 
+                               join b in _context.KhachHangs
+                                  on a.Name equals b.TenQg where a.Name != "VIETNAM" select a).Distinct();
+            ViewBag.khuvuc = (from a in _context.Khuvucs
+                              join b in _context.KhachHangs
                               on a.MaKhuvuc equals b.MaKhuvuc where b.TenQg == "VIETNAM" select a).Distinct();
             return View("khuvuc");
         }
         public IActionResult khachhang(string id)
         {
+            ViewBag.gd = (from a in _context.KhachHangs where a.Idkhach == id select a.GiaoDich).FirstOrDefault();
             ViewBag.khuvuc = (from a in _context.Khuvucs
                               join b in _context.KhachHangs
                               on a.MaKhuvuc equals b.MaKhuvuc
@@ -211,14 +214,18 @@ namespace pmkd.Controllers
                                   on a.Name equals b.TenQg
                                where b.TenQg != "VIETNAM"
                                select a).Distinct();
+            ViewBag.param1 = id;
             ViewBag.nullquocgia = _context.KhachHangs.Where(a => a.TenQg == "").ToList();
             ViewBag.nulltinhthanh = _context.KhachHangs.Where(a => a.TenQg == "VIETNAM" && a.MaKhuvuc == "").ToList();
+
             ViewBag.item = (from a in _context.KhachHangs where a.MaKhuvuc == id select a).Distinct();
-            ViewBag.item1 = (from b in _context.KhachHangs where b.TenQg == id select b).Distinct(); 
+            ViewBag.item1 = (from b in _context.KhachHangs where b.TenQg == id select b).Distinct();
             return View("khachhang");
         }
+
         public IActionResult detailKH(string id)
         {
+
             ViewBag.signer = from kh in _context.KhachHangs join sn in _context.Signers on kh.MaKhach equals sn.MaKhach where kh.Idkhach == id select sn;
             ViewBag.customerNorm = from a in _context.KhachHangs join b in _context.CustomerNorms on a.MaKhach equals b.Makhach where a.Idkhach == id select b;
             ViewBag.list_qg = _context.Quocgia.ToList();
@@ -243,6 +250,7 @@ namespace pmkd.Controllers
                 }
                 else
                 {
+
                     _context.KhachHangs.Add(kh);
                     _context.SaveChanges();
 
@@ -258,47 +266,144 @@ namespace pmkd.Controllers
             }
 
         }
-        public async Task<IActionResult> AddOrEdit(int id = 0)
+        public IActionResult deleteKH(string id)
         {
-            ViewBag.kh = _context.KhachHangs.ToList();
-            if (id == 0)
-                return View(new Signer());
-            else
-            {
-                
-                var signer = await _context.Signers.FindAsync(id);
-                if (signer == null)
-                {
-                    return NotFound();
-                }
-                return View(signer);
-            }
+            var kh = _context.KhachHangs.Where(a => a.Idkhach == id).FirstOrDefault();
+            _context.KhachHangs.Remove(kh);
+            _context.SaveChanges();
+            TempData["alertMessage"] = "Xóa khách hàng thành công";
+            return RedirectToAction("khuvuc");
+        }
+        public IActionResult updateKH(string id)
+        {
+            ViewBag.khuvuc = _context.Khuvucs.ToList();
+            ViewBag.list_qg = _context.Quocgia.ToList();
+            return View(_context.KhachHangs.Where(a => a.Idkhach == id).FirstOrDefault());
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id, [Bind("Id,MaKhach,Nguoiky,Chucvu,Uyquyen")] Signer signer)
+        public IActionResult updateKH(KhachHang kh)
+        {
+            kh.Visible = true;
+            if (ModelState.IsValid) {
+                _context.Update(kh);
+                _context.SaveChanges();
+                TempData["alertMessage"] = "update thành công";
+                return RedirectToAction("khuvuc");
+            }
+            else
+            {
+                ViewBag.khuvuc = _context.Khuvucs.ToList();
+                ViewBag.list_qg = _context.Quocgia.ToList();
+                return View("updateKH");
+            }
+        }
+
+        public IActionResult themnguoidaidien(string id)
+        {
+            ViewBag.makhach = (from a in _context.KhachHangs where a.Idkhach == id select a.MaKhach).FirstOrDefault();
+            ViewBag.id = (from a in _context.KhachHangs where a.Idkhach == id select a.Idkhach).FirstOrDefault();
+            return View("themnguoidaidien");
+        }
+        [HttpPost]
+        public IActionResult themnguoidaidien(Signer signer, string id)
         {
             if (ModelState.IsValid)
             {
-                //Insert
-                if (id == 0)
+                if (_context.Signers.Any(a => a.Id == signer.Id))
                 {
-                    signer.Visible = true;
-                    _context.Add(signer);
-                    await _context.SaveChangesAsync();
-
+                    TempData["alertMessage1"] = "Mã người đại diện bị trùng";
+                    return RedirectToAction("khuvuc");
                 }
-                //Update
                 else
                 {
-                    _context.Update(signer);
-                    await _context.SaveChangesAsync();
-                    return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "khuvuc", _context.Signers.ToList()) });
-                }
-            }
-            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", signer) });
-        }
+                    signer.Id = 0;
+                    int stt = (from a in _context.KhachHangs
+                               join b in _context.Signers on a.MaKhach equals b.MaKhach
+                               where a.MaKhach == id
+                               select a).Count();
 
+                    signer.Stt = stt;
+                    _context.Signers.Add(signer);
+                    _context.SaveChanges();
+                    TempData["alertMessage"] = "thêm người đại diện thành công";
+                    return RedirectToAction("khuvuc");
+                }
+            }   
+            else
+            {
+                ViewBag.makhach = (from a in _context.KhachHangs where a.Idkhach == id select a.MaKhach).FirstOrDefault();
+                return View("themnguoidaidien");
+            }                
+            
+
+        }
+        public IActionResult updateSigner(int id)
+        {
+
+            return View(_context.Signers.Where(a => a.Id == id).FirstOrDefault());
+        }
+        [HttpPost]
+        public IActionResult updateSigner(Signer sn)
+        {
+            if (ModelState.IsValid)
+            {
+                sn.Id = 0;
+                _context.Update(sn).Property(a => a.Id).IsModified = false;
+                _context.SaveChanges();
+                TempData["alertMessage"] = "cập nhật người đại diện thành công";
+                return RedirectToAction("khuvuc");
+            }
+            else
+                return View("updateSigner");
+        }
+        public IActionResult dinhmuc(string id)
+        {
+    
+            ViewBag.customerNorm = from a in _context.KhachHangs join b in _context.CustomerNorms on a.MaKhach equals b.Makhach where a.Idkhach == id select b;
+            ViewBag.list_qg = _context.Quocgia.ToList();
+            var ct_kh = _context.KhachHangs.Where(a => a.Idkhach == id).FirstOrDefault();
+            return View(ct_kh);
+        }
+        public IActionResult nguoidaidien(string id)
+        {
+            ViewBag.signer = from kh in _context.KhachHangs join sn in _context.Signers on kh.MaKhach equals sn.MaKhach where kh.Idkhach == id select sn;
+            ViewBag.list_qg = _context.Quocgia.ToList();
+            var ct_kh = _context.KhachHangs.Where(a => a.Idkhach == id).FirstOrDefault();
+            return View(ct_kh);
+        }
+        public IActionResult themdinhmuc(string id)
+        {
+            ViewBag.makhach = (from a in _context.KhachHangs where a.Idkhach == id select a.MaKhach).FirstOrDefault();
+            ViewBag.id = (from a in _context.KhachHangs where a.Idkhach == id select a.Idkhach).FirstOrDefault();
+            ViewBag.branch = _context.Branches.ToList();
+            ViewBag.nhomhang = _context.Nhom_hang_hoas.ToList();
+            return View("themdinhmuc");
+        }
+        [HttpPost]
+        public IActionResult themdinhmuc(CustomerNorm customerNorm,string id)
+        {
+            if (ModelState.IsValid)
+            {
+                customerNorm.Makhach = (from a in _context.KhachHangs where a.Idkhach == id select a.MaKhach).FirstOrDefault();
+                customerNorm.UserCreate = HttpContext.Session.GetString("userId");
+                customerNorm.DateCreate = DateTime.Now;
+                customerNorm.GdMua = false;
+                customerNorm.GdBan = false;
+                _context.Entry(customerNorm).State = EntityState.Added;
+                _context.CustomerNorms.AddRange(customerNorm);
+                _context.SaveChanges();
+                TempData["alertMessage"] = "thêm người đại diện thành công";
+                return RedirectToAction("khuvuc");
+            }
+            else
+            {
+                ViewBag.makhach = (from a in _context.KhachHangs where a.Idkhach == id select a.MaKhach).FirstOrDefault();
+                ViewBag.id = (from a in _context.KhachHangs where a.Idkhach == id select a.Idkhach).FirstOrDefault();
+                ViewBag.branch = _context.Branches.ToList();
+                ViewBag.nhomhang = _context.Nhom_hang_hoas.ToList();
+                return View("themdinhmuc");
+            }
+        }
     }
 }
 

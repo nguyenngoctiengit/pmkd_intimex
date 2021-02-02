@@ -35,7 +35,7 @@
                                 foreach (var item in ViewBag.khuvuc)
                                 {
 
-                                    <option value="khachhang/@item.MaKhuvuc">@item.TenKhuvuc</option>
+                                    <option value="khachhang/id=@item.MaKhuvuc">@item.TenKhuvuc</option>
                                 }
                             }
                         </select>
@@ -47,7 +47,7 @@
                                 <option selected>-- Chọn một quốc gia --</option>
                                 foreach (var item in ViewBag.quocgia)
                                 {
-                                    <option value="khachhang/@item.Name"><a asp-action="khachhang" asp-controller="danhmuc" asp-route-id="@item.Name">@item.Name</a></option>
+                                    <option value="khachhang/id=@item.Name">@item.Name</option>
                                 }
                             }
                         </select>

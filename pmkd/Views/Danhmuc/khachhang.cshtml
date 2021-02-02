@@ -23,12 +23,18 @@
                     <div>
                         <select onchange="location = this.value">
                             @{
-                                <option selected>-- Chọn một khu vực --</option>
+                                <option >-- Chọn một khu vực --</option>
                                 <option value="">     </option>
                                 foreach (var item in ViewBag.khuvuc)
                                 {
-
-                                    <option value="@item.MaKhuvuc">@item.TenKhuvuc</option>
+                                    if (item.MaKhuvuc == ViewBag.param1)
+                                    { 
+                                    <option selected value="@item.MaKhuvuc">@item.TenKhuvuc</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.MaKhuvuc">@item.TenKhuvuc</option>
+                                    }
                                 }
                             }
                         </select>
@@ -38,17 +44,34 @@
                         <select name="cars" id="cars" onchange="location = this.value">
                             @{
 
-                                <option selected>-- Chọn một quốc gia --</option>
+                                <option >-- Chọn một quốc gia --</option>
                                 <option value="">     </option>
                                 foreach (var item in ViewBag.quocgia)
                                 {
+                                    if (item.Name == ViewBag.param1)
+                                    { 
 
-                                    <option value="@item.Name">@item.Name</option>
+                                    <option selected value="@item.Name">@item.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Name">@item.Name</option>
+                                    }
                                 }
                             }
                         </select>
-                    </div>                    
+                    </div>
                 </center>
+                <div class="container-contact100-form-btn">
+                    <a asp-action="themkhachhang" asp-controller="danhmuc">
+                        <button class="contact100-form-btn">
+                            <span>
+                                Thêm khách hàng
+                                <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -64,7 +87,9 @@
                             <th>ID khách hàng</th>
                             <th>Mã khách hàng</th>
                             <th>Tên khách hàng</th>
-                            <th>Thông tin || Edit</th>
+                            <th>Thông tin</th> 
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -80,52 +105,134 @@
                                             <i class="fa fa-info" aria-hidden="true"></i>
                                         </a>
                                     </td>
+                                    @{
+                                        if(item.GiaoDich != 1)
+                                        { 
+                                            <td>
+                                                <a asp-action="updateKH" asp-route-id="@item.Idkhach" asp-controller="danhmuc">
+                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                        }
+                                    }
+                                    @{
+                                        if (item.GiaoDich != 1)
+                                        {
+                                            <td>
+                                                <a asp-action="deleteKH" asp-route-id="@item.Idkhach" asp-controller="danhmuc">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                        }
+                                    }
+
                                 </tr>
                             }
 
                             foreach (var item in ViewBag.item1)
                             {
-                                <tr>
-                                    <td>@item.Idkhach</td>
-                                    <td>@item.MaKhach</td>
-                                    <td>@item.TenKhach</td>
+                    <tr>
+                        <td>@item.Idkhach</td>
+                        <td>@item.MaKhach</td>
+                        <td>@item.TenKhach</td>
+                        <td>
+                            <a asp-action="detailKH" asp-route-id="@item.Idkhach" asp-controller="danhmuc">
+                                <i class="fa fa-info" aria-hidden="true"></i>
+                            </a>
+                            @{
+                                if (item.GiaoDich != 1)
+                                {
+                                <td>
+                                    <a asp-action="updateKH" asp-route-id="@item.Idkhach" asp-controller="danhmuc">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            }
+                            }
+                            </td>
+                            @{
+                                if (item.GiaoDich != 1)
+                                {
                                     <td>
-                                        <a asp-action="detailKH" asp-route-id="@item.Idkhach" asp-controller="danhmuc">
-                                            <i class="fa fa-info" aria-hidden="true"></i>
+                                        <a asp-action="deleteKH" asp-route-id="@item.Idkhach" asp-controller="danhmuc">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
                                         </a>
                                     </td>
-                                </tr>
+                                }
+                            }
+                        </tr>
                             }
                             foreach (var item in ViewBag.nulltinhthanh)
                             {
-                                <tr>
-                                    <td>@item.Idkhach</td>
-                                    <td>@item.MaKhach</td>
-                                    <td>@item.TenKhach</td>
+                    <tr>
+                        <td>@item.Idkhach</td>
+                        <td>@item.MaKhach</td>
+                        <td>@item.TenKhach</td>
+                        <td>
+                            <a asp-action="detailKH" asp-route-id="@item.Idkhach" asp-controller="danhmuc">
+                                <i class="fa fa-info" aria-hidden="true"></i>
+                            </a>
+                            @{
+                                if (item.GiaoDich != 1)
+                                {
+                                <td>
+                                    <a asp-action="updateKH" asp-route-id="@item.Idkhach" asp-controller="danhmuc">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            }
+                            }
+                            </td>
+                            @{
+                                if (item.GiaoDich != 1)
+                                {
                                     <td>
-                                        <a asp-action="detailKH" asp-route-id="@item.Idkhach" asp-controller="danhmuc">
-                                            <i class="fa fa-info" aria-hidden="true"></i>
+                                        <a asp-action="deleteKH" asp-route-id="@item.Idkhach" asp-controller="danhmuc">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
                                         </a>
                                     </td>
-                                </tr>
+                                }
+                            }
+                        </tr>
                             }
                             foreach (var item in ViewBag.nullquocgia)
                             {
-                                <tr>
-                                    <td>@item.Idkhach</td>
-                                    <td>@item.MaKhach</td>
-                                    <td>@item.TenKhach</td>
+                    <tr>
+                        <td>@item.Idkhach</td>
+                        <td>@item.MaKhach</td>
+                        <td>@item.TenKhach</td>
+                        <td>
+                            <a asp-action="detailKH" asp-route-id="@item.Idkhach" asp-controller="danhmuc">
+                                <i class="fa fa-info" aria-hidden="true"></i>
+                            </a>
+                            @{
+                                if (item.GiaoDich != 1)
+                                {
+                                <td>
+                                    <a asp-action="updateKH" asp-route-id="@item.Idkhach" asp-controller="danhmuc">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            }
+                            }
+                            </td>
+                            @{
+                                if (item.GiaoDich != 1)
+                                {
                                     <td>
-                                        <a asp-action="detailKH" asp-route-id="@item.Idkhach" asp-controller="danhmuc">
-                                            <i class="fa fa-info" aria-hidden="true"></i>
+                                        <a asp-action="deleteKH" asp-route-id="@item.Idkhach" asp-controller="danhmuc">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
                                         </a>
                                     </td>
-                                </tr>
+                                }
+                            }
+                        </tr>
                             }
                         }
 
                     </tbody>
                 </table>  
+
             </div>
         </div>
     </div>

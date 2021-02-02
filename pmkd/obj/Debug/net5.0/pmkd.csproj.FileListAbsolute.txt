@@ -456,3 +456,9 @@ C:\Users\Admin\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\ref\pmkd.dll
 C:\Users\Admin\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\pmkd.pdb
 C:\Users\Admin\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\pmkd.genruntimeconfig.cache
 C:\Users\Admin\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\AddOrEdit.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\updateKH.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\themnguoidaidien.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\updateSigner.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\dinhmuc.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\nguoidaidien.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\themdinhmuc.cshtml.g.cs

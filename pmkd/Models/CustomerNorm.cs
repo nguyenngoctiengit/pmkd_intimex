@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -8,8 +9,11 @@ namespace pmkd.Models
 {
     public partial class CustomerNorm
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Makhach { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string Nhomhang { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string Macn { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:C}")]
         public decimal ValueNorm { get; set; }
