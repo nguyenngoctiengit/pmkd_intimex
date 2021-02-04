@@ -1,413 +1,766 @@
-﻿@using Microsoft.AspNetCore.Http
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords"
-          content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 4 admin, bootstrap 4, css3 dashboard, bootstrap 4 dashboard, AdminWrap lite admin bootstrap 4 dashboard, frontend, responsive bootstrap 4 admin template, Elegant admin lite design, Elegant admin lite dashboard bootstrap 4 dashboard template">
-    <meta name="description"
-          content="Elegant Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
-    <meta name="robots" content="noindex,nofollow">
-    <title>Công ty CP Tập đoàn Intimex - Intimex Group</title>
-    <link rel="canonical" href="https://www.wrappixel.com/templates/elegant-admin-lite/" />
-    <!-- Favicon icon -->
-    <link rel="icon" href="~/public/images/icon_main.ico" type="image/png">
-    <!-- This page CSS -->
-    <!-- chartist CSS -->
-    <link href="~/public/morrisjs/morris.css" rel="stylesheet">
-    <!--c3 plugins CSS -->
-    <link href="~/public/c3-master/c3.min.css" rel="stylesheet">
-    <link href="~/public/css/style.css" rel="stylesheet" asp-append-version="true">
-    <link href="~/public/css/pages/icon-page.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="~/public/css/style.css" rel="stylesheet">
-    <!-- Dashboard 1 Page CSS -->
-    <link href="~/public/css/pages/dashboard1.css" rel="stylesheet">
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <!--form-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-    <!-->-->
-    <style>
-        .examp1:hover {
-            color: black;
-        }
-    </style>
-    <!--<body class="skin-default-dark fixed-layout">
-        <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
-    <div class="preloader">
-        <div class="loader">
-            <div class="loader__figure"></div>
-            <p class="loader__label">Elegant admin</p>
-        </div>
-    </div>
-    <!-- ============================================================== -->
-    <!-- Main wrapper - style you can find in pages.scss -->
-    <!-- ============================================================== -->
-    <div id="main-wrapper">
-        <!-- ============================================================== -->
-        <!-- Topbar header - style you can find in pages.scss -->
-        <!-- ============================================================== -->
-        <header class="topbar">
-            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-                <!-- ============================================================== -->
-                <!-- Logo -->
-                <!-- ============================================================== -->
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="">
-                        <!-- Logo icon --><b>
-                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                            <!-- Dark Logo icon -->
-                            <img src="~/public/images/intimex.png" alt="homepage" class="dark-logo" />
-                            <!-- Light Logo icon -->
-                        </b>
-                        <!--End Logo icon -->
-                        <!-- Logo text -->
-                        <span>
-                            <!-- dark Logo text -->
-                            <!-- Light Logo text -->
-                            <img src="~/public/images/logo" class="light-logo" alt="homepage" />
-                        </span>
-                    </a>
-                </div>
-                <!-- ============================================================== -->
-                <!-- End Logo -->
-                <!-- ============================================================== -->
-                <div class="navbar-collapse">
-                    <!-- ============================================================== -->
-                    <!-- toggle and nav items -->
-                    <!-- ============================================================== -->
-                    @{
-                        var userId = Context.Session.GetString("userId");
-                        var name = Context.Session.GetString("FullName1");
-                        if (userId != null)
-                        {
+    <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-                            <div class="media align-items-center">
-                                <a asp-action="logout" asp-controller="Account">
-                                    <span class="avatar avatar-sm rounded-circle" style="width: 50px;height: 50px">
-                                        <img src="~/public/images/4_16.png">
-                                    </span>
-                                </a>
-                                <div class="media-body  ml-2  d-none d-lg-block">
-                                    Chào mừng @name đã đăng nhập
-                                </div>
-                            </div>
-                        }
+    <title>Công ty CP tập đoàn Intimex</title>
+    <link href="cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <!-- Bootstrap -->
+    <link href="~/public/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="~/public/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="~/public/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="~/public/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+    <!-- bootstrap-progressbar -->
+    <link href="~/public/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="~/public/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="~/public/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+
+    <!-- datatable -->
+    <link href="~/public/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/public/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="~/public/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="~/public/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="~/public/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <!-- datatable -->
+    <!-- Custom Theme Style -->
+    <link href="~/public/build/css/custom.min.css" rel="stylesheet">
+    <script type="text/javascript">
+        /// some script
+
+        // jquery ready start
+        $(document).ready(function () {
+            // jQuery code
+
+            //////////////////////// Prevent closing from click inside dropdown
+            $(document).on('click', '.dropdown-menu', function (e) {
+                e.stopPropagation();
+            });
+
+            // make it as accordion for smaller screens
+            if ($(window).width() < 992) {
+                $('.dropdown-menu a').click(function (e) {
+                    e.preventDefault();
+                    if ($(this).next('.submenu').length) {
+                        $(this).next('.submenu').toggle();
                     }
-                    <a href="/danhmuc"  class="nav-link examp1">
-                        <div class="media align-items-center">
-                            <span class="avatar avatar-sm rounded-circle">
+                    $('.dropdown').on('hide.bs.dropdown', function () {
+                        $(this).find('.submenu').hide();
+                    })
+                });
+            }
 
-                            </span>
-                            <div class="media-body  ml-2  d-none d-lg-block">
+        }); // jquery end
+    </script>
 
-                            </div>
+    <style type="text/css">
+	@@media (min-width: 992px){
+		.dropdown-menu .dropdown-toggle:after{
+			border-top: .3em solid transparent;
+		    border-right: 0;
+		    border-bottom: .3em solid transparent;
+		    border-left: .3em solid;
+		}
+
+		.dropdown-menu .dropdown-menu{
+			margin-left:0; margin-right: 0;
+		}
+
+		.dropdown-menu li{
+			position: relative;
+		}
+		.nav-item .submenu{
+			display: none;
+			position: absolute;
+			left:100%; top:-7px;
+		}
+		.nav-item .submenu-left{
+			right:100%; left:auto;
+		}
+
+		.dropdown-menu > li:hover{ background-color: #f1f1f1 }
+		.dropdown-menu > li:hover > .submenu{
+			display: block;
+		}
+	}
+    </style>
+
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Intimex</span></a>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            <img src="images/img.jpg" alt="..." class="img-circle profile_img">
                         </div>
-                    </a>
-                    <a href="/hopdong" class="nav-link">
-                        <div class="media align-items-center">
-                            <span class="avatar avatar-sm rounded-circle">
-
-                            </span>
-                            <div class="media-body  ml-2  d-none d-lg-block">
-
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/chungtu" class="nav-link">
-                        <div class="media align-items-center">
-                            <span class="avatar avatar-sm rounded-circle">
-
-                            </span>
-                            <div class="media-body  ml-2  d-none d-lg-block">
-
-                            </div>
-                        </div>
-                    </a>
-                    <a href="vanphongdientu" class="nav-link">
-                        <div class="media align-items-center">
-                            <span class="avatar avatar-sm rounded-circle">
-
-                            </span>
-                            <div class="media-body  ml-2  d-none d-lg-block">
-
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="/quanlinhansu" class="nav-link">
-                        <div class="media align-items-center">
-                            <span class="avatar avatar-sm rounded-circle">
-
-
-                            </span>
-                            <div class="media-body  ml-2  d-none d-lg-block">
-
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/baocaogiaoban" class="nav-link">
-                        <div class="media align-items-center">
-                            <span class="avatar avatar-sm rounded-circle">
-
-                            </span>
-                            <div class="media-body  ml-2  d-none d-lg-block">
-
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/about" class="nav-link">
-                        <div class="media align-items-center">
-                            <span class="avatar avatar-sm rounded-circle">
-
-                            </span>
-                            <div class="media-body  ml-2  d-none d-lg-block">
-
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </nav>
-        </header>
-        <!-- ============================================================== -->
-        <!-- End Topbar header -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <aside class="left-sidebar" style=" background-color: #0037ff">
-            <div class="d-flex no-block nav-text-box align-items-center" style=" background-color: #0037ff">
-                <span><img src="~/public/images/intimex.png" alt="elegant admin template"></span>
-                <a class="waves-effect waves-dark  ml-auto hidden-sm-down" href="javascript:void(0)">
-                    <i class="ti-menu"></i>
-                </a>
-                <a class="nav-toggler waves-effect waves-dark  ml-auto hidden-sm-up" href="javascript:void(0)">
-                    <i class="ti-menu ti-close"></i>
-                </a>
-            </div>
-            <!-- Sidebar scroll-->
-            <div class="scroll-sidebar" style="color:white">
-                <!-- Sidebar navigation-->
-                <nav class="sidebar-nav">
-                    <ul id="sidebarnav">
-                        <li>
-                            <a href="/hethong" class="waves-effect waves-dark  " aria-expanded="false"><i class="fa fa-cubes"></i><span class="hide-menu">Hệ thống</span></a>
-
-                        </li>
-                        <li>
-                            <a href="/danhmuc" class="waves-effect waves-dark " aria-expanded="false"><i class="fa fa-file-text"></i><span class="hide-menu">Danh mục</span></a>
-
-                        </li>
-                        <li>
-                            <a class="waves-effect waves-dark " href="/hopdong" aria-expanded="false">
-                                <i class="fa fa-book"></i><span class="hide-menu"></span>Hợp đồng
-                            </a>
-
-                        </li>
-                        <li>
-                            <a class="waves-effect waves-dark " href="/chungtu" aria-expanded="false">
-                                <i class="fa fa-id-card-o"></i><span class="hide-menu"></span>Chứng từ
-                            </a>
-
-                        </li>
-                        <li>
-                            <a class="waves-effect waves-dark " href="vanphongdientu" aria-expanded="false">
-                                <i class="fa fa-desktop"></i><span class="hide-menu"></span>Văn phòng điện tử
-                            </a>
-
-                        </li>
-                        <li>
-                            <a class="waves-effect waves-dark " href="/quanlinhansu" aria-expanded="false">
-                                <i class="fa fa-male"></i><span class="hide-menu"></span>Quản lí nhân sự
-                            </a>
-
-                        </li>
-                        <li>
-                            <a class="waves-effect waves-dark " href="/baocaogiaoban" aria-expanded="false">
-                                <i class="fa fa-folder-open"></i><span class="hide-menu"></span>Báo cáo giao ban
-                            </a>
-
-                        </li>
-                        <li>
-                            <a class="waves-effect waves-dark " href="/about" aria-expanded="false">
-                                <i class="fa fa-question-circle"></i><span class="hide-menu"></span>About
-                            </a>
-
-                        </li>
-                    </ul>
-                </nav>
-                <!-- End Sidebar navigation -->
-            </div>
-            <!-- End Sidebar scroll-->
-        </aside>
-        <!-- ============================================================== -->
-        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Page wrapper  -->
-        <!-- ============================================================== -->
-        <div class="page-wrapper">
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
-            <div class="container-fluid">
-                <!-- ============================================================== -->
-                <!-- Bread crumb and right sidebar toggle -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- End Bread crumb and right sidebar toggle -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Yearly Sales -->
-                <!-- ============================================================== -->
-                @RenderBody()
-                <!-- ============================================================== -->
-                <!-- To do chat and message -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- End Container fluid  -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- End Page wrapper  -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- footer -->
-                <!-- ============================================================== -->
-                <div class="modal" tabindex="-1" role="dialog" id="form-modal">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title"></h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-
-                            </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2>John Doe</h2>
                         </div>
                     </div>
-                </div>
+                    <!-- /menu profile quick info -->
 
-                <div class="loaderbody" id="loaderbody">
-                    <div class="loader"></div>
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>General</h3>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a><i class="fa fa-home"></i> Hệ thống <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="index.html">Config System</a></li>
+                                        <li><a href="index2.html">User Manager</a></li>
+                                        <li><a href="index3.html">Admin setup</a></li>
+                                        <li><a href="index3.html">HĐMB đã ký</a></li>
+                                        <li><a href="index3.html">KH sắp hết định mức</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-edit"></i> Danh mục <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a >Hàng hóa<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a asp-action="hanghoa" asp-controller="danhmuc">Chi tiết hàng hóa</a>
+                                                </li>
+                                                <li>
+                                                    <a asp-action="themnhomhang"  asp-controller="danhmuc">Thêm nhóm hàng</a>
+                                                </li>
+                                                <li>
+                                                    <a asp-action="themhanghoa"  asp-controller="danhmuc">Thêm hàng hóa</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><a asp-action="khachhang" asp-controller="danhmuc">Khách hàng</a></li>
+                                        <li><a href="form_validation.html">Tiền tệ</a></li>
+                                        <li><a href="form_wizards.html">Huyện</a></li>
+                                        <li><a href="form_upload.html">Xã </a></li>
+                                        <li><a href="form_buttons.html">Đại lí</a></li>
+                                        <li><a href="form_buttons.html">Nhóm trưởng</a></li>
+                                        <li><a href="form_buttons.html">KH đăng ký theo từng đơn vị</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-sitemap"></i>Hợp đồng<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a>Số liệu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">Phương án kinh doanh</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">Hợp đồng mua bán</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Ghép phương án kinh doanh</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Giao nhận hàng hóa</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Fix giá hợp đồng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Cập nhật dữ liệu điện tử</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Hoàn thành giao hàng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Tra cứu HĐMB</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Phiếu KSC</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Cân trọng lượng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Xử lí tồn kho</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Điều khoản chất lượng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Phương án kinh doanh mới</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Tra cứu HĐMB từ invoice</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a>Báo biểu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">BC PAKD</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">BC HĐ chưa giao - trễ hạn</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC cân đối hàng hóa</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC hợp đồng chưa fix giá</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC nhập xuất tồn</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC HĐMB</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC tổng hợp hàng hóa</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC HĐ Mượn - Cho mượn chưa trả hàng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Đối chiếu hàng tồn kho với KH</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC tình hình HĐKD</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC nhập xuất sản xuất</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Bảng kê nhập xuất hàng hóa</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC cân xe</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC KSC</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC kim ngạch theo thị trường</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC tổng hợp nhập xuất sản xuất</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC nhập xuất tồn theo KH</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC phụ kiện hợp đồng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC hợp đồng chưa giao - trễ hạn - Gạo</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-sitemap"></i>Chứng từ<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a>Số liệu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">Nhập chứng từ</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">Lập hóa đơn bán hàng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Tra cứu chứng từ</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Nhập giao nhận</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a>Báo biểu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">Bảng kê bộ chứng từ</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">BC Kim ngạch - Doanh thu</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC hóa đơn xuất nhập khẩu</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Bảng kê phân loại chứng từ</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Bảng kê bộ chứng từ - kế toán</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-sitemap"></i>Văn phòng điện tử<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a>Số liệu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">Văn bản đến</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">Văn bản đi</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Quản lí văn bản</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Theo dõi văn bản</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Quản lí Hồ sơ - Công việc</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Giá cà phê</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Tài liệu họp</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Màn hình chiếu</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Lịch công tác ban giám đốc</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Tài liệu mẫu</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Thông báo</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Bản đánh giá hiệu quả làm việc</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a>Báo biểu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">Báo cáo công việc</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">BC văn bản đi đến</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Lịch sử văn bản</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC tổng hợp đánh giá</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-sitemap"></i>Quản lí nhân sự<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a>Số liệu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">Thông tin nhân sự</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">Phòng ban</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Chức danh</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Thông tin ứng viên</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Phiếu yêu cầu tuyển dụng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Danh mục bậc lương</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Thông tin tiền lương</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Danh mục bậc lương 205</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a>Báo biểu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">BC tổ chức NS</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">DSNV đến hạn kí hợp đồng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Tình hình tăng giảm NS</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Thông kê nhân sự</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Thông tin đoàn đảng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC kết quả phỏng vấn</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Danh sách ứng viên theo đợt</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC yêu cầu tuyển dụng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">DS CBNV</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">DS tham gia BHYT, BHTN, BHXH</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-sitemap"></i>Báo cáo giao ban<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a>Số liệu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">Kế hoạch năm</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">Số liệu báo cáo</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Tỷ giá giao ban</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a>Báo biểu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">Tổng hợp báo cáo</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="chartjs.html">Chart JS</a></li>
+                                        <li><a href="chartjs2.html">Chart JS2</a></li>
+                                        <li><a href="morisjs.html">Moris JS</a></li>
+                                        <li><a href="echarts.html">ECharts</a></li>
+                                        <li><a href="other_charts.html">Other Charts</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-clone"></i>Layouts <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
+                                        <li><a href="fixed_footer.html">Fixed Footer</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="menu_section">
+                            <h3>Live On</h3>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="e_commerce.html">E-commerce</a></li>
+                                        <li><a href="projects.html">Projects</a></li>
+                                        <li><a href="project_detail.html">Project Detail</a></li>
+                                        <li><a href="contacts.html">Contacts</a></li>
+                                        <li><a href="profile.html">Profile</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-windows"></i> Extras <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="page_403.html">403 Error</a></li>
+                                        <li><a href="page_404.html">404 Error</a></li>
+                                        <li><a href="page_500.html">500 Error</a></li>
+                                        <li><a href="plain_page.html">Plain Page</a></li>
+                                        <li><a href="login.html">Login Page</a></li>
+                                        <li><a href="pricing_tables.html">Pricing Tables</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-sitemap"></i> Multilevel Menu <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="#level1_1">Level One</a>
+                                        <li>
+                                            <a>Level One<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">Level Two</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">Level Two</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Level Two</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#level1_2">Level One</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- /sidebar menu -->
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                        <a data-toggle="tooltip" data-placement="top" title="Settings">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Lock">
+                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Logout">
+                            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Exit" href="login.html">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <!-- /menu footer buttons -->
                 </div>
-                <footer class="footer">
-                    Design by <a href="">Tiến Nguyễn</a>
-                </footer>
-                <!-- ============================================================== -->
-                <!-- End footer -->
-                <!-- ============================================================== -->
             </div>
-            <!-- ============================================================== -->
-            <!-- End Wrapper -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- All Jquery -->
-            <!-- ============================================================== -->
-            <script src="~/public/jquery/jquery-3.2.1.min.js"></script>
-            <!-- Bootstrap popper Core JavaScript -->
-            <script src="~/public/popper/popper.min.js"></script>
-            <script src="~/public/bootstrap/dist/js/bootstrap.min.js"></script>
-            <!-- slimscrollbar scrollbar JavaScript -->
-            <script src="~/public/js/perfect-scrollbar.jquery.min.js"></script>
-            <!--Wave Effects -->
-            <script src="~/public/js/waves.js"></script>
-            <!--Menu sidebar -->
-            <script src="~/public/js/sidebarmenu.js"></script>
-            <!--Custom JavaScript -->
-            <script src="~/public/js/custom.min.js"></script>
-            <!-- ============================================================== -->
-            <!-- This page plugins -->
-            <!-- ============================================================== -->
-            <!--morris JavaScript -->
-            <script src="~/public/raphael/raphael-min.js"></script>
-            <script src="~/public/morrisjs/morris.min.js"></script>
-            <script src="~/public/jquery-sparkline/jquery.sparkline.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
-            <!--c3 JavaScript -->
-            <script src="~/public/d3/d3.min.js"></script>
-            <script src="~/public/c3-master/c3.min.js"></script>
-            <!-- Chart JS -->
-            <script src="~/public/js/dashboard1.js"></script>
 
-            <script src="~/js/site.js"></script>
-            <!--===============================================================================================-->
-            <script src="~/public/form/vendor/select2/select2.min.js"></script>
-            <script>
-                $(".js-select2").each(function () {
-                    $(this).select2({
-                        minimumResultsForSearch: 20,
-                        dropdownParent: $(this).next('.dropDownSelect2')
-                    });
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+                    <nav class="nav navbar-nav">
+                        <ul class=" navbar-right">
+                            <li class="nav-item dropdown open" style="padding-left: 15px;">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="images/img.jpg" alt="">John Doe
+                                </a>
+                                <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="javascript:;"> Profile</a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <span class="badge bg-red pull-right">50%</span>
+                                        <span>Settings</span>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">Help</a>
+                                    <a class="dropdown-item" href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                </div>
+                            </li>
 
-
-                    $(".js-select2").each(function () {
-                        $(this).on('select2:close', function (e) {
-                            if ($(this).val() == "Please chooses") {
-                                $('.js-show-service').slideUp();
-                            }
-                            else {
-                                $('.js-show-service').slideUp();
-                                $('.js-show-service').slideDown();
-                            }
-                        });
-                    });
-                })
-            </script>
-            <!--===============================================================================================-->
-            <script>
-                var filterBar = document.getElementById('filter-bar');
-
-                noUiSlider.create(filterBar, {
-                    start: [1500, 3900],
-                    connect: true,
-                    range: {
-                        'min': 1500,
-                        'max': 7500
-                    }
-                });
-
-                var skipValues = [
-                    document.getElementById('value-lower'),
-                    document.getElementById('value-upper')
-                ];
-
-                filterBar.noUiSlider.on('update', function (values, handle) {
-                    skipValues[handle].innerHTML = Math.round(values[handle]);
-                    $('.contact100-form-range-value input[name="from-value"]').val($('#value-lower').html());
-                    $('.contact100-form-range-value input[name="to-value"]').val($('#value-upper').html());
-                });
-            </script>
-            <!--===============================================================================================-->
-            <script src="~/public/form/js/main.js"></script>
-
-            <!-- Global site tag (gtag.js) - Google Analytics -->
-            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-            <script>
-                window.dataLayer = window.dataLayer || [];
-                function gtag() { dataLayer.push(arguments); }
-                gtag('js', new Date());
-
-                gtag('config', 'UA-23581568-13');
-            </script>
+                            <li role="presentation" class="nav-item dropdown open">
+                                <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-envelope-o"></i>
+                                    <span class="badge bg-green">6</span>
+                                </a>
+                                <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
+                                    <li class="nav-item">
+                                        <a class="dropdown-item">
+                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item">
+                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item">
+                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item">
+                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <div class="text-center">
+                                            <a class="dropdown-item">
+                                                <strong>See All Alerts</strong>
+                                                <i class="fa fa-angle-right"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            <!-- page content -->
+            @RenderBody()
+            <!-- /page content -->
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
         </div>
     </div>
+    <!-- jQuery -->
+    <script src="~/public/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/public/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- iCheck -->
+    <script src="~/public/vendors/iCheck/icheck.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/public/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- Datatables -->
+    <script src="~/public/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/public/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/public/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/public/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/public/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/public/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/public/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/public/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/public/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/public/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/public/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/public/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="~/public/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="~/public/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/public/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <!-- NProgress -->
+    <script src="~/public/vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="~/public/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="~/public/vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="~/public/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="~/public/vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="~/public/vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="~/public/vendors/Flot/jquery.flot.js"></script>
+    <script src="~/public/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="~/public/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="~/public/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="~/public/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="~/public/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="~/public/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="~/public/vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="~/public/vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="~/public/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="~/public/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="~/public/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="~/public/vendors/moment/min/moment.min.js"></script>
+    <script src="~/public/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="~/public/build/js/custom.min.js"></script>
+    <script type="text/javascript">
+        /// some script
+
+        // jquery ready start
+        $(document).ready(function () {
+            // jQuery code
+
+            //////////////////////// Prevent closing from click inside dropdown
+            $(document).on('click', '.dropdown-menu', function (e) {
+                e.stopPropagation();
+            });
+
+            // make it as accordion for smaller screens
+            if ($(window).width() < 992) {
+                $('.dropdown-menu a').click(function (e) {
+                    e.preventDefault();
+                    if ($(this).next('.submenu').length) {
+                        $(this).next('.submenu').toggle();
+                    }
+                    $('.dropdown').on('hide.bs.dropdown', function () {
+                        $(this).find('.submenu').hide();
+                    })
+                });
+            }
+
+        }); // jquery end
+    </script>
+
+</body>
 </html>

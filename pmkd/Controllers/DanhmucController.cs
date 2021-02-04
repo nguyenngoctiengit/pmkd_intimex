@@ -128,7 +128,8 @@ namespace pmkd.Controllers
             }
         }
         //view tạo hàng hóa
-        public IActionResult createhanghoa()
+        [Route("themhanghoa")]
+        public IActionResult themhanghoa()
         {
             ViewBag._nhomhanghoa = _context.Nhom_hang_hoas.ToList();
             ViewBag._nhomhang = _context.Nhomhangs.ToList();
@@ -136,7 +137,7 @@ namespace pmkd.Controllers
         }
         //hàm tạo hàng hóa
         [HttpPost]
-        public IActionResult createhanghoa(Hanghoa hanghoa)
+        public IActionResult themhanghoa(Hanghoa hanghoa)
         {
             if (_context.Hanghoas.Any(a => a.Mahang == hanghoa.Mahang) || _context.Hanghoas.Any(a => a.Idhanghoa == hanghoa.Idhanghoa))
             {
