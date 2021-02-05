@@ -1,6 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
@@ -65,35 +67,43 @@
     </script>
 
     <style type="text/css">
-	@@media (min-width: 992px){
-		.dropdown-menu .dropdown-toggle:after{
-			border-top: .3em solid transparent;
-		    border-right: 0;
-		    border-bottom: .3em solid transparent;
-		    border-left: .3em solid;
-		}
+        @@media (min-width: 992px) {
+            .dropdown-menu .dropdown-toggle:after {
+                border-top: .3em solid transparent;
+                border-right: 0;
+                border-bottom: .3em solid transparent;
+                border-left: .3em solid;
+            }
 
-		.dropdown-menu .dropdown-menu{
-			margin-left:0; margin-right: 0;
-		}
+            .dropdown-menu .dropdown-menu {
+                margin-left: 0;
+                margin-right: 0;
+            }
 
-		.dropdown-menu li{
-			position: relative;
-		}
-		.nav-item .submenu{
-			display: none;
-			position: absolute;
-			left:100%; top:-7px;
-		}
-		.nav-item .submenu-left{
-			right:100%; left:auto;
-		}
+            .dropdown-menu li {
+                position: relative;
+            }
 
-		.dropdown-menu > li:hover{ background-color: #f1f1f1 }
-		.dropdown-menu > li:hover > .submenu{
-			display: block;
-		}
-	}
+            .nav-item .submenu {
+                display: none;
+                position: absolute;
+                left: 100%;
+                top: -7px;
+            }
+
+            .nav-item .submenu-left {
+                right: 100%;
+                left: auto;
+            }
+
+            .dropdown-menu > li:hover {
+                background-color: #f1f1f1
+            }
+
+                .dropdown-menu > li:hover > .submenu {
+                    display: block;
+                }
+        }
     </style>
 
 </head>
@@ -111,13 +121,20 @@
 
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
-                        <div class="profile_pic">
-                            <img src="images/img.jpg" alt="..." class="img-circle profile_img">
-                        </div>
-                        <div class="profile_info">
-                            <span>Welcome,</span>
-                            <h2>John Doe</h2>
-                        </div>
+                        @{
+                            var userId = Context.Session.GetString("userId");
+                            var name = Context.Session.GetString("FullName1");
+                            if (userId != null)
+                            {
+
+                                <div class="profile_info">
+                                    <span>Welcome,</span>
+                                    <h2>@name</h2>
+                                </div>
+
+                            }
+                        }
+
                     </div>
                     <!-- /menu profile quick info -->
 
@@ -142,20 +159,30 @@
                                     <a><i class="fa fa-edit"></i> Danh mục <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li>
-                                            <a >Hàng hóa<span class="fa fa-chevron-down"></span></a>
+                                            <a>Hàng hóa<span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
                                                 <li class="sub_menu">
                                                     <a asp-action="hanghoa" asp-controller="danhmuc">Chi tiết hàng hóa</a>
                                                 </li>
                                                 <li>
-                                                    <a asp-action="themnhomhang"  asp-controller="danhmuc">Thêm nhóm hàng</a>
+                                                    <a asp-action="themnhomhang" asp-controller="danhmuc">Thêm nhóm hàng</a>
                                                 </li>
                                                 <li>
-                                                    <a asp-action="themhanghoa"  asp-controller="danhmuc">Thêm hàng hóa</a>
+                                                    <a asp-action="themhanghoa" asp-controller="danhmuc">Thêm hàng hóa</a>
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li><a asp-action="khachhang" asp-controller="danhmuc">Khách hàng</a></li>
+                                        <li>
+                                            <a>Khách hàng<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a asp-action="khachhang" asp-controller="danhmuc">Chi tiết khách hàng</a>
+                                                </li>
+                                                <li>
+                                                    <a asp-action="themkhachhang" asp-controller="danhmuc">Thêm nhóm hàng</a>
+                                                </li>
+                                            </ul>
+                                        </li>
                                         <li><a href="form_validation.html">Tiền tệ</a></li>
                                         <li><a href="form_wizards.html">Huyện</a></li>
                                         <li><a href="form_upload.html">Xã </a></li>
@@ -559,10 +586,10 @@
                         <a data-toggle="tooltip" data-placement="top" title="Lock">
                             <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                         </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Logout">
+                        <a data-toggle="tooltip" data-placement="top" asp-action="logout" asp-controller="Account" title="Logout">
                             <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                         </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Exit" href="login.html">
+                        <a data-toggle="tooltip" data-placement="top" asp-action="logout" asp-controller="Account" title="Exit" href="login.html">
                             <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                         </a>
                     </div>
@@ -579,9 +606,19 @@
                     <nav class="nav navbar-nav">
                         <ul class=" navbar-right">
                             <li class="nav-item dropdown open" style="padding-left: 15px;">
-                                <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="images/img.jpg" alt="">John Doe
-                                </a>
+                                @{
+                                    var user = Context.Session.GetString("userId");
+                                    var ten = Context.Session.GetString("FullName1");
+                                    if (userId != null)
+                                    {
+
+                                        <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                                            @ten
+                                        </a>
+
+                                    }
+                                }
+
                                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="javascript:;"> Profile</a>
                                     <a class="dropdown-item" href="javascript:;">
@@ -589,7 +626,7 @@
                                         <span>Settings</span>
                                     </a>
                                     <a class="dropdown-item" href="javascript:;">Help</a>
-                                    <a class="dropdown-item" href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                    <a class="dropdown-item" asp-action="logout" asp-controller="Account"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                                 </div>
                             </li>
 
@@ -601,7 +638,6 @@
                                 <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
                                     <li class="nav-item">
                                         <a class="dropdown-item">
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
                                             <span>
                                                 <span>John Smith</span>
                                                 <span class="time">3 mins ago</span>
