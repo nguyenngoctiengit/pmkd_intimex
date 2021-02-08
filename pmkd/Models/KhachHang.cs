@@ -55,7 +55,9 @@ namespace pmkd.Models
         public string ChucVu2 { get; set; }
         public string UyQuyen2 { get; set; }
         public bool? Visible { get; set; }
+        [Required(ErrorMessage = "Vui lòng nhập sản lượng")]
         public decimal Sanluong { get; set; }
+        [Required(ErrorMessage = "Vui lòng nhập diện tích")]
         public decimal Dientich { get; set; }
         public string MaHd { get; set; }
     }

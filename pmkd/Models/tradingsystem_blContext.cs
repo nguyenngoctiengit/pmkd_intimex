@@ -2780,7 +2780,7 @@ namespace pmkd.Models
                 entity.HasKey(e => new { e.Makhach, e.Nhomhang, e.Macn });
 
                 entity.ToTable("CustomerNorm");
-
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.Makhach)
                     .HasMaxLength(50)
                     .HasDefaultValueSql("('')");

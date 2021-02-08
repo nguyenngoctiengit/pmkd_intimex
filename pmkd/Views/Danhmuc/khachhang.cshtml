@@ -3,22 +3,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@{
-    if (TempData["alertMessage"] != null)
-    {
-        <div class="alert alert-success  alert-dismissable">
-            @TempData["alertMessage"].ToString()
-        </div>
-    }
-}
-@{
-    if (TempData["alertMessage1"] != null)
-    {
-        <div class="alert alert-success  alert-dismissable">
-            @TempData["alertMessage"].ToString()
-        </div>
-    }
-}
 @model IEnumerable<KhachHang>
 <div class="right_col" role="main" style="height: 500px">
     <div class="">
@@ -37,6 +21,22 @@
                 </div>
             </div>
         </div>
+        @{
+            if (TempData["alertMessage"] != null)
+            {
+                <div style="color:red;font-size:30px">
+                    @TempData["alertMessage"].ToString()
+                </div>
+            }
+        }
+        @{
+            if (TempData["alertMessage1"] != null)
+            {
+                <div style="color:red;font-size:30px">
+                    @TempData["alertMessage1"].ToString()
+                </div>
+            }
+        }
         <div class="clearfix"></div>
         <div class="row" style="display: block;">
             <div class="col-md-12 col-sm-12 ">
@@ -70,6 +70,7 @@
                                                 <th>Mã khách</th>
                                                 <th>Tên tắt</th>
                                                 <th>Tên khách</th>
+                                                <th class="last">Action</th>
                                                 <th>Địa chỉ</th>
                                                 <th>SĐT</th>
                                                 <th>email</th>
@@ -98,73 +99,86 @@
                                                 foreach (var item in Model)
                                                 {
 
-                                                    <tr>
-                                                        <td>@item.MaKhach</td>
-                                                        <td><a asp-action="detailKH" asp-controller="danhmuc" asp-route-id="@item.Idkhach">@item.TenKhach</a></td>
-                                                        <td>@item.TenFull</td>
-                                                        <td>@item.DiaChi</td>
-                                                        <td>@item.DienThoai</td>
-                                                        <td>@item.Email</td>
-                                                        <td>@item.MaSoThue</td>
-                                                        <td>@item.Fax</td>
-                                                        <td>@item.GiaoDich</td>
-                                                        <td>@item.MaKhuvuc</td>
-                                                        <td>@item.TenQg</td>
-                                                        <td>@item.LoaiKhach</td>
-                                                        <td>@item.TaiKhoan</td>
-                                                        <td>@item.NganHang</td>
-                                                        <td>@item.GiayPhep</td>
-                                                        <td>@item.NgayCap</td>
-                                                        <td>@item.Vanchuyen</td>
-                                                        <td>@item.Bocxep</td>
-                                                        <td>@item.Dientich</td>
-                                                        <td>@item.Sanluong</td>
-                                                        @{
-                                                            if (item.GiaoDichMua == true)
-                                                            {
-                                                                <td>Có</td>
-                                                            }
-                                                            else
-                                                            {
-                                                                <td>Không</td>
-                                                            }
-
+                                                <tr>
+                                                    <td>@item.MaKhach</td>
+                                                    <td><a asp-action="detailKH" asp-controller="danhmuc" asp-route-id="@item.Idkhach">@item.TenKhach</a></td>
+                                                    <td>@item.TenFull</td>
+                                                    @{
+                                                        if (item.GiaoDich != 1)
+                                                        {
+                                                            <td>
+                                                                <a asp-action="updateKH" asp-controller="danhmuc" asp-route-id="@item.Idkhach">Edit </a>/
+                                                                <a asp-action="deleteKH" asp-controller="danhmuc" asp-route-id="@item.Idkhach">Delete</a>
+                                                            </td>
                                                         }
-                                                        @{
-                                                            if (item.GiaoDichBan == true)
-                                                            {
-                                                                <td>Có</td>
-                                                            }
-                                                            else
-                                                            {
-                                                                <td>Không</td>
-                                                            }
-
+                                                        else
+                                                        {
+                                                            <td>Edit / Delete</td>
                                                         }
-                                                        @{
-                                                            if (item.ThanhToanMua == true)
-                                                            {
-                                                                <td>Có</td>
-                                                            }
-                                                            else
-                                                            {
-                                                                <td>Không</td>
-                                                            }
-
+                                                    }
+                                                    <td>@item.DiaChi</td>
+                                                    <td>@item.DienThoai</td>
+                                                    <td>@item.Email</td>
+                                                    <td>@item.MaSoThue</td>
+                                                    <td>@item.Fax</td>
+                                                    <td>@item.GiaoDich</td>
+                                                    <td>@item.MaKhuvuc</td>
+                                                    <td>@item.TenQg</td>
+                                                    <td>@item.LoaiKhach</td>
+                                                    <td>@item.TaiKhoan</td>
+                                                    <td>@item.NganHang</td>
+                                                    <td>@item.GiayPhep</td>
+                                                    <td>@item.NgayCap</td>
+                                                    <td>@item.Vanchuyen</td>
+                                                    <td>@item.Bocxep</td>
+                                                    <td>@item.Dientich</td>
+                                                    <td>@item.Sanluong</td>
+                                                    @{
+                                                        if (item.GiaoDichMua == true)
+                                                        {
+                                                            <td>Có</td>
                                                         }
-                                                        @{
-                                                            if (item.ThanhToanBan == true)
-                                                            {
-                                                                <td>Có</td>
-                                                            }
-                                                            else
-                                                            {
-                                                                <td>Không</td>
-                                                            }
-
+                                                        else
+                                                        {
+                                                            <td>Không</td>
                                                         }
 
-                                                    </tr>
+                                                    }
+                                                    @{
+                                                        if (item.GiaoDichBan == true)
+                                                        {
+                                                            <td>Có</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>Không</td>
+                                                        }
+
+                                                    }
+                                                    @{
+                                                        if (item.ThanhToanMua == true)
+                                                        {
+                                                            <td>Có</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>Không</td>
+                                                        }
+
+                                                    }
+                                                    @{
+                                                        if (item.ThanhToanBan == true)
+                                                        {
+                                                            <td>Có</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>Không</td>
+                                                        }
+
+                                                    }
+
+                                                </tr>
                                                 }
                                             }
                                         </tbody>
@@ -222,14 +236,14 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <th scope="col" style="border-color:black">Nhóm hàng</th>
-                                                    <th scope="col" style="border-color:black">ĐM HH chưa giao(KGS)</th>
-                                                    <th scope="col" style="border-color:black">Đơn vị</th>
-                                                    <th scope="col" style="border-color:black">Người GD</th>
-                                                    <th scope="col" style="border-color:black">QH với DN</th>
-                                                    <th scope="col" style="border-color:black">Ghi chú</th>
-                                                    <th scope="col" style="border-color:black">Người tạo</th>
-                                                    <th scope="col" style="border-color:black">Ngày tạo</th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
                                                 </tr>
                                             </tbody>
                                         </table>

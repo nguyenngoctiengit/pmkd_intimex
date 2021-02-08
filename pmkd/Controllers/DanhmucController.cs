@@ -52,7 +52,7 @@ namespace pmkd.Controllers
                     _context.Nhom_hang_hoas.Add(nhh);
                     _context.SaveChanges();
                     TempData["alertMessage"] = "Thêm nhóm hàng thành công";
-                    return RedirectToAction("nhomhanghoa");
+                    return RedirectToAction("hanghoa");
                 }
             }
             else
@@ -216,15 +216,16 @@ namespace pmkd.Controllers
         public IActionResult khachhang(string id)
         {
            
-            return View("khachhang",_context.KhachHangs.ToList());
+            return View("khachhang",_context.KhachHangs.Where(a => a.Visible == true).ToList());
         }
 
         public IActionResult detailKH(string id)
         {
 
+            ViewBag.idKH = (from a in _context.KhachHangs where a.Idkhach == id select a.Idkhach).FirstOrDefault();
             ViewBag.signer = from kh in _context.KhachHangs join sn in _context.Signers on kh.MaKhach equals sn.MaKhach where kh.Idkhach == id select sn;
             ViewBag.customerNorm = from a in _context.KhachHangs join b in _context.CustomerNorms on a.MaKhach equals b.Makhach where a.Idkhach == id select b;
-            var ct_kh = _context.KhachHangs.ToList();
+            var ct_kh = _context.KhachHangs.Where(a => a.Visible == true).ToList();
             return View(ct_kh);
         }
         public IActionResult themkhachhang()
@@ -241,7 +242,7 @@ namespace pmkd.Controllers
                 if (_context.KhachHangs.Any(a => a.Idkhach == kh.Idkhach) || _context.KhachHangs.Any(a => a.MaKhach == kh.MaKhach))
                 {
                     TempData["alertMessage1"] = "Mã khách hàng hoặc ID khách hàng bị trùng";
-                    return RedirectToAction("khuvuc");
+                    return RedirectToAction("themkhachhang");
                 }
                 else
                 {
@@ -250,7 +251,7 @@ namespace pmkd.Controllers
                     _context.SaveChanges();
 
                     TempData["alertMessage"] = "thêm khách hàng thành công";
-                    return RedirectToAction("khuvuc");
+                    return RedirectToAction("khachhang");
                 }
             }
             else
@@ -264,10 +265,11 @@ namespace pmkd.Controllers
         public IActionResult deleteKH(string id)
         {
             var kh = _context.KhachHangs.Where(a => a.Idkhach == id).FirstOrDefault();
-            _context.KhachHangs.Remove(kh);
+            kh.Visible = false;
+            _context.KhachHangs.Update(kh);
             _context.SaveChanges();
             TempData["alertMessage"] = "Xóa khách hàng thành công";
-            return RedirectToAction("khuvuc");
+            return RedirectToAction("khachhang");
         }
         public IActionResult updateKH(string id)
         {
@@ -283,7 +285,7 @@ namespace pmkd.Controllers
                 _context.Update(kh);
                 _context.SaveChanges();
                 TempData["alertMessage"] = "update thành công";
-                return RedirectToAction("khuvuc");
+                return RedirectToAction("khachhang");
             }
             else
             {
@@ -314,14 +316,14 @@ namespace pmkd.Controllers
                     signer.Id = 0;
                     int stt = (from a in _context.KhachHangs
                                join b in _context.Signers on a.MaKhach equals b.MaKhach
-                               where a.MaKhach == id
+                               where a.Idkhach == id
                                select a).Count();
 
                     signer.Stt = stt;
                     _context.Signers.Add(signer);
                     _context.SaveChanges();
                     TempData["alertMessage"] = "thêm người đại diện thành công";
-                    return RedirectToAction("khuvuc");
+                    return RedirectToAction("detailKH",_context.KhachHangs.Where(a => a.Idkhach == id).FirstOrDefault());
                 }
             }   
             else
@@ -334,7 +336,8 @@ namespace pmkd.Controllers
         }
         public IActionResult updateSigner(int id)
         {
-
+            
+            ViewBag.makhach = (from a in _context.KhachHangs join b in _context.Signers on a.MaKhach equals b.MaKhach where b.Id == id select a.MaKhach).FirstOrDefault();
             return View(_context.Signers.Where(a => a.Id == id).FirstOrDefault());
         }
         [HttpPost]
@@ -346,25 +349,10 @@ namespace pmkd.Controllers
                 _context.Update(sn).Property(a => a.Id).IsModified = false;
                 _context.SaveChanges();
                 TempData["alertMessage"] = "cập nhật người đại diện thành công";
-                return RedirectToAction("khuvuc");
+                return RedirectToAction("khachhang");
             }
             else
                 return View("updateSigner");
-        }
-        public IActionResult dinhmuc(string id)
-        {
-    
-            ViewBag.customerNorm = from a in _context.KhachHangs join b in _context.CustomerNorms on a.MaKhach equals b.Makhach where a.Idkhach == id select b;
-            ViewBag.list_qg = _context.Quocgia.ToList();
-            var ct_kh = _context.KhachHangs.Where(a => a.Idkhach == id).FirstOrDefault();
-            return View(ct_kh);
-        }
-        public IActionResult nguoidaidien(string id)
-        {
-            ViewBag.signer = from kh in _context.KhachHangs join sn in _context.Signers on kh.MaKhach equals sn.MaKhach where kh.Idkhach == id select sn;
-            ViewBag.list_qg = _context.Quocgia.ToList();
-            var ct_kh = _context.KhachHangs.Where(a => a.Idkhach == id).FirstOrDefault();
-            return View(ct_kh);
         }
         public IActionResult themdinhmuc(string id)
         {
@@ -375,10 +363,17 @@ namespace pmkd.Controllers
             return View("themdinhmuc");
         }
         [HttpPost]
-        public IActionResult themdinhmuc(CustomerNorm customerNorm,string id)
+        public IActionResult createdinhmuc(CustomerNorm customerNorm,string id)
         {
-            if (ModelState.IsValid)
+            if (_context.CustomerNorms.Any(a => a.Macn == customerNorm.Macn) && _context.CustomerNorms.Any(a => a.Nhomhang == customerNorm.Nhomhang))
+
             {
+                TempData["alertMessage1"] = "Mã chi nhánh và mã nhóm hàng bị trùng, vui lòng nhập lại";
+                return RedirectToAction("khachhang");
+            }
+            else
+            {
+                customerNorm.Id = 0;  
                 customerNorm.Makhach = (from a in _context.KhachHangs where a.Idkhach == id select a.MaKhach).FirstOrDefault();
                 customerNorm.UserCreate = HttpContext.Session.GetString("userId");
                 customerNorm.DateCreate = DateTime.Now;
@@ -388,16 +383,15 @@ namespace pmkd.Controllers
                 _context.CustomerNorms.AddRange(customerNorm);
                 _context.SaveChanges();
                 TempData["alertMessage"] = "thêm người đại diện thành công";
-                return RedirectToAction("khuvuc");
+                return RedirectToAction("khachhang");
             }
-            else
-            {
-                ViewBag.makhach = (from a in _context.KhachHangs where a.Idkhach == id select a.MaKhach).FirstOrDefault();
-                ViewBag.id = (from a in _context.KhachHangs where a.Idkhach == id select a.Idkhach).FirstOrDefault();
-                ViewBag.branch = _context.Branches.ToList();
-                ViewBag.nhomhang = _context.Nhom_hang_hoas.ToList();
-                return View("themdinhmuc");
-            }
+
+        }
+        public IActionResult updateCN(long id)
+        {
+            ViewBag.branch = _context.Branches.ToList();
+            ViewBag.nhomhang = _context.Nhom_hang_hoas.ToList();
+            return View(_context.CustomerNorms.Where(a => a.Id == id).FirstOrDefault());
         }
     }
 }

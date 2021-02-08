@@ -9,16 +9,21 @@ namespace pmkd.Models
 {
     public partial class CustomerNorm
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long Id;
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)][Required]
         public string Makhach { get; set; }
+        [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+
         public string Nhomhang { get; set; }
+        [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string Macn { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:C}")]
         public decimal ValueNorm { get; set; }
         public decimal ValueDmgh { get; set; }
         public string Ghichu { get; set; }
+        [Required]
         public string NguoiGd { get; set; }
         public string ChucvuNguoigd { get; set; }
         public string UserCreate { get; set; }

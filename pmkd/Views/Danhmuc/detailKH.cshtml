@@ -70,6 +70,7 @@
                                                 <th>Mã khách</th>
                                                 <th>Tên tắt</th>
                                                 <th>Tên khách</th>
+                                                <th class="last">Action</th>
                                                 <th>Địa chỉ</th>
                                                 <th>SĐT</th>
                                                 <th>email</th>
@@ -98,73 +99,85 @@
                                                 foreach (var item in Model)
                                                 {
 
-                                                    <tr>
-                                                        <td>@item.MaKhach</td>
-                                                        <td><a asp-action="detailKH" asp-controller="danhmuc" asp-route-id="@item.Idkhach">@item.TenKhach</a></td>
-                                                        <td>@item.TenFull</td>
-                                                        <td>@item.DiaChi</td>
-                                                        <td>@item.DienThoai</td>
-                                                        <td>@item.Email</td>
-                                                        <td>@item.MaSoThue</td>
-                                                        <td>@item.Fax</td>
-                                                        <td>@item.GiaoDich</td>
-                                                        <td>@item.MaKhuvuc</td>
-                                                        <td>@item.TenQg</td>
-                                                        <td>@item.LoaiKhach</td>
-                                                        <td>@item.TaiKhoan</td>
-                                                        <td>@item.NganHang</td>
-                                                        <td>@item.GiayPhep</td>
-                                                        <td>@item.NgayCap</td>
-                                                        <td>@item.Vanchuyen</td>
-                                                        <td>@item.Bocxep</td>
-                                                        <td>@item.Dientich</td>
-                                                        <td>@item.Sanluong</td>
-                                                        @{
-                                                            if (item.GiaoDichMua == true)
-                                                            {
-                                                                <td>Có</td>
-                                                            }
-                                                            else
-                                                            {
-                                                                <td>Không</td>
-                                                            }
-
+                                                <tr>
+                                                    <td>@item.MaKhach</td>
+                                                    <td><a asp-action="detailKH" asp-controller="danhmuc" asp-route-id="@item.Idkhach">@item.TenKhach</a></td>
+                                                    <td>@item.TenFull</td>
+                                                    @{
+                                                        if (item.GiaoDich != 1)
+                                                        {
+                                                            <td><a asp-action="updateKH" asp-controller="danhmuc" asp-route-id="@item.Idkhach">Edit </a>/
+                                                            <a asp-action="deleteKH" asp-controller="danhmuc" asp-route-id="@item.Idkhach">Delete</a></td>
                                                         }
-                                                        @{
-                                                            if (item.GiaoDichBan == true)
-                                                            {
-                                                                <td>Có</td>
-                                                            }
-                                                            else
-                                                            {
-                                                                <td>Không</td>
-                                                            }
-
+                                                        else
+                                                        {
+                                                            <td>Edit / Delete</td>
                                                         }
-                                                        @{
-                                                            if (item.ThanhToanMua == true)
-                                                            {
-                                                                <td>Có</td>
-                                                            }
-                                                            else
-                                                            {
-                                                                <td>Không</td>
-                                                            }
+                                                    }
 
+                                                    <td>@item.DiaChi</td>
+                                                    <td>@item.DienThoai</td>
+                                                    <td>@item.Email</td>
+                                                    <td>@item.MaSoThue</td>
+                                                    <td>@item.Fax</td>
+                                                    <td>@item.GiaoDich</td>
+                                                    <td>@item.MaKhuvuc</td>
+                                                    <td>@item.TenQg</td>
+                                                    <td>@item.LoaiKhach</td>
+                                                    <td>@item.TaiKhoan</td>
+                                                    <td>@item.NganHang</td>
+                                                    <td>@item.GiayPhep</td>
+                                                    <td>@item.NgayCap</td>
+                                                    <td>@item.Vanchuyen</td>
+                                                    <td>@item.Bocxep</td>
+                                                    <td>@item.Dientich</td>
+                                                    <td>@item.Sanluong</td>
+                                                    @{
+                                                        if (item.GiaoDichMua == true)
+                                                        {
+                                                            <td>Có</td>
                                                         }
-                                                        @{
-                                                            if (item.ThanhToanBan == true)
-                                                            {
-                                                                <td>Có</td>
-                                                            }
-                                                            else
-                                                            {
-                                                                <td>Không</td>
-                                                            }
-
+                                                        else
+                                                        {
+                                                            <td>Không</td>
                                                         }
 
-                                                    </tr>
+                                                    }
+                                                    @{
+                                                        if (item.GiaoDichBan == true)
+                                                        {
+                                                            <td>Có</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>Không</td>
+                                                        }
+
+                                                    }
+                                                    @{
+                                                        if (item.ThanhToanMua == true)
+                                                        {
+                                                            <td>Có</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>Không</td>
+                                                        }
+
+                                                    }
+                                                    @{
+                                                        if (item.ThanhToanBan == true)
+                                                        {
+                                                            <td>Có</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>Không</td>
+                                                        }
+
+                                                    }
+
+                                                </tr>
                                                 }
                                             }
                                         </tbody>
@@ -207,7 +220,7 @@
                                 </ul>
                                 <div class="tab-content" id="myTabContent">
                                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                        <table class="table table-striped table-bordered" style="width:100%">
+                                        <table class="table table-striped table-bordered" style="width:100%" id="test">
                                             <thead>
                                                 <tr>
                                                     <th scope="col" style="border-color:black">Nhóm hàng</th>
@@ -218,11 +231,13 @@
                                                     <th scope="col" style="border-color:black">Ghi chú</th>
                                                     <th scope="col" style="border-color:black">Người tạo</th>
                                                     <th scope="col" style="border-color:black">Ngày tạo</th>
+                                                    <th scope="col" style="border-color:black">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @{
-                                                    foreach(var item in ViewBag.customerNorm)
+
+                                                    foreach (var item in ViewBag.customerNorm)
                                                     {
                                                         <tr>
                                                             <td style="border-color:black">@item.Nhomhang</td>
@@ -233,11 +248,19 @@
                                                             <td style="border-color:black">@item.Ghichu</td>
                                                             <td style="border-color:black">@item.UserCreate</td>
                                                             <td style="border-color:black">@item.DateCreate</td>
+                                                            <td style="border-color:black"><a asp-action="updateCN" asp-controller="danhmuc" asp-route-id="@item.DateCreate">Edit </a>/ 
+                                                            <a asp-action="deleteCN" asp-controller="danhmuc" asp-route-id="@item.Id">Delete</a></td>
                                                         </tr>
+                                                        
                                                     }
                                                 }
                                             </tbody>
                                         </table>
+                                        <div class="form-row text-center">
+                                            <div class="col-12">
+                                                <a asp-action="themdinhmuc" asp-controller="danhmuc" asp-route-id="@ViewBag.idKH"><button type="submit" class="btn btn-primary" >Thêm định mức</button></a>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                         <table class="table table-striped table-bordered" style="width:100%">
@@ -246,31 +269,37 @@
                                                     <th border="1" style="border-color:black">Người đại diện</th>
                                                     <th border="1" style="border-color:black">Chức vụ</th>
                                                     <th border="1" style="border-color:black">Ủy quyền</th>
+                                                    <th border="1" style="border-color:black">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @{
+
                                                     foreach (var a in ViewBag.signer)
                                                     {
                                                         <tr>
                                                             <td border="1" style="border-color:black">@a.Nguoiky</td>
                                                             <td border="1" style="border-color:black">@a.Chucvu</td>
                                                             <td border="1" style="border-color:black">@a.Uyquyen</td>
+                                                            <td border="1" style="border-color:black"><a asp-action="updateSigner" asp-controller="danhmuc" asp-route-id="@a.Id">Edit</a></td>
                                                         </tr>
                                                     }
+                                                    
                                                 }
                                             </tbody>
                                         </table>
+                                        <div class="form-row text-center">
+                                            <div class="col-12">
+                                                <a asp-action="themnguoidaidien" asp-controller="danhmuc" asp-route-id="@ViewBag.idKH"><button type="submit" class="btn btn-primary" >Thêm người đại diện</button></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-
-
         </div>
     </div>
 </div>
