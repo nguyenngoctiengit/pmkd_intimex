@@ -50,7 +50,7 @@
                     </div>
                     <div class="x_content">
                         <br />
-                        <form method="post" role="form" asp-action="updateCN" asp-controller="Danhmuc">
+                        <form method="post" role="form" asp-action="updateCustomerNorm" asp-controller="Danhmuc">
                             <div class="form-row">
 
                                 <div class="form-group col-md-6">
@@ -88,7 +88,7 @@
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Định mức HH chưa giao</label>
-                                    <input type="number" class="form-control" asp-for="ValueNorm" placeholder="Định mức HH chưa giao">
+                                    <input type="text" class="form-control" asp-for="ValueNorm" placeholder="Định mức HH chưa giao">
                                 </div>
                             </div>
                             <div>
@@ -96,7 +96,7 @@
                                 <textarea class="form-control" asp-for="Ghichu" placeholder="Ghi chú"></textarea>
                             </div>
                             <div>
-                                <a asp-action="updateCN" asp-controller="Danhmuc"><button type="submit" class="btn btn-primary btn-block" style="margin-top: 30px">Submit</button></a>
+                                <a asp-action="updateCustomerNorm" asp-controller="Danhmuc"><button type="submit" class="btn btn-primary btn-block" style="margin-top: 30px">Submit</button></a>
                             </div>
                         </form>
                     </div>

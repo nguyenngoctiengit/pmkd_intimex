@@ -309,7 +309,7 @@ namespace pmkd.Controllers
                 if (_context.Signers.Any(a => a.Id == signer.Id))
                 {
                     TempData["alertMessage1"] = "Mã người đại diện bị trùng";
-                    return RedirectToAction("khuvuc");
+                    return RedirectToAction("khachhang");
                 }
                 else
                 {
@@ -365,24 +365,25 @@ namespace pmkd.Controllers
         [HttpPost]
         public IActionResult createdinhmuc(CustomerNorm customerNorm,string id)
         {
-            if (_context.CustomerNorms.Any(a => a.Macn == customerNorm.Macn) && _context.CustomerNorms.Any(a => a.Nhomhang == customerNorm.Nhomhang))
+            if (!(_context.CustomerNorms.Any(a => a.Macn == customerNorm.Macn) && _context.CustomerNorms.Any(a => a.Nhomhang == customerNorm.Nhomhang)))
 
             {
-                TempData["alertMessage1"] = "Mã chi nhánh và mã nhóm hàng bị trùng, vui lòng nhập lại";
-                return RedirectToAction("khachhang");
-            }
-            else
-            {
-                customerNorm.Id = 0;  
+                var rand = new Random();
+                customerNorm.Id = rand.Next(0000, 9999);
                 customerNorm.Makhach = (from a in _context.KhachHangs where a.Idkhach == id select a.MaKhach).FirstOrDefault();
                 customerNorm.UserCreate = HttpContext.Session.GetString("userId");
                 customerNorm.DateCreate = DateTime.Now;
                 customerNorm.GdMua = false;
                 customerNorm.GdBan = false;
-                _context.Entry(customerNorm).State = EntityState.Added;
-                _context.CustomerNorms.AddRange(customerNorm);
+/*                _context.Entry(customerNorm).State = EntityState.Added;*/
+                _context.CustomerNorms.Add(customerNorm);
                 _context.SaveChanges();
                 TempData["alertMessage"] = "thêm người đại diện thành công";
+                return RedirectToAction("khachhang");
+            }
+            else
+            {
+                TempData["alertMessage1"] = "Mã chi nhánh và mã nhóm hàng bị trùng, vui lòng nhập lại";
                 return RedirectToAction("khachhang");
             }
 
@@ -392,6 +393,26 @@ namespace pmkd.Controllers
             ViewBag.branch = _context.Branches.ToList();
             ViewBag.nhomhang = _context.Nhom_hang_hoas.ToList();
             return View(_context.CustomerNorms.Where(a => a.Id == id).FirstOrDefault());
+        }
+        [HttpPost]
+        public IActionResult updateCustomerNorm(CustomerNorm customerNorm)
+        {
+            var rand = new Random();
+            customerNorm.Id = rand.Next(0000, 9999);
+            _context.CustomerNorms.Update(customerNorm);
+            _context.SaveChanges();
+            TempData["alertMessage"] = "cập nhật người đại diện thành công";
+            return RedirectToAction("khachhang");
+            
+
+        }
+        public IActionResult deleteCN(long id)
+        {
+            var cn = _context.CustomerNorms.Where(a => a.Id == id).FirstOrDefault();
+            _context.CustomerNorms.Remove(cn);
+            _context.SaveChanges();
+            TempData["alertMessage"] = "xóa người đại diện thành công";
+            return RedirectToAction("khachhang");
         }
     }
 }
