@@ -1,0 +1,228 @@
+﻿
+@{
+    ViewData["Title"] = "hdmb";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model IEnumerable<Hdmb>
+<div class="right_col" role="main" style="height: 500px">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Hợp đồng mua bán</h3>
+            </div>
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @{
+            if (TempData["alertMessage"] != null)
+            {
+                <div style="color:red;font-size:30px">
+                    @TempData["alertMessage"].ToString()
+                </div>
+            }
+        }
+        @{
+            if (TempData["alertMessage1"] != null)
+            {
+                <div style="color:red;font-size:30px">
+                    @TempData["alertMessage1"].ToString()
+                </div>
+            }
+        }
+        <div class="clearfix"></div>
+        <div class="row" style="display: block;">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Hợp đồng mua bán</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Settings 1</a>
+                                    <a class="dropdown-item" href="#">Settings 2</a>
+                                </div>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box table-responsive">
+                                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>System ID</th>
+                                                <th>Ref</th>
+                                                <th>Số HĐ</th>
+                                                <th>Tiền tệ</th>
+                                                <th class="last">Action</th>
+                                                <th>Mã khách hàng</th>
+                                                <th>Khách hàng</th>
+                                                <th>Vận chuyển</th>
+                                                <th>INT ký</th>
+                                                <th>Khách ký</th>
+                                                <th>Thanh toán</th>
+                                                <th>Địa điểm giao hàng</th>
+                                                <th>Mức ứng</th>
+                                                <th>Tạm ứng theo HĐ</th>
+                                                <th>Ngày hợp đồng</th>
+                                                <th>Ngày giao hàng</th>
+                                                <th>Ngày hiệu lực</th>
+                                                <th>Ghi chú</th>
+                                                <th>Hình thức KD</th>
+                                                <th>Loại hợp đồng</th>
+                                                <th>Hình thức gía</th>
+                                                <th>Mã đơn vị</th>
+                                                <th>Người tạo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                foreach (var item in Model)
+                                                {
+                                                    <tr>
+                                                        <th>@item.Systemref</th>
+                                                        <th>@item.Ref</th>
+                                                        <th>@item.Sohd</th>
+                                                        <th>@item.Tiente</th>
+                                                        <th class="last">Action</th>
+                                                        <th>@item.Makhach</th>
+                                                        <th>@item.Makhach</th>
+                                                        <th>@item.VanChuyen</th>
+                                                        <th>@item.IntKy</th>
+                                                        <th>@item.ClientKy</th>
+                                                        <th>@item.Thanhtoan</th>
+                                                        <th>@item.DiaDiemGiaoHang</th>
+                                                        <th>@ViewBag.mucung</th>
+                                                        <th>@item.TienUngHd</th>
+                                                        <th>@item.Ngayky</th>
+                                                        <th>@item.Ngaygiao</th>
+                                                        <th>@item.Ngayhl</th>
+                                                        <th>@item.Ghichu</th>
+                                                        <th>@item.TypeKd</th>
+                                                        <th>@item.MuaBan</th>
+                                                        <th>@item.IsFix</th>
+                                                        <th>@item.Macn</th>
+                                                        <th>@item.Nguoilam</th>
+                                                    </tr>
+                                                }
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 col-sm-12  ">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2><i class="fa fa-bars"></i>Chi tiết hàng hóa</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#">Settings 1</a>
+                                            <a class="dropdown-item" href="#">Settings 2</a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+
+                                <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Chi tiết HĐMB</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active table-responsive" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th border="1" style="border-color:black">SystemRef</th>
+                                                    <th border="1" style="border-color:black">Mã hàng</th>
+                                                    <th border="1" style="border-color:black">Tên hàng</th>
+                                                    <th border="1" style="border-color:black">Số lượng</th>
+                                                    <th border="1" style="border-color:black">Trọng lượng</th>
+                                                    <th border="1" style="border-color:black">ĐVT</th>
+                                                    <th border="1" style="border-color:black">VAT</th>
+                                                    <th border="1" style="border-color:black">Giá</th>
+                                                    <th border="1" style="border-color:black">Giá tạm tính</th>
+                                                    <th border="1" style="border-color:black">Số LOT</th>
+                                                    <th border="1" style="border-color:black">Giá tháng</th>
+                                                    <th border="1" style="border-color:black">Giá năm</th>
+                                                    <th border="1" style="border-color:black">+ / -</th>
+                                                    <th border="1" style="border-color:black">Mức trừ</th>
+                                                    <th border="1" style="border-color:black">Ngày chốt</th>
+                                                    <th border="1" style="border-color:black">Mức stoploss</th>
+                                                    <th border="1" style="border-color:black">Mã nhóm</th>
+                                                    <th border="1" style="border-color:black">Giá thị trường</th>
+                                                    <th border="1" style="border-color:black">Mức thưởng</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                    <th scope="col" style="border-color:black"></th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<!-- /page content -->
+<!-- /page content -->
+<!-- footer content -->
