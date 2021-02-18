@@ -21,8 +21,17 @@ namespace pmkd.Controllers
         }
         public IActionResult hdmb()
         {
-            ViewBag.mucung = (from a in _context.Hdmbs join b in _context.PortfolioPayments on a.Thanhtoan equals b.Matt select b.Mucung).ToList();
-            return View("hdmb",_context.Hdmbs.ToList());
+            ViewBag.signer = _context.Signers.ToList();
+            var startDay = new DateTime(2020, 01, 01);
+            var endDay = new DateTime(2021, 12, 30);
+            var hdmb = (from a in _context.Hdmbs join b in _context.PortfolioPayments on a.ThanhtoanId equals b.Id 
+                        join c in _context.KhachHangs on a.Makhach equals c.MaKhach
+                        where (a.Ngayky >= startDay) && (a.Ngayky <= endDay) 
+                        select new ViewModelHDMB{ 
+                            hdmb = a,portfolioPayment = b,khachHang = c,signer = _context.Signers.ToList()
+                        }).ToList().Distinct();
+            ViewBag.mucung = (from a in _context.Hdmbs join b in _context.PortfolioPayments on a.Thanhtoan equals b.Matt select b.Mucung).FirstOrDefault();
+            return View("hdmb",hdmb);
         }
     }
 }

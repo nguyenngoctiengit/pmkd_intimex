@@ -1,9 +1,9 @@
-﻿
+﻿@using System.Linq;
 @{
     ViewData["Title"] = "hdmb";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model IEnumerable<Hdmb>
+@model IEnumerable<ViewModelHDMB>
 <div class="right_col" role="main" style="height: 500px">
     <div class="">
         <div class="page-title">
@@ -70,10 +70,10 @@
                                                 <th>System ID</th>
                                                 <th>Ref</th>
                                                 <th>Số HĐ</th>
-                                                <th>Tiền tệ</th>
-                                                <th class="last">Action</th>
                                                 <th>Mã khách hàng</th>
                                                 <th>Khách hàng</th>
+                                                <th>Ngày hợp đồng</th>
+                                                <th>Tiền tệ</th>
                                                 <th>Vận chuyển</th>
                                                 <th>INT ký</th>
                                                 <th>Khách ký</th>
@@ -81,7 +81,6 @@
                                                 <th>Địa điểm giao hàng</th>
                                                 <th>Mức ứng</th>
                                                 <th>Tạm ứng theo HĐ</th>
-                                                <th>Ngày hợp đồng</th>
                                                 <th>Ngày giao hàng</th>
                                                 <th>Ngày hiệu lực</th>
                                                 <th>Ghi chú</th>
@@ -97,29 +96,57 @@
                                                 foreach (var item in Model)
                                                 {
                                                     <tr>
-                                                        <th>@item.Systemref</th>
-                                                        <th>@item.Ref</th>
-                                                        <th>@item.Sohd</th>
-                                                        <th>@item.Tiente</th>
-                                                        <th class="last">Action</th>
-                                                        <th>@item.Makhach</th>
-                                                        <th>@item.Makhach</th>
-                                                        <th>@item.VanChuyen</th>
-                                                        <th>@item.IntKy</th>
-                                                        <th>@item.ClientKy</th>
-                                                        <th>@item.Thanhtoan</th>
-                                                        <th>@item.DiaDiemGiaoHang</th>
-                                                        <th>@ViewBag.mucung</th>
-                                                        <th>@item.TienUngHd</th>
-                                                        <th>@item.Ngayky</th>
-                                                        <th>@item.Ngaygiao</th>
-                                                        <th>@item.Ngayhl</th>
-                                                        <th>@item.Ghichu</th>
-                                                        <th>@item.TypeKd</th>
-                                                        <th>@item.MuaBan</th>
-                                                        <th>@item.IsFix</th>
-                                                        <th>@item.Macn</th>
-                                                        <th>@item.Nguoilam</th>
+                                                        <th>@item.hdmb.Systemref</th>
+                                                        <th>@item.hdmb.Ref</th>
+                                                        <th>@item.hdmb.Sohd</th>
+                                                        <th>@item.hdmb.Makhach</th>
+                                                        <th>@item.khachHang.TenKhach</th>
+                                                        <th>@item.hdmb.Ngayky</th>
+                                                        <th>@item.hdmb.Tiente</th>
+                                                        <th>@item.hdmb.VanChuyen</th>
+                                                        @{
+                                                            string str = item.hdmb.IntKy.Trim();
+                                                            string str1 = str.Substring(str.Length - 1, 1);
+                                                            var intky = (from a in Model
+                                                                            where a.signer.MaKhach == item.hdmb.Makhach
+                                                        && a.signer.Stt.ToString() == str1
+                                                                            select a.signer.Nguoiky).FirstOrDefault();
+                                                            <th>@intky</th>
+                                                        }
+
+                                                        <th>@item.hdmb.ClientKy</th>
+                                                        <th>@item.hdmb.Thanhtoan || @item.portfolioPayment.TenTt</th>
+                                                        <th>@item.hdmb.DiaDiemGiaoHang</th>
+                                                        <th>@item.portfolioPayment.Mucung</th>
+                                                        <th>@item.hdmb.TienUngHd.ToString("N")</th>
+                                                        <th>@item.hdmb.Ngaygiao</th>
+                                                        <th>@item.hdmb.Ngayhl</th>
+                                                        <th>@item.hdmb.Ghichu</th>
+                                                        @{
+                                                            if (item.hdmb.TypeKd == 1)
+                                                            {
+                                                                <th>Trực tiếp</th>
+                                                            }
+                                                            else
+                                                            {
+                                                                <th>Ủy thác</th>
+                                                            }
+                                                        }
+
+                                                        <th>@item.hdmb.MuaBan</th>
+                                                        @{
+                                                            if (item.hdmb.IsFix == true)
+                                                            {
+                                                                <th>Giá outright</th>
+                                                            }
+                                                            else
+                                                            {
+                                                                <th>Giá trừ lùi</th>
+                                                            }
+                                                        }
+
+                                                        <th>@item.hdmb.Macn</th>
+                                                        <th>@item.hdmb.Nguoilam</th>
                                                     </tr>
                                                 }
                                             }
