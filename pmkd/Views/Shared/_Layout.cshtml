@@ -201,7 +201,15 @@
                                                     <a href="level2.html">Phương án kinh doanh</a>
                                                 </li>
                                                 <li>
-                                                    <a asp-action="hdmb" asp-controller="hopdong">Hợp đồng mua bán</a>
+                                                    <a>Hợp đồng mua bán<span class="fa fa-chevron-down"></span></a>
+                                                    <ul class="nav child_menu">
+                                                        <li>
+                                                            <a asp-action="hdmb" asp-controller="hopdong">Hợp đồng mua bán</a>
+                                                        </li>
+                                                        <li>
+                                                            <a asp-action="themhopdong" asp-controller="hopdong">Thêm hợp đồng</a>
+                                                        </li>
+                                                    </ul>
                                                 </li>
                                                 <li>
                                                     <a href="#level2_2">Ghép phương án kinh doanh</a>

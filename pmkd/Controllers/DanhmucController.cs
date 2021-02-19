@@ -203,16 +203,6 @@ namespace pmkd.Controllers
                 }
             }
         }
-        public IActionResult khuvuc()
-        {
-            ViewBag.quocgia = (from a in _context.Quocgia
-                               join b in _context.KhachHangs
-                                  on a.Name equals b.TenQg where a.Name != "VIETNAM" select a).Distinct();
-            ViewBag.khuvuc = (from a in _context.Khuvucs
-                              join b in _context.KhachHangs
-                              on a.MaKhuvuc equals b.MaKhuvuc where b.TenQg == "VIETNAM" select a).Distinct();
-            return View("khuvuc");
-        }
         public IActionResult khachhang(string id)
         {
            

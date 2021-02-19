@@ -1,0 +1,340 @@
+﻿
+@{
+    ViewData["Title"] = "themhopdong";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    if (TempData["alertMessage"] != null)
+    {
+        <div style="color:red">
+            @TempData["alertMessage"].ToString()
+        </div>
+    }
+}
+<style>
+    .input-validation-error {
+        border-color: red;
+</style>
+<div class="right_col" role="main">
+    <div class="">
+        <div class="col-md-12 col-sm-12" style="height:auto">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Thêm<small>Hàng hóa</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    @{
+                        if (TempData["alertMessage"] != null)
+                        {
+                            <div style="color:red;font-size:30px">
+                                @TempData["alertMessage"].ToString()
+                            </div>
+                        }
+                    }
+                    @{
+                        if (TempData["alertMessage1"] != null)
+                        {
+                            <div style="color:red;font-size:30px">
+                                @TempData["alertMessage1"].ToString()
+                            </div>
+                        }
+                    }
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <form method="post" class="validate-form" role="form">
+                        <div>
+                            <label>System ID</label>
+                            <input type="text" class="form-control" placeholder="System ID">
+                            <span class="text-danger"></span>
+                        </div>
+                        <label for="inputEmail4">Ref</label>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <input type="text" class="form-control" placeholder="Ref">
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-8 form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" style="margin-left:20px">
+                                <label class="form-check-label" for="inlineCheckbox1" style="font-size:20px">Hợp đồng bắt buộc có PAKD</label>
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" style="margin-left:30px">
+                                <label class="form-check-label" for="inlineCheckbox1" style="font-size:20px">Hợp đồng nợ khó đòi</label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="inputPassword4">Tiền tệ</label>
+                                <select class="form-control">
+                                    <option value="VND">VND</option>
+                                    <option value="USD">USD</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Khách hàng</label>
+                                <input list="browsers" name="browser" id="browser" class="form-control">
+                                <datalist id="browsers">
+                                    <option value="Edge">Edge</option>
+                                    <option value="Firefox">Firefox</option>
+                                    <option value="Chrome">Chrome</option>
+                                    <option value="Opera">Opera</option>
+                                    <option value="Safari">Safari</option>
+                                </datalist>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputEmail4">Vận chuyển</label>
+                                <input type="text" class="form-control" placeholder="Vận chuyển">
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <label for="inputEmail4">Số hợp đồng</label>
+                        <label for="inputEmail4" style="margin-left:180px">Loại hợp đồng</label>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <input type="text" class="form-control" placeholder="Số hợp đồng">
+                                <span class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-md-8 form-check-inline">
+
+                                <label class="radio-inline">
+                                    <input type="radio" name="optradio"><span style="font-size:15px">Mua hàng</span>
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optradio" style="margin-left:15px"><span style="font-size:15px">Bán hàng</span>
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optradio" style="margin-left:15px"><span style="font-size:15px">Mượn hàng</span>
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optradio" style="margin-left:15px"><span style="font-size:15px">Cho mượn</span>
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optradio" style="margin-left:15px"><span style="font-size:15px">Khách trả</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">INT ký</label>
+                                <input list="browsers" name="browser" id="browser" class="form-control">
+                                <datalist id="browsers">
+                                    <option value="Edge">Edge</option>
+                                    <option value="Firefox">Firefox</option>
+                                    <option value="Chrome">Chrome</option>
+                                    <option value="Opera">Opera</option>
+                                    <option value="Safari">Safari</option>
+                                </datalist>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">Khách ký</label>
+                                <input list="browsers" name="browser" id="browser" class="form-control">
+                                <datalist id="browsers">
+                                    <option value="Edge">Edge</option>
+                                    <option value="Firefox">Firefox</option>
+                                    <option value="Chrome">Chrome</option>
+                                    <option value="Opera">Opera</option>
+                                    <option value="Safari">Safari</option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <label for="inputEmail4">Thanh toán</label>
+                        <label for="inputEmail4" style="margin-left:440px">Hình thức giá</label>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <input list="browsers" name="browser" id="browser" class="form-control">
+                                <datalist id="browsers">
+                                    <option value="Edge">Edge</option>
+                                    <option value="Firefox">Firefox</option>
+                                    <option value="Chrome">Chrome</option>
+                                    <option value="Opera">Opera</option>
+                                    <option value="Safari">Safari</option>
+                                </datalist>
+                            </div>
+                            <div class="form-group col-md-5 form-check-inline">
+                                <label class="radio-inline">
+                                    <input type="radio" name="optradio"><span style="font-size:20px">Giá outright</span>
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optradio" style="margin-left:15px"><span style="font-size:20px">Giá trừ lùi</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label for="inputState">Loại khách  || 0-MB lâu dài, 1-MB theo từng PA, 2-MB theo ủy thác, 3-Khách lập bảng kê</label>
+                            <label for="inputZip" style="margin-left:270px">Email</label>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <select class="form-control">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3" style="margin-left:599px">
+                                <input type="text" class="form-control">
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="inputEmail4">Tài khoản</label>
+                                <input type="text" class="form-control" placeholder="Tài khoản">
+                            </div>
+                            <div class="form-group col-md-9">
+                                <label for="inputPassword4">Ngân hàng</label>
+                                <input type="text" class="form-control" placeholder="Ngân hàng">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="inputEmail4">Giấy phép</label>
+                                <input type="text" class="form-control" placeholder="Giấy phép">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">Ngày cấp</label>
+                                <input type="date" class="form-control" placeholder="ngày cấp">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputPassword4">Tỉnh / TP</label>
+                                <select class="form-control">
+
+                                    <option>1</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label>Ghi chú</label>
+                            <textarea class="form-control"></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Quốc gia</label>
+                                <select class="form-control">
+
+                                    <option>1</option>
+
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Tòa kinh tế</label>
+                                <input type="text" class="form-control" placeholder="Tòa kinh tế">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Bốc xếp</label>
+                                <input type="text" class="form-control" placeholder="Bốc xếp">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Vận chuyển</label>
+                                <input type="text" class="form-control" placeholder="Vận chuyển">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Diện tích(m2)</label>
+                                <input type="text" class="form-control" placeholder="Diện tích">
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Sản lượng(kg)</label>
+                                <input type="text" class="form-control" placeholder="Sản lượng">
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" id="isActive" type="checkbox" value="true">
+                                <input type="hidden" value="false" />
+                                <label class="form-check-label">
+                                    Kiểm tra định mức HH chưa giao
+                                </label>
+
+                            </div>
+                        </div>
+                        <div>
+                            <label>Địa điểm giao hàng</label>
+                            <input type="text" class="form-control" placeholder="Địa điểm giao hàng">
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+
+                                <select class="form-control">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </div>
+                            <div class="custom-control custom-checkbox" style="margin-left:450px">
+                                <input type="checkbox" id="customRadio1" class="custom-control-input" value="true">
+                                <input type="hidden" value="false">
+                                <label class="custom-control-label" for="customRadio1">Thanh toán mua</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" id="customRadio2" class="custom-control-input" value="true">
+                                <input type="hidden" value="false">
+                                <label class="custom-control-label" for="customRadio2">Thanh toán bán</label>
+                            </div>
+                        </div>
+                        <div class="form-group row" style="margin-left:618px">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="exampleRadios1" value="true">
+                                <label class="form-check-label" for="exampleRadios1">
+                                    Ứng tiền
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline" style="margin-left:40px">
+                                <input class="form-check-input" type="radio" id="exampleRadios2" value="true">
+                                <label class="form-check-label" for="exampleRadios2">
+                                    Ứng tiền
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row" style="margin-left:618px">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="exampleRadios1" value="false">
+                                <label class="form-check-label" for="exampleRadios1">
+                                    Không ứng tiền
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline" style="margin-left:2px">
+                                <input class="form-check-input " type="radio" id="exampleRadios2" value="false">
+                                <label class="form-check-label" for="exampleRadios2">
+                                    Không ứng tiền
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit" asp-action="themkhachhang" asp-controller="danhmuc" class="btn btn-primary btn-block" style="margin-top: 30px">Submit</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

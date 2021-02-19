@@ -11,5 +11,7 @@ namespace pmkd.Models
         public Hdmb hdmb { get; set; }
         public KhachHang khachHang { get; set; }
         public Signer signer { get; set; }
+        public Hanghoa hanghoa { get; set; }
+        public CtHdmb ctHdmb { get; set; }
     }
 }

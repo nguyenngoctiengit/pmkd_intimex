@@ -466,3 +466,5 @@ C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khu
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\nguoidaidien.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\nhomhanghoa.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\hdmb.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\cthdmb.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\themhopdong.cshtml.g.cs

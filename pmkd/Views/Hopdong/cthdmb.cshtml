@@ -1,6 +1,6 @@
 ﻿@using System.Linq;
 @{
-    ViewData["Title"] = "hdmb";
+    ViewData["Title"] = "cthdmb";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model IEnumerable<ViewModelHDMB>
@@ -183,7 +183,7 @@
                                                         <th>@item.hdmb.Macn</th>
                                                         <th>@item.hdmb.Nguoilam</th>
                                                     </tr>
-            }
+                                                }
                                             }
 
                                         </tbody>
@@ -249,27 +249,33 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <th scope="col" style="border-color:black"></th>
-                                                    <th scope="col" style="border-color:black"></th>
-                                                    <th scope="col" style="border-color:black"></th>
-                                                    <th scope="col" style="border-color:black"></th>
-                                                    <th scope="col" style="border-color:black"></th>
-                                                    <th scope="col" style="border-color:black"></th>
-                                                    <th scope="col" style="border-color:black"></th>
-                                                    <th scope="col" style="border-color:black"></th>
-                                                    <th scope="col" style="border-color:black"></th>
-                                                    <th scope="col" style="border-color:black"></th>
-                                                    <th scope="col" style="border-color:black"></th>
-                                                    <th scope="col" style="border-color:black"></th>
-                                                    <th scope="col" style="border-color:black"></th>
-                                                    <th scope="col" style="border-color:black"></th>
-                                                    <th scope="col" style="border-color:black"></th>
-                                                    <th scope="col" style="border-color:black"></th>
-                                                    <th scope="col" style="border-color:black"></th>
-                                                    <th scope="col" style="border-color:black"></th>
-                                                    <th scope="col" style="border-color:black"></th>
-                                                </tr>
+                                                @{
+                                                    foreach (var item in ViewBag.cthdmb)
+                                                    {
+                                                        <tr>
+                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Systemref</th>
+                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Mahang</th>
+                                                            <th scope="col" style="border-color:black">@item.hanghoa.Tenhang</th>
+                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Soluong</th>
+                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Trongluong.ToString("N")</th>
+                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Dvt</th>
+                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Vat</th>
+                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Giact.ToString("N")</th>
+                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Giatt.ToString("N")</th>
+                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Solot</th>
+                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Giathang</th>
+                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Gianam</th>
+                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Sig</th>
+                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Diff</th>
+                                                            <th scope="col" style="border-color:black">@item.ctHdmb.FNgayfix</th>
+                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Stoploss</th>
+                                                            <th scope="col" style="border-color:black">@item.hanghoa.MaNhom</th>
+                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Giathitruong</th>
+                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Mucthuong</th>
+                                                        </tr>
+                                                    }
+                                                }
+
                                             </tbody>
                                         </table>
                                     </div>
