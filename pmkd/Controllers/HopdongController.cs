@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using pmkd.Models;
 using System;
 using System.Collections.Generic;
@@ -59,7 +60,56 @@ namespace pmkd.Controllers
         }
         public IActionResult themhopdong()
         {
+            ViewBag.kh = _context.KhachHangs.ToList();
+            var uniname = HttpContext.Session.GetString("UnitName");
+            ViewBag.intky = _context.Signers.Where(a => a.MaKhach == uniname).ToList();
+            ViewBag.thanhtoan = _context.PortfolioPayments.ToList();
+            ViewBag.diadiemgiaohang = _context.HdmbGiaohangs.ToList();
+            ViewBag.hdchomuon = _context.Hdmbs.Where(a => a.MuaBan == "CMUON").ToList();
             return View("themhopdong");
         }
+        [HttpPost]
+        public IActionResult themhopdong(Hdmb hdmb1)
+        {
+
+                var hdchomuon = (from a in _context.Hdmbs where a.MuaBan == "CMUON" select a).ToList();
+                hdmb1.Macn = HttpContext.Session.GetString("UnitName");
+                hdmb1.Trangthai = 1;
+                hdmb1.Nguoilam = HttpContext.Session.GetString("userId");
+                if (hdmb1.HdcmuonId == null)
+                {
+                    hdmb1.HdcmuonId = "";
+                    hdmb1.SoHdcmuon = "";
+                }
+                else
+                {
+                    foreach (var item in hdchomuon)
+                    {
+                        if (item.HdcmuonId == hdmb1.HdcmuonId)
+                        {
+                            hdmb1.HdcmuonId = item.HdcmuonId;
+                            hdmb1.SoHdcmuon = (from a in _context.Hdmbs where hdmb1.HdcmuonId == item.HdcmuonId select a.SoHdcmuon).FirstOrDefault().ToString();
+                        }
+                    }
+                }
+                hdmb1.TrangthaiGhep = true;
+                hdmb1.Ngaylam = DateTime.Now;
+                _context.Hdmbs.Add(hdmb1);
+                _context.SaveChanges();
+                var startDay = new DateTime(2020, 01, 01);
+                var endDay = new DateTime(2021, 12, 30);
+                var hdmb = (from a in _context.Hdmbs
+                            join b in _context.PortfolioPayments on a.ThanhtoanId equals b.Id
+                            join c in _context.KhachHangs on a.Makhach equals c.MaKhach
+                            where (a.Ngayky >= startDay) && (a.Ngayky <= endDay)
+                            select new ViewModelHDMB
+                            {
+                                hdmb = a,
+                                portfolioPayment = b,
+                                khachHang = c
+                            }).ToList().Distinct();
+                TempData["alertMessage"] = "thêm người hợp đồng thành công";
+                return RedirectToAction("hdmb");
+        }          
     }
 }

@@ -780,7 +780,18 @@
     <script src="~/public/build/js/custom.min.js"></script>
     <script type="text/javascript">
         /// some script
-
+        function show() {
+            document.getElementById('divhdchomuon').style.display = 'block';
+            document.getElementById('ngaytra').style.display = 'none';
+        }
+        function show1() {
+            document.getElementById('divhdchomuon').style.display = 'none';
+            document.getElementById('ngaytra').style.display = 'none';
+        }
+        function show2() {
+            document.getElementById('divhdchomuon').style.display = 'none';
+            document.getElementById('ngaytra').style.display = 'block';
+        }
         // jquery ready start
         $(document).ready(function () {
             // jQuery code

@@ -38,6 +38,7 @@ namespace pmkd.Controllers
                 }
                 HttpContext.Session.SetString("userId", userdetails.UserName1);
                 HttpContext.Session.SetString("FullName1", userdetails.FullName1);
+                HttpContext.Session.SetString("UnitName", userdetails.UnitName);
 
             }
             else

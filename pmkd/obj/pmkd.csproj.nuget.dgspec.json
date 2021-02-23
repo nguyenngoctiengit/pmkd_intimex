@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Desktop\\pmkd_project\\pmkd\\pmkd.csproj": {}
+    "C:\\Users\\User\\Desktop\\pmkd_intimex\\pmkd\\pmkd.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Desktop\\pmkd_project\\pmkd\\pmkd.csproj": {
+    "C:\\Users\\User\\Desktop\\pmkd_intimex\\pmkd\\pmkd.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Desktop\\pmkd_project\\pmkd\\pmkd.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\pmkd_intimex\\pmkd\\pmkd.csproj",
         "projectName": "pmkd",
-        "projectPath": "C:\\Users\\User\\Desktop\\pmkd_project\\pmkd\\pmkd.csproj",
+        "projectPath": "C:\\Users\\User\\Desktop\\pmkd_intimex\\pmkd\\pmkd.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Desktop\\pmkd_project\\pmkd\\obj\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\pmkd_intimex\\pmkd\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
