@@ -21,7 +21,7 @@
         <div class="col-md-12 col-sm-12" style="height:auto">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Thêm<small>Hàng hóa</small></h2>
+                    <h2>Thêm<small>hợp đồng</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li>
                             <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -188,11 +188,12 @@
                                 <label for="inputPassword4">Khách ký</label>
                                 <input list="browsers" class="form-control" asp-for="ClientKy">
                                 <datalist id="browsers">
-                                    <option value="Edge">Edge</option>
-                                    <option value="Firefox">Firefox</option>
-                                    <option value="Chrome">Chrome</option>
-                                    <option value="Opera">Opera</option>
-                                    <option value="Safari">Safari</option>
+                                    @{
+                                        foreach (var item in ViewBag.client)
+                                        {
+                                            <option value="@item.MaKhach@item.Stt"> || @item.Nguoiky chức vụ @item.Chucvu</option>
+                                        }
+                                    }
                                 </datalist>
                                 <span asp-validation-for="ClientKy" class="text-danger"></span>
                             </div>

@@ -1,296 +1,509 @@
-﻿@using System.Linq;
+﻿@model Hdmb
 @{
     ViewData["Title"] = "cthdmb";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model IEnumerable<ViewModelHDMB>
-<div class="right_col" role="main" style="height: 500px">
-    <div class="">
-        <div class="page-title">
-            <div class="title_left">
-                <h3>Hợp đồng mua bán</h3>
-            </div>
-            <div class="title_right">
-                <div class="col-md-5 col-sm-5   form-group pull-right top_search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for...">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Go!</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
+
+@{
+    if (TempData["alertMessage"] != null)
+    {
+        <div style="color:red">
+            @TempData["alertMessage"].ToString()
         </div>
-        @{
-            if (TempData["alertMessage"] != null)
-            {
-                <div style="color:red;font-size:30px">
-                    @TempData["alertMessage"].ToString()
+    }
+}
+<style>
+    .input-validation-error {
+        border-color: red;
+</style>
+<div class="right_col" role="main">
+    <div class="">
+        <div class="col-md-12 col-sm-12" style="height:auto">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Chi tiết<small>hợp đồng</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    @{
+                        if (TempData["alertMessage"] != null)
+                        {
+                            <div style="color:red;font-size:30px">
+                                @TempData["alertMessage"].ToString()
+                            </div>
+                        }
+                    }
+                    @{
+                        if (TempData["alertMessage1"] != null)
+                        {
+                            <div style="color:red;font-size:30px">
+                                @TempData["alertMessage1"].ToString()
+                            </div>
+                        }
+                    }
+                    <div class="clearfix"></div>
                 </div>
-            }
-        }
-        @{
-            if (TempData["alertMessage1"] != null)
-            {
-                <div style="color:red;font-size:30px">
-                    @TempData["alertMessage1"].ToString()
-                </div>
-            }
-        }
-        <div class="clearfix"></div>
-        <div class="row" style="display: block;">
-            <div class="col-md-12 col-sm-12 ">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Hợp đồng mua bán</h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li>
-                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Settings 1</a>
-                                    <a class="dropdown-item" href="#">Settings 2</a>
-                                </div>
-                            </li>
-                            <li>
-                                <a class="close-link"><i class="fa fa-close"></i></a>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="card-box table-responsive">
-                                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th>System ID</th>
-                                                <th>Ref</th>
-                                                <th>Số HĐ</th>
-                                                <th>Mã khách hàng</th>
-                                                <th>Khách hàng</th>
-                                                <th>Ngày hợp đồng</th>
-                                                <th>Tiền tệ</th>
-                                                <th>Vận chuyển</th>
-                                                <th>INT ký</th>
-                                                <th>Khách ký</th>
-                                                <th>Thanh toán</th>
-                                                <th>Địa điểm giao hàng</th>
-                                                <th>Mức ứng</th>
-                                                <th>Tạm ứng theo HĐ</th>
-                                                <th>Ngày giao hàng</th>
-                                                <th>Ngày hiệu lực</th>
-                                                <th>Ghi chú</th>
-                                                <th>Hình thức KD</th>
-                                                <th>Loại hợp đồng</th>
-                                                <th>Hình thức gía</th>
-                                                <th>Mã đơn vị</th>
-                                                <th>Người tạo</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @{
-                                                foreach (var item in Model)
-                                                {
-                                                    <tr>
-                                                        <th>@item.hdmb.Systemref</th>
-                                                        <th><a asp-action="cthdmb" asp-controller="hopdong" asp-route-id="@item.hdmb.Systemref">@item.hdmb.Ref</a></th>
-                                                        <th>@item.hdmb.Sohd</th>
-                                                        <th>@item.hdmb.Makhach</th>
-                                                        <th>@item.khachHang.TenKhach</th>
-                                                        <th>@item.hdmb.Ngayky</th>
-                                                        <th>@item.hdmb.Tiente</th>
-                                                        <th>@item.hdmb.VanChuyen</th>
-                                                        @{
+                <div class="x_content">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <form method="post" class="validate-form" role="form">
+                        <div class="form-row">
+                            <label>Hình thức kinh doanh</label>
+                            <label style="margin-left:210px">Loại hợp đồng</label>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <div style="width:200px ; border:1px dashed;border-color:black;">
+                                    @{
+                                        if (Model.TypeKd == 0)
+                                        {
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.TypeKd)" id="inlineRadio1" value="false" checked>
+                                                <label class="form-check-label" for="inlineRadio1">Trực tiếp</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="true">
+                                                <label class="form-check-label" for="inlineRadio2">Ủy thác</label>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.TypeKd)" id="inlineRadio1" value="false">
+                                                <label class="form-check-label" for="inlineRadio1">Trực tiếp</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="true" checked>
+                                                <label class="form-check-label" for="inlineRadio2">Ủy thác</label>
+                                            </div>
+                                        }
+                                    }
 
-                                                            string str = item.hdmb.IntKy.Trim();
-                                                            int c = str.Length;
-                                                            if (c > 1)
-                                                            {
-                                                                string str1 = str.Substring(str.Length - 1, 1);
-                                                                foreach (var a in ViewBag.signer)
-                                                                {
-                                                                    if (a.MaKhach == item.hdmb.Macn.Trim() && a.Stt.ToString() == str1)
-                                                                    {
-                                                                        <th>@a.Nguoiky chức vụ @a.Chucvu</th>
-                                                                    }
-
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                <th></th>
-                                                            }
-                                                        }
-
-                                                        @{
-
-                                                            string strKH = item.hdmb.ClientKy.Trim();
-                                                            int b = strKH.Length;
-                                                            if (b > 0)
-                                                            {
-                                                                string strKH1 = strKH.Substring(b - 1, 1);
-                                                                foreach (var a in ViewBag.signer)
-                                                                {
-                                                                    if (a.MaKhach == item.hdmb.Makhach && a.Stt.ToString() == strKH1)
-                                                                    {
-                                                                        <th>@a.Nguoiky chức vụ @a.Chucvu</th>
-                                                                    }
-
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                <th></th>
-                                                            }
-
-
-
-                                                        }
-                                                        <th>@item.hdmb.Thanhtoan || @item.portfolioPayment.TenTt</th>
-                                                        <th>@item.hdmb.DiaDiemGiaoHang</th>
-                                                        <th>@item.portfolioPayment.Mucung</th>
-                                                        <th>@item.hdmb.TienUngHd.ToString("N")</th>
-                                                        <th>@item.hdmb.Ngaygiao</th>
-                                                        <th>@item.hdmb.Ngayhl</th>
-                                                        <th>@item.hdmb.Ghichu</th>
-                                                        @{
-                                                            if (item.hdmb.TypeKd == 1)
-                                                            {
-                                                                <th>Trực tiếp</th>
-                                                            }
-                                                            else
-                                                            {
-                                                                <th>Ủy thác</th>
-                                                            }
-                                                        }
-
-                                                        <th>@item.hdmb.MuaBan</th>
-                                                        @{
-                                                            if (item.hdmb.IsFix == true)
-                                                            {
-                                                                <th>Giá outright</th>
-                                                            }
-                                                            else
-                                                            {
-                                                                <th>Giá trừ lùi</th>
-                                                            }
-                                                        }
-
-                                                        <th>@item.hdmb.Macn</th>
-                                                        <th>@item.hdmb.Nguoilam</th>
-                                                    </tr>
-                                                }
-                                            }
-
-                                        </tbody>
-                                    </table>
                                 </div>
                             </div>
-                        </div>
-
-                    </div>
-                    <div class="col-md-12 col-sm-12  ">
-                        <div class="x_panel">
-                            <div class="x_title">
-                                <h2><i class="fa fa-bars"></i>Chi tiết hàng hóa</h2>
-                                <ul class="nav navbar-right panel_toolbox">
-                                    <li>
-                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">Settings 1</a>
-                                            <a class="dropdown-item" href="#">Settings 2</a>
+                            <div class="form-group col-md-7" style="border:1px dashed;border-color:black">
+                                @{
+                                    if (Model.MuaBan == "MUA")
+                                    {
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onfocus="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio1" value="MUA" checked>
+                                            <label class="form-check-label" for="inlineRadio1">Mua hàng</label>
                                         </div>
-                                    </li>
-                                    <li>
-                                        <a class="close-link"><i class="fa fa-close"></i></a>
-                                    </li>
-                                </ul>
-                                <div class="clearfix"></div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onfocus="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio2" value="BAN">
+                                            <label class="form-check-label" for="inlineRadio2">Bàn hàng</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onfocus="show2();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="MUON">
+                                            <label class="form-check-label" for="inlineRadio3">Mượn hàng</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onfocus="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="CMUON">
+                                            <label class="form-check-label" for="inlineRadio3">Cho mượn</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onfocus="show();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="KTRA">
+                                            <label class="form-check-label" for="inlineRadio3">Khách trả</label>
+                                        </div>
+                                    }
+                                    else if (Model.MuaBan == "BAN")
+                                    {
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio1" value="MUA">
+                                            <label class="form-check-label" for="inlineRadio1">Mua hàng</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio2" value="BAN" checked>
+                                            <label class="form-check-label" for="inlineRadio2">Bàn hàng</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onclick="show2();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="MUON">
+                                            <label class="form-check-label" for="inlineRadio3">Mượn hàng</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="CMUON">
+                                            <label class="form-check-label" for="inlineRadio3">Cho mượn</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onclick="show();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="KTRA">
+                                            <label class="form-check-label" for="inlineRadio3">Khách trả</label>
+                                        </div>
+                                    }
+                                    else if (Model.MuaBan == "MUON")
+                                    {
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio1" value="MUA">
+                                            <label class="form-check-label" for="inlineRadio1">Mua hàng</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio2" value="BAN">
+                                            <label class="form-check-label" for="inlineRadio2">Bàn hàng</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onclick="show2();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="MUON" checked>
+                                            <label class="form-check-label" for="inlineRadio3">Mượn hàng</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="CMUON">
+                                            <label class="form-check-label" for="inlineRadio3">Cho mượn</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onclick="show();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="KTRA">
+                                            <label class="form-check-label" for="inlineRadio3">Khách trả</label>
+                                        </div>
+                                    }
+                                    else if (Model.MuaBan == "CMUON")
+                                    {
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio1" value="MUA">
+                                            <label class="form-check-label" for="inlineRadio1">Mua hàng</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio2" value="BAN">
+                                            <label class="form-check-label" for="inlineRadio2">Bàn hàng</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onclick="show2();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="MUON">
+                                            <label class="form-check-label" for="inlineRadio3">Mượn hàng</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="CMUON" checked>
+                                            <label class="form-check-label" for="inlineRadio3">Cho mượn</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onclick="show();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="KTRA">
+                                            <label class="form-check-label" for="inlineRadio3">Khách trả</label>
+                                        </div>
+                                    }
+                                    else if (Model.MuaBan == "KTRA")
+                                    {
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onfocus="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio1" value="MUA">
+                                            <label class="form-check-label" for="inlineRadio1">Mua hàng</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onfocus="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio2" value="BAN">
+                                            <label class="form-check-label" for="inlineRadio2">Bàn hàng</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onfocus="show2();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="MUON">
+                                            <label class="form-check-label" for="inlineRadio3">Mượn hàng</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onfocus="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="CMUON">
+                                            <label class="form-check-label" for="inlineRadio3">Cho mượn</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" onfocus="show();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="KTRA" checked>
+                                            <label class="form-check-label" for="inlineRadio3">Khách trả</label>
+                                        </div>
+                                    }
+                                }
                             </div>
-                            <div class="x_content">
+                        </div>
+                        <div>
+                            <label>System ID</label>
+                            <input type="text" class="form-control" placeholder="System ID" asp-for="Systemref">
+                            <span asp-validation-for="Systemref" class="text-danger"></span>
+                        </div>
+                        <label for="inputEmail4">Ref</label>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <input type="text" class="form-control" placeholder="Ref" asp-for="Ref">
+                                <span asp-validation-for="Ref" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-8 form-check-inline">
+                                @{
+                                    if (Model.Pakd == true)
+                                    {
+                                        <input class="form-check-input" type="checkbox" name="@Html.NameFor(m => m.Pakd)" value="true" style="margin-left:20px" checked>
+                                        <input type="hidden" name="@Html.NameFor(m => m.Pakd)" value="false">
+                                        <label class="form-check-label" for="inlineCheckbox1" style="font-size:20px">Hợp đồng bắt buộc có PAKD</label>
 
-                                <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Chi tiết HĐMB</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content" id="myTabContent">
-                                    <div class="tab-pane fade show active table-responsive" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
-                                            <thead>
+                                    }
+                                    else
+                                    {
+                                        <input class="form-check-input" type="checkbox" name="@Html.NameFor(m => m.Pakd)" value="true" style="margin-left:20px">
+                                        <input type="hidden" name="@Html.NameFor(m => m.Pakd)" value="false">
+                                        <label class="form-check-label" for="inlineCheckbox1" style="font-size:20px">Hợp đồng bắt buộc có PAKD</label>
+                                    }
+                                    if (Model.IsNoKhoDoi == true)
+                                    {
+                                        <input class="form-check-input" type="checkbox" name="@Html.NameFor(m => m.IsNoKhoDoi)" value="true" style="margin-left:30px" checked>
+                                        <input type="hidden" name="@Html.NameFor(m => m.IsNoKhoDoi)" value="false">
+                                        <label class="form-check-label" for="inlineCheckbox1" style="font-size:20px">Hợp đồng nợ khó đòi</label>
+                                    }
+                                    else
+                                    {
+                                        <input class="form-check-input" type="checkbox" name="@Html.NameFor(m => m.IsNoKhoDoi)" value="true" style="margin-left:30px">
+                                        <input type="hidden" name="@Html.NameFor(m => m.IsNoKhoDoi)" value="false">
+                                        <label class="form-check-label" for="inlineCheckbox1" style="font-size:20px">Hợp đồng nợ khó đòi</label>
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="inputPassword4">Tiền tệ</label>
+                                <select class="form-control" asp-for="Tiente">
+                                    <option value="VND">VND</option>
+                                    <option value="USD">USD</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Khách hàng</label>
+                                <input list="khachhang" class="form-control" asp-for="Makhach">
+                                <datalist id="khachhang">
+                                    @{
+                                        foreach (var a in ViewBag.kh)
+                                        {
+                                            <option value="@a.MaKhach">@a.MaKhach || @a.TenKhach || @a.TenFull</option>
+                                        }
+                                    }
+
+                                </datalist>
+                                <span asp-validation-for="Makhach" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputEmail4">Vận chuyển</label>
+                                <input type="text" class="form-control" id="vanchuyentextbox" placeholder="Vận chuyển" asp-for="VanChuyen">
+                                <span asp-validation-for="VanChuyen" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="inputEmail4">Số hợp đồng</label>
+                                <input type="text" class="form-control" placeholder="Số hợp đồng" asp-for="Sohd">
+                                <span asp-validation-for="Sohd" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-md-9" style="display:none" id="divhdchomuon">
+                                <label for="inputEmail4">HĐ cho mượn</label>
+                                <input list="hdchomuon" class="form-control" asp-for="HdcmuonId">
+                                <datalist id="hdchomuon">
+                                    @{
+                                        foreach (var item in ViewBag.hdchomuon)
+                                        {
+                                            <option value="@item.Systemref">@item.Ref || @item.Sohd || @item.Makhach</option>
+                                        }
+                                    }
+
+                                </datalist>
+                                <span asp-validation-for="HdcmuonId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">INT ký</label>
+                                <input list="intky" class="form-control" asp-for="IntKy">
+                                <datalist id="intky">
+                                    @{
+                                        foreach (var item in ViewBag.intky)
+                                        {
+                                            <option value="@item.MaKhach@item.Stt"> || @item.Nguoiky chức vụ @item.Chucvu</option>
+                                        }
+                                    }
+
+                                </datalist>
+                                <span asp-validation-for="IntKy" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">Khách ký</label>
+                                <input list="browsers" class="form-control" asp-for="ClientKy">
+                                <datalist id="browsers">
+                                    @{
+                                        foreach (var item in ViewBag.client)
+                                        {
+                                            <option value="@item.MaKhach@item.Stt"> || @item.Nguoiky chức vụ @item.Chucvu</option>
+                                        }
+                                    }
+                                </datalist>
+                                <span asp-validation-for="ClientKy" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <label for="inputEmail4">Thanh toán</label>
+                        <label for="inputEmail4" style="margin-left:440px">Hình thức giá</label>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <input list="thanhtoan" class="form-control" asp-for="ThanhtoanId">
+                                <datalist id="thanhtoan">
+                                    @{
+                                        foreach (var item in ViewBag.thanhtoan)
+                                        {
+                                            <option value="@item.Id">@item.Matt || @item.TenTt</option>
+                                        }
+                                    }
+
+                                </datalist>
+                                <span asp-validation-for="ThanhtoanId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-5 form-check-inline">
+                                @{
+                                    if (Model.IsFix == false)
+                                    {
+                                        <label class="radio-inline">
+                                            <input type="radio" name="@Html.NameFor(m => m.IsFix)" value="true" checked><span style="font-size:20px">Giá outright</span>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="@Html.NameFor(m => m.IsFix)" value="false" style="margin-left:15px"><span style="font-size:20px">Giá trừ lùi</span>
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label class="radio-inline">
+                                            <input type="radio" name="@Html.NameFor(m => m.IsFix)" value="true"><span style="font-size:20px">Giá outright</span>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="@Html.NameFor(m => m.IsFix)" value="false" style="margin-left:15px" checked><span style="font-size:20px">Giá trừ lùi</span>
+                                        </label>
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                        <div>
+                            <label>Địa điểm giao hàng</label>
+                            <input list="diadiemgiaohang" class="form-control" asp-for="DiaDiemGiaoHang">
+                            <datalist id="diadiemgiaohang">
+                                @{
+                                    foreach (var item1 in ViewBag.diadiemgiaohang)
+                                    {
+                                        <option value="@item1.DiaDiemGiaoHang">@*@item1.DiaDiemGiaoHang*@</option>
+                                    }
+                                }
+
+                            </datalist>
+                            <span asp-validation-for="DiaDiemGiaoHang" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="inputEmail4">Mức ứng</label>
+                                <input type="text" class="form-control" placeholder="Tài khoản" asp-for="TienUngHd">
+                                <span asp-validation-for="TienUngHd" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputPassword4">Tạm ứng theo HĐ(FOB)</label>
+                                <input type="text" class="form-control" placeholder="Ngân hàng" asp-for="TienUngTt">
+                                <span asp-validation-for="TienUngTt" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputPassword4">Tạm ứng thực tế</label>
+                                <input type="text" class="form-control" placeholder="Ngân hàng">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="inputEmail4">Ngày hợp đồng</label>
+                                <input type="date" class="form-control" asp-for="Ngayky">
+                                <span asp-validation-for="Ngayky" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputPassword4">Ngày giao hàng</label>
+                                <input type="date" class="form-control" asp-for="Ngaygiao">
+                                <span asp-validation-for="Ngaygiao" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputPassword4">Ngày hiệu lực</label>
+                                <input type="date" class="form-control" asp-for="Ngayhl">
+                                <span asp-validation-for="Ngayhl" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-3" id="ngaytra" style="display:none">
+                                <label for="inputPassword4">Ngày trả</label>
+                                <input type="date" class="form-control" asp-for="NgayTraPhaitra">
+                                <span asp-validation-for="Ngayky" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div>
+                            <label>Ghi chú</label>
+                            <textarea class="form-control"></textarea>
+                        </div>
+                        <div>
+                            <button type="submit" asp-action="themhopdong" asp-controller="hopdong" class="btn btn-primary" style="margin-top: 30px">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card-box table-responsive">
+                                <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th border="1" style="border-color:black">SystemRef</th>
+                                            <th border="1" style="border-color:black">Mã hàng</th>
+                                            <th border="1" style="border-color:black">Tên hàng</th>
+                                            <th border="1" style="border-color:black">Số lượng</th>
+                                            <th border="1" style="border-color:black">Trọng lượng</th>
+                                            <th border="1" style="border-color:black">ĐVT</th>
+                                            <th border="1" style="border-color:black">VAT</th>
+                                            <th border="1" style="border-color:black">Giá</th>
+                                            <th border="1" style="border-color:black">Giá tạm tính</th>
+                                            <th border="1" style="border-color:black">Số LOT</th>
+                                            <th border="1" style="border-color:black">Giá tháng</th>
+                                            <th border="1" style="border-color:black">Giá năm</th>
+                                            <th border="1" style="border-color:black">+ / -</th>
+                                            <th border="1" style="border-color:black">Mức trừ</th>
+                                            <th border="1" style="border-color:black">Ngày chốt</th>
+                                            <th border="1" style="border-color:black">Mức stoploss</th>
+                                            <th border="1" style="border-color:black">Mã nhóm</th>
+                                            <th border="1" style="border-color:black">Giá thị trường</th>
+                                            <th border="1" style="border-color:black">Mức thưởng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            foreach (var item in ViewBag.cthdmb)
+                                            {
                                                 <tr>
-                                                    <th border="1" style="border-color:black">SystemRef</th>
-                                                    <th border="1" style="border-color:black">Mã hàng</th>
-                                                    <th border="1" style="border-color:black">Tên hàng</th>
-                                                    <th border="1" style="border-color:black">Số lượng</th>
-                                                    <th border="1" style="border-color:black">Trọng lượng</th>
-                                                    <th border="1" style="border-color:black">ĐVT</th>
-                                                    <th border="1" style="border-color:black">VAT</th>
-                                                    <th border="1" style="border-color:black">Giá</th>
-                                                    <th border="1" style="border-color:black">Giá tạm tính</th>
-                                                    <th border="1" style="border-color:black">Số LOT</th>
-                                                    <th border="1" style="border-color:black">Giá tháng</th>
-                                                    <th border="1" style="border-color:black">Giá năm</th>
-                                                    <th border="1" style="border-color:black">+ / -</th>
-                                                    <th border="1" style="border-color:black">Mức trừ</th>
-                                                    <th border="1" style="border-color:black">Ngày chốt</th>
-                                                    <th border="1" style="border-color:black">Mức stoploss</th>
-                                                    <th border="1" style="border-color:black">Mã nhóm</th>
-                                                    <th border="1" style="border-color:black">Giá thị trường</th>
-                                                    <th border="1" style="border-color:black">Mức thưởng</th>
-
+                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Systemref</th>
+                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Mahang</th>
+                                                    <th scope="col" style="border-color:black">@item.hanghoa.Tenhang</th>
+                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Soluong</th>
+                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Trongluong.ToString("N")</th>
+                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Dvt</th>
+                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Vat</th>
+                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Giact.ToString("N")</th>
+                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Giatt.ToString("N")</th>
+                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Solot</th>
+                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Giathang</th>
+                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Gianam</th>
+                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Sig</th>
+                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Diff</th>
+                                                    <th scope="col" style="border-color:black">@item.ctHdmb.FNgayfix</th>
+                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Stoploss</th>
+                                                    <th scope="col" style="border-color:black">@item.hanghoa.MaNhom</th>
+                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Giathitruong</th>
+                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Mucthuong</th>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-                                                @{
-                                                    foreach (var item in ViewBag.cthdmb)
-                                                    {
-                                                        <tr>
-                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Systemref</th>
-                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Mahang</th>
-                                                            <th scope="col" style="border-color:black">@item.hanghoa.Tenhang</th>
-                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Soluong</th>
-                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Trongluong.ToString("N")</th>
-                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Dvt</th>
-                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Vat</th>
-                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Giact.ToString("N")</th>
-                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Giatt.ToString("N")</th>
-                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Solot</th>
-                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Giathang</th>
-                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Gianam</th>
-                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Sig</th>
-                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Diff</th>
-                                                            <th scope="col" style="border-color:black">@item.ctHdmb.FNgayfix</th>
-                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Stoploss</th>
-                                                            <th scope="col" style="border-color:black">@item.hanghoa.MaNhom</th>
-                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Giathitruong</th>
-                                                            <th scope="col" style="border-color:black">@item.ctHdmb.Mucthuong</th>
-                                                        </tr>
-                                                    }
-                                                }
+                                            }
+                                        }
 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
+
                 </div>
-
             </div>
-
-
         </div>
     </div>
 </div>
-<!-- /page content -->
-<!-- /page content -->
-<!-- footer content -->
+
+
+
+
+

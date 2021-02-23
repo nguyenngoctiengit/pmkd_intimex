@@ -28,7 +28,6 @@
     <!-- bootstrap-daterangepicker -->
     <link href="~/public/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
-
     <!-- datatable -->
     <link href="~/public/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
     <link href="~/public/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
@@ -792,6 +791,17 @@
             document.getElementById('divhdchomuon').style.display = 'none';
             document.getElementById('ngaytra').style.display = 'block';
         }
+        $("input[type=radio]").change(function () {
+            var val1 = $('[name=Month]:checked').val();
+            $('tr.dataRow').each(function () {
+                var src = $(this).find('.aaa').text();
+                if ((src == val1 || val1 == 'All')) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
         // jquery ready start
         $(document).ready(function () {
             // jQuery code
