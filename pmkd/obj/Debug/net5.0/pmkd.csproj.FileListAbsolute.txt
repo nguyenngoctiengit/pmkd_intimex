@@ -651,3 +651,4 @@ C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\pmkd.dll
 C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\ref\pmkd.dll
 C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\pmkd.pdb
 C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\pmkd.genruntimeconfig.cache
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\themcthdoutright.cshtml.g.cs

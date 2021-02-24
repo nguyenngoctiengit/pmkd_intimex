@@ -52,7 +52,7 @@ namespace pmkd.Controllers
             ViewBag.diadiemgiaohang = _context.HdmbGiaohangs.ToList();
             ViewBag.hdchomuon = _context.Hdmbs.Where(a => a.MuaBan == "CMUON").ToList();
             ViewBag.client = _context.Signers.ToList();
-            return View("ct_hdmb", hdmb);
+            return View("cthdmb", hdmb);
         }
         /*        public IActionResult cthdmb(string id)
                 {
@@ -140,6 +140,16 @@ namespace pmkd.Controllers
             TempData["alertMessage"] = "thêm người hợp đồng thành công";
             return RedirectToAction("hdmb");
         }     
- 
+        public IActionResult themcthdoutright(string id)
+        {
+            ViewBag.systemId = (from a in _context.Hdmbs where a.Systemref == id select a.Systemref).FirstOrDefault();
+            ViewBag.refid = (from a in _context.Hdmbs where a.Systemref == id select a.Ref).FirstOrDefault();
+            ViewBag.sohd = (from a in _context.Hdmbs where a.Systemref == id select a.Sohd).FirstOrDefault();
+            ViewBag.hh = (from a in _context.Hanghoas select a).ToList();
+            ViewBag.hanghoa = (from a in _context.Hanghoas select a).ToArray();
+            return View("themcthdoutright");
+        }
+
+
     }
 }

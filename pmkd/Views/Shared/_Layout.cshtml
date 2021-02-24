@@ -802,6 +802,35 @@
                 }
             });
         });
+@*        function funcMahang() {
+            var dropdown = document.getElementById('hanghoa');
+            var idhanghoa = dropdown.val();
+            var textbox = document.getElementById('thuevat');
+            textbox.val = idhanghoa;
+        }*@
+@*        function funcMahang() {
+            var dropdown1 = document.getElementById('hanghoa');
+            var a = dropdown1.options[dropdown1.selectedIndex].value;
+            var textbox = document.getElementById('thuevat');
+            textbox.value = a;
+        }*@
+        $('#dropdownHH').change(function () {
+            var a = ($("#dropdownHH").val());
+            var arrayHH = new Array();
+            var array = @Html.Raw(Json.Serialize(ViewBag.hanghoa));
+            alert(array[5].map(a => a.Mahang));
+            for (var i = 1; i <= array.length; i++) {
+                ;
+                if (arrayHH.push(array[i].val) == a) {
+                    alert(a);
+                }
+                else {
+                    alert('khong xuat hien');
+                }
+            }
+            @*var textbox = document.getElementById('Vat');
+            textbox.value = a;*@
+        });
         // jquery ready start
         $(document).ready(function () {
             // jQuery code

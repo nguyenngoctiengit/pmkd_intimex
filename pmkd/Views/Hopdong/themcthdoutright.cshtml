@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewData["Title"] = "themcthdoutright";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model CtHdmb
+@{
+    if (TempData["alertMessage"] != null)
+    {
+        <div style="color:red">
+            @TempData["alertMessage"].ToString()
+        </div>
+    }
+}
+<style>
+    .input-validation-error {
+        border-color: red;
+</style>
+<div class="right_col" role="main">
+    <div class="">
+        <div class="col-md-12 col-sm-12" style="height:auto">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Thêm<small>chi tiết hợp đồng mua bán Outright</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    @{
+                        if (TempData["alertMessage"] != null)
+                        {
+                            <div style="color:red;font-size:30px">
+                                @TempData["alertMessage"].ToString()
+                            </div>
+                        }
+                    }
+                    @{
+                        if (TempData["alertMessage1"] != null)
+                        {
+                            <div style="color:red;font-size:30px">
+                                @TempData["alertMessage1"].ToString()
+                            </div>
+                        }
+                    }
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <form method="post" class="validate-form" role="form">
+                        <label for="inputEmail4">System ID</label>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <input type="text" class="form-control" readonly value="@ViewBag.systemId" asp-for="Systemref">
+                                <span asp-validation-for="Systemref" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <input type="text" class="form-control" readonly value="@ViewBag.refid" placeholder="Vận chuyển" asp-for="Ref">
+                                <span asp-validation-for="Ref" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="text" class="form-control" value="@ViewBag.sohd" readonly placeholder="Vận chuyển">
+                            </div>
+                        </div>
+                        <label for="inputEmail4">Mã hàng</label>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <input list="dropdownHH1" id="dropdownHH" class="form-control" asp-for="Mahang">
+                                <datalist id="dropdownHH1" onchange="funcMahang()">
+                                    @{
+                                        foreach (var a in ViewBag.hh)
+                                        {
+                                            <option value="@a.Mahang">@a.Mahang || @a.Tenhang || @a.MaNhom</option>
+                                        }
+                                    }
+                                </datalist>
+                                <span asp-validation-for="Mahang" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="text" class="form-control" value="@ViewBag.sohd" placeholder="Vận chuyển">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Mã hàng</label>
+                                <select class="form-control" asp-for="DvtTheoHd">
+                                    <option value="KGS">KGS</option>
+                                    <option value="MTS">MTS</option>
+                                    <option value="LBS">LBS</option>
+                                </select>
+                                <span asp-validation-for="DvtTheoHd" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Thuế VAT</label>
+                                <input type="text" class="form-control" placeholder="VAT" asp-for="Vat" name="Vat">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Số lượng</label>
+                                <input type="text" class="form-control" placeholder="Số lượng" asp-for="Soluong">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Trọng lượng</label>
+                                <input type="text" class="form-control" asp-for="Trongluong">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Giá OutRight theo hợp đồng</label>
+                                <input type="text" class="form-control" placeholder="Giá OutRight" asp-for="GiaTheoHd">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Giá OutRight</label>
+                                <input type="text" class="form-control" asp-for="Giact" value="@ViewBag.asdasdasd">
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit" asp-action="themcthdoutright" asp-controller="hopdong" class="btn btn-primary" style="margin-top: 30px">Submit</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
