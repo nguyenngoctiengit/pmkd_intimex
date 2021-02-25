@@ -493,25 +493,25 @@
 
                                     </tbody>
                                 </table>
-                                @{
-                                    if (Model.IsFix == false)
-                                    {
-                                        <div>
-                                            <a asp-action="themcthdoutright" asp-controller="hopdong" asp-route-id="@Model.Systemref"><button type="submit"  class="btn btn-primary" style="margin-top: 30px">Submit</button></a>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div>
-                                            <button type="submit" asp-action="themcthd" asp-controller="hopdong" asp-route-id="@Model.Systemref" class="btn btn-primary" style="margin-top: 30px">Submit</button>
-                                        </div>
-                                    }
-                                }
+
 
                             </div>
                         </div>
                     </div>
-
+                    @{
+                        if (Model.IsFix == false)
+                        {
+                            <div>
+                                <a asp-action="themcthdoutright" asp-controller="hopdong" asp-route-id="@Model.Systemref"><button type="submit" class="btn btn-primary" style="margin-top: 30px">Thêm chi tiết hợp đồng</button></a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                <a asp-action="themcthd" asp-controller="hopdong" asp-route-id="@Model.Systemref"><button type="submit" asp-action="themcthd" asp-controller="hopdong" asp-route-id="@Model.Systemref" class="btn btn-primary" style="margin-top: 30px">Thêm chi tiết hợp đồng</button></a>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
         </div>

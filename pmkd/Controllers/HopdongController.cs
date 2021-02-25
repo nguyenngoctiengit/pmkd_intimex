@@ -149,7 +149,19 @@ namespace pmkd.Controllers
             ViewBag.hanghoa = (from a in _context.Hanghoas select a).ToArray();
             return View("themcthdoutright");
         }
-
+        [HttpPost]
+        public IActionResult themcthdoutright(CtHdmb ctHdmb, string id)
+        {
+            ctHdmb.IdRow = null;
+            _context.CtHdmbs.Add(ctHdmb);
+            _context.SaveChanges();
+            TempData["alertMessage"] = "thêm chi tiết hợp đồng thành công";
+            return RedirectToAction("hdmb");
+        }
+        public IActionResult themcthd(string id)
+        {
+            return View("themcthd");
+        }
 
     }
 }
