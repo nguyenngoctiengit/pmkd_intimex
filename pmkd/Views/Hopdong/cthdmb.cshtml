@@ -214,13 +214,13 @@
                         </div>
                         <div>
                             <label>System ID</label>
-                            <input type="text" class="form-control" placeholder="System ID" asp-for="Systemref">
+                            <input type="text" class="form-control" readonly placeholder="System ID" asp-for="Systemref">
                             <span asp-validation-for="Systemref" class="text-danger"></span>
                         </div>
                         <label for="inputEmail4">Ref</label>
                         <div class="form-row">
                             <div class="form-group col-md-3">
-                                <input type="text" class="form-control" placeholder="Ref" asp-for="Ref">
+                                <input type="text" class="form-control" readonly placeholder="Ref" asp-for="Ref">
                                 <span asp-validation-for="Ref" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-8 form-check-inline">
@@ -288,21 +288,43 @@
                                 <input type="text" class="form-control" placeholder="Số hợp đồng" asp-for="Sohd">
                                 <span asp-validation-for="Sohd" class="text-danger"></span>
                             </div>
+                            @{
+                                if (Model.MuaBan == "KTRA")
+                                {
+                                    <div class="form-group col-md-9" id="divhdchomuon">
+                                        <label for="inputEmail4">HĐ cho mượn</label>
+                                        <input list="hdchomuon" class="form-control" asp-for="HdcmuonId">
+                                        <datalist id="hdchomuon">
+                                            @{
+                                                foreach (var item in ViewBag.hdchomuon)
+                                                {
+                                                    <option value="@item.Systemref">@item.Ref || @item.Sohd || @item.Makhach</option>
+                                                }
+                                            }
 
-                            <div class="form-group col-md-9" style="display:none" id="divhdchomuon">
-                                <label for="inputEmail4">HĐ cho mượn</label>
-                                <input list="hdchomuon" class="form-control" asp-for="HdcmuonId">
-                                <datalist id="hdchomuon">
-                                    @{
-                                        foreach (var item in ViewBag.hdchomuon)
-                                        {
-                                            <option value="@item.Systemref">@item.Ref || @item.Sohd || @item.Makhach</option>
-                                        }
-                                    }
+                                        </datalist>
+                                        <span asp-validation-for="HdcmuonId" class="text-danger"></span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-group col-md-9" style="display:none" id="divhdchomuon">
+                                        <label for="inputEmail4">HĐ cho mượn</label>
+                                        <input list="hdchomuon" class="form-control" asp-for="HdcmuonId">
+                                        <datalist id="hdchomuon">
+                                            @{
+                                                foreach (var item in ViewBag.hdchomuon)
+                                                {
+                                                    <option value="@item.Systemref">@item.Ref || @item.Sohd || @item.Makhach</option>
+                                                }
+                                            }
 
-                                </datalist>
-                                <span asp-validation-for="HdcmuonId" class="text-danger"></span>
-                            </div>
+                                        </datalist>
+                                        <span asp-validation-for="HdcmuonId" class="text-danger"></span>
+                                    </div>
+                                }
+                            }
+
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -428,10 +450,13 @@
                         </div>
                         <div>
                             <label>Ghi chú</label>
-                            <textarea class="form-control"></textarea>
+                            <textarea class="form-control" asp-for="Ghichu"></textarea>
                         </div>
-                        <div>
-                            <button type="submit" asp-action="themhopdong" asp-controller="hopdong" class="btn btn-primary" style="margin-top: 30px">Submit</button>
+                        <div class="item form-group" style="margin-top:20px">
+                            <div class="col-md-6 col-sm-6 offset-md-3">
+                                <button class="btn btn-danger" asp-action="deletehopdong" onclick="return confirm('Are you sure you want to delete this item?');" asp-controller="hopdong" asp-route-id="@Model.Systemref" type="submit">Hủy hợp đồng</button>
+                                <button type="submit" asp-action="edithopdong" asp-controller="hopdong" asp-route-id="@Model.Systemref" class="btn btn-primary">Edit hợp đồng</button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -448,6 +473,7 @@
                                             <th border="1" style="border-color:black">Số lượng</th>
                                             <th border="1" style="border-color:black">Trọng lượng</th>
                                             <th border="1" style="border-color:black">ĐVT</th>
+                                            <th border="1" style="border-color:black" class="last">Action</th>
                                             <th border="1" style="border-color:black">VAT</th>
                                             <th border="1" style="border-color:black">Giá</th>
                                             <th border="1" style="border-color:black">Giá tạm tính</th>
@@ -474,8 +500,10 @@
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Soluong</th>
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Trongluong.ToString("N")</th>
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Dvt</th>
+                                                    <th scope="col" style="border-color:black" class="last">Edit / Delete</th>
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Vat</th>
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Giact.ToString("N")</th>
+
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Giatt.ToString("N")</th>
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Solot</th>
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Giathang</th>

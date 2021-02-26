@@ -101,13 +101,13 @@
                         </div>
                         <div>
                             <label>System ID</label>
-                            <input type="text" class="form-control" placeholder="System ID" asp-for="Systemref">
+                            <input type="text" class="form-control" required="required" placeholder="System ID" asp-for="Systemref">
                             <span asp-validation-for="Systemref" class="text-danger"></span>
                         </div>
                         <label for="inputEmail4">Ref</label>
                         <div class="form-row">
                             <div class="form-group col-md-3">
-                                <input type="text" class="form-control" placeholder="Ref" asp-for="Ref">
+                                <input type="text" class="form-control" placeholder="Ref" required asp-for="Ref">
                                 <span asp-validation-for="Ref" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-8 form-check-inline">
@@ -129,7 +129,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputEmail4">Khách hàng</label>
-                                <input list="khachhang" class="form-control" asp-for="Makhach">
+                                <input list="khachhang" class="form-control" asp-for="Makhach" required>
                                 <datalist id="khachhang">
                                     @{
                                         foreach (var a in ViewBag.kh)
@@ -143,14 +143,14 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputEmail4">Vận chuyển</label>
-                                <input type="text" class="form-control" id="vanchuyentextbox" placeholder="Vận chuyển" asp-for="VanChuyen">
+                                <input type="text" class="form-control" id="vanchuyentextbox" required placeholder="Vận chuyển" asp-for="VanChuyen">
                                 <span asp-validation-for="VanChuyen" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-3">
                                 <label for="inputEmail4">Số hợp đồng</label>
-                                <input type="text" class="form-control" placeholder="Số hợp đồng" asp-for="Sohd">
+                                <input type="text" class="form-control" placeholder="Số hợp đồng" required asp-for="Sohd">
                                 <span asp-validation-for="Sohd" class="text-danger"></span>
                             </div>
 
@@ -172,7 +172,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputEmail4">INT ký</label>
-                                <input list="intky" class="form-control" asp-for="IntKy">
+                                <input list="intky" class="form-control" asp-for="IntKy" required>
                                 <datalist id="intky">
                                     @{
                                         foreach (var item in ViewBag.intky)
@@ -225,7 +225,7 @@
                         </div>
                         <div>
                             <label>Địa điểm giao hàng</label>
-                            <input list="diadiemgiaohang" class="form-control" asp-for="DiaDiemGiaoHang">
+                            <input list="diadiemgiaohang" class="form-control" asp-for="DiaDiemGiaoHang" required>
                             <datalist id="diadiemgiaohang">
                                 @{
                                     foreach (var item1 in ViewBag.diadiemgiaohang)
@@ -241,12 +241,12 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="inputEmail4">Mức ứng</label>
-                                <input type="text" class="form-control" placeholder="Tài khoản" asp-for="TienUngHd">
+                                <input type="text" class="form-control" placeholder="Tài khoản" asp-for="TienUngHd" required>
                                 <span asp-validation-for="TienUngHd" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="inputPassword4">Tạm ứng theo HĐ(FOB)</label>
-                                <input type="text" class="form-control" placeholder="Ngân hàng" asp-for="TienUngTt">
+                                <input type="text" class="form-control" placeholder="Ngân hàng" asp-for="TienUngTt" required>
                                 <span asp-validation-for="TienUngTt" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-4">
@@ -278,7 +278,7 @@
                         </div>
                         <div>
                             <label>Ghi chú</label>
-                            <textarea class="form-control"></textarea>
+                            <textarea class="form-control" asp-for="Ghichu"></textarea>
                         </div>
                         <div>
                             <button type="submit" asp-action="themhopdong" asp-controller="hopdong" class="btn btn-primary" style="margin-top: 30px">Submit</button>

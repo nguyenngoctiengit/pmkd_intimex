@@ -770,6 +770,7 @@
     <!-- DateJS -->
     <script src="~/public/vendors/DateJS/build/date.js"></script>
     <!-- JQVMap -->
+    <script src="~/public/vendors/switchery/dist/switchery.min.js"></script>
     <script src="~/public/vendors/jqvmap/dist/jquery.vmap.js"></script>
     <script src="~/public/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
     <script src="~/public/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
@@ -804,35 +805,22 @@
                 }
             });
         });
-@*        function funcMahang() {
-            var dropdown = document.getElementById('hanghoa');
-            var idhanghoa = dropdown.val();
-            var textbox = document.getElementById('thuevat');
-            textbox.val = idhanghoa;
-        }*@
-@*        function funcMahang() {
-            var dropdown1 = document.getElementById('hanghoa');
-            var a = dropdown1.options[dropdown1.selectedIndex].value;
-            var textbox = document.getElementById('thuevat');
-            textbox.value = a;
-        }*@
-        $('#dropdownHH').change(function () {
-            var a = ($("#dropdownHH").val());
-            var arrayHH = new Array();
-            var array = @Html.Raw(Json.Serialize(ViewBag.hanghoa));
-            alert(array[5].map(a => a.Mahang));
-            for (var i = 1; i <= array.length; i++) {
-                ;
-                if (arrayHH.push(array[i].val) == a) {
-                    alert(a);
+        $(document).ready(function () {
+            var table = $('#example').DataTable();
+
+            $('#example tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
                 }
                 else {
-                    alert('khong xuat hien');
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
                 }
-            }
-            @*var textbox = document.getElementById('Vat');
-            textbox.value = a;*@
-        });
+            });
+
+            $('#button').click(function () {
+                table.row('.selected').remove().draw(false);
+            });
         // jquery ready start
         $(document).ready(function () {
             // jQuery code
