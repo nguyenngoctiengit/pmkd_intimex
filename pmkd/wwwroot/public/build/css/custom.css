@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 @font-face {
   font-family: 'Glyphicons Halflings';
   src: url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot");
@@ -1658,11 +1658,13 @@ h2 {
   -moz-column-break-inside: avoid;
   column-break-inside: avoid;
   opacity: 1;
+  color:black;
   -webkit-transition: all .2s ease;
   transition: all .2s ease; }
 
 .x_title {
   border-bottom: 2px solid #E6E9ED;
+  color:black;
   padding: 1px 5px 6px;
   margin-bottom: 10px; }
 

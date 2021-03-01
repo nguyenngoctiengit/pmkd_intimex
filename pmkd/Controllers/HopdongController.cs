@@ -55,30 +55,6 @@ namespace pmkd.Controllers
             ViewBag.client = _context.Signers.ToList();
             return View("cthdmb", hdmb);
         }
-        /*        public IActionResult cthdmb(string id)
-                {
-                    ViewBag.signer = _context.Signers.ToList();
-                    var startDay = new DateTime(2020, 01, 01);
-                    var endDay = new DateTime(2021, 12, 30);
-                    var cthdmb = (from a in _context.Hdmbs
-                                join b in _context.PortfolioPayments on a.ThanhtoanId equals b.Id
-                                join c in _context.KhachHangs on a.Makhach equals c.MaKhach
-                                where (a.Ngayky >= startDay) && (a.Ngayky <= endDay)
-                                select new ViewModelHDMB
-                                {
-                                    hdmb = a,
-                                    portfolioPayment = b,
-                                    khachHang = c
-                                }).ToList().Distinct();
-                    ViewBag.cthdmb = from a in _context.CtHdmbs
-                                     join b in _context.Hanghoas on a.Mahang equals b.Mahang
-                                     where a.Systemref == id
-                                     select new ViewModelHDMB
-                                     {
-                                         ctHdmb = a,hanghoa = b
-                                     };
-                    return View("cthdmb",cthdmb);
-                }*/
         public IActionResult themhopdong()
         {
             ViewBag.kh = _context.KhachHangs.ToList();
@@ -164,37 +140,6 @@ namespace pmkd.Controllers
                 TempData["alertMessage"] = "stop loss nhập không đúng";
                 return View("themcthdoutright");
             }    
-            if (ctHdmb.Giathang != "1" && ctHdmb.Giathang != "3" && ctHdmb.Giathang != "5" && ctHdmb.Giathang != "7" && ctHdmb.Giathang != "9" && ctHdmb.Giathang != "11")
-            {
-                ViewBag.systemId = (from a in _context.Hdmbs where a.Systemref == id select a.Systemref).FirstOrDefault();
-                ViewBag.refid = (from a in _context.Hdmbs where a.Systemref == id select a.Ref).FirstOrDefault();
-                ViewBag.sohd = (from a in _context.Hdmbs where a.Systemref == id select a.Sohd).FirstOrDefault();
-                ViewBag.hh = (from a in _context.Hanghoas select a).ToList();
-                ViewBag.hanghoa = (from a in _context.Hanghoas select a).ToArray();
-                TempData["alertMessage"] = "giá tháng nhập không đúng";
-                return View("themcthdoutright");
-            }
-            if (int.TryParse(ctHdmb.Gianam,out t)==false && t < NgayKy.Year)
-            {
-                ViewBag.systemId = (from a in _context.Hdmbs where a.Systemref == id select a.Systemref).FirstOrDefault();
-                ViewBag.refid = (from a in _context.Hdmbs where a.Systemref == id select a.Ref).FirstOrDefault();
-                ViewBag.sohd = (from a in _context.Hdmbs where a.Systemref == id select a.Sohd).FirstOrDefault();
-                ViewBag.hh = (from a in _context.Hanghoas select a).ToList();
-                ViewBag.hanghoa = (from a in _context.Hanghoas select a).ToArray();
-                TempData["alertMessage"] = "giá năm nhập không đúng";
-                return View("themcthdoutright");
-            }
-            if (ctHdmb.FNgayfix.Value.Year > t || (ctHdmb.FNgayfix.Value.Month > int.Parse(ctHdmb.Giathang) && ctHdmb.FNgayfix.Value.Year == t))
-            {
-                ViewBag.systemId = (from a in _context.Hdmbs where a.Systemref == id select a.Systemref).FirstOrDefault();
-                ViewBag.refid = (from a in _context.Hdmbs where a.Systemref == id select a.Ref).FirstOrDefault();
-                ViewBag.sohd = (from a in _context.Hdmbs where a.Systemref == id select a.Sohd).FirstOrDefault();
-                ViewBag.hh = (from a in _context.Hanghoas select a).ToList();
-                ViewBag.hanghoa = (from a in _context.Hanghoas select a).ToArray();
-                TempData["alertMessage"] = "ngày chốt cuối nhập không đúng";
-                return View("themcthdoutright");
-            }
-            ctHdmb.IdRow = null;
             _context.CtHdmbs.Add(ctHdmb);
             _context.SaveChanges();
             TempData["alertMessage"] = "thêm chi tiết hợp đồng thành công";
@@ -212,6 +157,10 @@ namespace pmkd.Controllers
         public IActionResult themcthd(CtHdmb ctHdmb,string id)
         {
             int t = 0;
+            if (ctHdmb.FNgayfix == null)
+            {
+                ctHdmb.FNgayfix = new DateTime(1990, 01, 01);
+            }
             if (int.TryParse(ctHdmb.Stoploss.ToString(), out t) == false && t < 0)
             {
                 ViewBag.systemId = (from a in _context.Hdmbs where a.Systemref == id select a.Systemref).FirstOrDefault();
@@ -321,6 +270,90 @@ namespace pmkd.Controllers
             _context.SaveChanges();
             TempData["alertMessage"] = "cập nhật hợp đồng thành công";
             return RedirectToAction("hdmb");
+        }
+        public IActionResult editcthd(long id)
+        {
+            ViewBag.systemId = (from a in _context.Hdmbs join b in _context.CtHdmbs on a.Systemref equals b.Systemref where
+                                b.Id == id select a.Systemref).FirstOrDefault();
+            ViewBag.refid = (from a in _context.Hdmbs join b in _context.CtHdmbs on a.Systemref equals b.Systemref where
+                                b.Id == id select a.Ref).FirstOrDefault().Trim();
+            ViewBag.sohd = (from a in _context.Hdmbs join b in _context.CtHdmbs on a.Systemref equals b.Systemref
+                            where b.Id == id select a.Sohd).FirstOrDefault();
+            ViewBag.hh = (from a in _context.Hanghoas select a).ToList();
+            var cthdmb = _context.CtHdmbs.Where(a => a.Id == id).FirstOrDefault();
+            return View("editcthd",cthdmb);
+        }
+        [HttpPost]
+        public IActionResult editcthd(CtHdmb ctHdmb,long id)
+        {
+            ctHdmb.Giact = 0;
+            ctHdmb.Dvt = "KGS";
+            ctHdmb.Giatt = 0;
+            ctHdmb.DvtTheoHd = "KGS";
+            _context.Update(ctHdmb);
+            _context.SaveChanges();
+            TempData["alertMessage"] = "cập nhật chi tiết hợp đồng thành công";
+            return RedirectToAction("hdmb");
+        }
+        public IActionResult deletecthd(long id)
+        {
+            var del_item = _context.CtHdmbs.Where(a => a.Id == id).FirstOrDefault();
+            var flag_fix = false;
+            var list_fix = _context.Fixgia.ToList();
+            foreach (var item in list_fix)
+            {
+                if (del_item.Systemref == item.Systemref)
+                {
+                    flag_fix = true;
+                }
+            }
+            if (flag_fix == true)
+            {
+                ViewBag.systemId = (from a in _context.Hdmbs
+                                    join b in _context.CtHdmbs on a.Systemref equals b.Systemref
+                                    where b.Id == id
+                                    select a.Systemref).FirstOrDefault();
+                ViewBag.refid = (from a in _context.Hdmbs
+                                 join b in _context.CtHdmbs on a.Systemref equals b.Systemref
+                                 where b.Id == id
+                                 select a.Ref).FirstOrDefault().Trim();
+                ViewBag.sohd = (from a in _context.Hdmbs
+                                join b in _context.CtHdmbs on a.Systemref equals b.Systemref
+                                where b.Id == id
+                                select a.Sohd).FirstOrDefault();
+                ViewBag.hh = (from a in _context.Hanghoas select a).ToList();
+                var item_return = (from a in _context.CtHdmbs where a.Id == id select a).FirstOrDefault();
+
+                TempData["alertMessage"] = "hợp đồng đã fix giá, không xóa đc";
+                return View("editcthd",item_return);
+                
+            }
+            else
+            {
+                _context.CtHdmbs.Remove(del_item);
+                _context.SaveChanges();
+                TempData["alertMessage"] = "xóa chi tiết hợp đồng mua bán thành công";
+                return RedirectToAction("hdmb");
+            }
+
+        }
+        public IActionResult editcthdoutright(long id)
+        {
+            ViewBag.systemId = (from a in _context.Hdmbs
+                                join b in _context.CtHdmbs on a.Systemref equals b.Systemref
+                                where b.Id == id
+                                select a.Systemref).FirstOrDefault();
+            ViewBag.refid = (from a in _context.Hdmbs
+                             join b in _context.CtHdmbs on a.Systemref equals b.Systemref
+                             where b.Id == id
+                             select a.Ref).FirstOrDefault().Trim();
+            ViewBag.sohd = (from a in _context.Hdmbs
+                            join b in _context.CtHdmbs on a.Systemref equals b.Systemref
+                            where b.Id == id
+                            select a.Sohd).FirstOrDefault();
+            ViewBag.hh = (from a in _context.Hanghoas select a).ToList();
+            var cthdmb = _context.CtHdmbs.Where(a => a.Id == id).FirstOrDefault();
+            return View("editcthdoutright",cthdmb);
         }
     }
 }

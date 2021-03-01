@@ -376,19 +376,19 @@
                                     if (Model.IsFix == false)
                                     {
                                         <label class="radio-inline">
-                                            <input type="radio" name="@Html.NameFor(m => m.IsFix)" value="true" checked><span style="font-size:20px">Giá outright</span>
+                                            <input type="radio" name="@Html.NameFor(m => m.IsFix)" value="false" checked><span style="font-size:20px">Giá outright</span>
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="@Html.NameFor(m => m.IsFix)" value="false" style="margin-left:15px"><span style="font-size:20px">Giá trừ lùi</span>
+                                            <input type="radio" name="@Html.NameFor(m => m.IsFix)" value="true" style="margin-left:15px"><span style="font-size:20px">Giá trừ lùi</span>
                                         </label>
                                     }
                                     else
                                     {
                                         <label class="radio-inline">
-                                            <input type="radio" name="@Html.NameFor(m => m.IsFix)" value="true"><span style="font-size:20px">Giá outright</span>
+                                            <input type="radio" name="@Html.NameFor(m => m.IsFix)" value="false"><span style="font-size:20px">Giá outright</span>
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="@Html.NameFor(m => m.IsFix)" value="false" style="margin-left:15px" checked><span style="font-size:20px">Giá trừ lùi</span>
+                                            <input type="radio" name="@Html.NameFor(m => m.IsFix)" value="true" style="margin-left:15px" checked><span style="font-size:20px">Giá trừ lùi</span>
                                         </label>
                                     }
                                 }
@@ -473,7 +473,6 @@
                                             <th border="1" style="border-color:black">Số lượng</th>
                                             <th border="1" style="border-color:black">Trọng lượng</th>
                                             <th border="1" style="border-color:black">ĐVT</th>
-                                            <th border="1" style="border-color:black" class="last">Action</th>
                                             <th border="1" style="border-color:black">VAT</th>
                                             <th border="1" style="border-color:black">Giá</th>
                                             <th border="1" style="border-color:black">Giá tạm tính</th>
@@ -495,15 +494,23 @@
                                             {
                                                 <tr>
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Systemref</th>
-                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Mahang</th>
+                                                    @{
+                                                        if (Model.IsFix == true)
+                                                        {
+                                                            <th scope="col" style="border-color:black"><a asp-action="editcthd" asp-controller="hopdong" asp-route-id="@item.ctHdmb.Id">@item.ctHdmb.Mahang </a></th>
+                                                        }
+                                                        else
+                                                        {
+                                                            <th scope="col" style="border-color:black"><a asp-action="editcthdoutright" asp-controller="hopdong" asp-route-id="@item.ctHdmb.Id">@item.ctHdmb.Mahang </a></th>
+                                                        }
+                                                    }
+
                                                     <th scope="col" style="border-color:black">@item.hanghoa.Tenhang</th>
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Soluong</th>
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Trongluong.ToString("N")</th>
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Dvt</th>
-                                                    <th scope="col" style="border-color:black" class="last">Edit / Delete</th>
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Vat</th>
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Giact.ToString("N")</th>
-
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Giatt.ToString("N")</th>
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Solot</th>
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Giathang</th>
@@ -521,7 +528,7 @@
 
                                     </tbody>
                                 </table>
-
+                                <button id="button">Delete selected row</button>
 
                             </div>
                         </div>

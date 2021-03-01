@@ -1,8 +1,9 @@
 ﻿
 @{
-    ViewData["Title"] = "themcthdoutright";
+    ViewData["Title"] = "editcthdoutright";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 
 @model CtHdmb
 @{
@@ -22,7 +23,7 @@
         <div class="col-md-12 col-sm-12" style="height:auto">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Thêm<small>chi tiết hợp đồng mua bán Outright</small></h2>
+                    <h2>Edit<small>chi tiết hợp đồng mua bán Outright</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li>
                             <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -95,21 +96,58 @@
                             <div class="form-group col-md-6">
                                 <label for="inputEmail4">Mã hàng</label>
                                 <select class="form-control" asp-for="DvtTheoHd" required>
-                                    <option value="KGS">KGS</option>
-                                    <option value="MTS">MTS</option>
-                                    <option value="LBS">LBS</option>
+                                    @{
+                                        if (Model.DvtTheoHd == "KGS")
+                                        {
+                                            <option value="KGS" selected>KGS</option>
+                                            <option value="MTS">MTS</option>
+                                            <option value="LBS">LBS</option>
+                                        }
+                                        else if (Model.DvtTheoHd == "MTS")
+                                        {
+                                            <option value="KGS">KGS</option>
+                                            <option value="MTS" selected>MTS</option>
+                                            <option value="LBS">LBS</option>
+                                        }
+                                        else if (Model.DvtTheoHd == "LBS")
+                                        {
+                                            <option value="KGS">KGS</option>
+                                            <option value="MTS">MTS</option>
+                                            <option value="LBS" selected>LBS</option>
+                                        }
+                                    }
+
                                 </select>
                                 <span asp-validation-for="DvtTheoHd" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputEmail4">Thuế VAT</label>
                                 <select class="form-control" asp-for="Vat" required>
-                                    <option value="0">0</option>
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
+                                    @{
+                                        if (Model.Vat == 0)
+                                        {
+                                            <option value="0" selected>0</option>
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                        }
+                                        else if (Model.Vat == 5)
+                                        {
+                                            <option value="0">0</option>
+                                            <option value="5" selected>5</option>
+                                            <option value="10">10</option>
+                                        }
+                                        else if (Model.Vat == 10)
+                                        {
+                                            <option value="0">0</option>
+                                            <option value="5">5</option>
+                                            <option value="10" selected>10</option>
+                                        }
+                                    }
+
                                 </select>
                             </div>
                         </div>
+                       
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputEmail4">Số lượng</label>
@@ -141,7 +179,8 @@
                             </div>
                         </div>
                         <div>
-                            <button type="submit" asp-action="editcthd" asp-controller="hopdong" asp-route-id="@ViewBag.systemId" class="btn btn-primary" style="margin-top: 30px">Submit</button>
+                            <button type="submit" class="btn btn-success" asp-action="editcthd" asp-controller="hopdong" asp-route-id="@Model.Id">Submit</button>
+                            <button class="btn btn-danger" asp-action="deletecthd" onclick="return confirm('Are you sure you want to delete this item?');" asp-controller="hopdong" asp-route-id="@Model.Id" type="submit">Xóa chi tiết hợp đồng</button>
                         </div>
                     </form>
                 </div>
@@ -150,6 +189,8 @@
         </div>
     </div>
 </div>
+
+
 
 
 
