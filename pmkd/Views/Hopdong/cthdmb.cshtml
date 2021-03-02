@@ -1,6 +1,6 @@
-﻿@model Hdmb
+﻿
 @{
-    ViewData["Title"] = "cthdmb";
+    ViewData["Title"] = "editcthd";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -12,16 +12,17 @@
         </div>
     }
 }
+@model Hdmb
 <style>
     .input-validation-error {
         border-color: red;
 </style>
-<div class="right_col" role="main">
+<div class="right_col" role="main" style="height:800px">
     <div class="">
-        <div class="col-md-12 col-sm-12" style="height:auto">
+        <div class="col-md-12 col-sm-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Chi tiết<small>hợp đồng</small></h2>
+                    <h2>Thêm<small>hợp đồng</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li>
                             <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -56,8 +57,9 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <form method="post" class="validate-form" role="form">
+                    <br />
+
+                    <form class="form-label-left input_mask" method="post" role="form">
                         <div class="form-row">
                             <label>Hình thức kinh doanh</label>
                             <label style="margin-left:210px">Loại hợp đồng</label>
@@ -69,30 +71,30 @@
                                         if (Model.TypeKd == 0)
                                         {
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.TypeKd)" id="inlineRadio1" value="false" checked>
+                                                <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.TypeKd)" id="inlineRadio1" value="0" checked>
                                                 <label class="form-check-label" for="inlineRadio1">Trực tiếp</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="true">
+                                                <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.TypeKd)" id="inlineRadio2" value="1">
                                                 <label class="form-check-label" for="inlineRadio2">Ủy thác</label>
                                             </div>
                                         }
-                                        else
+                                        else if (Model.TypeKd == 1)
                                         {
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.TypeKd)" id="inlineRadio1" value="false">
+                                                <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.TypeKd)" id="inlineRadio1" value="0">
                                                 <label class="form-check-label" for="inlineRadio1">Trực tiếp</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="true" checked>
+                                                <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.TypeKd)" id="inlineRadio2" value="1" checked>
                                                 <label class="form-check-label" for="inlineRadio2">Ủy thác</label>
                                             </div>
                                         }
                                     }
-
                                 </div>
                             </div>
                             <div class="form-group col-md-7" style="border:1px dashed;border-color:black">
+
                                 @{
                                     if (Model.MuaBan == "MUA")
                                     {
@@ -212,59 +214,76 @@
                                 }
                             </div>
                         </div>
-                        <div>
-                            <label>System ID</label>
-                            <input type="text" class="form-control" readonly placeholder="System ID" asp-for="Systemref">
-                            <span asp-validation-for="Systemref" class="text-danger"></span>
-                        </div>
-                        <label for="inputEmail4">Ref</label>
-                        <div class="form-row">
-                            <div class="form-group col-md-3">
-                                <input type="text" class="form-control" readonly placeholder="Ref" asp-for="Ref">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">System ID</label>
+                            <div class="col-md-4 col-sm-4">
+                                <input type="text" class="form-control" id="inputSuccess2" required="required" placeholder="System ID" asp-for="Systemref">
+                                <span asp-validation-for="Systemref" class="text-danger"></span>
+                            </div>
+                            <label class="col-form-label col-md-2 col-sm-2">Ref</label>
+                            <div class="col-md-4 col-sm-4">
+                                <input type="text" class="form-control" id="inputSuccess2" placeholder="Ref" required asp-for="Ref">
                                 <span asp-validation-for="Ref" class="text-danger"></span>
                             </div>
-                            <div class="form-group col-md-8 form-check-inline">
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Tiền tệ</label>
+                            <div class="col-md-4 col-sm-4">
+                                <select class="form-control" asp-for="Tiente">
+                                    @{
+                                        if (Model.Tiente.ToString().Trim() == "VND")
+                                        {
+                                            <option value="VND" selected>VND</option>
+                                            <option value="USD">USD</option>
+                                        }
+                                        else if (Model.Tiente.ToString().Trim() == "USD")
+                                        {
+                                            <option value="VND">VND</option>
+                                            <option value="USD" selected>USD</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="VND" selected>VND</option>
+                                            <option value="USD">USD</option>
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
                                 @{
                                     if (Model.Pakd == true)
                                     {
-                                        <input class="form-check-input" type="checkbox" name="@Html.NameFor(m => m.Pakd)" value="true" style="margin-left:20px" checked>
-                                        <input type="hidden" name="@Html.NameFor(m => m.Pakd)" value="false">
-                                        <label class="form-check-label" for="inlineCheckbox1" style="font-size:20px">Hợp đồng bắt buộc có PAKD</label>
+                                        <input class="form-check-input js-switch" type="checkbox" name="@Html.NameFor(a => a.Pakd)" style="margin-left:20px" value="true" checked>
+                                        <input type="hidden" value="false" name="@Html.NameFor(a => a.Pakd)">
+                                        <label class="form-check-label" for="inlineCheckbox1" style="font-size:18px">Hợp đồng bắt buộc có PAKD</label>
 
                                     }
                                     else
                                     {
-                                        <input class="form-check-input" type="checkbox" name="@Html.NameFor(m => m.Pakd)" value="true" style="margin-left:20px">
-                                        <input type="hidden" name="@Html.NameFor(m => m.Pakd)" value="false">
-                                        <label class="form-check-label" for="inlineCheckbox1" style="font-size:20px">Hợp đồng bắt buộc có PAKD</label>
+                                        <input class="form-check-input js-switch" name="@Html.NameFor(a => a.Pakd)" type="checkbox" value="true" style="margin-left:20px">
+                                        <input type="hidden" value="false" name="@Html.NameFor(a => a.Pakd)">
+                                        <label class="form-check-label" for="inlineCheckbox1" style="font-size:18px">Hợp đồng bắt buộc có PAKD</label>
                                     }
                                     if (Model.IsNoKhoDoi == true)
                                     {
-                                        <input class="form-check-input" type="checkbox" name="@Html.NameFor(m => m.IsNoKhoDoi)" value="true" style="margin-left:30px" checked>
-                                        <input type="hidden" name="@Html.NameFor(m => m.IsNoKhoDoi)" value="false">
-                                        <label class="form-check-label" for="inlineCheckbox1" style="font-size:20px">Hợp đồng nợ khó đòi</label>
+                                        <input class="form-check-input js-switch" type="checkbox" name="@Html.NameFor(a => a.IsNoKhoDoi)" value="true" style="margin-left:30px" checked>
+                                        <input type="hidden" value="false" name="@Html.NameFor(a => a.IsNoKhoDoi)">
+                                        <label class="form-check-label" for="inlineCheckbox1" style="font-size:18px">Hợp đồng nợ khó đòi</label>
                                     }
                                     else
                                     {
-                                        <input class="form-check-input" type="checkbox" name="@Html.NameFor(m => m.IsNoKhoDoi)" value="true" style="margin-left:30px">
-                                        <input type="hidden" name="@Html.NameFor(m => m.IsNoKhoDoi)" value="false">
-                                        <label class="form-check-label" for="inlineCheckbox1" style="font-size:20px">Hợp đồng nợ khó đòi</label>
+                                        <input class="form-check-input js-switch" type="checkbox" name="@Html.NameFor(a => a.IsNoKhoDoi)" value="true" style="margin-left:30px">
+                                        <input type="hidden" value="false" name="@Html.NameFor(a => a.IsNoKhoDoi)">
+                                        <label class="form-check-label" for="inlineCheckbox1" style="font-size:18px">Hợp đồng nợ khó đòi</label>
                                     }
                                 }
-
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-3">
-                                <label for="inputPassword4">Tiền tệ</label>
-                                <select class="form-control" asp-for="Tiente">
-                                    <option value="VND">VND</option>
-                                    <option value="USD">USD</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">Khách hàng</label>
-                                <input list="khachhang" class="form-control" asp-for="Makhach">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Khách hàng</label>
+                            <div class="col-md-4 col-sm-4">
+                                <input list="khachhang" class="form-control" asp-for="Makhach" required>
                                 <datalist id="khachhang">
                                     @{
                                         foreach (var a in ViewBag.kh)
@@ -276,23 +295,21 @@
                                 </datalist>
                                 <span asp-validation-for="Makhach" class="text-danger"></span>
                             </div>
-                            <div class="form-group col-md-3">
-                                <label for="inputEmail4">Vận chuyển</label>
-                                <input type="text" class="form-control" id="vanchuyentextbox" placeholder="Vận chuyển" asp-for="VanChuyen">
-                                <span asp-validation-for="VanChuyen" class="text-danger"></span>
+                            <label class="col-form-label col-md-2 col-sm-2">Vận chuyển</label>
+                            <div class="col-md-4 col-sm-4">
+                                <input type="text" class="form-control" id="vanchuyentextbox" required placeholder="Vận chuyển" asp-for="VanChuyen">
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-3">
-                                <label for="inputEmail4">Số hợp đồng</label>
-                                <input type="text" class="form-control" placeholder="Số hợp đồng" asp-for="Sohd">
-                                <span asp-validation-for="Sohd" class="text-danger"></span>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Số hợp đồng</label>
+                            <div class="col-md-4 col-sm-4">
+                                <input type="text" class="form-control" placeholder="Số hợp đồng" required asp-for="Sohd">
                             </div>
                             @{
                                 if (Model.MuaBan == "KTRA")
                                 {
-                                    <div class="form-group col-md-9" id="divhdchomuon">
-                                        <label for="inputEmail4">HĐ cho mượn</label>
+                                    <label class="col-form-label col-md-2 col-sm-2" id="divhdchomuon">Hợp đồng cho mượn</label>
+                                    <div class="col-form-label col-md-4 col-sm-4" id="divhdchomuon1">
                                         <input list="hdchomuon" class="form-control" asp-for="HdcmuonId">
                                         <datalist id="hdchomuon">
                                             @{
@@ -308,8 +325,8 @@
                                 }
                                 else
                                 {
-                                    <div class="form-group col-md-9" style="display:none" id="divhdchomuon">
-                                        <label for="inputEmail4">HĐ cho mượn</label>
+                                    <label class="col-form-label col-md-2 col-sm-2" style="display:none" id="divhdchomuon">Hợp đồng cho mượn</label>
+                                    <div class="col-form-label col-md-4 col-sm-4" style="display:none" id="divhdchomuon1">
                                         <input list="hdchomuon" class="form-control" asp-for="HdcmuonId">
                                         <datalist id="hdchomuon">
                                             @{
@@ -324,12 +341,11 @@
                                     </div>
                                 }
                             }
-
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">INT ký</label>
-                                <input list="intky" class="form-control" asp-for="IntKy">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">INT ký</label>
+                            <div class="col-md-4 col-sm-4">
+                                <input list="intky" class="form-control" asp-for="IntKy" required value="@Model.IntKy.ToString().Trim()">
                                 <datalist id="intky">
                                     @{
                                         foreach (var item in ViewBag.intky)
@@ -341,9 +357,9 @@
                                 </datalist>
                                 <span asp-validation-for="IntKy" class="text-danger"></span>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputPassword4">Khách ký</label>
-                                <input list="browsers" class="form-control" asp-for="ClientKy">
+                            <label class="col-form-label col-md-2 col-sm-2">Khách ký</label>
+                            <div class="col-md-4 col-sm-4">
+                                <input list="browsers" class="form-control" asp-for="ClientKy" value="@Model.ClientKy.ToString().Trim()">
                                 <datalist id="browsers">
                                     @{
                                         foreach (var item in ViewBag.client)
@@ -355,23 +371,23 @@
                                 <span asp-validation-for="ClientKy" class="text-danger"></span>
                             </div>
                         </div>
-                        <label for="inputEmail4">Thanh toán</label>
-                        <label for="inputEmail4" style="margin-left:440px">Hình thức giá</label>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Thanh toán</label>
+                            <div class="col-md-4 col-sm-4">
                                 <input list="thanhtoan" class="form-control" asp-for="ThanhtoanId">
                                 <datalist id="thanhtoan">
                                     @{
                                         foreach (var item in ViewBag.thanhtoan)
                                         {
-                                            <option value="@item.Id">@item.Matt || @item.TenTt</option>
+                                            <option value="@item.Id">@item.Matt || @item.TenTt || @item.Mucung</option>
                                         }
                                     }
 
                                 </datalist>
                                 <span asp-validation-for="ThanhtoanId" class="text-danger"></span>
                             </div>
-                            <div class="form-group col-md-5 form-check-inline">
+                            <label class="col-form-label col-md-2 col-sm-2">Hình thức giá</label>
+                            <div class="col-md-4 col-sm-4">
                                 @{
                                     if (Model.IsFix == false)
                                     {
@@ -392,68 +408,80 @@
                                         </label>
                                     }
                                 }
-
                             </div>
                         </div>
-                        <div>
-                            <label>Địa điểm giao hàng</label>
-                            <input list="diadiemgiaohang" class="form-control" asp-for="DiaDiemGiaoHang">
-                            <datalist id="diadiemgiaohang">
-                                @{
-                                    foreach (var item1 in ViewBag.diadiemgiaohang)
-                                    {
-                                        <option value="@item1.DiaDiemGiaoHang">@*@item1.DiaDiemGiaoHang*@</option>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Địa điểm giao hàng</label>
+                            <div class="col-md-10 col-sm-10">
+                                <input list="diadiemgiaohang" class="form-control" asp-for="DiaDiemGiaoHang" required>
+                                <datalist id="diadiemgiaohang">
+                                    @{
+                                        foreach (var item1 in ViewBag.diadiemgiaohang)
+                                        {
+                                            <option value="@item1.DiaDiemGiaoHang">@*@item1.DiaDiemGiaoHang*@</option>
+                                        }
                                     }
+
+                                </datalist>
+                                <span asp-validation-for="DiaDiemGiaoHang" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Mức ứng</label>
+                            <div class="col-md-2 col-sm-2">
+                                <input type="text" class="form-control" id="inputSuccess2" value="@ViewBag.mucung ">
+                            </div>
+                            <label class="col-form-label col-md-2 col-sm-2">Tạm ứng theo HĐ</label>
+                            <div class="col-md-2 col-sm-2">
+                                <input type="text" class="form-control" id="inputSuccess2" asp-for="TienUngHd" required>
+                            </div>
+                            <label class="col-form-label col-md-2 col-sm-2">Tạm ứng thực tế</label>
+                            <div class="col-md-2 col-sm-2">
+                                <input type="text" class="form-control" id="inputSuccess2" asp-for="TienUngTt">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Ngày hợp đồng</label>
+                            <div class="col-md-4 col-sm-4">
+                                <input type="date" class="form-control" id="inputSuccess2" asp-for="Ngayky">
+                            </div>
+                            <label class="col-form-label col-md-2 col-sm-2">Ngày giao hàng</label>
+                            <div class="col-md-4 col-sm-4">
+                                <input type="date" class="form-control" id="inputSuccess2" asp-for="Ngaygiao">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Ngày hiệu lực</label>
+                            <div class="col-md-4 col-sm-4">
+                                <input type="date" class="form-control" id="inputSuccess2" asp-for="Ngayhl">
+                            </div>
+                            @{
+                                if (Model.MuaBan == "MUON")
+                                {
+                                    <label class="col-form-label col-md-2 col-sm-2" id="ngaytra">Ngày trả</label>
+                                    <div class="col-md-4 col-sm-4" id="ngaytra1">
+                                        <input type="date" class="form-control" id="inputSuccess2" asp-for="NgayTraPhaitra">
+                                    </div>
                                 }
+                                else
+                                {
+                                    <label class="col-form-label col-md-2 col-sm-2" id="ngaytra" style="display:none">Ngày trả</label>
+                                    <div class="col-md-4 col-sm-4" id="ngaytra1" style="display:none">
+                                        <input type="date" class="form-control" id="inputSuccess2" asp-for="NgayTraPhaitra">
+                                    </div>
+                                }
+                            }
 
-                            </datalist>
-                            <span asp-validation-for="DiaDiemGiaoHang" class="text-danger"></span>
                         </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="inputEmail4">Mức ứng</label>
-                                <input type="text" class="form-control" placeholder="Tài khoản" asp-for="TienUngHd">
-                                <span asp-validation-for="TienUngHd" class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="inputPassword4">Tạm ứng theo HĐ(FOB)</label>
-                                <input type="text" class="form-control" placeholder="Ngân hàng" asp-for="TienUngTt">
-                                <span asp-validation-for="TienUngTt" class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="inputPassword4">Tạm ứng thực tế</label>
-                                <input type="text" class="form-control" placeholder="Ngân hàng">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Ghi chú</label>
+                            <div class="col-md-10 col-sm-10">
+                                <textarea type="text" class="form-control" id="inputSuccess2" asp-for="Ghichu"></textarea>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-3">
-                                <label for="inputEmail4">Ngày hợp đồng</label>
-                                <input type="date" class="form-control" asp-for="Ngayky">
-                                <span asp-validation-for="Ngayky" class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label for="inputPassword4">Ngày giao hàng</label>
-                                <input type="date" class="form-control" asp-for="Ngaygiao">
-                                <span asp-validation-for="Ngaygiao" class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label for="inputPassword4">Ngày hiệu lực</label>
-                                <input type="date" class="form-control" asp-for="Ngayhl">
-                                <span asp-validation-for="Ngayhl" class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-3" id="ngaytra" style="display:none">
-                                <label for="inputPassword4">Ngày trả</label>
-                                <input type="date" class="form-control" asp-for="NgayTraPhaitra">
-                                <span asp-validation-for="Ngayky" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div>
-                            <label>Ghi chú</label>
-                            <textarea class="form-control" asp-for="Ghichu"></textarea>
-                        </div>
-                        <div class="item form-group" style="margin-top:20px">
-                            <div class="col-md-6 col-sm-6 offset-md-3">
+                        <div class="ln_solid"></div>
+                        <div class="form-group row">
+                            <div class="col-md-9 col-sm-9  offset-md-5">
                                 <button class="btn btn-danger" asp-action="deletehopdong" onclick="return confirm('Are you sure you want to delete this item?');" asp-controller="hopdong" asp-route-id="@Model.Systemref" type="submit">Hủy hợp đồng</button>
                                 <button type="submit" asp-action="edithopdong" asp-controller="hopdong" asp-route-id="@Model.Systemref" class="btn btn-primary">Edit hợp đồng</button>
                             </div>
@@ -551,7 +579,15 @@
             </div>
         </div>
     </div>
+        </div>
+    </div>
 </div>
+
+
+
+
+
+
 
 
 

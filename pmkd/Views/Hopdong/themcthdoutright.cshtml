@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 @model CtHdmb
 @{
     if (TempData["alertMessage"] != null)
@@ -57,25 +58,24 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <form method="post" class="validate-form" role="form">
-                        <label for="inputEmail4">System ID</label>
-                        <div class="form-row">
-                            <div class="form-group col-md-3">
+                    <br />
+
+                    <form class="form-label-left input_mask" method="post" role="form">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-1 col-sm-1">System ID</label>
+                            <div class="col-md-3 col-sm-3">
                                 <input type="text" class="form-control" readonly value="@ViewBag.systemId" asp-for="Systemref">
-                                <span asp-validation-for="Systemref" class="text-danger"></span>
                             </div>
-                            <div class="form-group col-md-3">
-                                <input type="text" class="form-control" readonly value="@ViewBag.refid" placeholder="Vận chuyển" asp-for="Ref">
-                                <span asp-validation-for="Ref" class="text-danger"></span>
+                            <div class="col-md-4 col-sm-4">
+                                <input type="text" class="form-control" readonly value="@ViewBag.refid" asp-for="Ref">
                             </div>
-                            <div class="form-group col-md-6">
-                                <input type="text" class="form-control" value="@ViewBag.sohd" readonly placeholder="Vận chuyển">
+                            <div class="col-md-4 col-sm-4">
+                                <input type="text" class="form-control" readonly value="@ViewBag.sohd" />
                             </div>
                         </div>
-                        <label for="inputEmail4">Mã hàng</label>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Mã hàng</label>
+                            <div class="col-md-2 col-sm-2">
                                 <input list="dropdownHH1" id="dropdownHH" class="form-control" asp-for="Mahang" required>
                                 <datalist id="dropdownHH1" onchange="funcMahang()">
                                     @{
@@ -85,71 +85,71 @@
                                         }
                                     }
                                 </datalist>
-                                <span asp-validation-for="Mahang" class="text-danger"></span>
                             </div>
-                            <div class="form-group col-md-6">
-                                <input type="text" class="form-control" placeholder="Vận chuyển">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">Mã hàng</label>
+                            <label class="col-form-label col-md-2 col-sm-2">Đơn vị tính theo HĐ</label>
+                            <div class="col-md-2 col-sm-2">
                                 <select class="form-control" asp-for="DvtTheoHd" required>
-                                    <option value="KGS">KGS</option>
+                                    <option value="KGS" selected>KGS</option>
                                     <option value="MTS">MTS</option>
                                     <option value="LBS">LBS</option>
                                 </select>
-                                <span asp-validation-for="DvtTheoHd" class="text-danger"></span>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">Thuế VAT</label>
+                            <label class="col-form-label col-md-2 col-sm-2">Thuế VAT</label>
+                            <div class="col-md-2 col-sm-2">
                                 <select class="form-control" asp-for="Vat" required>
                                     <option value="0">0</option>
-                                    <option value="5">5</option>
+                                    <option value="5" selected>5</option>
                                     <option value="10">10</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">Số lượng</label>
-                                <input type="text" class="form-control" placeholder="Số lượng" asp-for="Soluong" required>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Số lượng</label>
+                            <div class="col-md-4 col-sm-4">
+                                <input type="text" class="form-control" id="inputSuccess2" asp-for="Soluong">
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">Trọng lượng</label>
-                                <input type="text" class="form-control" asp-for="Trongluong" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">Giá OutRight theo hợp đồng</label>
-                                <input type="text" class="form-control" placeholder="Giá OutRight" asp-for="GiaTheoHd">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">Giá OutRight</label>
-                                <input type="text" class="form-control" asp-for="Giact">
+                            <label class="col-form-label col-md-2 col-sm-2">Trọng lượng</label>
+                            <div class="col-md-4 col-sm-4">
+                                <input type="text" class="form-control" id="inputSuccess2" asp-for="Trongluong" required>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">Giá thị trường</label>
-                                <input type="text" class="form-control" asp-for="Giathitruong">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Giá Outright theo HĐ</label>
+                            <div class="col-md-4 col-sm-4">
+                                <input type="text" class="form-control" id="inputSuccess2" asp-for="GiaTheoHd" required>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">Mức thưởng</label>
-                                <input type="text" class="form-control" asp-for="Mucthuong">
+                            <label class="col-form-label col-md-2 col-sm-2">Giá Outright</label>
+                            <div class="col-md-4 col-sm-4">
+                                <input type="text" class="form-control" id="inputSuccess2" asp-for="Giact" required>
                             </div>
                         </div>
-                        <div>
-                            <button type="submit" asp-action="editcthd" asp-controller="hopdong" asp-route-id="@ViewBag.systemId" class="btn btn-primary" style="margin-top: 30px">Submit</button>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Giá thị trường</label>
+                            <div class="col-md-4 col-sm-4">
+                                <input type="text" class="form-control" id="inputSuccess2" asp-for="Giathitruong">
+                            </div>
+                            <label class="col-form-label col-md-2 col-sm-2">Mức thưởng</label>
+                            <div class="col-md-4 col-sm-4">
+                                <input type="text" class="form-control" id="inputSuccess2" asp-for="Mucthuong">
+                            </div>
                         </div>
+                        <div class="ln_solid"></div>
+                        <div class="form-group row">
+                            <div class="col-md-9 col-sm-9  offset-md-4">
+                                <button type="submit" asp-action="themcthdoutright" asp-controller="hopdong" asp-route-id="@ViewBag.systemId" class="btn btn-primary" style="margin-top: 30px">Submit</button>
+                            </div>
+                        </div>
+
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
+
+
+
+
 
 
 

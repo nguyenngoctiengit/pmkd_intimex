@@ -53,6 +53,10 @@ namespace pmkd.Controllers
             ViewBag.diadiemgiaohang = _context.HdmbGiaohangs.ToList();
             ViewBag.hdchomuon = _context.Hdmbs.Where(a => a.MuaBan == "CMUON").ToList();
             ViewBag.client = _context.Signers.ToList();
+            ViewBag.mucung = (from a in _context.Hdmbs
+                              join b in _context.PortfolioPayments on a.ThanhtoanId equals b.Id
+                              where a.Systemref == id
+                              select b.Mucung).FirstOrDefault();
             return View("cthdmb", hdmb);
         }
         public IActionResult themhopdong()
@@ -139,11 +143,31 @@ namespace pmkd.Controllers
                 ViewBag.hanghoa = (from a in _context.Hanghoas select a).ToArray();
                 TempData["alertMessage"] = "stop loss nhập không đúng";
                 return View("themcthdoutright");
-            }    
+            }
+            ViewBag.cthdmb = from a in _context.CtHdmbs
+                             join b in _context.Hanghoas on a.Mahang equals b.Mahang
+                             where a.Systemref == id
+                             select new ViewModelHDMB
+                             {
+                                 ctHdmb = a,
+                                 hanghoa = b
+                             };
+            var item_return = _context.Hdmbs.Where(a => a.Systemref == id).FirstOrDefault();
+            ViewBag.kh = _context.KhachHangs.ToList();
+            var uniname = HttpContext.Session.GetString("UnitName");
+            ViewBag.intky = _context.Signers.Where(a => a.MaKhach == uniname).ToList();
+            ViewBag.thanhtoan = _context.PortfolioPayments.ToList();
+            ViewBag.diadiemgiaohang = _context.HdmbGiaohangs.ToList();
+            ViewBag.hdchomuon = _context.Hdmbs.Where(a => a.MuaBan == "CMUON").ToList();
+            ViewBag.client = _context.Signers.ToList();
+            ViewBag.mucung = (from a in _context.Hdmbs
+                              join b in _context.PortfolioPayments on a.ThanhtoanId equals b.Id
+                              where a.Systemref == id
+                              select b.Mucung).FirstOrDefault();
             _context.CtHdmbs.Add(ctHdmb);
             _context.SaveChanges();
             TempData["alertMessage"] = "thêm chi tiết hợp đồng thành công";
-            return RedirectToAction("hdmb");
+            return View("cthdmb",item_return);
         }
         public IActionResult themcthd(string id)
         {
@@ -330,10 +354,33 @@ namespace pmkd.Controllers
             }
             else
             {
+                ViewBag.cthdmb = from a in _context.CtHdmbs
+                                 join b in _context.Hanghoas on a.Mahang equals b.Mahang
+                                 where a.Id == id
+                                 select new ViewModelHDMB
+                                 {
+                                     ctHdmb = a,
+                                     hanghoa = b
+                                 };
+                var item_return = (from a in _context.CtHdmbs
+                                   join b in _context.Hdmbs on a.Systemref equals b.Systemref
+                                   where a.Id == id
+                                   select b).FirstOrDefault();
+                ViewBag.kh = _context.KhachHangs.ToList();
+                var uniname = HttpContext.Session.GetString("UnitName");
+                ViewBag.intky = _context.Signers.Where(a => a.MaKhach == uniname).ToList();
+                ViewBag.thanhtoan = _context.PortfolioPayments.ToList();
+                ViewBag.diadiemgiaohang = _context.HdmbGiaohangs.ToList();
+                ViewBag.hdchomuon = _context.Hdmbs.Where(a => a.MuaBan == "CMUON").ToList();
+                ViewBag.client = _context.Signers.ToList();
+                ViewBag.mucung = (from a in _context.Hdmbs
+                                  join b in _context.PortfolioPayments on a.ThanhtoanId equals b.Id
+                                  where b.Id == id
+                                  select b.Mucung).FirstOrDefault();
                 _context.CtHdmbs.Remove(del_item);
                 _context.SaveChanges();
                 TempData["alertMessage"] = "xóa chi tiết hợp đồng mua bán thành công";
-                return RedirectToAction("hdmb");
+                return View("cthdmb",item_return);
             }
 
         }

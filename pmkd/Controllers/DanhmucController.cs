@@ -22,19 +22,20 @@ namespace pmkd.Controllers
         {
             _context = context;
         }
-
+        
         //list hàng hóa
+        //===============================================Hàng hóa===========================================
         [HttpGet]
         public IActionResult hanghoa(string id)
         {
             ViewBag.cthdmb = _context.CtHdmbs.ToList();
-            return View("hanghoa",_context.Hanghoas.ToList());
+            return View("hanghoa/hanghoa",_context.Hanghoas.Where(a => a.Visible == true).ToList());
 
         }
         //view thêm nhóm hàng hóa
         public IActionResult themnhomhang()
         {
-            return View("themnhomhang");
+            return View("hanghoa/themnhomhang");
         }
         //hàm thêm nhóm hàng hóa
         [HttpPost]
@@ -45,25 +46,26 @@ namespace pmkd.Controllers
                 if (_context.Nhom_hang_hoas.Any(x => x.Manhom == nhh.Manhom))
                 {
                     TempData["alertMessage1"] = "Mã nhóm hàng bị trùng, không thể thêm, mời nhập lại";
-                    return RedirectToAction("hanghoa");
+                    return RedirectToAction("hanghoa/hanghoa");
                 }
                 else
                 {
                     _context.Nhom_hang_hoas.Add(nhh);
                     _context.SaveChanges();
                     TempData["alertMessage"] = "Thêm nhóm hàng thành công";
-                    return RedirectToAction("hanghoa");
+                    return RedirectToAction("hanghoa/hanghoa");
                 }
             }
             else
-                return View("themnhomhang");
+                return View("hanghoa/themnhomhang");
 
         }
         public IActionResult updateHH(string id)
         {
             ViewBag._hanghoa = _context.Hanghoas.Where(a => a.Idhanghoa == id).FirstOrDefault();    
             ViewBag._nhomhanghoa = _context.Nhom_hang_hoas.ToList();
-            return View(_context.Hanghoas.Where(a => a.Idhanghoa == id).FirstOrDefault());
+            var item = _context.Hanghoas.Where(a => a.Idhanghoa == id).FirstOrDefault();
+            return View("hanghoa/updateHH",item);
         }
         [HttpPost]
         public IActionResult updateHH(Hanghoa hanghoa,string id)
@@ -73,42 +75,14 @@ namespace pmkd.Controllers
                 _context.Update(hanghoa);
                 _context.SaveChanges();
                 TempData["alertMessage"] = "update thành công";
-                return RedirectToAction("hanghoa");
+                return RedirectToAction("hanghoa/hanghoa");
             }   
             else
             {
                 ViewBag._hanghoa = _context.Hanghoas.Where(a => a.Idhanghoa == id).FirstOrDefault();
                 ViewBag._nhomhanghoa = _context.Nhom_hang_hoas.ToList();
-                return View("updateHH");
+                return View("hanghoa/updateHH");
             }    
-        }
-        //xóa nhóm hàng hóa
-        public IActionResult delete(string id)
-        {
-            var flag = false;
-            var list_product = _context.Hanghoas.ToList();
-            var list_nhomhang = _context.Nhom_hang_hoas.Where(a => a.Manhom == id).FirstOrDefault();
-            foreach (var a in list_product)
-            {
-                if (a.MaNhom == list_nhomhang.Manhom)
-                {
-                    flag = true;
-                }
-                if (flag == true)
-                {
-                    TempData["alertMessage1"] = "Không được xóa, nhóm hàng này đã chứa hàng hóa";
-                    return RedirectToAction("nhomhanghoa");
-                }
-                else
-                {
-                    _context.Nhom_hang_hoas.Remove(list_nhomhang);
-                    _context.SaveChanges();
-                    TempData["alertMessage"] = "Xóa nhóm hàng thành công";
-                    return RedirectToAction("nhomhanghoa");
-                }
-
-            }
-            return RedirectToAction("nhomhanghoa");
         }
         //xóa hàng hóa
         public IActionResult deletehanghoa(string id)
@@ -128,15 +102,16 @@ namespace pmkd.Controllers
                 if (flag == true)
                 {
                     TempData["alertMessage1"] = "Không được xóa, hàng hóa có chứa trong hợp đồng";
-                    return RedirectToAction("nhomhanghoa");
+                    return RedirectToAction("hanghoa");
                 }
                 else
                 {
-
-                    _context.Hanghoas.Remove(hh);
+                    hh.Visible = false;
+                    hh.Sudung = 0;
+                    _context.Hanghoas.Update(hh);
                     _context.SaveChanges();
                     TempData["alertMessage"] = "Xóa hàng hóa thành công";
-                    return RedirectToAction("nhomhanghoa");
+                    return RedirectToAction("hanghoa");
                 }
             }
         }
@@ -145,7 +120,7 @@ namespace pmkd.Controllers
         public IActionResult themhanghoa()
         {
             ViewBag.nhomhanghoa = _context.Nhom_hang_hoas.ToList();
-            return View("themhanghoa");
+            return View("hanghoa/themhanghoa");
         }
         //hàm tạo hàng hóa
         [HttpPost]
@@ -156,7 +131,7 @@ namespace pmkd.Controllers
                 if (_context.Hanghoas.Any(a => a.Mahang == hanghoa.Mahang) || _context.Hanghoas.Any(a => a.Idhanghoa == hanghoa.Idhanghoa))
                 {
                     TempData["alertMessage1"] = "Mã hàng hóa hoặc ID hàng hóa bị trùng";
-                    return RedirectToAction("hanghoa");
+                    return RedirectToAction("themhanghoa");
                 }
                 else
                 {
@@ -169,7 +144,7 @@ namespace pmkd.Controllers
             else
             {
                 ViewBag.nhomhanghoa = _context.Nhom_hang_hoas.ToList();
-                return View("themhanghoa");
+                return View("hanghoa/themhanghoa");
             }
 
         }
@@ -192,17 +167,19 @@ namespace pmkd.Controllers
                 if (flag == true)
                 {
                     TempData["alertMessage1"] = "Không được sửa, hàng hóa có chứa trong hợp đồng";
-                    return RedirectToAction("nhomhanghoa");
+                    return RedirectToAction("hanghoa");
                 }
                 else
                 {
                     _context.Update(hh);
                     _context.SaveChanges();
                     TempData["alertMessage"] = "update thành công";
-                    return RedirectToAction("nhomhanghoa");
+                    return RedirectToAction("hanghoa");
                 }
             }
         }
+//===========================================================================================================
+//=================================Khách hàng================================================================
         public IActionResult khachhang(string id)
         {
            
