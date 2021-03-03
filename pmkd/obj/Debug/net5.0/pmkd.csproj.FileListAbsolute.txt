@@ -216,7 +216,6 @@ C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.TagHelpers.output.
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.RazorCoreGenerate.cache
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hethong\Index.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\Index.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.RazorTargetAssemblyInfo.cache
@@ -274,9 +273,6 @@ C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Account\Ind
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\ServiceStack.Interfaces.dll
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\System.Linq.Dynamic.dll
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\detailKH.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\themkhachhang.cshtml.g.cs
 C:\Users\Admin\Desktop\pmkd_intimex\pmkd\bin\Debug\net5.0\appsettings.Development.json
 C:\Users\Admin\Desktop\pmkd_intimex\pmkd\bin\Debug\net5.0\appsettings.json
 C:\Users\Admin\Desktop\pmkd_intimex\pmkd\bin\Debug\net5.0\pmkd.exe
@@ -449,13 +445,6 @@ C:\Users\Admin\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\ref\pmkd.dll
 C:\Users\Admin\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\pmkd.pdb
 C:\Users\Admin\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\pmkd.genruntimeconfig.cache
 C:\Users\Admin\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\AddOrEdit.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\updateKH.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\themnguoidaidien.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\updateSigner.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\themdinhmuc.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\updateCN.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khuvuc.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\nguoidaidien.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\hdmb.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\cthdmb.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\themhopdong.cshtml.g.cs
@@ -651,3 +640,10 @@ C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\han
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\hanghoa\themhanghoa.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\hanghoa\themnhomhang.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\hanghoa\updateHH.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang\detailKH.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang\khachhang.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang\themdinhmuc.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang\themkhachhang.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang\themnguoidaidien.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang\updateCN.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang\updateSigner.cshtml.g.cs
