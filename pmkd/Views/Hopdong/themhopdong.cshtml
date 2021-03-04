@@ -12,6 +12,7 @@
         </div>
     }
 }
+@model Hdmb
 <style>
     .input-validation-error {
         border-color: red;
@@ -60,123 +61,215 @@
 
                     <form class="form-label-left input_mask" method="post" role="form">
                         <div class="form-group row">
+                            <div class="form-group col-md-4">
+                                <div style="width:200px ; border:1px dashed;border-color:black;">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.TypeKd)" id="inlineRadio1" value="false" checked>
+                                        <label class="form-check-label" for="inlineRadio1">Trực tiếp</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="true">
+                                        <label class="form-check-label" for="inlineRadio2">Ủy thác</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-7" style="border:1px dashed;border-color:black">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio1" value="MUA" checked>
+                                    <label class="form-check-label" for="inlineRadio1">Mua hàng</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio2" value="BAN">
+                                    <label class="form-check-label" for="inlineRadio2">Bàn hàng</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" onclick="show2();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="MUON">
+                                    <label class="form-check-label" for="inlineRadio3">Mượn hàng</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="CMUON">
+                                    <label class="form-check-label" for="inlineRadio3">Cho mượn</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" onclick="show();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="KTRA">
+                                    <label class="form-check-label" for="inlineRadio3">Khách trả</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">System ID</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2">
+                                <input type="text" class="form-control" id="inputSuccess2" asp-for="Systemref">
                             </div>
                             <label class="col-form-label col-md-2 col-sm-2">Ref</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2">
+                                <input type="text" class="form-control" id="inputSuccess2" asp-for="Ref">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Tiền tệ</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2">
+                                <select class="form-control" asp-for="Tiente">
+                                    <option value="VND">VND</option>
+                                    <option value="USD">USD</option>
+                                </select>
                             </div>
                             <div class="col-md-6 col-sm-6">
-                                <input class="form-check-input js-switch" type="checkbox" style="margin-left:20px" checked>
-                                <input type="hidden" value="false">
+                                <input class="form-check-input js-switch" name="@Html.NameFor(a => a.Pakd)" type="checkbox" style="margin-left:20px" checked>
+                                <input type="hidden" value="false" name="@Html.NameFor(a => a.Pakd)">
                                 <label class="form-check-label" for="inlineCheckbox1" style="font-size:18px">Hợp đồng bắt buộc có PAKD</label>
-                                <input class="form-check-input js-switch" type="checkbox" value="true" style="margin-left:30px">
-                                <input type="hidden" value="false">
+                                <input class="form-check-input js-switch" name="@Html.NameFor(a => a.IsNoKhoDoi)" type="checkbox" value="true" style="margin-left:30px">
+                                <input type="hidden" value="false" name="@Html.NameFor(a => a.IsNoKhoDoi)">
                                 <label class="form-check-label" for="inlineCheckbox1" style="font-size:18px">Hợp đồng nợ khó đòi</label>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Khách hàng</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2">
+                                <input list="khachhang" class="form-control" asp-for="Makhach" required>
+                                <datalist id="khachhang">
+                                    @{
+                                        foreach (var a in ViewBag.kh)
+                                        {
+                                            <option value="@a.MaKhach">@a.MaKhach || @a.TenKhach || @a.TenFull</option>
+                                        }
+                                    }
+
+                                </datalist>
                             </div>
                             <label class="col-form-label col-md-2 col-sm-2">Vận chuyển</label>
                             <div class="col-md-4 col-sm-4">
-                                <select class="form-control">
-                                </select>
+                                <input type="text" class="form-control" id="vanchuyentextbox" required placeholder="Vận chuyển" asp-for="VanChuyen">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Số hợp đồng</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2">
+                                <input type="text" class="form-control" id="inputSuccess2" asp-for="Sohd" required>
                             </div>
-                            <label class="col-form-label col-md-2 col-sm-2">Hợp đồng cho mượn</label>
-                            <div class="col-md-4 col-sm-4">
-                                <select class="form-control">
-                                </select>
+                            <label class="col-form-label col-md-2 col-sm-2" style="display:none" id="divhdchomuon">Hợp đồng cho mượn</label>
+                            <div class="col-form-label col-md-4 col-sm-4" style="display:none" id="divhdchomuon1">
+                                <input list="hdchomuon" class="form-control" asp-for="HdcmuonId">
+                                <datalist id="hdchomuon">
+                                    @{
+                                        foreach (var item in ViewBag.hdchomuon)
+                                        {
+                                            <option value="@item.Systemref">@item.Ref || @item.Sohd || @item.Makhach</option>
+                                        }
+                                    }
+
+                                </datalist>
+                                <span asp-validation-for="HdcmuonId" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">INT ký</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2">
+                                <input list="intky" class="form-control" asp-for="IntKy" required>
+                                <datalist id="intky">
+                                    @{
+                                        foreach (var item in ViewBag.intky)
+                                        {
+                                            <option value="@item.MaKhach@item.Stt"> || @item.Nguoiky chức vụ @item.Chucvu</option>
+                                        }
+                                    }
+
+                                </datalist>
                             </div>
                             <label class="col-form-label col-md-2 col-sm-2">Khách ký</label>
                             <div class="col-md-4 col-sm-4">
-                                <select class="form-control">
-                                </select>
+                                <input list="browsers" class="form-control" asp-for="ClientKy">
+                                <datalist id="browsers">
+                                    @{
+                                        foreach (var item in ViewBag.client)
+                                        {
+                                            <option value="@item.MaKhach@item.Stt"> || @item.Nguoiky chức vụ @item.Chucvu</option>
+                                        }
+                                    }
+                                </datalist>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Thanh toán</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2">
+                                <input list="thanhtoan" class="form-control" asp-for="ThanhtoanId">
+                                <datalist id="thanhtoan">
+                                    @{
+                                        foreach (var item in ViewBag.thanhtoan)
+                                        {
+                                            <option value="@item.Id">@item.Matt || @item.TenTt</option>
+                                        }
+                                    }
+
+                                </datalist>
                             </div>
                             <label class="col-form-label col-md-2 col-sm-2">Hình thức giá</label>
                             <div class="col-md-4 col-sm-4">
                                 <label class="radio-inline">
-                                    <input type="radio" value="true" checked><span style="font-size:20px">Giá outright</span>
+                                    <input type="radio" value="true" name="@Html.NameFor(m => m.IsFix)" checked><span style="font-size:20px">Giá outright</span>
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" value="false" style="margin-left:15px"><span style="font-size:20px">Giá trừ lùi</span>
+                                    <input type="radio" value="false" name="@Html.NameFor(m => m.IsFix)" style="margin-left:15px"><span style="font-size:20px">Giá trừ lùi</span>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Địa điểm giao hàng</label>
                             <div class="col-md-10 col-sm-10">
-                                <input type="text" class="form-control" id="inputSuccess2">
+                                <input list="diadiemgiaohang" class="form-control" asp-for="DiaDiemGiaoHang" required>
+                                <datalist id="diadiemgiaohang">
+                                    @{
+                                        foreach (var item1 in ViewBag.diadiemgiaohang)
+                                        {
+                                            <option value="@item1.DiaDiemGiaoHang">@*@item1.DiaDiemGiaoHang*@</option>
+                                        }
+                                    }
+
+                                </datalist>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-form-label col-md-2 col-sm-2">Mức ứng</label>
-                            <div class="col-md-2 col-sm-2">
-                                <input type="text" class="form-control" id="inputSuccess2">
-                            </div>
                             <label class="col-form-label col-md-2 col-sm-2">Tạm ứng theo HĐ</label>
-                            <div class="col-md-2 col-sm-2">
-                                <input type="text" class="form-control" id="inputSuccess2">
+                            <div class="col-md-4 col-sm-4">
+                                <input type="text" class="form-control" placeholder="Ngân hàng" asp-for="TienUngHd" required>
                             </div>
                             <label class="col-form-label col-md-2 col-sm-2">Tạm ứng thực tế</label>
-                            <div class="col-md-2 col-sm-2">
-                                <input type="text" class="form-control" id="inputSuccess2">
+                            <div class="col-md-4 col-sm-4">
+                                <input type="text" class="form-control" placeholder="Ngân hàng" asp-for="TienUngTt" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Ngày hợp đồng</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2">
+                                <input type="date" class="form-control" asp-for="Ngayky">
                             </div>
                             <label class="col-form-label col-md-2 col-sm-2">Ngày giao hàng</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2">
+                                <input type="date" class="form-control" asp-for="Ngaygiao">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Ngày hiệu lực</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2">
+                                <input type="date" class="form-control" asp-for="Ngayhl">
                             </div>
-                            <label class="col-form-label col-md-2 col-sm-2">Ngày trả</label>
-                            <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2">
+                            <label class="col-form-label col-md-2 col-sm-2" id="ngaytra" style="display:none">Ngày trả</label>
+                            <div class="col-md-4 col-sm-4" id="ngaytra1" style="display:none">
+                                <input type="date" class="form-control" id="inputSuccess2" asp-for="NgayTraPhaitra">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Ghi chú</label>
                             <div class="col-md-10 col-sm-10">
-                                <textarea type="text" class="form-control" id="inputSuccess2"></textarea>   
+                                <textarea type="text" class="form-control" id="inputSuccess2" asp-for="Ghichu"></textarea>
                             </div>
-                        </div>                      
+                        </div>
+                        <div class="ln_solid"></div>
+                        <div class="form-group row">
+                            <div class="col-md-9 col-sm-9  offset-md-5">
+                                <button type="submit" asp-action="themhopdong" asp-controller="hopdong" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

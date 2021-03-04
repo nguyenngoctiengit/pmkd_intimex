@@ -112,6 +112,10 @@
               "target": "Package",
               "version": "[3.2.11, )"
             },
+            "Moment.js": {
+              "target": "Package",
+              "version": "[2.29.1, )"
+            },
             "ServiceStack.Interfaces.Core": {
               "target": "Package",
               "version": "[5.10.4, )"

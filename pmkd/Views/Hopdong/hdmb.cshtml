@@ -72,21 +72,21 @@
                                     <input type="radio" name="Month" value="KTRA" style="margin-left:10px" />Khách trả
                                 </div>
                             </div>
-                            <div class="col-md-7 col-sm-7">
+                            <div class="col-md-7 col-sm-7 input-daterange">
                                 <label class="col-form-label col-md-1 col-sm-1">From</label>
                                 <div class="col-md-5 col-sm-5">
-                                    <input type="text" id="datepicker">
+                                    <input type="date" id="min-date" class="form-control date-range-filter">
                                 </div>
                                 <label class="col-form-label col-md-1 col-sm-1">To</label>
                                 <div class="col-md-5 col-sm-5">
-                                    <input type="text" id="datepicker">
+                                    <input type="date" id="max-date" class="form-control date-range-filter">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive">
-                                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                    <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
                                                 <th>System ID</th>
@@ -112,12 +112,63 @@
                                                 <th>Mã đơn vị</th>
                                                 <th>Người tạo</th>
                                             </tr>
+                                            <tr>
+                                                <th class="filterhead">System ID</th>
+                                                <th class="filterhead">Ref</th>
+                                                <th class="filterhead">Số HĐ</th>
+                                                <th class="filterhead">Mã khách hàng</th>
+                                                <th class="filterhead">Khách hàng</th>
+                                                <th class="filterhead">Ngày hợp đồng</th>
+                                                <th class="filterhead">Tiền tệ</th>
+                                                <th class="filterhead">Vận chuyển</th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                            </tr>
                                         </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>System ID</th>
+                                                <th>Ref</th>
+                                                <th>Số HĐ</th>
+                                                <th>Mã khách hàng</th>
+                                                <th>Khách hàng</th>
+                                                <th>Ngày hợp đồng</th>
+                                                <th>Tiền tệ</th>
+                                                <th>Vận chuyển</th>
+                                                <th>INT ký</th>
+                                                <th>Khách ký</th>
+                                                <th>Thanh toán</th>
+                                                <th>Địa điểm giao hàng</th>
+                                                <th>Mức ứng</th>
+                                                <th>Tạm ứng theo HĐ</th>
+                                                <th>Ngày giao hàng</th>
+                                                <th>Ngày hiệu lực</th>
+                                                <th>Ghi chú</th>
+                                                <th>Hình thức KD</th>
+                                                <th>Loại hợp đồng</th>
+                                                <th>Hình thức gía</th>
+                                                <th>Mã đơn vị</th>
+                                                <th>Người tạo</th>
+                                            </tr>
+                                        </tfoot>
+
                                         <tbody>
                                             @{
                                                 foreach (var item in Model)
                                                 {
-                                                    <tr class="dataRow">
+                                                    <tr>
                                                         <th>@item.hdmb.Systemref</th>
                                                         <th><a asp-action="cthdmb" asp-controller="hopdong" asp-route-id="@item.hdmb.Systemref">@item.hdmb.Ref</a></th>
                                                         <th>@item.hdmb.Sohd</th>
