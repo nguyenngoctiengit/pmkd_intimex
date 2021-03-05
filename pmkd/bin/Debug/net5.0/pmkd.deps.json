@@ -27,6 +27,7 @@
         "dependencies": {
           "AspNet.Security.OpenIdConnect.Primitives": "2.0.0",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "8.1.0",
+          "Bootstrap.Datepicker": "1.8.0.1",
           "Microsoft.AspNet.Identity.Core": "2.2.3",
           "Microsoft.AspNetCore.Authentication.Cookies": "2.2.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "5.0.0",
@@ -380,6 +381,7 @@
           "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
         }
       },
+      "Bootstrap.Datepicker/1.8.0.1": {},
       "Humanizer.Core/2.8.26": {
         "runtime": {
           "lib/netstandard2.0/Humanizer.dll": {
@@ -3858,6 +3860,13 @@
       "sha512": "sha512-dQyGCAYcHbGuimVvCMu4Ea2S1oYOlgO9XfVdClmY5wgygJMZoS57emPzH0qNfknmtzMm4QbDO9i237W5IDjU1A==",
       "path": "automapper.extensions.microsoft.dependencyinjection/8.1.0",
       "hashPath": "automapper.extensions.microsoft.dependencyinjection.8.1.0.nupkg.sha512"
+    },
+    "Bootstrap.Datepicker/1.8.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/pKY2/KjIGQHmK2reK2iowG0Weu6w42VRjBT8vS5AMcsdKMMxQ4NBrvOxWHUpzf0idY+YaKGnjXyWb+Ba+/M3g==",
+      "path": "bootstrap.datepicker/1.8.0.1",
+      "hashPath": "bootstrap.datepicker.1.8.0.1.nupkg.sha512"
     },
     "Humanizer.Core/2.8.26": {
       "type": "package",

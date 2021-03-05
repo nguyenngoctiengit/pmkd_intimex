@@ -72,15 +72,15 @@
                                     <input type="radio" name="Month" value="KTRA" style="margin-left:10px" />Khách trả
                                 </div>
                             </div>
-                            <div class="col-md-7 col-sm-7 input-daterange">
-                                <label class="col-form-label col-md-1 col-sm-1">From</label>
-                                <div class="col-md-5 col-sm-5">
-                                    <input type="date" id="min-date" class="form-control date-range-filter">
-                                </div>
-                                <label class="col-form-label col-md-1 col-sm-1">To</label>
-                                <div class="col-md-5 col-sm-5">
-                                    <input type="date" id="max-date" class="form-control date-range-filter">
-                                </div>
+                            <div class="col-md-7 col-sm-7">
+                                    <label class="col-form-label col-md-1 col-sm-1">From</label>
+                                    <div class="col-md-5 col-sm-5">
+                                        <input type="text" name="min" id="min">
+                                    </div>
+                                    <label class="col-form-label col-md-1 col-sm-1">To</label>
+                                    <div class="col-md-5 col-sm-5">
+                                        <input type="text" name="max" id="max">
+                                    </div>
                             </div>
                         </div>
                         <div class="row">
@@ -112,6 +112,8 @@
                                                 <th>Mã đơn vị</th>
                                                 <th>Người tạo</th>
                                             </tr>
+                                        </thead>
+                                        <tfoot>
                                             <tr>
                                                 <th class="filterhead">System ID</th>
                                                 <th class="filterhead">Ref</th>
@@ -121,46 +123,20 @@
                                                 <th class="filterhead">Ngày hợp đồng</th>
                                                 <th class="filterhead">Tiền tệ</th>
                                                 <th class="filterhead">Vận chuyển</th>
-                                                <th style="display:none"></th>
-                                                <th style="display:none"></th>
-                                                <th style="display:none"></th>
-                                                <th style="display:none"></th>
-                                                <th style="display:none"></th>
-                                                <th style="display:none"></th>
-                                                <th style="display:none"></th>
-                                                <th style="display:none"></th>
-                                                <th style="display:none"></th>
-                                                <th style="display:none"></th>
-                                                <th style="display:none"></th>
-                                                <th style="display:none"></th>
-                                                <th style="display:none"></th>
-                                                <th style="display:none"></th>
-                                            </tr>
-                                        </thead>
-                                        <tfoot>
-                                            <tr>
-                                                <th>System ID</th>
-                                                <th>Ref</th>
-                                                <th>Số HĐ</th>
-                                                <th>Mã khách hàng</th>
-                                                <th>Khách hàng</th>
-                                                <th>Ngày hợp đồng</th>
-                                                <th>Tiền tệ</th>
-                                                <th>Vận chuyển</th>
-                                                <th>INT ký</th>
-                                                <th>Khách ký</th>
-                                                <th>Thanh toán</th>
-                                                <th>Địa điểm giao hàng</th>
-                                                <th>Mức ứng</th>
-                                                <th>Tạm ứng theo HĐ</th>
-                                                <th>Ngày giao hàng</th>
-                                                <th>Ngày hiệu lực</th>
-                                                <th>Ghi chú</th>
-                                                <th>Hình thức KD</th>
-                                                <th>Loại hợp đồng</th>
-                                                <th>Hình thức gía</th>
-                                                <th>Mã đơn vị</th>
-                                                <th>Người tạo</th>
+                                                <th style="display:none">INT ký</th>
+                                                <th style="display:none">Khách ký</th>
+                                                <th style="display:none">Thanh toán</th>
+                                                <th style="display:none">Địa điểm giao hàng</th>
+                                                <th style="display:none">Mức ứng</th>
+                                                <th style="display:none">Tạm ứng theo HĐ</th>
+                                                <th style="display:none">Ngày giao hàng</th>
+                                                <th style="display:none">Ngày hiệu lực</th>
+                                                <th style="display:none">Ghi chú</th>
+                                                <th style="display:none">Hình thức KD</th>
+                                                <th style="display:none">Loại hợp đồng</th>
+                                                <th style="display:none">Hình thức gía</th>
+                                                <th style="display:none">Mã đơn vị</th>
+                                                <th style="display:none">Người tạo</th>
                                             </tr>
                                         </tfoot>
 

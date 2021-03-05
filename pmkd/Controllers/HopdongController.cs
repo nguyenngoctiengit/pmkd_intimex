@@ -61,6 +61,7 @@ namespace pmkd.Controllers
         }
         public IActionResult themhopdong()
         {
+            ViewBag.hh = _context.Hanghoas.ToList();
             ViewBag.kh = _context.KhachHangs.ToList();
             var uniname = HttpContext.Session.GetString("UnitName");
             ViewBag.intky = _context.Signers.Where(a => a.MaKhach == uniname).ToList();
@@ -71,56 +72,46 @@ namespace pmkd.Controllers
             return View("themhopdong");
         }
         [HttpPost]
-        public IActionResult themhopdong(Hdmb hdmb1)
+        public IActionResult themhopdong(ViewModelHDMB viewModelHDMB)
         {
 
             var hdchomuon = (from a in _context.Hdmbs where a.MuaBan == "CMUON" select a).ToList();
             var phuongthucthanhtoan = (from a in _context.PortfolioPayments select a).ToList();
-            hdmb1.Macn = HttpContext.Session.GetString("UnitName");
-            hdmb1.Trangthai = 1;
-            hdmb1.Nguoilam = HttpContext.Session.GetString("userId");
-            foreach(var item in phuongthucthanhtoan)
+            viewModelHDMB.hdmb.Macn = HttpContext.Session.GetString("UnitName");
+            viewModelHDMB.hdmb.Trangthai = 1;
+            viewModelHDMB.hdmb.Nguoilam = HttpContext.Session.GetString("userId");
+            foreach (var item in phuongthucthanhtoan)
             {
-                if (item.Id == hdmb1.ThanhtoanId)
+                if (item.Id == viewModelHDMB.hdmb.ThanhtoanId)
                 {
-                    hdmb1.Thanhtoan = (from a in _context.PortfolioPayments where hdmb1.ThanhtoanId == item.Id select a.Matt).FirstOrDefault();
-                }    
-            }    
-            if (hdmb1.HdcmuonId == null)
+                    viewModelHDMB.hdmb.Thanhtoan = (from a in _context.PortfolioPayments where viewModelHDMB.hdmb.ThanhtoanId == item.Id select a.Matt).FirstOrDefault();
+                }
+            }
+            if (viewModelHDMB.hdmb.HdcmuonId == null)
             {
-                hdmb1.HdcmuonId = "";
-                hdmb1.SoHdcmuon = "";
+                viewModelHDMB.hdmb.HdcmuonId = "";
+                viewModelHDMB.hdmb.SoHdcmuon = "";
             }
             else
             {
                 foreach (var item in hdchomuon)
                 {
-                    if (item.Systemref == hdmb1.HdcmuonId)
+                    if (item.Systemref == viewModelHDMB.hdmb.HdcmuonId)
                     {
-                        hdmb1.HdcmuonId = item.Systemref;
-                        hdmb1.SoHdcmuon = (from a in _context.Hdmbs where hdmb1.HdcmuonId == item.Systemref select a.Sohd).FirstOrDefault().ToString();
+                        viewModelHDMB.hdmb.HdcmuonId = item.Systemref;
+                        viewModelHDMB.hdmb.SoHdcmuon = (from a in _context.Hdmbs where viewModelHDMB.hdmb.HdcmuonId == item.Systemref select a.Sohd).FirstOrDefault().ToString();
                     }
                 }
             }
-            hdmb1.TrangthaiGhep = true;
-            hdmb1.Ngaylam = DateTime.Now;
-            _context.Hdmbs.Add(hdmb1);
+            viewModelHDMB.hdmb.TrangthaiGhep = true;
+            viewModelHDMB.hdmb.Ngaylam = DateTime.Now;
+            viewModelHDMB.ctHdmb.Systemref = viewModelHDMB.hdmb.Systemref;
+            viewModelHDMB.ctHdmb.Ref = viewModelHDMB.hdmb.Systemref;
+            _context.Hdmbs.Add(viewModelHDMB.hdmb);
+            _context.CtHdmbs.Add(viewModelHDMB.ctHdmb);
             _context.SaveChanges();
-            var startDay = new DateTime(2020, 01, 01);
-            var endDay = new DateTime(2021, 12, 30);
-            var hdmb = (from a in _context.Hdmbs
-                        join b in _context.PortfolioPayments on a.ThanhtoanId equals b.Id
-                        join c in _context.KhachHangs on a.Makhach equals c.MaKhach
-                        where (a.Ngayky >= startDay) && (a.Ngayky <= endDay)
-                        select new ViewModelHDMB
-                        {
-                            hdmb = a,
-                            portfolioPayment = b,
-                            khachHang = c
-                        }).ToList().Distinct();
-            TempData["alertMessage"] = "thêm hợp đồng thành công";
             return RedirectToAction("hdmb");
-        }     
+        }
         public IActionResult themcthdoutright(string id)
         {
             ViewBag.systemId = (from a in _context.Hdmbs where a.Systemref == id select a.Systemref).FirstOrDefault();

@@ -35,33 +35,30 @@
     <link href="~/public/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet" asp-append-version="true">
     <link href="~/public/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" asp-append-version="true">
     <link href="~/public/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet" asp-append-version="true">
-    <!-- datepicker -->
-    <!-- Select2 plugin -->
-    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-
-    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
-    <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>
-    <!-- Select2 plugin -->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
-    <!-- Select2 plugin -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <link href="~/public/build/css/custom.min.css" rel="stylesheet" asp-append-version="true">
 
     <!-- datatable -->
+    <!-- datepicker -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <link href="~/public/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="~/public/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker-standalone.css" rel="stylesheet" />
     <!-- Custom Theme Style -->
     <style>
         thead input {
             width: 100%;
         }
+
+        tfoot {
+            display: table-header-group
+        }
     </style>
-    <script>
-        $(function () {
-            $("#datepicker").datepicker();
-        });
-    </script>
-    <link href="~/public/build/css/custom.min.css" rel="stylesheet" asp-append-version="true">
+
+
     <script type="text/javascript">
         /// some script
-
+        $('#min').datetimepicker();
         // jquery ready start
         $(document).ready(function () {
             // jQuery code
@@ -741,7 +738,9 @@
         </div>
     </div>
     <!-- datepicker -->
-
+    <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="~/public/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     <!-- jQuery -->
     <script src="~/public/vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
@@ -835,37 +834,38 @@
                 }
             });
         });
-        $(document).ready(function () {
-            // Setup - add a text input to each footer cell
-            $('#example thead .filterhead').each(function () {
-                var title = $(this).text();
-                $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-            });
+        //search individual column
+        $('.filterhead').each(function () {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+        });
+        // DataTable
+        var otable = $('#example').DataTable({
+            dom: 'Blfrtip',
+            
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+        });
+        // Apply the search
+        otable.columns().every(function () {
 
-            // DataTable
-            var table = $('#example').DataTable();
-
-            // Apply the search
-            table.columns('.filterhead').every(function () {
-                var that = this;
-                $('input', this.footer()).on('keyup change', function () {
-                    if (that.search() !== this.value) {
-                        that
-                            .search(this.value)
-                            .draw();
-                    }
-                });
+            var that = this;
+            $('input', this.footer()).on('keyup change', function () {
+                if (that.search() !== this.value) {
+                    that
+                        .search(this.value)
+                        .draw();
+                }
             });
         });
-
-
-
-
-
-
+        $(function () {
+            $("#sysref").keypress(function () {
+                $("#sysref1").val($(this).val());
+            });
+        });
         // jquery ready start
-      
-
         // DataTable
         $(document).ready(function () {
             // jQuery code

@@ -1,70 +1,56 @@
-﻿
+﻿@model ViewModelHDMB
 @{
-    ViewData["Title"] = "editcthd";
+    ViewData["Title"] = "addhdmb";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@{
-    if (TempData["alertMessage"] != null)
-    {
-        <div style="color:red">
-            @TempData["alertMessage"].ToString()
-        </div>
-    }
-}
-@model Hdmb
-<style>
-    .input-validation-error {
-        border-color: red;
-</style>
 <div class="right_col" role="main" style="height:800px">
     <div class="">
-        <div class="col-md-12 col-sm-12" >
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>Thêm<small>hợp đồng</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li>
-                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Settings 1</a>
-                                <a class="dropdown-item" href="#">Settings 2</a>
-                            </div>
-                        </li>
-                        <li>
-                            <a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
-                    </ul>
-                    @{
-                        if (TempData["alertMessage"] != null)
-                        {
-                            <div style="color:red;font-size:30px">
-                                @TempData["alertMessage"].ToString()
-                            </div>
+        <div class="col-md-12 col-sm-12">
+            <form method="post" asp-action="addhdmb" asp-controller="hopdong">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Thêm<small>hợp đồng</small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Settings 1</a>
+                                    <a class="dropdown-item" href="#">Settings 2</a>
+                                </div>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        @{
+                            if (TempData["alertMessage"] != null)
+                            {
+                                <div style="color:red;font-size:30px">
+                                    @TempData["alertMessage"].ToString()
+                                </div>
+                            }
                         }
-                    }
-                    @{
-                        if (TempData["alertMessage1"] != null)
-                        {
-                            <div style="color:red;font-size:30px">
-                                @TempData["alertMessage1"].ToString()
-                            </div>
+                        @{
+                            if (TempData["alertMessage1"] != null)
+                            {
+                                <div style="color:red;font-size:30px">
+                                    @TempData["alertMessage1"].ToString()
+                                </div>
+                            }
                         }
-                    }
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <br />
-
-                    <form class="form-label-left input_mask" method="post" role="form">
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
                         <div class="form-group row">
                             <div class="form-group col-md-4">
                                 <div style="width:200px ; border:1px dashed;border-color:black;">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.TypeKd)" id="inlineRadio1" value="false" checked>
+                                        <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.hdmb.TypeKd)" id="inlineRadio1" value="false" checked>
                                         <label class="form-check-label" for="inlineRadio1">Trực tiếp</label>
                                     </div>
                                     <div class="form-check form-check-inline">
@@ -75,23 +61,23 @@
                             </div>
                             <div class="form-group col-md-7" style="border:1px dashed;border-color:black">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio1" value="MUA" checked>
+                                    <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.hdmb.MuaBan)" id="inlineRadio1" value="MUA" checked>
                                     <label class="form-check-label" for="inlineRadio1">Mua hàng</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio2" value="BAN">
+                                    <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.hdmb.MuaBan)" id="inlineRadio2" value="BAN">
                                     <label class="form-check-label" for="inlineRadio2">Bàn hàng</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" onclick="show2();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="MUON">
+                                    <input class="form-check-input" type="radio" onclick="show2();" name="@Html.NameFor(m => m.hdmb.MuaBan)" id="inlineRadio3" value="MUON">
                                     <label class="form-check-label" for="inlineRadio3">Mượn hàng</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="CMUON">
+                                    <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.hdmb.MuaBan)" id="inlineRadio3" value="CMUON">
                                     <label class="form-check-label" for="inlineRadio3">Cho mượn</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" onclick="show();" name="@Html.NameFor(m => m.MuaBan)" id="inlineRadio3" value="KTRA">
+                                    <input class="form-check-input" type="radio" onclick="show();" name="@Html.NameFor(m => m.hdmb.MuaBan)" id="inlineRadio3" value="KTRA">
                                     <label class="form-check-label" for="inlineRadio3">Khách trả</label>
                                 </div>
                             </div>
@@ -99,34 +85,34 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">System ID</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="Systemref">
+                                <input type="text" class="form-control" onblur="funchange()" id="sysref" asp-for="hdmb.Systemref">
                             </div>
                             <label class="col-form-label col-md-2 col-sm-2">Ref</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="Ref">
+                                <input type="text" class="form-control" asp-for="hdmb.Ref">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Tiền tệ</label>
                             <div class="col-md-4 col-sm-4">
-                                <select class="form-control" asp-for="Tiente">
+                                <select class="form-control" asp-for="hdmb.Tiente">
                                     <option value="VND">VND</option>
                                     <option value="USD">USD</option>
                                 </select>
                             </div>
                             <div class="col-md-6 col-sm-6">
-                                <input class="form-check-input js-switch" name="@Html.NameFor(a => a.Pakd)" type="checkbox" style="margin-left:20px" checked>
-                                <input type="hidden" value="false" name="@Html.NameFor(a => a.Pakd)">
+                                <input class="form-check-input js-switch" name="@Html.NameFor(a => a.hdmb.Pakd)" type="checkbox" style="margin-left:20px" checked>
+                                <input type="hidden" value="false" name="@Html.NameFor(a => a.hdmb.Pakd)">
                                 <label class="form-check-label" for="inlineCheckbox1" style="font-size:18px">Hợp đồng bắt buộc có PAKD</label>
-                                <input class="form-check-input js-switch" name="@Html.NameFor(a => a.IsNoKhoDoi)" type="checkbox" value="true" style="margin-left:30px">
-                                <input type="hidden" value="false" name="@Html.NameFor(a => a.IsNoKhoDoi)">
+                                <input class="form-check-input js-switch" name="@Html.NameFor(a => a.hdmb.IsNoKhoDoi)" type="checkbox" value="true" style="margin-left:30px">
+                                <input type="hidden" value="false" name="@Html.NameFor(a => a.hdmb.IsNoKhoDoi)">
                                 <label class="form-check-label" for="inlineCheckbox1" style="font-size:18px">Hợp đồng nợ khó đòi</label>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Khách hàng</label>
                             <div class="col-md-4 col-sm-4">
-                                <input list="khachhang" class="form-control" asp-for="Makhach" required>
+                                <input list="khachhang" class="form-control" asp-for="hdmb.Makhach" required>
                                 <datalist id="khachhang">
                                     @{
                                         foreach (var a in ViewBag.kh)
@@ -139,17 +125,17 @@
                             </div>
                             <label class="col-form-label col-md-2 col-sm-2">Vận chuyển</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="vanchuyentextbox" required placeholder="Vận chuyển" asp-for="VanChuyen">
+                                <input type="text" class="form-control" id="vanchuyentextbox" required placeholder="Vận chuyển" asp-for="hdmb.VanChuyen">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Số hợp đồng</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="Sohd" required>
+                                <input type="text" class="form-control" id="inputSuccess2" asp-for="hdmb.Sohd" required>
                             </div>
                             <label class="col-form-label col-md-2 col-sm-2" style="display:none" id="divhdchomuon">Hợp đồng cho mượn</label>
                             <div class="col-form-label col-md-4 col-sm-4" style="display:none" id="divhdchomuon1">
-                                <input list="hdchomuon" class="form-control" asp-for="HdcmuonId">
+                                <input list="hdchomuon" class="form-control" asp-for="hdmb.HdcmuonId">
                                 <datalist id="hdchomuon">
                                     @{
                                         foreach (var item in ViewBag.hdchomuon)
@@ -159,13 +145,13 @@
                                     }
 
                                 </datalist>
-                                <span asp-validation-for="HdcmuonId" class="text-danger"></span>
+                                <span asp-validation-for="hdmb.HdcmuonId" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">INT ký</label>
                             <div class="col-md-4 col-sm-4">
-                                <input list="intky" class="form-control" asp-for="IntKy" required>
+                                <input list="intky" class="form-control" asp-for="hdmb.IntKy" required>
                                 <datalist id="intky">
                                     @{
                                         foreach (var item in ViewBag.intky)
@@ -178,7 +164,7 @@
                             </div>
                             <label class="col-form-label col-md-2 col-sm-2">Khách ký</label>
                             <div class="col-md-4 col-sm-4">
-                                <input list="browsers" class="form-control" asp-for="ClientKy">
+                                <input list="browsers" class="form-control" asp-for="hdmb.ClientKy">
                                 <datalist id="browsers">
                                     @{
                                         foreach (var item in ViewBag.client)
@@ -192,7 +178,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Thanh toán</label>
                             <div class="col-md-4 col-sm-4">
-                                <input list="thanhtoan" class="form-control" asp-for="ThanhtoanId">
+                                <input list="thanhtoan" class="form-control" asp-for="hdmb.ThanhtoanId" required>
                                 <datalist id="thanhtoan">
                                     @{
                                         foreach (var item in ViewBag.thanhtoan)
@@ -206,17 +192,17 @@
                             <label class="col-form-label col-md-2 col-sm-2">Hình thức giá</label>
                             <div class="col-md-4 col-sm-4">
                                 <label class="radio-inline">
-                                    <input type="radio" value="true" name="@Html.NameFor(m => m.IsFix)" checked><span style="font-size:20px">Giá outright</span>
+                                    <input type="radio" value="true" name="@Html.NameFor(m => m.hdmb.IsFix)" checked><span style="font-size:20px">Giá outright</span>
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" value="false" name="@Html.NameFor(m => m.IsFix)" style="margin-left:15px"><span style="font-size:20px">Giá trừ lùi</span>
+                                    <input type="radio" value="false" name="@Html.NameFor(m => m.hdmb.IsFix)" style="margin-left:15px"><span style="font-size:20px">Giá trừ lùi</span>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Địa điểm giao hàng</label>
                             <div class="col-md-10 col-sm-10">
-                                <input list="diadiemgiaohang" class="form-control" asp-for="DiaDiemGiaoHang" required>
+                                <input list="diadiemgiaohang" class="form-control" asp-for="hdmb.DiaDiemGiaoHang" required>
                                 <datalist id="diadiemgiaohang">
                                     @{
                                         foreach (var item1 in ViewBag.diadiemgiaohang)
@@ -231,59 +217,259 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Tạm ứng theo HĐ</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" placeholder="Ngân hàng" asp-for="TienUngHd" required>
+                                <input type="text" class="form-control" placeholder="Ngân hàng" asp-for="hdmb.TienUngHd" required>
                             </div>
                             <label class="col-form-label col-md-2 col-sm-2">Tạm ứng thực tế</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" placeholder="Ngân hàng" asp-for="TienUngTt" required>
+                                <input type="text" class="form-control" placeholder="Ngân hàng" asp-for="hdmb.TienUngTt" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Ngày hợp đồng</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="date" class="form-control" asp-for="Ngayky">
+                                <input type="date" class="form-control" asp-for="hdmb.Ngayky" required>
                             </div>
                             <label class="col-form-label col-md-2 col-sm-2">Ngày giao hàng</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="date" class="form-control" asp-for="Ngaygiao">
+                                <input type="date" class="form-control" asp-for="hdmb.Ngaygiao">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Ngày hiệu lực</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="date" class="form-control" asp-for="Ngayhl">
+                                <input type="date" class="form-control" asp-for="hdmb.Ngayhl">
                             </div>
                             <label class="col-form-label col-md-2 col-sm-2" id="ngaytra" style="display:none">Ngày trả</label>
                             <div class="col-md-4 col-sm-4" id="ngaytra1" style="display:none">
-                                <input type="date" class="form-control" id="inputSuccess2" asp-for="NgayTraPhaitra">
+                                <input type="date" class="form-control" id="inputSuccess2" asp-for="hdmb.NgayTraPhaitra">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Ghi chú</label>
                             <div class="col-md-10 col-sm-10">
-                                <textarea type="text" class="form-control" id="inputSuccess2" asp-for="Ghichu"></textarea>
+                                <textarea type="text" class="form-control" id="inputSuccess2" asp-for="hdmb.Ghichu"></textarea>
                             </div>
                         </div>
                         <div class="ln_solid"></div>
-                        <div class="form-group row">
-                            <div class="col-md-9 col-sm-9  offset-md-5">
-                                <button type="submit" asp-action="themhopdong" asp-controller="hopdong" class="btn btn-primary">Submit</button>
+                    </div>
+                    <div class="col-md-12 col-sm-12  ">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2><i class="fa fa-bars"></i>Thêm chi tiết hợp đồng</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#">Settings 1</a>
+                                            <a class="dropdown-item" href="#">Settings 2</a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+
+                                <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Chi tiết hợp đồng</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Chi tiết hợp đồng Outright</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Phụ lục hợp đồng</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2 col-sm-2">Mã hàng</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input list="dropdownHH1" id="dropdownHH" class="form-control" asp-for="ctHdmb.Mahang" />
+                                                <datalist id="dropdownHH1" onchange="funcMahang()">
+                                                    @{
+                                                        foreach (var a in ViewBag.hh)
+                                                        {
+                                                            <option value="@a.Mahang">@a.Mahang || @a.Tenhang || @a.MaNhom</option>
+                                                        }
+                                                    }
+                                                </datalist>
+
+                                            </div>
+                                            <label class="col-form-label col-md-2 col-sm-2">Giá TT</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input type="text" class="form-control" id="inputSuccess3" asp-for="ctHdmb.Giatt">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2 col-sm-2">Đơn vị tính theo HĐ</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <select class="form-control" asp-for="ctHdmb.DvtTheoHd">
+                                                    <option value="KGS">KGS</option>
+                                                    <option value="MTS">MTS</option>
+                                                    <option value="LBS">LBS</option>
+                                                </select>
+                                            </div>
+                                            <label class="col-form-label col-md-2 col-sm-2">Thuế VAT</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <select class="form-control" asp-for="ctHdmb.Vat">
+                                                    <option value="0">0</option>
+                                                    <option value="5" selected>5</option>
+                                                    <option value="10">10</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2 col-sm-2">Số lượng</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Soluong">
+                                            </div>
+                                            <label class="col-form-label col-md-2 col-sm-2">Sig</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <select class="form-control" asp-for="ctHdmb.Sig">
+                                                    <option value="+">+</option>
+                                                    <option value="-">-</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2 col-sm-2">Trọng lượng</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Trongluong">
+                                            </div>
+                                            <label class="col-form-label col-md-2 col-sm-2">Mức trừ hoặc cộng</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input type="text" class="form-control" id="inputSuccess3" asp-for="ctHdmb.Diff">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2 col-sm-2">Số LOT</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Solot">
+                                            </div>
+                                            <label class="col-form-label col-md-2 col-sm-2">Ngày chốt cuối</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input type="date" class="form-control" id="inputSuccess3" asp-for="ctHdmb.FNgayfix">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2 col-sm-2">Giá tháng</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Giathang">
+                                            </div>
+                                            <label class="col-form-label col-md-2 col-sm-2">Mức stoploss</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input type="text" class="form-control" id="inputSuccess3" asp-for="ctHdmb.Stoploss">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2 col-sm-2">Giá năm</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Gianam">
+                                            </div>
+                                            <label class="col-form-label col-md-2 col-sm-2"></label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input type="checkbox" class="js-switch" name="@Html.NameFor(m => m.ctHdmb.ChuyenThang)" value="true" style="margin-left:5px" /> Chuyển tháng
+                                                <input type="hidden" class="js-switch" name="@Html.NameFor(m => m.ctHdmb.ChuyenThang)" value="false" style="margin-left:5px" />
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2 col-sm-2">Giá thị trường</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Giathitruong">
+                                            </div>
+                                            <label class="col-form-label col-md-2 col-sm-2">Mức thưởng</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input type="text" class="form-control" id="inputSuccess3">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2 col-sm-2">Mã hàng</label>
+                                            <div class="col-md-2 col-sm-2">
+                                                <input list="dropdownHH1" id="dropdownHH" class="form-control" asp-for="ctHdmb.Mahang">
+                                                <datalist id="dropdownHH1" onchange="funcMahang()">
+                                                    @{
+                                                        foreach (var a in ViewBag.hh)
+                                                        {
+                                                            <option value="@a.Mahang">@a.Mahang || @a.Tenhang || @a.MaNhom</option>
+                                                        }
+                                                    }
+                                                </datalist>
+                                            </div>
+                                            <label class="col-form-label col-md-2 col-sm-2">Đơn vị tính theo HĐ</label>
+                                            <div class="col-md-2 col-sm-2">
+                                                <select class="form-control" asp-for="ctHdmb.DvtTheoHd">
+                                                    <option value="KGS" selected>KGS</option>
+                                                    <option value="MTS">MTS</option>
+                                                    <option value="LBS">LBS</option>
+                                                </select>
+                                            </div>
+                                            <label class="col-form-label col-md-2 col-sm-2">Thuế VAT</label>
+                                            <div class="col-md-2 col-sm-2">
+                                                <select class="form-control" asp-for="ctHdmb.Vat">
+                                                    <option value="0">0</option>
+                                                    <option value="5" selected>5</option>
+                                                    <option value="10">10</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2 col-sm-2">Số lượng</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Soluong">
+                                            </div>
+                                            <label class="col-form-label col-md-2 col-sm-2">Trọng lượng</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Trongluong">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2 col-sm-2">Giá Outright theo HĐ</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.GiaTheoHd">
+                                            </div>
+                                            <label class="col-form-label col-md-2 col-sm-2">Giá Outright</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Giact">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2 col-sm-2">Giá thị trường</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Giathitruong">
+                                            </div>
+                                            <label class="col-form-label col-md-2 col-sm-2">Mức thưởng</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Mucthuong">
+                                            </div>
+                                        </div>
+                                        <div class="ln_solid"></div>
+                                    </div>
+                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    </div>
+                                    <div class="ln_solid"></div>
+                                </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
+                <div class="form-group row">
+                    <div class="col-md-9 col-sm-9  offset-md-5">
+                        <button type="submit" asp-action="addhdmb" asp-controller="hopdong" class="btn btn-primary" style="margin-top: 30px">Submit</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
 
 
