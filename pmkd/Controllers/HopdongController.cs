@@ -59,14 +59,6 @@ namespace pmkd.Controllers
                               select b.Mucung).FirstOrDefault();
             return View("cthdmb", hdmb);
         }
-        [Route("api/staff")]
-        [HttpGet]
-        [HttpPost]
-        public IActionResult ct_hdmb()
-        {
-            var ct_hdmb1 = (from a in _context.CtHdmbs where a.Systemref == "HD123123" select a).ToList();
-            return Json(ct_hdmb1);
-        }
         public IActionResult themhopdong()
         {
             ViewBag.hh = _context.Hanghoas.ToList();
@@ -128,6 +120,19 @@ namespace pmkd.Controllers
             ViewBag.hh = (from a in _context.Hanghoas select a).ToList();
             ViewBag.hanghoa = (from a in _context.Hanghoas select a).ToArray();
             return View("themcthdoutright");
+        }
+        public IActionResult addcthdoutright()
+        {
+            ViewBag.hh = (from a in _context.Hanghoas select a).ToList();
+            ViewBag.hanghoa = (from a in _context.Hanghoas select a).ToArray();
+            return View("addcthdoutright");
+        }
+        [HttpPost]
+        public JsonResult addcthdoutright(CtHdmb ctHdmb)
+        {
+            _context.CtHdmbs.Add(ctHdmb);
+            _context.SaveChanges();
+            return Json(new { success = true, message = "Saved Successfully" });
         }
         [HttpPost]
         public IActionResult themcthdoutright(CtHdmb ctHdmb, string id)
