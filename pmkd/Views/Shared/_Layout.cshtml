@@ -42,12 +42,7 @@
 
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
-    <script src="~/Scripts/notify.min.js"></script>
+    
     <!-- datepicker -->
     <!-- Custom Theme Style -->
     <style>
@@ -742,7 +737,13 @@
     </div>
     <!-- datepicker -->
     <!-- jQuery -->
-@*    <script src="~/public/vendors/jquery/dist/jquery.min.js"></script>*@
+    <script src="~/public/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+@*    <script src="~/Scripts/bootstrap.min.js"></script>*@
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/notify.min.js"></script>
     <!-- Bootstrap -->
     <script src="~/public/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -927,7 +928,7 @@
             var table = $("#myTable").DataTable()
         });
         function PopupForm(url) {
-            var formDiv = $('<div/>');
+            var formDiv = $('<div class="formAdd"></div>');
             $.get(url)
             .done(function (response) {
                 formDiv.html(response);
@@ -954,7 +955,6 @@
                     if (data.success) {
                         Popup.dialog('close');
                         table.ajax.reload();
-                        alert(data.message);
                         $.notify(data.message, {
                             globalPosition: "top center",
                             className: "success"
@@ -963,30 +963,6 @@
                 }
             })
         }
-       @* function SubmitForm(form) {
-            $.validator.unobtrusive.parse(form);
-            if($(form).valid()){
-                $.ajax({
-                    type : "POST",
-                    url : form.action,
-                    data : $(form).serialize(),
-                    success: function (data) {
-                        if (data.status == true)
-                        {
-                            Popup.dialog('close');
-                            dataTable.ajax.reload();
-
-                            $.notify(data.message,{
-                                globalPosition :"top center",
-                                className : "success"
-                            })
-
-                        }
-                    }
-                });
-            }
-            return false;
-        }*@
 
         function Delete(id) {
             if(confirm('Are You Sure to Delete this Employee Record ?'))

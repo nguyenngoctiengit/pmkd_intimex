@@ -503,6 +503,7 @@
                                             <th border="1" style="border-color:black">Trọng lượng</th>
                                             <th border="1" style="border-color:black">ĐVT</th>
                                             <th border="1" style="border-color:black">VAT</th>
+                                            <th border="1" style="border-color:black">Action</th>
                                             <th border="1" style="border-color:black">Giá</th>
                                             <th border="1" style="border-color:black">Giá tạm tính</th>
                                             <th border="1" style="border-color:black">Số LOT</th>
@@ -539,6 +540,7 @@
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Trongluong.ToString("N")</th>
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Dvt</th>
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Vat</th>
+                                                    <th scope="col" style="border-color:black"><a onclick=PopupFormEdit('@Url.Action("Editcthdoutright","hopdong")/" + @item.ctHdmb.Id +"')>Edit</a> / Delete</th>
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Giact.ToString("N")</th>
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Giatt.ToString("N")</th>
                                                     <th scope="col" style="border-color:black">@item.ctHdmb.Solot</th>
@@ -557,7 +559,7 @@
 
                                     </tbody>
                                 </table>
-                                @*<div class="aaa"></div>*@
+                                <div class="formAdd"></div>
                             </div>
                         </div>
                     </div>

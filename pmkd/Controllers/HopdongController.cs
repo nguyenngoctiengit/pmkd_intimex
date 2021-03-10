@@ -112,6 +112,12 @@ namespace pmkd.Controllers
             _context.SaveChanges();
             return RedirectToAction("hdmb");
         }
+        [HttpGet]
+        public IActionResult getdata()
+        {
+            var item = _context.CtHdmbs.ToList();
+            return Json(new {data = item});
+        }
         public IActionResult themcthdoutright(string id)
         {
             ViewBag.systemId = (from a in _context.Hdmbs where a.Systemref == id select a.Systemref).FirstOrDefault();
@@ -128,11 +134,15 @@ namespace pmkd.Controllers
             return View("addcthdoutright");
         }
         [HttpPost]
-        public JsonResult addcthdoutright(CtHdmb ctHdmb)
+        public ActionResult addcthdoutright(CtHdmb ctHdmb)
         {
             _context.CtHdmbs.Add(ctHdmb);
             _context.SaveChanges();
             return Json(new { success = true, message = "Saved Successfully" });
+        }
+        public IActionResult editcthdoutright()
+        {
+            return View("updatecthdoutright");
         }
         [HttpPost]
         public IActionResult themcthdoutright(CtHdmb ctHdmb, string id)
