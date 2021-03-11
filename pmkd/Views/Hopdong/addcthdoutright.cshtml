@@ -3,15 +3,18 @@
     Layout = null;
 }
 @model CtHdmb
-@using (Html.BeginForm("addcthdoutright", "hopdong", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
-{
+
+<form class="form-label-left input_mask" method="post" role="form" asp-action="addcthdoutright1" asp-controller="hopdong" asp-route-id="@ViewBag.systemId">
     <div class="form-group row">
         <label class="col-form-label col-md-1 col-sm-1">System ID</label>
         <div class="col-md-3 col-sm-3">
-            <input type="text" class="form-control" asp-for="Systemref">
+            <input type="text" class="form-control" readonly value="@ViewBag.systemId" asp-for="Systemref">
         </div>
         <div class="col-md-4 col-sm-4">
-            <input type="text" class="form-control" asp-for="Ref">
+            <input type="text" class="form-control" readonly value="@ViewBag.refid" asp-for="Ref">
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <input type="text" class="form-control" readonly value="@ViewBag.sohd" />
         </div>
     </div>
     <div class="form-group row">
@@ -80,7 +83,7 @@
             <input type="submit" value="submit" class="btn btn-primary">
         </div>
     </div>
-}
+</form>
 
 
 

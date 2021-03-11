@@ -631,11 +631,7 @@ C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\pmkd.dll
 C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\ref\pmkd.dll
 C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\pmkd.pdb
 C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\pmkd.genruntimeconfig.cache
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\themcthdoutright.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\themcthdoutright.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\themcthd.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\editcthd.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\editcthdoutright.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\hanghoa\hanghoa.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\hanghoa\themhanghoa.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\hanghoa\themnhomhang.cshtml.g.cs
@@ -647,7 +643,6 @@ C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\kha
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang\themnguoidaidien.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang\updateCN.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang\updateSigner.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\Index.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\addcthdoutright.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\hanghoa\hanghoa.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\hanghoa\themhanghoa.cshtml.g.cs
@@ -684,3 +679,5 @@ C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\upd
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\updateKH.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\updateSigner.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\updatecthdoutright.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\addcthd.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\updatecthd.cshtml.g.cs

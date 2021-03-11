@@ -4,14 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@{
-    if (TempData["alertMessage"] != null)
-    {
-        <div style="color:red">
-            @TempData["alertMessage"].ToString()
-        </div>
-    }
-}
 @model Hdmb
 <style>
     .input-validation-error {
@@ -41,16 +33,8 @@
                     @{
                         if (TempData["alertMessage"] != null)
                         {
-                            <div style="color:red;font-size:30px">
+                            <div style="color:red;font-size:25px">
                                 @TempData["alertMessage"].ToString()
-                            </div>
-                        }
-                    }
-                    @{
-                        if (TempData["alertMessage1"] != null)
-                        {
-                            <div style="color:red;font-size:30px">
-                                @TempData["alertMessage1"].ToString()
                             </div>
                         }
                     }
@@ -491,89 +475,87 @@
                 <div class="x_content">
                     <div class="row">
                         <div class="col-sm-12">
-                            <a class="btn btn-success" style="margin-bottom:10px" onclick="PopupForm('@Url.Action("addcthdoutright","hopdong")')"><i class="fa fa-plus"></i> Add New</a>
-                            <div class="card-box table-responsive">
-                                <table id="myTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th border="1" style="border-color:black">SystemRef</th>
-                                            <th border="1" style="border-color:black">Mã hàng</th>
-                                            <th border="1" style="border-color:black">Tên hàng</th>
-                                            <th border="1" style="border-color:black">Số lượng</th>
-                                            <th border="1" style="border-color:black">Trọng lượng</th>
-                                            <th border="1" style="border-color:black">ĐVT</th>
-                                            <th border="1" style="border-color:black">VAT</th>
-                                            <th border="1" style="border-color:black">Action</th>
-                                            <th border="1" style="border-color:black">Giá</th>
-                                            <th border="1" style="border-color:black">Giá tạm tính</th>
-                                            <th border="1" style="border-color:black">Số LOT</th>
-                                            <th border="1" style="border-color:black">Giá tháng</th>
-                                            <th border="1" style="border-color:black">Giá năm</th>
-                                            <th border="1" style="border-color:black">+ / -</th>
-                                            <th border="1" style="border-color:black">Mức trừ</th>
-                                            <th border="1" style="border-color:black">Ngày chốt</th>
-                                            <th border="1" style="border-color:black">Mức stoploss</th>
-                                            <th border="1" style="border-color:black">Mã nhóm</th>
-                                            <th border="1" style="border-color:black">Giá thị trường</th>
-                                            <th border="1" style="border-color:black">Mức thưởng</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @{
-                                            foreach (var item in ViewBag.cthdmb)
-                                            {
-                                                <tr>
-                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Systemref</th>
-                                                    @{
-                                                        if (Model.IsFix == true)
-                                                        {
-                                                            <th scope="col" style="border-color:black"><a asp-action="editcthd" asp-controller="hopdong" asp-route-id="@item.ctHdmb.Id">@item.ctHdmb.Mahang </a></th>
-                                                        }
-                                                        else
-                                                        {
-                                                            <th scope="col" style="border-color:black"><a asp-action="editcthdoutright" asp-controller="hopdong" asp-route-id="@item.ctHdmb.Id">@item.ctHdmb.Mahang </a></th>
-                                                        }
+                            <table id="myTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th border="1" style="border-color:black">SystemRef</th>
+                                        <th border="1" style="border-color:black">Mã hàng</th>
+                                        <th border="1" style="border-color:black">Tên hàng</th>
+                                        <th border="1" style="border-color:black">Số lượng</th>
+                                        <th border="1" style="border-color:black">Trọng lượng</th>
+                                        <th border="1" style="border-color:black">ĐVT</th>
+                                        <th border="1" style="border-color:black">VAT</th>
+                                        <th border="1" style="border-color:black">Action</th>
+                                        <th border="1" style="border-color:black">Giá</th>
+                                        <th border="1" style="border-color:black">Giá tạm tính</th>
+                                        <th border="1" style="border-color:black">Số LOT</th>
+                                        <th border="1" style="border-color:black">Giá tháng</th>
+                                        <th border="1" style="border-color:black">Giá năm</th>
+                                        <th border="1" style="border-color:black">+ / -</th>
+                                        <th border="1" style="border-color:black">Mức trừ</th>
+                                        <th border="1" style="border-color:black">Ngày chốt</th>
+                                        <th border="1" style="border-color:black">Mức stoploss</th>
+                                        <th border="1" style="border-color:black">Mã nhóm</th>
+                                        <th border="1" style="border-color:black">Giá thị trường</th>
+                                        <th border="1" style="border-color:black">Mức thưởng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        foreach (var item in ViewBag.cthdmb)
+                                        {
+                                            <tr>
+                                                <th scope="col" style="border-color:black">@item.ctHdmb.Systemref</th>
+                                                <th scope="col" style="border-color:black">@item.ctHdmb.Mahang</th>
+                                                <th scope="col" style="border-color:black">@item.hanghoa.Tenhang</th>
+                                                <th scope="col" style="border-color:black">@item.ctHdmb.Soluong</th>
+                                                <th scope="col" style="border-color:black">@item.ctHdmb.Trongluong.ToString("N")</th>
+                                                <th scope="col" style="border-color:black">@item.ctHdmb.Dvt</th>
+                                                <th scope="col" style="border-color:black">@item.ctHdmb.Vat</th>
+                                                @{
+                                                    if (Model.IsFix == false)
+                                                    {
+                                                        <th scope="col" style="border-color:black">
+                                                        <a class='btn btn-default btn-sm' onclick=PopupFormEdit('@Url.Action("updatecthdoutright","hopdong")/@item.ctHdmb.Id')>
+                                                        <i class='fa fa-pencil'></i> Edit</a> / <a class='btn btn-default btn-sm' style='margin-left:5px' asp-action="deletecthd" onclick="return confirm('Are you sure you want to delete this item?');" asp-controller="hopdong" asp-route-id="@item.ctHdmb.Id" type="submit">
+                                                        <i class='fa fa-trash'></i> Delete</a></th>
                                                     }
-
-                                                    <th scope="col" style="border-color:black">@item.hanghoa.Tenhang</th>
-                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Soluong</th>
-                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Trongluong.ToString("N")</th>
-                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Dvt</th>
-                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Vat</th>
-                                                    <th scope="col" style="border-color:black"><a onclick=PopupFormEdit('@Url.Action("Editcthdoutright","hopdong")/" + @item.ctHdmb.Id +"')>Edit</a> / Delete</th>
-                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Giact.ToString("N")</th>
-                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Giatt.ToString("N")</th>
-                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Solot</th>
-                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Giathang</th>
-                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Gianam</th>
-                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Sig</th>
-                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Diff</th>
-                                                    <th scope="col" style="border-color:black">@item.ctHdmb.FNgayfix</th>
-                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Stoploss</th>
-                                                    <th scope="col" style="border-color:black">@item.hanghoa.MaNhom</th>
-                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Giathitruong</th>
-                                                    <th scope="col" style="border-color:black">@item.ctHdmb.Mucthuong</th>
-                                                </tr>
-                                            }
+                                                    else
+                                                    {
+                                                        <th scope="col" style="border-color:black"><a class='btn btn-default btn-sm' onclick=PopupFormEdit('@Url.Action("updatecthd","hopdong")/@item.ctHdmb.Id')><i class='fa fa-pencil'></i> Edit</a> / <a class='btn btn-default btn-sm' style='margin-left:5px' asp-action="deletecthd" onclick="return confirm('Are you sure you want to delete this item?');" asp-controller="hopdong" asp-route-id="@item.ctHdmb.Id" type="submit"><i class='fa fa-trash'></i> Delete</a></th>
+                                                    }
+                                                }
+                                                <th scope="col" style="border-color:black">@item.ctHdmb.Giact.ToString("N")</th>
+                                                <th scope="col" style="border-color:black">@item.ctHdmb.Giatt.ToString("N")</th>
+                                                <th scope="col" style="border-color:black">@item.ctHdmb.Solot</th>
+                                                <th scope="col" style="border-color:black">@item.ctHdmb.Giathang</th>
+                                                <th scope="col" style="border-color:black">@item.ctHdmb.Gianam</th>
+                                                <th scope="col" style="border-color:black">@item.ctHdmb.Sig</th>
+                                                <th scope="col" style="border-color:black">@item.ctHdmb.Diff</th>
+                                                <th scope="col" style="border-color:black">@item.ctHdmb.FNgayfix</th>
+                                                <th scope="col" style="border-color:black">@item.ctHdmb.Stoploss</th>
+                                                <th scope="col" style="border-color:black">@item.hanghoa.MaNhom</th>
+                                                <th scope="col" style="border-color:black">@item.ctHdmb.Giathitruong</th>
+                                                <th scope="col" style="border-color:black">@item.ctHdmb.Mucthuong</th>
+                                            </tr>
                                         }
+                                    }
 
-                                    </tbody>
-                                </table>
-                                <div class="formAdd"></div>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     @{
                         if (Model.IsFix == false)
                         {
                             <div>
-                                <a asp-action="themcthdoutright" asp-controller="hopdong" asp-route-id="@Model.Systemref"><button type="submit" class="btn btn-primary" style="margin-top: 30px">Thêm chi tiết hợp đồng</button></a>
+                                <a class="btn btn-success" style="margin-bottom:10px" onclick=PopupForm('@Url.Action("addcthdoutright","hopdong")/@Model.Systemref')><i class="fa fa-plus"></i> Add New</a>
                             </div>
                         }
                         else
                         {
                             <div>
-                                <a asp-action="themcthd" asp-controller="hopdong" asp-route-id="@Model.Systemref"><button type="submit" asp-action="themcthd" asp-controller="hopdong" asp-route-id="@Model.Systemref" class="btn btn-primary" style="margin-top: 30px">Thêm chi tiết hợp đồng</button></a>
+                                <a class="btn btn-success" style="margin-bottom:10px" onclick=PopupFormAddCthd('@Url.Action("addcthd","hopdong")/@Model.Systemref')><i class="fa fa-plus"></i> Add New</a>
                             </div>
                         }
                     }

@@ -928,11 +928,10 @@
             var table = $("#myTable").DataTable()
         });
         function PopupForm(url) {
-            var formDiv = $('<div class="formAdd"></div>');
+            var formDiv = $('<div/>');
             $.get(url)
             .done(function (response) {
                 formDiv.html(response);
-
                 Popup = formDiv.dialog({
                     autoOpen: true,
                     resizable: false,
@@ -946,45 +945,40 @@
                 });
             });
         };
-        function SubmitForm(form) {
-            $.ajax({
-                type: "POST",
-                url: form.action,
-                data: $(form).serialize(),
-                success: function (data) {
-                    if (data.success) {
-                        Popup.dialog('close');
-                        table.ajax.reload();
-                        $.notify(data.message, {
-                            globalPosition: "top center",
-                            className: "success"
-                        })
-                    }
-                }
-            })
-        }
-
-        function Delete(id) {
-            if(confirm('Are You Sure to Delete this Employee Record ?'))
-            {
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("Delete","Employee")/' + id,
-                    success: function (data) {
-                        if (data.success)
-                        {
-                            dataTable.ajax.reload();
-
-                            $.notify(data.message, {
-                                globalPosition: "top center",
-                                className: "success"
-                            })
-
+        function PopupFormEdit(url) {
+            var form = $('<div/>');
+            $.get(url)
+                .done(function (response) {
+                    form.html(response);
+                    Popup = form.dialog({
+                        autoOpen: true,
+                        resizable: false,
+                        title: 'Thêm chi tiết hợp đồng OutRight',
+                        height: 500,
+                        width: 700,
+                        close: function () {
+                            Popup.dialog('destroy').remove();
                         }
-                    }
 
+                    });
                 });
-            }
+        };
+        function PopupFormAddCthd(url) {
+            var form = $('<div/>');
+            $.get(url)
+                .done(function (respone) {
+                    form.html(respone);
+                    Popup = form.dialog({
+                        autoOpen: true,
+                        resizable: false,
+                        title: 'Thêm chi tiết hợp đồng',
+                        height: 500,
+                        width: 700,
+                        close: function () {
+                            Popup.dialog('destroy').remove();
+                        }
+                    });
+                });
         }
         // jquery ready start
         // DataTable
