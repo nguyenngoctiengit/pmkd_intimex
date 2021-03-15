@@ -10,8 +10,8 @@ namespace pmkd.Models
     public partial class Hanghoa
     {
         [Required(ErrorMessage ="Vui lòng nhập ID hàng hóa")]
+        [Key]   
         public string Idhanghoa { get; set; }
-        [Key]
         [Required(ErrorMessage = "Vui lòng nhập mã hàng hóa")]
         public string Mahang { get; set; }
         [Required(ErrorMessage = "Vui lòng nhập tên hàng hóa")]

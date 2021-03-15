@@ -39,7 +39,10 @@ namespace pmkd.Controllers
             return View();
         }
         
-
+        public IActionResult DevExtremeLayout()
+        {
+            return View("_DevExtremeLayout");
+        }
 
 
 

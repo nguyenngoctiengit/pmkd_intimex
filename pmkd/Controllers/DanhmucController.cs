@@ -11,6 +11,12 @@ using Microsoft.AspNetCore.Http;
 using ServiceStack;
 using RouteAttribute = ServiceStack.RouteAttribute;
 using System.Web;
+using DevExtreme.AspNet.Data;
+using System.Collections;
+using System.Globalization;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using DevExtreme.AspNet.Mvc;
 
 namespace pmkd.Controllers
 {
@@ -46,106 +52,18 @@ namespace pmkd.Controllers
                 if (_context.Nhom_hang_hoas.Any(x => x.Manhom == nhh.Manhom))
                 {
                     TempData["alertMessage1"] = "Mã nhóm hàng bị trùng, không thể thêm, mời nhập lại";
-                    return RedirectToAction("hanghoa/hanghoa");
+                    return RedirectToAction("hanghoa");
                 }
                 else
                 {
                     _context.Nhom_hang_hoas.Add(nhh);
                     _context.SaveChanges();
                     TempData["alertMessage"] = "Thêm nhóm hàng thành công";
-                    return RedirectToAction("hanghoa/hanghoa");
+                    return RedirectToAction("hanghoa");
                 }
             }
             else
                 return View("hanghoa/themnhomhang");
-
-        }
-        public IActionResult updateHH(string id)
-        {
-            ViewBag._hanghoa = _context.Hanghoas.Where(a => a.Idhanghoa == id).FirstOrDefault();    
-            ViewBag._nhomhanghoa = _context.Nhom_hang_hoas.ToList();
-            var item = _context.Hanghoas.Where(a => a.Idhanghoa == id).FirstOrDefault();
-            return View("hanghoa/updateHH",item);
-        }
-        [HttpPost]
-        public IActionResult updateHH(Hanghoa hanghoa,string id)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Update(hanghoa);
-                _context.SaveChanges();
-                TempData["alertMessage"] = "update thành công";
-                return RedirectToAction("hanghoa/hanghoa");
-            }   
-            else
-            {
-                ViewBag._hanghoa = _context.Hanghoas.Where(a => a.Idhanghoa == id).FirstOrDefault();
-                ViewBag._nhomhanghoa = _context.Nhom_hang_hoas.ToList();
-                return View("hanghoa/updateHH");
-            }    
-        }
-        //xóa hàng hóa
-        public IActionResult deletehanghoa(string id)
-        {
-
-            var flag = false;
-            var list_product = _context.CtHdmbs.ToList();
-            var hh = _context.Hanghoas.Where(a => a.Idhanghoa == id).FirstOrDefault();
-            {
-                foreach (var a in list_product)
-                {
-                    if (a.Mahang == hh.Mahang)
-                    {
-                        flag = true;
-                    }
-                }
-                if (flag == true)
-                {
-                    TempData["alertMessage1"] = "Không được xóa, hàng hóa có chứa trong hợp đồng";
-                    return RedirectToAction("hanghoa");
-                }
-                else
-                {
-                    hh.Visible = false;
-                    hh.Sudung = 0;
-                    _context.Hanghoas.Update(hh);
-                    _context.SaveChanges();
-                    TempData["alertMessage"] = "Xóa hàng hóa thành công";
-                    return RedirectToAction("hanghoa");
-                }
-            }
-        }
-        //view tạo hàng hóa
-        [Route("themhanghoa")]
-        public IActionResult themhanghoa()
-        {
-            ViewBag.nhomhanghoa = _context.Nhom_hang_hoas.ToList();
-            return View("hanghoa/themhanghoa");
-        }
-        //hàm tạo hàng hóa
-        [HttpPost]
-        public IActionResult themhanghoa(Hanghoa hanghoa)
-        {
-            if (ModelState.IsValid)
-            {
-                if (_context.Hanghoas.Any(a => a.Mahang == hanghoa.Mahang) || _context.Hanghoas.Any(a => a.Idhanghoa == hanghoa.Idhanghoa))
-                {
-                    TempData["alertMessage1"] = "Mã hàng hóa hoặc ID hàng hóa bị trùng";
-                    return RedirectToAction("themhanghoa");
-                }
-                else
-                {
-                    _context.Hanghoas.Add(hanghoa);
-                    _context.SaveChanges();
-                    TempData["alertMessage"] = "Thêm hàng hóa thành công";
-                    return RedirectToAction("hanghoa");
-                }
-            }
-            else
-            {
-                ViewBag.nhomhanghoa = _context.Nhom_hang_hoas.ToList();
-                return View("hanghoa/themhanghoa");
-            }
 
         }
         //cập nhật hàng hóa
@@ -178,8 +96,236 @@ namespace pmkd.Controllers
                 }
             }
         }
-//===========================================================================================================
-//=================================Khách hàng================================================================
+        [HttpGet]
+        public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
+        {
+            var hanghoas = _context.Hanghoas.Select(i => new {
+                i.Idhanghoa,
+                i.Mahang,
+                i.Tenhang,
+                i.Tenhangvat,
+                i.MaNhom,
+                i.Dvt,
+                i.Vat,
+                i.Sudung,
+                i.Fullname,
+                i.Quicach,
+                i.Baobi,
+                i.Kiemdinh,
+                i.Visible,
+                i.OrderNhom,
+                i.DoAm,
+                i.HatDen,
+                i.TapChat,
+                i.HatVo
+            });
+            return Json(await DataSourceLoader.LoadAsync(hanghoas, loadOptions));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post(string values)
+        {
+            var model = new Hanghoa();
+            var valuesDict = JsonConvert.DeserializeObject<IDictionary>(values);
+            PopulateModel(model, valuesDict);
+            if (_context.Hanghoas.Any(a => a.Idhanghoa == model.Idhanghoa) || _context.Hanghoas.Any(a => a.Mahang == model.Mahang))
+            {
+                return BadRequest("Mã hàng hóa hoặc ID hàng hóa bị trùng");
+            }
+            if (!TryValidateModel(model))
+                return BadRequest(GetFullErrorMessage(ModelState));
+
+            var result = _context.Hanghoas.Add(model);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Put(string key, string values)
+        {
+            var keys = JsonConvert.DeserializeObject<IDictionary>(key);
+            var keyIdhanghoa = Convert.ToString(keys["Idhanghoa"]);
+            var keyMahang = Convert.ToString(keys["Mahang"]);
+            var model = await _context.Hanghoas.FirstOrDefaultAsync(item =>
+                            item.Idhanghoa == keyIdhanghoa &&
+                            item.Mahang == keyMahang);
+            if (model == null)
+                return StatusCode(409, "Object not found");
+
+            var valuesDict = JsonConvert.DeserializeObject<IDictionary>(values);
+            PopulateModel(model, valuesDict);
+            var flag = false;
+            var list_contac = _context.CtHdmbs.ToList();
+            {
+                foreach (var a in list_contac)
+                {
+                    if (a.Mahang == model.Mahang)
+                    {
+                        flag = true;
+                    }    
+                }    
+                if (flag == true)
+                {
+                    return BadRequest("Hàng hóa đang giao dịch, không được sửa");
+                }
+            }
+            if (!TryValidateModel(model))
+                return BadRequest(GetFullErrorMessage(ModelState));
+
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task  Delete(string key)
+        {
+            var keys = JsonConvert.DeserializeObject<IDictionary>(key);
+            var keyIdhanghoa = Convert.ToString(keys["Idhanghoa"]);
+            var keyMahang = Convert.ToString(keys["Mahang"]);
+            var model = await _context.Hanghoas.FirstOrDefaultAsync(item =>
+                            item.Idhanghoa == keyIdhanghoa &&
+                            item.Mahang == keyMahang);
+
+            _context.Hanghoas.Remove(model);
+            await _context.SaveChangesAsync();
+        }
+        [HttpGet]
+        public async Task <IActionResult>Getnhomhang(DataSourceLoadOptions loadOptions)
+        {
+            var manhomhang = _context.Nhom_hang_hoas.Select(i => new {
+                i.Manhom,
+                i.TenNhom
+            });
+            
+            return Json(await DataSourceLoader.LoadAsync(manhomhang, loadOptions));
+        }
+
+        private void PopulateModel(Hanghoa model, IDictionary values)
+        {
+            string IDHANGHOA = nameof(Hanghoa.Idhanghoa);
+            string MAHANG = nameof(Hanghoa.Mahang);
+            string TENHANG = nameof(Hanghoa.Tenhang);
+            string TENHANGVAT = nameof(Hanghoa.Tenhangvat);
+            string MA_NHOM = nameof(Hanghoa.MaNhom);
+            string DVT = nameof(Hanghoa.Dvt);
+            string VAT = nameof(Hanghoa.Vat);
+            string SUDUNG = nameof(Hanghoa.Sudung);
+            string FULLNAME = nameof(Hanghoa.Fullname);
+            string QUICACH = nameof(Hanghoa.Quicach);
+            string BAOBI = nameof(Hanghoa.Baobi);
+            string KIEMDINH = nameof(Hanghoa.Kiemdinh);
+            string VISIBLE = nameof(Hanghoa.Visible);
+            string ORDER_NHOM = nameof(Hanghoa.OrderNhom);
+            string DO_AM = nameof(Hanghoa.DoAm);
+            string HAT_DEN = nameof(Hanghoa.HatDen);
+            string TAP_CHAT = nameof(Hanghoa.TapChat);
+            string HAT_VO = nameof(Hanghoa.HatVo);
+
+            if (values.Contains(IDHANGHOA))
+            {
+                model.Idhanghoa = Convert.ToString(values[IDHANGHOA]);
+            }
+
+            if (values.Contains(MAHANG))
+            {
+                model.Mahang = Convert.ToString(values[MAHANG]);
+            }
+
+            if (values.Contains(TENHANG))
+            {
+                model.Tenhang = Convert.ToString(values[TENHANG]);
+            }
+
+            if (values.Contains(TENHANGVAT))
+            {
+                model.Tenhangvat = Convert.ToString(values[TENHANGVAT]);
+            }
+
+            if (values.Contains(MA_NHOM))
+            {
+                model.MaNhom = Convert.ToString(values[MA_NHOM]);
+            }
+
+            if (values.Contains(DVT))
+            {
+                model.Dvt = Convert.ToString(values[DVT]);
+            }
+
+            if (values.Contains(VAT))
+            {
+                model.Vat = values[VAT] != null ? Convert.ToInt32(values[VAT]) : (int?)null;
+            }
+
+            if (values.Contains(SUDUNG))
+            {
+                model.Sudung = values[SUDUNG] != null ? Convert.ToInt16(values[SUDUNG]) : (short?)null;
+            }
+
+            if (values.Contains(FULLNAME))
+            {
+                model.Fullname = Convert.ToString(values[FULLNAME]);
+            }
+
+            if (values.Contains(QUICACH))
+            {
+                model.Quicach = Convert.ToString(values[QUICACH]);
+            }
+
+            if (values.Contains(BAOBI))
+            {
+                model.Baobi = Convert.ToString(values[BAOBI]);
+            }
+
+            if (values.Contains(KIEMDINH))
+            {
+                model.Kiemdinh = Convert.ToString(values[KIEMDINH]);
+            }
+
+            if (values.Contains(VISIBLE))
+            {
+                model.Visible = values[VISIBLE] != null ? Convert.ToBoolean(values[VISIBLE]) : (bool?)null;
+            }
+
+            if (values.Contains(ORDER_NHOM))
+            {
+                model.OrderNhom = values[ORDER_NHOM] != null ? Convert.ToInt16(values[ORDER_NHOM]) : (short?)null;
+            }
+
+            if (values.Contains(DO_AM))
+            {
+                model.DoAm = values[DO_AM] != null ? Convert.ToDecimal(values[DO_AM], CultureInfo.InvariantCulture) : (decimal?)null;
+            }
+
+            if (values.Contains(HAT_DEN))
+            {
+                model.HatDen = values[HAT_DEN] != null ? Convert.ToDecimal(values[HAT_DEN], CultureInfo.InvariantCulture) : (decimal?)null;
+            }
+
+            if (values.Contains(TAP_CHAT))
+            {
+                model.TapChat = values[TAP_CHAT] != null ? Convert.ToDecimal(values[TAP_CHAT], CultureInfo.InvariantCulture) : (decimal?)null;
+            }
+
+            if (values.Contains(HAT_VO))
+            {
+                model.HatVo = values[HAT_VO] != null ? Convert.ToDecimal(values[HAT_VO], CultureInfo.InvariantCulture) : (decimal?)null;
+            }
+        }
+
+        private string GetFullErrorMessage(ModelStateDictionary modelState)
+        {
+            var messages = new List<string>();
+
+            foreach (var entry in modelState)
+            {
+                foreach (var error in entry.Value.Errors)
+                    messages.Add(error.ErrorMessage);
+            }
+            
+            return String.Join(" ", messages);
+        }
+        //===========================================================================================================
+        //=================================Khách hàng================================================================
         //view khách hàng
         public IActionResult khachhang(string id)
         {
@@ -377,6 +523,10 @@ namespace pmkd.Controllers
             _context.SaveChanges();
             TempData["alertMessage"] = "xóa người đại diện thành công";
             return RedirectToAction("khachhang");
+        }
+        public IActionResult view()
+        {
+            return View("view");
         }
     }
 }

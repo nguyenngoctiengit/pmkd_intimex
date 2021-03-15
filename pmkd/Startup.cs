@@ -39,6 +39,7 @@ namespace pmkd
             services.AddSession(options => {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
+            services.AddRazorPages().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);  
             services.AddDbContextPool<tradingsystem_blContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("tradingsystem_blConnection")));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

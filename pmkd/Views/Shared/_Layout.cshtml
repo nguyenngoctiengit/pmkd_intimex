@@ -36,13 +36,27 @@
     <link href="~/public/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" asp-append-version="true">
     <link href="~/public/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet" asp-append-version="true">
     <link href="~/public/build/css/custom.min.css" rel="stylesheet" asp-append-version="true">
+    <!-- devexpress-->
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.0.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.9/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.1.1/exceljs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.2/FileSaver.min.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+    <link href="~/css/devextreme/dx.common.css" rel="stylesheet" />
+    <link href="~/css/devextreme/dx.light.css" rel="stylesheet" />
+    <script src="~/js/devextreme/jquery.js"></script>
+    <script src="~/js/devextreme/bootstrap.js"></script>
+    <script src="~/js/devextreme/dx.all.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.mvc.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.data.js"></script>
 
     <!-- dialog-->
 
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
-    
+
     <!-- datepicker -->
     <!-- Custom Theme Style -->
     <style>
@@ -54,6 +68,7 @@
             display: table-header-group
         }
     </style>
+
     <script type="text/javascript">
         /// some script
 
@@ -739,7 +754,7 @@
     <!-- jQuery -->
     <script src="~/public/vendors/jquery/dist/jquery.min.js"></script>
     <script src="~/Scripts/jquery-1.12.4.min.js"></script>
-@*    <script src="~/Scripts/bootstrap.min.js"></script>*@
+    @*    <script src="~/Scripts/bootstrap.min.js"></script>*@
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
@@ -805,6 +820,18 @@
     <!-- Custom Theme Scripts -->
     <script src="~/public/build/js/custom.min.js"></script>
     <script type="text/javascript">
+        window.jsPDF = window.jspdf.jsPDF;
+        applyPlugin(window.jsPDF);
+        function exportToPDF() {
+            var doc = new jsPDF();
+            var dataGrid = $("#gridContainer").dxDataGrid("instance");
+            DevExpress.pdfExporter.exportDataGrid({
+                jsPDFDocument: doc,
+                component: dataGrid
+            }).then(function () {
+                doc.save("Customers.pdf");
+            });
+        }
         $(document).ready(function () {
             $(function () {
                 var start = moment("2021/01/01");
@@ -923,27 +950,27 @@
         });
         var editor; // use a global for the submit and return data rendering in the examples
 
-         var Popup;
+        var Popup;
         $(document).ready(function () {
             var table = $("#myTable").DataTable()
         });
         function PopupForm(url) {
             var formDiv = $('<div/>');
             $.get(url)
-            .done(function (response) {
-                formDiv.html(response);
-                Popup = formDiv.dialog({
-                    autoOpen: true,
-                    resizable: false,
-                    title: 'Thêm chi tiết hợp đồng OutRight',
-                    height: 500,
-                    width: 700,
-                    close: function () {
-                        Popup.dialog('destroy').remove();
-                    }
+                .done(function (response) {
+                    formDiv.html(response);
+                    Popup = formDiv.dialog({
+                        autoOpen: true,
+                        resizable: false,
+                        title: 'Thêm chi tiết hợp đồng OutRight',
+                        height: 500,
+                        width: 700,
+                        close: function () {
+                            Popup.dialog('destroy').remove();
+                        }
 
+                    });
                 });
-            });
         };
         function PopupFormEdit(url) {
             var form = $('<div/>');
