@@ -62,12 +62,7 @@
                     <div class="x_content">
                         <div class="row">
                             <div class="col-sm-12">
-                                @(Html.DevExtreme().Button()
-                                    .ID("exportButton")
-                                    .Icon("exportpdf")
-                                    .Text("Export to PDF")
-                                    .OnClick("exportToPDF")
-                                )
+                                <a class="btn btn-success" style="margin-bottom:10px" onclick=PopupFormNhomhang('@Url.Action("themnhomhang","danhmuc")')><i class="fa fa-plus"></i>Thêm nhóm hàng</a>
                                 <div class="card-box table-responsive">
                                     @(Html.DevExtreme().DataGrid<pmkd.Models.Hanghoa>().ID("gridContainer")
                                     .DataSource(ds => ds.Mvc()
