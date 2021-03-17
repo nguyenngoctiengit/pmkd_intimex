@@ -309,17 +309,7 @@ namespace pmkd.Controllers
            
             return View("khachhang/khachhang",_context.KhachHangs.Where(a => a.Visible == true).ToList());
         }
-        //view chi tiết và edit khách hàng
-        public IActionResult detailKH(string id)
-        {
-            ViewBag.khuvuc = _context.Khuvucs.ToList();
-            ViewBag.list_qg = _context.Quocgia.ToList();
-            ViewBag.idKH = (from a in _context.KhachHangs where a.Idkhach == id select a.Idkhach).FirstOrDefault();
-            ViewBag.signer = from kh in _context.KhachHangs join sn in _context.Signers on kh.MaKhach equals sn.MaKhach where kh.Idkhach == id select sn;
-            ViewBag.customerNorm = from a in _context.KhachHangs join b in _context.CustomerNorms on a.MaKhach equals b.Makhach where a.Idkhach == id select b;
-            var ct_kh = _context.KhachHangs.Where(a => a.Visible == true && a.Idkhach == id).FirstOrDefault();
-            return View("khachhang/detailKH",ct_kh);
-        }
+
         //View thêm khách hàng
         public IActionResult themkhachhang()
         {
@@ -346,161 +336,7 @@ namespace pmkd.Controllers
                 return RedirectToAction("khachhang");
             }
         }
-        //function xóa khách hàng
-        public IActionResult deleteKH(string id)
-        {
-            var kh = _context.KhachHangs.Where(a => a.Idkhach == id).FirstOrDefault();
-            kh.Visible = false;
-            _context.KhachHangs.Update(kh);
-            _context.SaveChanges();
-            TempData["alertMessage"] = "Xóa khách hàng thành công";
-            return RedirectToAction("khachhang");
-        }
-        //function update khánh hàng
-        [HttpPost]
-        public IActionResult updateKH(KhachHang kh)
-        {
-            kh.Visible = true;
-            _context.Update(kh);
-            _context.SaveChanges();
-            TempData["alertMessage"] = "update thành công";
-            return RedirectToAction("khachhang");
-        }
-        //thêm người đại diện
-        public IActionResult themnguoidaidien(string id)
-        {
-            ViewBag.makhach = (from a in _context.KhachHangs where a.Idkhach == id select a.MaKhach).FirstOrDefault();
-            ViewBag.id = (from a in _context.KhachHangs where a.Idkhach == id select a.Idkhach).FirstOrDefault();
-            return View("khachhang/themnguoidaidien");
-        }
-        //function thêm người đại diện
-        [HttpPost]
-        public IActionResult themnguoidaidien(Signer signer, string id)
-        {
-                if (_context.Signers.Any(a => a.Id == signer.Id))
-                {
-                    TempData["alertMessage1"] = "Mã người đại diện bị trùng";
-                    return RedirectToAction("khachhang");
-                }
-                else
-                {
-                    signer.Id = 0;
-                    int stt = (from a in _context.KhachHangs
-                               join b in _context.Signers on a.MaKhach equals b.MaKhach
-                               where a.Idkhach == id
-                               select a).Count();
-
-                    signer.Stt = stt;
-                    ViewBag.khuvuc = _context.Khuvucs.ToList();
-                    ViewBag.list_qg = _context.Quocgia.ToList();
-                    ViewBag.idKH = (from a in _context.KhachHangs where a.Idkhach == id select a.Idkhach).FirstOrDefault();
-                    ViewBag.signer = from kh in _context.KhachHangs join sn in _context.Signers on kh.MaKhach equals sn.MaKhach where kh.Idkhach == id select sn;
-                    ViewBag.customerNorm = from a in _context.KhachHangs join b in _context.CustomerNorms on a.MaKhach equals b.Makhach where a.Idkhach == id select b;
-                    var ct_kh = _context.KhachHangs.Where(a => a.Visible == true && a.Idkhach == id).FirstOrDefault();
-                    _context.Signers.Add(signer);
-                    _context.SaveChanges();
-                    TempData["alertMessage"] = "thêm người đại diện thành công";
-                    return View("khachhang/detailKH",ct_kh);
-                }             
-        }
-        //update người kí
-        public IActionResult updateSigner(int id)
-        {
-            
-            ViewBag.makhach = (from a in _context.KhachHangs join b in _context.Signers on a.MaKhach equals b.MaKhach where b.Id == id select a.Idkhach).FirstOrDefault();
-            return View("khachhang/updateSigner",_context.Signers.Where(a => a.Id == id).FirstOrDefault());
-        }
-        //function update người kí
-        [HttpPost]
-        public IActionResult updateSigner(Signer sn)
-        {
-            var item = (from a in _context.Signers where a.Id == sn.Id select a).FirstOrDefault();
-            item.Nguoiky = sn.Nguoiky;
-            item.Chucvu = sn.Chucvu;
-            item.Uyquyen = sn.Uyquyen;
-            item.Visible = true; 
-            _context.Update(item).Property(a => a.Id).IsModified = false;
-            /* _context.Signers.Update(item);*/
-            _context.SaveChanges();
-            TempData["alertMessage"] = "cập nhật người đại diện thành công";
-            return RedirectToAction("khachhang");
-        }
-        //thêm định mức
-        public IActionResult themdinhmuc(string id)
-        {
-            ViewBag.makhach = (from a in _context.KhachHangs where a.Idkhach == id select a.MaKhach).FirstOrDefault();
-            ViewBag.id = (from a in _context.KhachHangs where a.Idkhach == id select a.Idkhach).FirstOrDefault();
-            ViewBag.branch = _context.Branches.ToList();
-            ViewBag.nhomhang = _context.Nhom_hang_hoas.ToList();
-            return View("khachhang/themdinhmuc");
-        }
-        //function thêm định mức
-        [HttpPost]
-        public IActionResult themdinhmuc(CustomerNorm customerNorm,string id)
-        {
-            if (!(_context.CustomerNorms.Any(a => a.Macn == customerNorm.Macn) && _context.CustomerNorms.Any(a => a.Nhomhang == customerNorm.Nhomhang)))
-
-            {
-                var rand = new Random();
-                customerNorm.Id = rand.Next(0000, 9999);
-                customerNorm.Makhach = (from a in _context.KhachHangs where a.Idkhach == id select a.MaKhach).FirstOrDefault();
-                customerNorm.UserCreate = HttpContext.Session.GetString("userId");
-                customerNorm.DateCreate = DateTime.Now;
-                customerNorm.GdMua = false;
-                customerNorm.GdBan = false;
-                /*                _context.Entry(customerNorm).State = EntityState.Added;*/
-                ViewBag.khuvuc = _context.Khuvucs.ToList();
-                ViewBag.list_qg = _context.Quocgia.ToList();
-                ViewBag.idKH = (from a in _context.KhachHangs where a.Idkhach == id select a.Idkhach).FirstOrDefault();
-                ViewBag.signer = from kh in _context.KhachHangs join sn in _context.Signers on kh.MaKhach equals sn.MaKhach where kh.Idkhach == id select sn;
-                ViewBag.customerNorm = from a in _context.KhachHangs join b in _context.CustomerNorms on a.MaKhach equals b.Makhach where a.Idkhach == id select b;
-                var ct_kh = _context.KhachHangs.Where(a => a.Visible == true && a.Idkhach == id).FirstOrDefault();
-                _context.CustomerNorms.Add(customerNorm);
-                _context.SaveChanges();
-                TempData["alertMessage"] = "thêm người đại diện thành công";
-                return View("khachhang/detailKH",ct_kh);
-            }
-            else
-            {
-                TempData["alertMessage1"] = "Mã chi nhánh và mã nhóm hàng bị trùng, vui lòng nhập lại";
-                return RedirectToAction("themdinhmuc");
-            }
-
-        }
-        //update customer norm
-        public IActionResult updateCN(long id)
-        {
-            ViewBag.branch = _context.Branches.ToList();
-            ViewBag.nhomhang = _context.Nhom_hang_hoas.ToList();
-            return View("khachhang/updateCN",_context.CustomerNorms.Where(a => a.Id == id).FirstOrDefault());
-        }
-        //function update customer norm
-        [HttpPost]
-        public IActionResult updateCustomerNorm(CustomerNorm customerNorm)
-        {
-            var rd = new Random();
-            customerNorm.Id = rd.Next(0000, 9999);
-            _context.CustomerNorms.Update(customerNorm);
-            _context.SaveChanges();
-            TempData["alertMessage"] = "cập nhật người đại diện thành công";
-            return RedirectToAction("khachhang");
-            
-
-        }
-        public IActionResult aaa()
-        {
-            var cn = _context.CustomerNorms.ToList();
-            return Json(cn);
-        }
-        //function xóa customer norm
-        public IActionResult deleteCN(long id)
-        {
-            var cn = _context.CustomerNorms.Where(a => a.Id == id).FirstOrDefault();
-            _context.CustomerNorms.Remove(cn);
-            _context.SaveChanges();
-            TempData["alertMessage"] = "xóa người đại diện thành công";
-            return RedirectToAction("khachhang");
-        }
+        //lấy dữ liệu khách hàng
         [HttpGet]
         public async Task<IActionResult> GetKH(DataSourceLoadOptions loadOptions)
         {
@@ -550,32 +386,22 @@ namespace pmkd.Controllers
                 i.Dientich,
                 i.MaHd
             });
-
-            // If you work with a large amount of data, consider specifying the PaginateViaPrimaryKey and PrimaryKey properties.
-            // In this case, keys and data are loaded in separate queries. This can make the SQL execution plan more efficient.
-            // Refer to the topic https://github.com/DevExpress/DevExtreme.AspNet.Data/issues/336.
-            // loadOptions.PrimaryKey = new[] { "Idkhach", "MaKhach" };
-            // loadOptions.PaginateViaPrimaryKey = true;
-
             return Json(await DataSourceLoader.LoadAsync(khachhangs, loadOptions));
         }
-
+        //function thêm khách hàng
         [HttpPost]
         public async Task<IActionResult> PostKH(string values)
         {
             var model = new KhachHang();
             var valuesDict = JsonConvert.DeserializeObject<IDictionary>(values);
             PopulateModel(model, valuesDict);
-
             if (!TryValidateModel(model))
                 return BadRequest(GetFullErrorMessage(ModelState));
-
             var result = _context.KhachHangs.Add(model);
             await _context.SaveChangesAsync();
-
             return Json(new { result.Entity.Idkhach, result.Entity.MaKhach });
         }
-
+        //function sửa khách hàng
         [HttpPut]
         public async Task<IActionResult> PutKH(string key, string values)
         {
@@ -597,7 +423,7 @@ namespace pmkd.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
-
+        //function xóa khách hàng
         [HttpDelete]
         public async Task DeleteKH(string key)
         {
@@ -612,7 +438,7 @@ namespace pmkd.Controllers
             await _context.SaveChangesAsync();
         }
 
-
+        //model khách hàng
         private void PopulateModel(KhachHang model, IDictionary values)
         {
             string IDKHACH = nameof(KhachHang.Idkhach);
@@ -880,6 +706,306 @@ namespace pmkd.Controllers
                 model.MaHd = Convert.ToString(values[MA_HD]);
             }
         }
+        //lấy dữ liệu định mức khách hàng
+        [HttpGet]
+        public object GetCN(DataSourceLoadOptions loadOptions, string IDkhachhang)
+        {
+            var cthdmbs = from a in _context.KhachHangs
+                          join b in _context.CustomerNorms on a.MaKhach equals b.Makhach
+                          where a.Idkhach == IDkhachhang
+                          select new
+                          {
+                              b.Id,
+                              b.Makhach,
+                              b.Nhomhang,
+                              b.ValueNorm,
+                              b.Macn,
+                              b.NguoiGd,
+                              b.ChucvuNguoigd,
+                              b.Ghichu,
+                              b.UserCreate,
+                              b.DateCreate
+                          };
+            return DataSourceLoader.Load(cthdmbs, loadOptions);
+        }
+        //lấy dữ liệu đơn vị (branch)
+        [HttpGet]
+        public async Task<IActionResult> getdonvi(DataSourceLoadOptions loadOptions)
+        {
+            var manhomhang = _context.Branches.Select(i => new {
+                i.Id,
+                i.NameE
+            });
+
+            return Json(await DataSourceLoader.LoadAsync(manhomhang, loadOptions));
+        }
+        //functin thêm định mức khách hàng
+        [HttpPost]
+        public async Task<IActionResult> PostCN(string values, string IDkhachhang)
+        {
+            var model = new CustomerNorm();
+            var valuesDict = JsonConvert.DeserializeObject<IDictionary>(values);
+            PopulateModelCN(model, valuesDict);
+            if (!TryValidateModel(model))
+                return BadRequest(GetFullErrorMessage(ModelState));
+            var rand = new Random();
+            model.Id = rand.Next(0000, 9999);
+            model.UserCreate = HttpContext.Session.GetString("userId");
+            model.DateCreate = DateTime.Now;
+            model.GdMua = false;
+            model.GdBan = false;
+            var result = _context.CustomerNorms.Add(model);
+            await _context.SaveChangesAsync();
+
+            return Json(new { result.Entity.Id, result.Entity.Macn, result.Entity.Makhach, result.Entity.Nhomhang });
+        }
+        //cập nhật định mức khách hàng
+        [HttpPut]
+        public async Task<IActionResult> PutCN(long key, string values, string IDkhachhang)
+        {
+            var model = await _context.CustomerNorms.FirstOrDefaultAsync(item =>
+                            item.Id == key);
+
+            if (model == null)
+                return StatusCode(409, "Object not found");
+            var valuesDict = JsonConvert.DeserializeObject<IDictionary>(values);
+            PopulateModelCN(model, valuesDict);
+            if (!TryValidateModel(model))
+                return BadRequest(GetFullErrorMessage(ModelState));
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+        //function xóa định mức khách hàng
+        [HttpDelete]
+        public async Task DeleteCN(long key)
+        {
+            var model = await _context.CustomerNorms.FirstOrDefaultAsync(item =>
+                            item.Id == key);
+            _context.CustomerNorms.Remove(model);
+            await _context.SaveChangesAsync();
+        }
+        // model định mức khách hàng
+        private void PopulateModelCN(CustomerNorm model, IDictionary values)
+        {
+            string ID = nameof(CustomerNorm.Id);
+            string MAKHACH = nameof(CustomerNorm.Makhach);
+            string NHOMHANG = nameof(CustomerNorm.Nhomhang);
+            string MACN = nameof(CustomerNorm.Macn);
+            string VALUE_NORM = nameof(CustomerNorm.ValueNorm);
+            string VALUE_DMGH = nameof(CustomerNorm.ValueDmgh);
+            string GHICHU = nameof(CustomerNorm.Ghichu);
+            string NGUOI_GD = nameof(CustomerNorm.NguoiGd);
+            string CHUCVU_NGUOIGD = nameof(CustomerNorm.ChucvuNguoigd);
+            string USER_CREATE = nameof(CustomerNorm.UserCreate);
+            string DATE_CREATE = nameof(CustomerNorm.DateCreate);
+            string USER_MODIFY = nameof(CustomerNorm.UserModify);
+            string DATE_MODIFY = nameof(CustomerNorm.DateModify);
+            string GD_MUA = nameof(CustomerNorm.GdMua);
+            string GD_BAN = nameof(CustomerNorm.GdBan);
+
+            if (values.Contains(ID))
+            {
+                model.Id = Convert.ToInt64(values[ID]);
+            }
+
+            if (values.Contains(MAKHACH))
+            {
+                model.Makhach = Convert.ToString(values[MAKHACH]);
+            }
+
+            if (values.Contains(NHOMHANG))
+            {
+                model.Nhomhang = Convert.ToString(values[NHOMHANG]);
+            }
+
+            if (values.Contains(MACN))
+            {
+                model.Macn = Convert.ToString(values[MACN]);
+            }
+
+            if (values.Contains(VALUE_NORM))
+            {
+                model.ValueNorm = Convert.ToDecimal(values[VALUE_NORM], CultureInfo.InvariantCulture);
+            }
+
+            if (values.Contains(VALUE_DMGH))
+            {
+                model.ValueDmgh = Convert.ToDecimal(values[VALUE_DMGH], CultureInfo.InvariantCulture);
+            }
+
+            if (values.Contains(GHICHU))
+            {
+                model.Ghichu = Convert.ToString(values[GHICHU]);
+            }
+
+            if (values.Contains(NGUOI_GD))
+            {
+                model.NguoiGd = Convert.ToString(values[NGUOI_GD]);
+            }
+
+            if (values.Contains(CHUCVU_NGUOIGD))
+            {
+                model.ChucvuNguoigd = Convert.ToString(values[CHUCVU_NGUOIGD]);
+            }
+
+            if (values.Contains(USER_CREATE))
+            {
+                model.UserCreate = Convert.ToString(values[USER_CREATE]);
+            }
+
+            if (values.Contains(DATE_CREATE))
+            {
+                model.DateCreate = values[DATE_CREATE] != null ? Convert.ToDateTime(values[DATE_CREATE]) : (DateTime?)null;
+            }
+
+            if (values.Contains(USER_MODIFY))
+            {
+                model.UserModify = Convert.ToString(values[USER_MODIFY]);
+            }
+
+            if (values.Contains(DATE_MODIFY))
+            {
+                model.DateModify = values[DATE_MODIFY] != null ? Convert.ToDateTime(values[DATE_MODIFY]) : (DateTime?)null;
+            }
+
+            if (values.Contains(GD_MUA))
+            {
+                model.GdMua = values[GD_MUA] != null ? Convert.ToBoolean(values[GD_MUA]) : (bool?)null;
+            }
+
+            if (values.Contains(GD_BAN))
+            {
+                model.GdBan = values[GD_BAN] != null ? Convert.ToBoolean(values[GD_BAN]) : (bool?)null;
+            }
+        }
+        //lấy dữ lại người đại diện
+        [HttpGet]
+        public object GetSN(DataSourceLoadOptions loadOptions, string IDkhachhang)
+        {
+            var item_return = from a in _context.KhachHangs
+                              join b in _context.Signers on a.MaKhach equals b.MaKhach
+                              where a.Idkhach == IDkhachhang
+                              select new
+                              {
+                                  b.MaKhach,
+                                  b.Id,
+                                  b.Stt,
+                                  b.Nguoiky,
+                                  b.Chucvu,
+                                  b.Uyquyen
+                              };
+            return DataSourceLoader.Load(item_return, loadOptions);
+        }
+        //lấy dữ liệu mã khách hàng
+        [HttpGet]
+        public async Task<IActionResult> getmakhach(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = _context.KhachHangs.Select(i => new { i.Idkhach, i.MaKhach });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
+        [HttpGet]
+        public IActionResult getquocgia(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = _context.Quocgia.ToList();
+            return Json(item_return);
+        }
+        //function thêm người đại diện khách hàng
+        [HttpPost]
+        public async Task<IActionResult> PostSN(string values, string IDkhachhang)
+        {
+            var model = new Signer();
+            var valuesDict = JsonConvert.DeserializeObject<IDictionary>(values);
+            PopulateModelSN(model, valuesDict);
+            if (!TryValidateModel(model))
+                return BadRequest(GetFullErrorMessage(ModelState));
+
+            var result = _context.Signers.Add(model);
+            await _context.SaveChangesAsync();
+
+            return Json(new { result.Entity.Id, result.Entity.MaKhach, result.Entity.Stt });
+        }
+        //function sửa người đại diện khách hàng
+        [HttpPut]
+        public async Task<IActionResult> PutSN(long key, string values)
+        {
+            var model = await _context.Signers.FirstOrDefaultAsync(item =>
+                            item.Id == key);
+            if (model == null)
+                return StatusCode(409, "Object not found");
+
+            var valuesDict = JsonConvert.DeserializeObject<IDictionary>(values);
+            PopulateModelSN(model, valuesDict);
+
+            if (!TryValidateModel(model))
+                return BadRequest(GetFullErrorMessage(ModelState));
+
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+        //function xóa người đại diện khách hàng
+        [HttpDelete]
+        public async Task DeleteSN(string key)
+        {
+            var keys = JsonConvert.DeserializeObject<IDictionary>(key);
+            var keyId = Convert.ToInt64(keys["Id"]);
+            var keyMaKhach = Convert.ToString(keys["MaKhach"]);
+            var keyStt = Convert.ToInt32(keys["Stt"]);
+            var model = await _context.Signers.FirstOrDefaultAsync(item =>
+                            item.Id == keyId &&
+                            item.MaKhach == keyMaKhach &&
+                            item.Stt == keyStt);
+
+            _context.Signers.Remove(model);
+            await _context.SaveChangesAsync();
+        }
+
+        //model người đại diện khách hàng
+        private void PopulateModelSN(Signer model, IDictionary values)
+        {
+            string ID = nameof(Signer.Id);
+            string STT = nameof(Signer.Stt);
+            string MA_KHACH = nameof(Signer.MaKhach);
+            string NGUOIKY = nameof(Signer.Nguoiky);
+            string CHUCVU = nameof(Signer.Chucvu);
+            string UYQUYEN = nameof(Signer.Uyquyen);
+            string VISIBLE = nameof(Signer.Visible);
+
+            if (values.Contains(ID))
+            {
+                model.Id = Convert.ToInt64(values[ID]);
+            }
+
+            if (values.Contains(STT))
+            {
+                model.Stt = Convert.ToInt32(values[STT]);
+            }
+
+            if (values.Contains(MA_KHACH))
+            {
+                model.MaKhach = Convert.ToString(values[MA_KHACH]);
+            }
+
+            if (values.Contains(NGUOIKY))
+            {
+                model.Nguoiky = Convert.ToString(values[NGUOIKY]);
+            }
+
+            if (values.Contains(CHUCVU))
+            {
+                model.Chucvu = Convert.ToString(values[CHUCVU]);
+            }
+
+            if (values.Contains(UYQUYEN))
+            {
+                model.Uyquyen = Convert.ToString(values[UYQUYEN]);
+            }
+
+            if (values.Contains(VISIBLE))
+            {
+                model.Visible = values[VISIBLE] != null ? Convert.ToBoolean(values[VISIBLE]) : (bool?)null;
+            }
+        }
+        //function get lỗi
         private string GetFullErrorMessage(ModelStateDictionary modelState)
         {
             var messages = new List<string>();

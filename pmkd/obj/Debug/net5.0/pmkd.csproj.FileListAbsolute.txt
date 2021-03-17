@@ -633,13 +633,8 @@ C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\pmkd.pdb
 C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\pmkd.genruntimeconfig.cache
 C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\themcthdoutright.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\hanghoa\hanghoa.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang\detailKH.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang\khachhang.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang\themdinhmuc.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang\themkhachhang.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang\themnguoidaidien.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang\updateCN.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang\updateSigner.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\addcthdoutright.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\hanghoa\hanghoa.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\hanghoa\themhanghoa.cshtml.g.cs
@@ -688,4 +683,3 @@ C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\the
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\themcthdoutright.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Shared\_DevExtremeLayout.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\hanghoa\themnhomhang.cshtml.g.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang\View.cshtml.g.cs

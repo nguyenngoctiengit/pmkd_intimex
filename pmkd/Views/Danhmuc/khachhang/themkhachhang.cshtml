@@ -155,14 +155,20 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Quốc gia</label>
                             <div class="col-md-2 col-sm-2">
-                                <select asp-for="TenQg" class="form-control">
-                                    @{
-                                        foreach (var listqg in ViewBag.list_qg)
-                                        {
-                                            <option value="@listqg.Name">@listqg.Name</option>
-                                        }
-                                    }
-                                </select>
+                                <input type="text" asp-for="TenQg">
+                                    @(Html.DevExtreme().SelectBox()
+                                        .ID("quocgia")
+                                        .DataSource(d => d
+                                            .Mvc()
+                                            .Controller("danhmuc")
+                                            .LoadAction("getquocgia")
+                                            .LoadMode(DataSourceLoadMode.Raw)
+                                            .Key("Name")
+                                        )
+                                        .DisplayExpr("Name")
+                                        .ValueExpr("Name")
+                                        .SearchEnabled(true)
+                                    )
                             </div>
                             <label class="col-form-label col-md-1 col-sm-1">Tòa kinh tế</label>
                             <div class="col-md-3 col-sm-3">
