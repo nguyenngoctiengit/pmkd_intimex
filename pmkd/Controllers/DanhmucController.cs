@@ -306,7 +306,8 @@ namespace pmkd.Controllers
         //view khách hàng
         public IActionResult khachhang(string id)
         {
-           
+            ViewBag.khuvuc = _context.Khuvucs.ToList();
+            ViewBag.tenqg = _context.Quocgia.ToList();
             return View("khachhang/khachhang",_context.KhachHangs.Where(a => a.Visible == true).ToList());
         }
 

@@ -160,9 +160,17 @@
 
                                         columns.AddFor(m => m.GiaoDich).Caption("Giao dịch").Visible(false);
 
-                                        columns.AddFor(m => m.MaKhuvuc).Caption("Khu vực").GroupIndex(1);
+                                        columns.AddFor(m => m.MaKhuvuc).Caption("Khu vực").GroupIndex(1).Lookup(lookup => lookup
+                                                .DataSource(ViewBag.khuvuc)
+                                                .DisplayExpr("TenKhuvuc")
+                                                .ValueExpr("MaKhuvuc")
+                                                );
 
-                                        columns.AddFor(m => m.TenQg).Caption("Tên quốc gia").GroupIndex(0);
+                                        columns.AddFor(m => m.TenQg).Caption("Tên quốc gia").GroupIndex(0).Lookup(lookup => lookup
+                                                .DataSource(ViewBag.tenqg)
+                                                .DisplayExpr("Name")
+                                                .ValueExpr("Name")
+                                                );
 
                                         columns.AddFor(m => m.ToaKinhTe).Caption("Mã khách").Visible(false);
 
@@ -326,13 +334,13 @@
                                                 .ValueExpr("MaKhach")
                                                 );
 
-                                                columns.AddFor(m => m.Stt);
+                                                columns.AddFor(m => m.Stt).Caption("Số thứ tự");
 
-                                                columns.AddFor(m => m.Nguoiky);
+                                                columns.AddFor(m => m.Nguoiky).Caption("Người ký");
 
-                                                columns.AddFor(m => m.Chucvu);
+                                                columns.AddFor(m => m.Chucvu).Caption("Chức vụ");
 
-                                                columns.AddFor(m => m.Uyquyen);
+                                                columns.AddFor(m => m.Uyquyen).Caption("Ủy quyền");
 
                                             })
                                             .Editing(e => e

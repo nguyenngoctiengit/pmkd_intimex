@@ -155,7 +155,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Quốc gia</label>
                             <div class="col-md-2 col-sm-2">
-                                <input type="text" asp-for="TenQg">
+                                <input type="text" asp-for="TenQg" id="tenqg" style="display:none">
                                     @(Html.DevExtreme().SelectBox()
                                         .ID("quocgia")
                                         .DataSource(d => d
@@ -164,10 +164,15 @@
                                             .LoadAction("getquocgia")
                                             .LoadMode(DataSourceLoadMode.Raw)
                                             .Key("Name")
+                                            
+
                                         )
                                         .DisplayExpr("Name")
                                         .ValueExpr("Name")
                                         .SearchEnabled(true)
+                                        .OnValueChanged("valueChange_tenqg")
+                                        
+                                        
                                     )
                             </div>
                             <label class="col-form-label col-md-1 col-sm-1">Tòa kinh tế</label>
