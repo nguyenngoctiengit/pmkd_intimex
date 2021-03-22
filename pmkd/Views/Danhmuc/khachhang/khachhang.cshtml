@@ -250,13 +250,13 @@
                                             .Columns(columns => {
 
                                                 columns.AddFor(m => m.Makhach).Caption("Mã khách").Lookup(lookup => lookup
-                                                .DataSource(d => d.Mvc().Controller("Danhmuc").LoadAction("getmakhach").Key("Idkhach"))
+                                                .DataSource(d => d.Mvc().Controller("lookup").LoadAction("getmakhach").Key("Idkhach"))
                                                 .DisplayExpr("MaKhach")
                                                 .ValueExpr("MaKhach")
                                                 ); 
 
                                                 columns.AddFor(m => m.Nhomhang).Caption("Nhóm hàng").Lookup(lookup => lookup
-                                                .DataSource(d => d.Mvc().Controller("Danhmuc").LoadAction("Getnhomhang").Key("Manhom"))
+                                                .DataSource(d => d.Mvc().Controller("lookup").LoadAction("Getnhomhang").Key("Manhom"))
                                                 .DisplayExpr("Manhom")
                                                 .ValueExpr("Manhom")
                                                 );
@@ -267,7 +267,7 @@
                                                                                 .EditorOptions(Format.FixedPoint);
 
                                                 columns.AddFor(m => m.Macn).Caption("Đơn vị").Lookup(lookup => lookup
-                                                .DataSource(d => d.Mvc().Controller("Danhmuc").LoadAction("getdonvi").Key("Id"))
+                                                .DataSource(d => d.Mvc().Controller("lookup").LoadAction("getdonvi").Key("Id"))
                                                 .DisplayExpr("Id")
                                                 .ValueExpr("Id")
                                                 );
@@ -329,7 +329,7 @@
                                             .Columns(columns => {
 
                                                 columns.AddFor(m => m.MaKhach).Caption("Mã khách").Lookup(lookup => lookup
-                                                .DataSource(d => d.Mvc().Controller("Danhmuc").LoadAction("getmakhach").Key("Idkhach"))
+                                                .DataSource(d => d.Mvc().Controller("lookup").LoadAction("getmakhach").Key("Idkhach"))
                                                 .DisplayExpr("MaKhach")
                                                 .ValueExpr("MaKhach")
                                                 );

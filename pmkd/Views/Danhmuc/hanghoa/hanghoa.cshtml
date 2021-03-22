@@ -85,7 +85,7 @@
                                         columns.AddFor(m => m.Tenhangvat).Caption("Tên hàng VAT");
 
                                         columns.AddFor(m => m.MaNhom).Caption("Mã nhóm").Lookup(lookup => lookup
-                                        .DataSource(d => d.Mvc().Controller("Danhmuc").LoadAction("Getnhomhang").Key("Manhom"))
+                                        .DataSource(d => d.Mvc().Controller("lookup").LoadAction("Getnhomhang").Key("Manhom"))
                                         .DisplayExpr("Manhom")
                                         .ValueExpr("Manhom")
                                         );

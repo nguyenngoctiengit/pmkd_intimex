@@ -68,7 +68,6 @@
                                         .DataSource(ds => ds.Mvc()
                                             .Controller("Hdmbs")
                                             .LoadAction("Get")
-                                            .InsertAction("Post")
                                             .UpdateAction("Put")
                                             .DeleteAction("Delete")
                                             .Key("Systemref")
@@ -76,7 +75,8 @@
                                         .RemoteOperations(true)
                                         .Columns(columns => {
 
-                                            columns.AddFor(m => m.Macn).Caption("Mã chi nhánh").Visible(false);
+                                            columns.AddFor(m => m.Macn).Caption("Mã chi nhánh").Visible(false).Lookup(lookup => lookup.DataSource(d => d.Mvc().Controller("lookup").LoadAction("getdonvi").Key("Id"))
+                                                                                                                                      .DisplayExpr("NameE").ValueExpr("Id"));
 
                                             columns.AddFor(m => m.Systemref).Caption("ID hệ thống").Fixed(true);
 
@@ -84,26 +84,11 @@
 
                                             columns.AddFor(m => m.Sohd).Caption("Số HĐ");
 
-                                            columns.AddFor(m => m.Trangthai).GroupIndex(1).Caption("Trạng thái")
-                                            .CalculateCellValue(@<text>
-                                                                    function(data){
-                                                                        if (data.Trangthai == 0)
-                                                                        {
-                                                                            return "thanh lý";
-                                                                        }else if (data.Trangthai == 1)
-                                                                            {
-                                                                            return "mới";
-                                                                            }
-                                                                        else
-                                                                        {
-                                                                        return "hủy";
-                                                                        }
-                                                                    }
-                                                                 </text>);
+                                            columns.AddFor(m => m.Trangthai).GroupIndex(1).Caption("Trạng thái").Lookup(lookup => lookup.DataSource(new JS("Trangthai")).ValueExpr("id").DisplayExpr("name"));
 
                                             columns.AddFor(m => m.MuaBan).GroupIndex(0).Caption("Mua bán");
 
-                                            columns.AddFor(m => m.Makhach).Caption("Mã khách");
+                                            columns.AddFor(m => m.Makhach).Caption("Mã khách").Visible(false);
 
                                             columns.AddFor(m => m.Ngayky).Caption("Ngày ký");
 
@@ -112,8 +97,8 @@
                                             columns.AddFor(m => m.Ngayhl).Caption("Ngày hiệu lực");
 
                                             columns.AddFor(m => m.IntKy).Caption("INT kí").CalculateCellValue("intky");
-                                                                       
-                                            columns.AddFor(m => m.ClientKy).Caption("Khách kí");
+
+                                            columns.AddFor(m => m.ClientKy).Caption("Khách kí").CalculateCellValue("khachky");
 
                                             columns.AddFor(m => m.Nguoilam).Caption("Người làm").Visible(false);
 
@@ -125,7 +110,13 @@
 
                                             columns.AddFor(m => m.Tiente).Caption("Tiền tệ").Visible(false);
 
-                                            columns.AddFor(m => m.ThanhtoanId).Caption("Thanh toán").Visible(false);
+                                            columns.AddFor(m => m.ThanhtoanId).Caption("Thanh toán").Visible(false).Lookup(lookup => lookup
+                                                                                                                        .DataSource(d => d.Mvc().Controller("lookup").LoadAction("getpttt").Key("Id"))
+                                                                                                                        .ValueExpr("Id")
+                                                                                                                        .DisplayExpr("TenTt")
+                                                                                                                        .AllowClearing(true))
+                                                                                                                   .EditCellTemplate(new TemplateName("DropDownBoxTemplate"));
+
 
                                             columns.AddFor(m => m.Thanhtoan).Caption("CT thanh toán").Visible(false);
 
@@ -141,11 +132,13 @@
 
                                             columns.AddFor(m => m.SoHdcmuon).Caption("Số hợp đồng cho mượn").Visible(false);
 
-                                            columns.AddFor(m => m.DiaDiemGiaoHang).Caption("Địa điểm giao hàng").Visible(false);
+                                            columns.AddFor(m => m.DiaDiemGiaoHang).Caption("Địa điểm giao hàng").Visible(false).Lookup(lookup => lookup.DataSource(d => d.Mvc().Controller("lookup").LoadAction("getdiadiemgiaohang").Key("DiaDiemGiaoHang"))
+                                                                                                                                                .ValueExpr("DiaDiemGiaoHang")
+                                                                                                                                                .DisplayExpr("DiaDiemGiaoHang"));
 
                                             columns.AddFor(m => m.IsNoKhoDoi).Caption("Nợ khó đòi").Visible(false);
 
-                                            columns.AddFor(m => m.TypeKd).Caption("Hình thức kinh doanh").Visible(false);
+                                            columns.AddFor(m => m.TypeKd).Caption("Hình thức kinh doanh").Visible(false).Lookup(lookup => lookup.DataSource(new JS("TypeKd")).ValueExpr("id").DisplayExpr("name"));
 
                                             columns.AddFor(m => m.VanChuyen).Caption("Vận chuyển").Visible(false);
 
@@ -153,9 +146,8 @@
 
                                         })
                                         .Editing(e => e
-                                            .AllowAdding(true)
                                             .AllowUpdating(true)
-                                            .AllowDeleting(true)
+                                            .AllowDeleting(new JS("allowDeleting"))
                                             .UseIcons(true)
 
                                         )
@@ -181,6 +173,42 @@
                                             paper.ShowInfo(true);
                                         })
                                     )
+                                    @using (Html.DevExtreme().NamedTemplate("DropDownBoxTemplate"))
+                                    {
+                                        @(Html.DevExtreme().DropDownBox()
+                                            .DataSource(d => d.Mvc().Controller("lookup").LoadAction("getpttt").Key("Id"))
+                                            .Value(new JS("value"))
+                                            .ValueExpr("Id")
+                                            .DisplayExpr("TenTt")
+                                            .DropDownOptions(options => options.Width(500))
+                                            .Option("setValue", new JS("setValue"))
+                                            .ContentTemplate(new TemplateName("ContentTemplate"))
+                                        )
+                                    }
+
+                                    @using (Html.DevExtreme().NamedTemplate("ContentTemplate"))
+                                    {
+                                        @(Html.DevExtreme().DataGrid()
+                                                .DataSource(d => d.Mvc().Controller("lookup").LoadAction("getpttt").Key("Id"))
+                                                .RemoteOperations(true)
+                                                .Height(250)
+                                                .Columns(c =>
+                                                {
+                                                    c.Add().DataField("Matt").Caption("Mã thanh toán");
+                                                    c.Add().DataField("TenTt").Caption("Tên thanh toán");
+                                                    c.Add().DataField("Mucung").Caption("Mức ứng");
+                                                })
+                                                .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+                                                .HoverStateEnabled(true)
+                                                .RemoteOperations(true)
+                                                .Selection(s => s.Mode(SelectionMode.Single))
+                                                .SelectedRowKeys(new JS("[component.option('value')]"))
+                                                .FocusedRowEnabled(true)
+                                                .FocusedRowKey(new JS("component.option('value')"))
+                                                .OnSelectionChanged("function(selectionChangedArgs) { onSelectionChanged(selectionChangedArgs, component) }")
+                                                .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                        )
+                                    }
                                 </div>
                             </div>
                         </div>

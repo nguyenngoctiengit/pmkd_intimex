@@ -177,16 +177,7 @@ namespace pmkd.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
-        [HttpGet]
-        public async Task <IActionResult>Getnhomhang(DataSourceLoadOptions loadOptions)
-        {
-            var manhomhang = _context.Nhom_hang_hoas.Select(i => new {
-                i.Manhom,
-                i.TenNhom
-            });
-            
-            return Json(await DataSourceLoader.LoadAsync(manhomhang, loadOptions));
-        }
+       
 
         private void PopulateModel(Hanghoa model, IDictionary values)
         {
@@ -730,16 +721,7 @@ namespace pmkd.Controllers
             return DataSourceLoader.Load(cthdmbs, loadOptions);
         }
         //lấy dữ liệu đơn vị (branch)
-        [HttpGet]
-        public async Task<IActionResult> getdonvi(DataSourceLoadOptions loadOptions)
-        {
-            var manhomhang = _context.Branches.Select(i => new {
-                i.Id,
-                i.NameE
-            });
-
-            return Json(await DataSourceLoader.LoadAsync(manhomhang, loadOptions));
-        }
+       
         //functin thêm định mức khách hàng
         [HttpPost]
         public async Task<IActionResult> PostCN(string values, string IDkhachhang)
@@ -898,18 +880,8 @@ namespace pmkd.Controllers
             return DataSourceLoader.Load(item_return, loadOptions);
         }
         //lấy dữ liệu mã khách hàng
-        [HttpGet]
-        public async Task<IActionResult> getmakhach(DataSourceLoadOptions loadOptions)
-        {
-            var item_return = _context.KhachHangs.Select(i => new { i.Idkhach, i.MaKhach });
-            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
-        }
-        [HttpGet]
-        public IActionResult getquocgia(DataSourceLoadOptions loadOptions)
-        {
-            var item_return = _context.Quocgia.ToList();
-            return Json(item_return);
-        }
+
+       
         //function thêm người đại diện khách hàng
         [HttpPost]
         public async Task<IActionResult> PostSN(string values, string IDkhachhang)

@@ -461,5 +461,6 @@ namespace pmkd.Controllers
             TempData["alertMessage"] = "cập nhật chi tiết hợp đồng thành công";
             return RedirectToAction("hdmb");
         }
+        
     }
 }

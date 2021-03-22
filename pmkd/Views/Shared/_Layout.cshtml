@@ -808,11 +808,10 @@
         var chuoi = [];
         for (var i = 0; i < array.length; i++) {
             chuoi[i] = array[i];
-            console.log(chuoi[i].Nguoiky);  
-        }
-        
+        };
+
         function intky(data) {
-            var a = data.IntKy.trim();
+            var a = data.IntKy;
             var c = a.length;
             if (c > 1) {
                 var str = a.substr(-1);
@@ -821,70 +820,21 @@
                         return chuoi[i].Nguoiky + " chức vụ " + chuoi[i].Chucvu;
                     }
                 }
+            }
 
+        }
+        function khachky(data) {
+            var b = data.ClientKy;
+            var d = b.length;
+            if (d > 1) {
+                var str1 = b.substr(-1);
+                for (var i = 0; i < array.length; i++) {
+                    if (chuoi[i].MaKhach == data.Makhach.trim() && chuoi[i].Stt == str1) {
+                        return chuoi[i].Nguoiky + " chức vụ " + chuoi[i].Chucvu;
+                    }
+                }
             }
         }
-
-        $(document).ready(function () {
-            $(function () {
-                var start = moment("2021/01/01");
-                var end = moment("2021/12/30");
-
-                function cb(start, end) {
-                    $('#rangecontact span').html(start.format('MM/DD/YYYY') + ' - ' + end.format('MM/DD/YYYY'));
-                }
-
-                $('#rangecontact').daterangepicker({
-                    autoUpdateInput: true,
-                    locale: {
-                        cancelLabel: 'Clear'
-                    },
-                    startDate: start,
-                    endDate: end,
-                    ranges: {
-                        'Today': [moment(), moment()],
-                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                        'This Month': [moment().startOf('month'), moment().endOf('month')],
-                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                    }
-                }, cb);
-
-                cb(start, end);
-
-            });
-            $('#rangecontact').on('cancel.daterangepicker', function (ev, picker) {
-                $(this).val('');
-            });
-
-            $('#rangecontact').on('apply.daterangepicker', function (ev, picker) {
-                var start = picker.startDate;
-                var end = picker.endDate;
-                $.fn.dataTable.ext.search.push(
-                    function (settings, data, dataIndex) {
-                        var min = start;
-                        var max = end;
-                        var startDate = new Date(data[5]);
-                        if (min == null && max == null) {
-                            return true;
-                        }
-                        if (min == null && startDate <= max) {
-                            return true;
-                        }
-                        if (max == null && startDate >= min) {
-                            return true;
-                        }
-                        if (startDate <= max && startDate >= min) {
-                            return true;
-                        }
-                        return false;
-                    }
-                );
-                otable.draw();
-                $.fn.dataTable.ext.search.pop();
-            });
-        });
         /// some script divhdchomuon1 ngaytra1
         function show() {
             document.getElementById('divhdchomuon').style.display = 'block';
@@ -904,45 +854,14 @@
             document.getElementById('divhdchomuon1').style.display = 'none';
             document.getElementById('ngaytra1').style.display = 'block';
         }
-        $("input[type=radio]").change(function () {
-            var val1 = $('[name=Month]:checked').val();
-            $('tr').each(function () {
-                var src = $(this).find('.aaa').text();
-                if ((src == val1 || val1 == 'All')) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-        });
+
         //search individual column
         $('.filterhead').each(function () {
             var title = $(this).text();
             $(this).html('<input type="text" placeholder="Search ' + title + '" />');
         });
         // DataTable
-        var otable = $('#example').DataTable({
-            dom: 'Blfrtip',
-            select: true,
-            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ],
-        });
-        // Apply the search
-        otable.columns().every(function () {
-
-            var that = this;
-            $('input', this.footer()).on('keyup change', function () {
-                if (that.search() !== this.value) {
-                    that
-                        .search(this.value)
-                        .draw();
-                }
-            });
-        });
         var editor; // use a global for the submit and return data rendering in the examples
-
         var Popup;
         $(document).ready(function () {
             var table = $("#myTable").DataTable()
