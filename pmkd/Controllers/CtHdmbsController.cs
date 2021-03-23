@@ -24,11 +24,53 @@ namespace pmkd.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions,string IDkhachhang) {
-            var cthdmbs = from a in _context.KhachHangs
-                          join b in _context.CustomerNorms on a.MaKhach equals b.Makhach
-                          where a.Idkhach == IDkhachhang
-                          select b;
+        public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions,string id) {
+            var cthdmbs = from a in _context.CtHdmbs
+                          join b in _context.Hanghoas on a.Mahang equals b.Mahang
+                          
+                            into ps
+                          from c in ps.DefaultIfEmpty()
+                          join d in _context.Hdmbs on a.Systemref equals d.Systemref
+                          where a.Systemref == id
+                          select new
+                          {
+                              a.IdRow,
+                              a.Systemref,
+                              a.Ref,
+                              a.Soluong,
+                              a.Trongluong,
+                              a.Mahang,
+                              a.Dvt,
+                              a.Giact,
+                              a.Giatt,
+                              a.Vat,
+                              a.Sig,
+                              a.Diff,
+                              a.Stoploss,
+                              a.Giacuoi,
+                              a.Ngayfix,
+                              a.Solot,
+                              a.Status,
+                              a.FNgayfix,
+                              a.Giathang,
+                              a.Gianam,
+                              a.DvtTheoHd,
+                              a.GiaTheoHd,
+                              a.IsrateEx,
+                              a.ChiPhi,
+                              a.Giathitruong,
+                              a.Mucthuong,
+                              a.ChuyenThang,
+                              a.Id,
+                              a.GiactSauCl,
+                              a.MathangOld,
+                              a.LoaiBao,
+                              a.LoaiBaoOld,
+                              a.GiaOld,
+                              tenhang = c.Tenhang,
+                              isfix = d.IsFix
+
+                          };
             return Json(await DataSourceLoader.LoadAsync(cthdmbs, loadOptions));
         }
 
