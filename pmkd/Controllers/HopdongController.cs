@@ -110,6 +110,7 @@ namespace pmkd.Controllers
             _context.SaveChanges();
             return RedirectToAction("hdmb");
         }
+        [Route("hopdong/hopdong/addcthdoutright/{id?}")]
         //View thêm chi tiết hợp đồng outright
         public IActionResult addcthdoutright(string id)
         {
@@ -267,6 +268,7 @@ namespace pmkd.Controllers
             TempData["alertMessage"] = "cập nhật hợp đồng thành công";
             return RedirectToAction("hdmb");
         }
+        [Route("hopdong/hopdong/deletecthd/{id?}")]
         //function xóa chi tiết hợp đồng
         public IActionResult deletecthd(long id)
         {
@@ -286,33 +288,9 @@ namespace pmkd.Controllers
             }
             if (flag_fix == true)
             {
-                var systemref = (from a in _context.CtHdmbs
-                                 join b in _context.Hdmbs on a.Systemref equals b.Systemref
-                                 where a.Id == id
-                                 select a.Systemref).FirstOrDefault();
-                ViewBag.cthdmb = from a in _context.CtHdmbs
-                                 join b in _context.Hanghoas on a.Mahang equals b.Mahang
-                                 where a.Systemref == systemref
-                                 select new ViewModelHDMB
-                                 {
-                                     ctHdmb = a,
-                                     hanghoa = b
-                                 };
-                ViewBag.kh = _context.KhachHangs.ToList();
-                var uniname = HttpContext.Session.GetString("UnitName");
-                ViewBag.intky = _context.Signers.Where(a => a.MaKhach == uniname).ToList();
-                ViewBag.thanhtoan = _context.PortfolioPayments.ToList();
-                ViewBag.diadiemgiaohang = _context.HdmbGiaohangs.ToList();
-                ViewBag.hdchomuon = _context.Hdmbs.Where(a => a.MuaBan == "CMUON").ToList();
-                ViewBag.client = _context.Signers.ToList();
-                ViewBag.mucung = (from a in _context.Hdmbs
-                                  join b in _context.PortfolioPayments on a.ThanhtoanId equals b.Id
-                                  join c in _context.CtHdmbs on a.Systemref equals c.Systemref
-                                  where c.Id == id
-                                  select b.Mucung).FirstOrDefault();
-                var item_return = (from a in _context.CtHdmbs join b in _context.Hdmbs on a.Systemref equals b.Systemref where a.Id == id select b).FirstOrDefault();
+                
                 TempData["alertMessage"] = "hợp đồng đã fix giá, không xóa đc";
-                return View("cthdmb", item_return);
+                return RedirectToAction("hdmb");
 
             }
             else
@@ -348,6 +326,7 @@ namespace pmkd.Controllers
                 return View("cthdmb",item_return);
             }
         }
+        [Route("hopdong/hopdong/addcthd/{id?}")]
         //View thêm chi tiết hợp đồng
         public IActionResult addcthd(string id)
         {
@@ -358,6 +337,7 @@ namespace pmkd.Controllers
             return View("addcthd");
         }
         [HttpPost]
+        
         //function thêm chi tiết hợp đồng
         public IActionResult addcthd(string id,CtHdmb ctHdmb)
         {
@@ -447,17 +427,20 @@ namespace pmkd.Controllers
                             where b.Id == id
                             select a.Sohd).FirstOrDefault();
             ViewBag.hh = (from a in _context.Hanghoas select a).ToList();
+            ViewBag.id = id;
             var cthdmb = _context.CtHdmbs.Where(a => a.Id == id).FirstOrDefault();
             return View("updatecthd", cthdmb);
         }
-        public IActionResult updatecthd(CtHdmb ctHdmb,string id)
+        [HttpPost]
+        public IActionResult updatecthd(CtHdmb ctHdmb,long id)
         {
-            ctHdmb.Giact = 0;
-            ctHdmb.Dvt = "KGS";
-            ctHdmb.Giatt = 0;
-            ctHdmb.DvtTheoHd = "KGS";
-            _context.Update(ctHdmb);
-            _context.SaveChanges();
+            var item = _context.CtHdmbs.Where(a => a.Id == id).FirstOrDefault();
+            item.Giact = 0;
+            item.Dvt = "KGS";
+            item.Giatt = 0;
+            item.DvtTheoHd = "KGS";
+            _context.Update(item);
+            _context.SaveChangesAsync();
             TempData["alertMessage"] = "cập nhật chi tiết hợp đồng thành công";
             return RedirectToAction("hdmb");
         }

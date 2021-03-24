@@ -806,6 +806,9 @@
     <!-- Custom Theme Scripts -->
     <script src="~/public/build/js/custom.min.js"></script>
     <script type="text/javascript">
+        function AllowAdding(e) {
+                return e.row.data.isfix == false;
+        }
         var array = @Html.Raw(Json.Serialize(ViewBag.signer));
         var chuoi = [];
         for (var i = 0; i < array.length; i++) {
