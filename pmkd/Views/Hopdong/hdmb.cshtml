@@ -63,6 +63,7 @@
                     <div class="x_content">
                         <div class="row">
                             <div class="col-sm-12">
+                                <a asp-action="themhopdong" asp-controller="hopdong"><button type="button" class="btn btn-outline-dark" style="">Thêm hợp đồng</button></a>
                                 <div class="card-box table-responsive">
                                     @(Html.DevExtreme().DataGrid<pmkd.Models.Hdmb>()
                                         .DataSource(ds => ds.Mvc()
@@ -147,14 +148,16 @@
 
                                         })
                                         .Editing(e => e
+                                            .Mode(GridEditMode.Popup)
+                                            .Popup(p => p.Title("Hợp đồng").ShowTitle(true).Width(700).Height(500))
                                             .AllowUpdating(true)
-                                            .AllowDeleting(new JS("allowDeleting"))
+                                            .AllowDeleting(true)
                                             .UseIcons(true)
 
                                         )
-
+                                        .ID("hdmb")
                                         .MasterDetail(m => m.Enabled(true).Template(new TemplateName("cthdmb")))
-                                        .Selection(s => s.Mode(SelectionMode.Single))
+                                        .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
                                         .HoverStateEnabled(true)
                                         .Export(e => e.Enabled(true))
                                         .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
@@ -232,12 +235,12 @@
                                                 columns.Add().CellTemplate(@<text>
                                                 <% if (data.isfix == false) { %>
                                                 <div>
-                                                    <a class='btn btn-default btn-sm' onclick=PopupFormEdit('@Url.Action("updatecthdoutright","hopdong")/<%= data.Id%>')><i class='fa fa-pencil'></i> Edit</a> / 
+                                                    <a class='btn btn-default btn-sm' onclick=PopupFormEdit('@Url.Action("updatecthdoutright","hopdong")/<%= data.Id%>')><i class='fa fa-pencil'></i> Edit</a> /
                                                     <a class='btn btn-default btn-sm' style='margin-left:5px' onclick="return confirm('Are you sure you want to delete this item?');" href="hopdong/deletecthd/<%= data.Id%>" type="submit"><i class='fa fa-trash'></i> Delete</a>
                                                 </div>
                                                 <% } else {%>
                                                     <div>
-                                                        <a class='btn btn-default btn-sm' onclick=PopupFormEdit('@Url.Action("updatecthd","hopdong")/<%= data.Id%>')><i class='fa fa-pencil'></i> Edit</a> / 
+                                                        <a class='btn btn-default btn-sm' onclick=PopupFormEdit('@Url.Action("updatecthd","hopdong")/<%= data.Id%>')><i class='fa fa-pencil'></i> Edit</a> /
                                                         <a class='btn btn-default btn-sm' style='margin-left:5px' onclick="return confirm('Are you sure you want to delete this item?');" href="hopdong/deletecthd/<%= data.Id%>" type="submit"><i class='fa fa-trash'></i> Delete</a>
                                                     </div>
                                                 <% } %>

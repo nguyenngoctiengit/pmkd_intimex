@@ -190,6 +190,8 @@
 
                                     })
                                     .Editing(e => e
+                                        .Mode(GridEditMode.Popup)
+                                        .Popup(p => p.Title("Khách hàng").ShowTitle(true).Width(700).Height(500))
                                         .AllowAdding(true)
                                         .AllowUpdating(true)
                                         .AllowDeleting(true)

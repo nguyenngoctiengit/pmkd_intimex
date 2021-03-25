@@ -30,31 +30,6 @@ namespace pmkd.Controllers
             var hdmb = from a in _context.Hdmbs select a;
             return View("hdmb",hdmb);
         }
-        //View Chi tiết hợp đồng mua bán
-        public IActionResult cthdmb(string id)
-        {
-            ViewBag.cthdmb = from a in _context.CtHdmbs
-                             join b in _context.Hanghoas on a.Mahang equals b.Mahang
-                             where a.Systemref == id
-                             select new ViewModelHDMB
-                             {
-                                 ctHdmb = a,
-                                 hanghoa = b
-                             };
-            var hdmb = (from a in _context.Hdmbs where a.Systemref == id select a).FirstOrDefault();
-            ViewBag.kh = _context.KhachHangs.ToList();
-            var uniname = HttpContext.Session.GetString("UnitName");
-            ViewBag.intky = _context.Signers.Where(a => a.MaKhach == uniname).ToList();
-            ViewBag.thanhtoan = _context.PortfolioPayments.ToList();
-            ViewBag.diadiemgiaohang = _context.HdmbGiaohangs.ToList();
-            ViewBag.hdchomuon = _context.Hdmbs.Where(a => a.MuaBan == "CMUON").ToList();
-            ViewBag.client = _context.Signers.ToList();
-            ViewBag.mucung = (from a in _context.Hdmbs
-                              join b in _context.PortfolioPayments on a.ThanhtoanId equals b.Id
-                              where a.Systemref == id
-                              select b.Mucung).FirstOrDefault();
-            return View("cthdmb", hdmb);
-        }
         //view thêm hợp đồng
         public IActionResult themhopdong()
         {
@@ -202,44 +177,6 @@ namespace pmkd.Controllers
             var return_item = (from a in _context.CtHdmbs join b in _context.Hdmbs on a.Systemref equals b.Systemref where a.Id == id select b).FirstOrDefault();
             TempData["alertMessage"] = "update chi tiết hợp đồng thành công";
             return View("cthdmb",return_item);
-        }
-        //xóa hợp đồng
-        public IActionResult deletehopdong(string id)
-        {
-            var flag_stock = false;
-            var flag_fix = false;
-            var list_stock = _context.InputStocks.ToList();
-            var list_fix = _context.Fixgia.ToList();
-            var hh = (from a in _context.Hdmbs where a.Systemref == id select a).FirstOrDefault();
-            foreach (var item in list_stock)
-            {
-                if (item.ContractId == hh.Systemref)
-                {
-                    flag_stock = true;
-                }
-            }
-            foreach(var item in list_fix)
-            {
-                if (item.Systemref == hh.Systemref)
-                {
-                    flag_fix = true;
-                }
-            }
-            if (flag_stock == true)
-            {
-                TempData["alertMessage"] = "hợp đồng đã giao hàng, không hủy đc";
-                return RedirectToAction("hdmb");
-            }
-            if (flag_fix == true)
-            {
-                TempData["alertMessage"] = "hợp đồng đã fix giá, không hủy đc";
-                return RedirectToAction("hdmb");
-            }
-            hh.Trangthai = 2;
-            _context.Hdmbs.Update(hh);
-            _context.SaveChanges();
-            TempData["alertMessage"] = "xóa thành công";
-            return RedirectToAction("hdmb");
         }
         //function cập nhật hợp đồng
         public IActionResult edithopdong(string id,Hdmb hdmb)

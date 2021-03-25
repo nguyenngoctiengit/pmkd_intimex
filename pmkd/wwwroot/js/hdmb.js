@@ -28,13 +28,13 @@ function onSelectionChanged(selectionChangedArgs, component) {
         component.close();
     }
 }
-function allowDeleting(e) {
-    return (e.row.data.Systemref != "HD00037227")
-}
 
 function selected_item(e) {
     var selectedRowData = e.selectedRowsData[0];
     
+}
+function getDataGridInstance() {
+    return $("#hdmb").dxDataGrid("instance");
 }
 
 function toolbar(e) {
@@ -43,52 +43,66 @@ function toolbar(e) {
         widget: "dxButton",
         options: {
             icon: "add",
-            onClick: function (data) {
-                var selectedRowData = e.component.getSelectedRowsData()[0];
-                if (selectedRowData.isfix == true) {
-                    var id = selectedRowData.Systemref;
-                    var url = "hopdong/addcthd/" + id;
-                    var formDiv = $('<div/>');
-                    $.get(url)
-                        .done(function (response) {
-                            formDiv.html(response);
-                            Popup = formDiv.dialog({
-                                autoOpen: true,
-                                resizable: false,
-                                title: 'Thêm chi tiết hợp đồng giá trừ lùi',
-                                height: 500,
-                                width: 700,
-                                close: function () {
-                                    Popup.dialog('destroy').remove();
-                                }
+            onClick: function () {
+                getDataGridInstance().getSelectedRowsData().done(function (rowData) {
+                    for (var i = 0; i < rowData.length; i++) {
+                        if (rowData[i].IsFix === null) {
+                            alert("Vui lòng click vào hợp đồng muốn thêm chi tiết")
+                        }
+                        else {
+                            if (rowData[i].IsFix == true) {
+                                var id = rowData[i].Systemref;
+                                var url = "hopdong/addcthd/" + id;
+                                var formDiv = $('<div/>');
+                                $.get(url)
+                                    .done(function (response) {
+                                        formDiv.html(response);
+                                        Popup = formDiv.dialog({
+                                            autoOpen: true,
+                                            resizable: false,
+                                            title: 'Thêm chi tiết hợp đồng giá trừ lùi',
+                                            height: 500,
+                                            width: 700,
+                                            close: function () {
+                                                Popup.dialog('destroy').remove();
+                                            }
 
-                            });
-                        });
-                }
-                else {
-                    var id = selectedRowData.Systemref;
-                    var url = "hopdong/addcthdoutright/" + id;
-                    var formDiv = $('<div/>');
-                    $.get(url)
-                        .done(function (response) {
-                            formDiv.html(response);
-                            Popup = formDiv.dialog({
-                                autoOpen: true,
-                                resizable: false,
-                                title: 'Thêm chi tiết hợp đồng giá OutRight',
-                                height: 500,
-                                width: 700,
-                                close: function () {
-                                    Popup.dialog('destroy').remove();
-                                }
+                                        });
+                                    });
+                            }
+                            else {
+                                var id = rowData[i].Systemref;
+                                var url = "hopdong/addcthdoutright/" + id;
+                                var formDiv = $('<div/>');
+                                $.get(url)
+                                    .done(function (response) {
+                                        formDiv.html(response);
+                                        Popup = formDiv.dialog({
+                                            autoOpen: true,
+                                            resizable: false,
+                                            title: 'Thêm chi tiết hợp đồng giá OutRight',
+                                            height: 500,
+                                            width: 700,
+                                            close: function () {
+                                                Popup.dialog('destroy').remove();
+                                            }
 
-                            });
-                        });
-                }
+                                        });
+                                    });
+                            }
+                        }
+
+
+                        
+                    }
+
+                })
+                
             }
         }
     });
 }
-
-
-
+function hdmb(e) {
+    var selected = e.component.getSelectedRowsData()[0];
+    alert(selected.IsFix);
+}

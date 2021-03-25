@@ -1,4 +1,4 @@
-using DevExtreme.AspNet.Data;
+﻿using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -11,6 +11,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using pmkd.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace pmkd.Controllers
 {
@@ -99,17 +100,63 @@ namespace pmkd.Controllers
 
             if(!TryValidateModel(model))
                 return BadRequest(GetFullErrorMessage(ModelState));
-
+            var hdchomuon = (from a in _context.Hdmbs where a.MuaBan == "CMUON" select a).ToList();
+            if (model.HdcmuonId == null)
+            {
+                model.HdcmuonId = "";
+                model.SoHdcmuon = "";
+            }
+            else
+            {
+                foreach (var item in hdchomuon)
+                {
+                    if (item.Systemref == model.HdcmuonId)
+                    {
+                        model.HdcmuonId = item.Systemref;
+                        model.SoHdcmuon = (from a in _context.Hdmbs where model.HdcmuonId == item.Systemref select a.Sohd).FirstOrDefault().ToString();
+                    }
+                }
+            }
+            model.Macn = HttpContext.Session.GetString("UnitName");
+            model.TrangthaiGhep = true;
+            _context.Hdmbs.Update(model);
             await _context.SaveChangesAsync();
             return Ok();
         }
 
         [HttpDelete]
-        public async Task Delete(string key) {
+        public async Task <IActionResult> Delete(string key) {
             var model = await _context.Hdmbs.FirstOrDefaultAsync(item => item.Systemref == key);
-
-            _context.Hdmbs.Remove(model);
+            var flag_stock = false;
+            var flag_fix = false;
+            var list_stock = _context.InputStocks.ToList();
+            var list_fix = _context.Fixgia.ToList();
+            foreach (var item in list_stock)
+            {
+                if (item.ContractId == model.Systemref)
+                {
+                    flag_stock = true;
+                }
+            }
+            foreach (var item in list_fix)
+            {
+                if (item.Systemref == model.Systemref)
+                {
+                    flag_fix = true;
+                }
+            }
+            if (flag_stock == true)
+            {
+                return BadRequest("Hợp đồng đã giao hàng, không fix đc");
+            }
+            if (flag_fix == true)
+            {
+                return BadRequest("Hợp đồng đã fix giá, không hủy đc");
+            }
+            model.Trangthai = 2;
+            _context.Hdmbs.Update(model);
             await _context.SaveChangesAsync();
+            return Ok();
         }
 
 

@@ -11,32 +11,29 @@
     <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
     <title>Công ty CP tập đoàn Intimex</title>
-    <link href="cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" asp-append-version="true">
     <!-- Bootstrap -->
-   
-    <link href="~/public/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/public/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="~/public/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/public/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="~/public/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <!-- dialog-->
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     <!-- NProgress -->
-    <link href="~/public/vendors/nprogress/nprogress.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/public/vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
-    <link href="~/public/vendors/iCheck/skins/flat/green.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/public/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 
     <!-- bootstrap-progressbar -->
-    <link href="~/public/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/public/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
     <!-- JQVMap -->
-    <link href="~/public/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/public/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
     <!-- bootstrap-daterangepicker -->
-    <link href="~/public/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" asp-append-version="true">
-    <!-- bootstrap-swtich -->
-    <link href="~/public/vendors/switchery/dist/switchery.min.css" rel="stylesheet" asp-append-version="true">
-    <!-- datatable -->
-    <link href="~/public/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet" asp-append-version="true">
-    <link href="~/public/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet" asp-append-version="true">
-    <link href="~/public/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet" asp-append-version="true">
-    <link href="~/public/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" asp-append-version="true">
-    <link href="~/public/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet" asp-append-version="true">
-    <link href="~/public/build/css/custom.min.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/public/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="~/public/build/css/custom.min.css" rel="stylesheet">
     <!-- devexpress-->
     <!-- jquery file -->
     <!-- DevExtreme file -->
@@ -51,7 +48,7 @@
     <link href="~/css/devextreme/dx.light.css" rel="stylesheet" />
     <!-- DevExtreme library -->
     <script src="~/js/devextreme/jquery.js"></script>
-    <script src="~/js/devextreme/bootstrap.js"></script>
+@*    <script src="~/js/devextreme/bootstrap.js"></script>*@
     <script src="~/js/devextreme/dx.all.js"></script>
     <script src="~/js/devextreme/aspnet/dx.aspnet.mvc.js"></script>
     <script src="~/js/devextreme/aspnet/dx.aspnet.data.js"></script>
@@ -215,15 +212,7 @@
                                                     <a href="level2.html">Phương án kinh doanh</a>
                                                 </li>
                                                 <li>
-                                                    <a>Hợp đồng mua bán<span class="fa fa-chevron-down"></span></a>
-                                                    <ul class="nav child_menu">
-                                                        <li>
-                                                            <a asp-action="hdmb" asp-controller="hopdong">Hợp đồng mua bán</a>
-                                                        </li>
-                                                        <li>
-                                                            <a asp-action="themhopdong" asp-controller="hopdong">Thêm hợp đồng</a>
-                                                        </li>
-                                                    </ul>
+                                                    <a asp-action="hdmb" asp-controller="hopdong">Hợp đồng mua bán</a>
                                                 </li>
                                                 <li>
                                                     <a href="#level2_2">Ghép phương án kinh doanh</a>
@@ -659,51 +648,16 @@
                                 </a>
                                 <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
                                     <li class="nav-item">
-                                        <a class="dropdown-item">
-                                            <span>
-                                                <span>John Smith</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where...
-                                            </span>
-                                        </a>
+                                        
                                     </li>
                                     <li class="nav-item">
-                                        <a class="dropdown-item">
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                                            <span>
-                                                <span>John Smith</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where...
-                                            </span>
-                                        </a>
+                                       
                                     </li>
                                     <li class="nav-item">
-                                        <a class="dropdown-item">
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                                            <span>
-                                                <span>John Smith</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where...
-                                            </span>
-                                        </a>
+                                       
                                     </li>
                                     <li class="nav-item">
-                                        <a class="dropdown-item">
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                                            <span>
-                                                <span>John Smith</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where...
-                                            </span>
-                                        </a>
+                                        
                                     </li>
                                     <li class="nav-item">
                                         <div class="text-center">
@@ -736,40 +690,12 @@
     <!-- datepicker -->
     <script src="~/js/khachhang.js"></script>
     <script src="~/js/hdmb.js"></script>
-    <!-- jQuery -->
-
-    <script src="~/public/vendors/jquery/dist/jquery.min.js"></script>
-    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
-    @*    <script src="~/Scripts/bootstrap.min.js"></script>*@
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <!-- dialog -->
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
-    <script src="~/Scripts/notify.min.js"></script>
     <!-- Bootstrap -->
     <script src="~/public/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- iCheck -->
-    <script src="~/public/vendors/iCheck/icheck.min.js"></script>
     <!-- FastClick -->
     <script src="~/public/vendors/fastclick/lib/fastclick.js"></script>
-    <!-- Datatables -->
-    @*    <script src="~/js/jquery.dataTables.min.js"></script>
-        <script src="~/js/jquery-3.5.1.js"></script>*@
-    <script src="~/public/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="~/public/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <script src="~/public/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="~/public/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-    <script src="~/public/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-    <script src="~/public/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-    <script src="~/public/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-    <script src="~/public/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-    <script src="~/public/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-    <script src="~/public/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="~/public/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-    <script src="~/public/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-    <script src="~/public/vendors/jszip/dist/jszip.min.js"></script>
-    <script src="~/public/vendors/pdfmake/build/pdfmake.min.js"></script>
-    <script src="~/public/vendors/pdfmake/build/vfs_fonts.js"></script>
     <!-- NProgress -->
     <script src="~/public/vendors/nprogress/nprogress.js"></script>
     <!-- Chart.js -->
@@ -780,6 +706,8 @@
     <script src="~/public/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
     <!-- iCheck -->
     <script src="~/public/vendors/iCheck/icheck.min.js"></script>
+    <!-- Switchery -->
+    <script src="~/public/vendors/switchery/dist/switchery.min.js"></script>
     <!-- Skycons -->
     <script src="~/public/vendors/skycons/skycons.js"></script>
     <!-- Flot -->
@@ -795,7 +723,6 @@
     <!-- DateJS -->
     <script src="~/public/vendors/DateJS/build/date.js"></script>
     <!-- JQVMap -->
-    <script src="~/public/vendors/switchery/dist/switchery.min.js"></script>
     <script src="~/public/vendors/jqvmap/dist/jquery.vmap.js"></script>
     <script src="~/public/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
     <script src="~/public/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
@@ -806,10 +733,7 @@
     <!-- Custom Theme Scripts -->
     <script src="~/public/build/js/custom.min.js"></script>
     <script type="text/javascript">
-        function AllowAdding(e) {
-                return e.row.data.isfix == false;
-        }
-        var array = @Html.Raw(Json.Serialize(ViewBag.signer));
+       var array = @Html.Raw(Json.Serialize(ViewBag.signer));
         var chuoi = [];
         for (var i = 0; i < array.length; i++) {
             chuoi[i] = array[i];
@@ -840,6 +764,9 @@
                 }
             }
         }
+
+
+
         /// some script divhdchomuon1 ngaytra1
         function show() {
             document.getElementById('divhdchomuon').style.display = 'block';
@@ -868,9 +795,6 @@
         // DataTable
         var editor; // use a global for the submit and return data rendering in the examples
         var Popup;
-        $(document).ready(function () {
-            var table = $("#myTable").DataTable()
-        });
         function PopupForm(url) {
             var formDiv = $('<div/>');
             $.get(url)
