@@ -1,22 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using pmkd.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Dynamic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Data;
-using Microsoft.AspNetCore.Http;
-using ServiceStack;
-using RouteAttribute = ServiceStack.RouteAttribute;
-using System.Web;
-using DevExtreme.AspNet.Data;
-using System.Collections;
-using System.Globalization;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using DevExtreme.AspNet.Mvc;
 
 namespace pmkd.Controllers
 {
@@ -42,6 +37,7 @@ namespace pmkd.Controllers
 
         }
         //view thêm nhóm hàng hóa
+        [Route("danhmuc/danhmuc/themnhomhang")]
         public IActionResult themnhomhang()
         {
             return View("hanghoa/themnhomhang");

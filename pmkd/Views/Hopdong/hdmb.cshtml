@@ -63,11 +63,10 @@
                     <div class="x_content">
                         <div class="row">
                             <div class="col-sm-12">
-                                <a asp-action="themhopdong" asp-controller="hopdong"><button type="button" class="btn btn-outline-dark" style="">Thêm hợp đồng</button></a>
                                 <div class="card-box table-responsive">
                                     @(Html.DevExtreme().DataGrid<pmkd.Models.Hdmb>()
                                         .DataSource(ds => ds.Mvc()
-                                            .Controller("Hdmbs")
+                                            .Controller("hopdong")
                                             .LoadAction("Get")
                                             .UpdateAction("Put")
                                             .DeleteAction("Delete")
@@ -78,7 +77,6 @@
 
                                             columns.AddFor(m => m.Macn).Caption("Mã chi nhánh").Visible(false).Lookup(lookup => lookup.DataSource(d => d.Mvc().Controller("lookup").LoadAction("getdonvi").Key("Id"))
                                                                                                                                       .DisplayExpr("NameE").ValueExpr("Id"));
-
                                             columns.AddFor(m => m.Systemref).Caption("ID hệ thống").Fixed(true);
 
                                             columns.AddFor(m => m.Ref).Caption("Ref").Fixed(true);
@@ -119,7 +117,6 @@
                                                                                                                         .AllowClearing(true))
                                                                                                                    .EditCellTemplate(new TemplateName("DropDownBoxTemplate"));
 
-
                                             columns.AddFor(m => m.Thanhtoan).Caption("CT thanh toán").Visible(false);
 
                                             columns.AddFor(m => m.Ngaylam).Caption("Ngày làm").Visible(false);
@@ -155,6 +152,7 @@
                                             .UseIcons(true)
 
                                         )
+                                        .OnToolbarPreparing("toolbarhdmb")
                                         .ID("hdmb")
                                         .MasterDetail(m => m.Enabled(true).Template(new TemplateName("cthdmb")))
                                         .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
@@ -221,11 +219,8 @@
                                     {
                                         @(Html.DevExtreme().DataGrid<pmkd.Models.CtHdmb>()
                                                 .DataSource(ds => ds.Mvc()
-                                                    .Controller("CtHdmbs")
-                                                    .LoadAction("Get")
-                                                    .InsertAction("Post")
-                                                    .UpdateAction("Put")
-                                                    .DeleteAction("Delete")
+                                                    .Controller("hopdong")
+                                                    .LoadAction("Getcthdmb")
                                                     .Key("Id")
                                                     .LoadParams(new { id = new JS("data.Systemref") })
                                                 )
@@ -287,8 +282,7 @@
                                                 columns.AddFor(m => m.Mucthuong).Caption("Mức thưởng").Visible(false);
 
                                                 })
-                                                .OnSelectionChanged("selected_item")
-                                                .OnToolbarPreparing("toolbar")
+                                                .OnToolbarPreparing("toolbarcthdmb")
                                                 .Selection(s => s.Mode(SelectionMode.Single))
                                                 .HoverStateEnabled(true)
                                                 .Export(e => e.Enabled(true))

@@ -103,58 +103,15 @@
 
                                         columns.AddFor(m => m.NgayCap).Caption("Ngày cấp").Visible(false);
 
-                                        columns.AddFor(m => m.MaCn).Caption("Mã chi nhánh").Visible(false);
+                                        columns.AddFor(m => m.MaCn).Caption("Mã chi nhánh").Visible(false).AllowEditing(false);
 
-                                        columns.AddFor(m => m.MatHang).Caption("Mặt hàng").Visible(false);
+                                        columns.AddFor(m => m.ThanhToanMua).Caption("Thanh toán mua").Visible(false).Lookup(lookup => lookup.DataSource(new JS("thanhtoanmua")).ValueExpr("id").DisplayExpr("name"));
 
-                                        columns.Add()
-                                            .Caption("Giao dịch mua")
-                                            .Visible(false)
-                                            .CalculateCellValue(@<text>
-                                                                function(data) {
-                                                                    if (data.GiaoDichMua == true)
-                                                                    {
-                                                                    return "Có";
-                                                                    }
-                                                                    else return "Không";
-                                                                    }
-                                                                </text>);
-                                        columns.Add()
-                                            .Caption("Giao dịch bán")
-                                            .Visible(false)
-                                            .CalculateCellValue(@<text>
-                                                                function(data) {
-                                                                    if (data.GiaoDichBan == true)
-                                                                    {
-                                                                    return "Có";
-                                                                    }
-                                                                    else return "Không";
-                                                                    }
-                                                                </text>);
-                                        columns.Add()
-                                            .Caption("Thanh toán mua")
-                                            .Visible(false)
-                                            .CalculateCellValue(@<text>
-                                                                function(data) {
-                                                                    if (data.ThanhToanMua == true)
-                                                                    {
-                                                                    return "Có";
-                                                                    }
-                                                                    else return "Không";
-                                                                    }
-                                                                </text>);
-                                        columns.Add()
-                                            .Caption("Thanh toán bán")
-                                            .Visible(false)
-                                            .CalculateCellValue(@<text>
-                                                                function(data) {
-                                                                    if (data.ThanhToanBan == true)
-                                                                    {
-                                                                    return "Có";
-                                                                    }
-                                                                    else return "Không";
-                                                                    }
-                                                                </text>);
+                                        columns.AddFor(m => m.ThanhToanBan).Caption("Thanh toán bán").Visible(false).Lookup(lookup => lookup.DataSource(new JS("thanhtoanban")).ValueExpr("id").DisplayExpr("name"));
+
+                                        columns.AddFor(m => m.GiaoDichMua).Caption("Giao dịch mua").Visible(false).Lookup(lookup => lookup.DataSource(new JS("giaodichmua")).ValueExpr("id").DisplayExpr("name"));
+
+                                        columns.AddFor(m => m.GiaoDichBan).Caption("Giao dịch bán").Visible(false).Lookup(lookup => lookup.DataSource(new JS("giaodichban")).ValueExpr("id").DisplayExpr("name"));
 
                                         columns.AddFor(m => m.GhiChu).Caption("Ghi chú").Visible(false);
 
@@ -172,17 +129,17 @@
                                                 .ValueExpr("Name")
                                                 );
 
-                                        columns.AddFor(m => m.ToaKinhTe).Caption("Mã khách").Visible(false);
+                                        columns.AddFor(m => m.ToaKinhTe).Caption("Tòa kinh tế").Visible(false);
 
-                                        columns.AddFor(m => m.CreatedDate).Caption("Ngày tạo").Visible(false);
+                                        columns.AddFor(m => m.CreatedDate).Caption("Ngày tạo").Visible(false).AllowEditing(false);
 
-                                        columns.AddFor(m => m.CreatedBy).Caption("Người tạo").Visible(false);
+                                        columns.AddFor(m => m.CreatedBy).Caption("Người tạo").Visible(false).AllowEditing(false);
 
                                         columns.AddFor(m => m.Vanchuyen).Caption("Vận chuyển").Visible(false);
 
                                         columns.AddFor(m => m.Bocxep).Caption("Bốc xếp").Visible(false);
 
-                                        columns.AddFor(m => m.LoaiKhach).Caption("Loại khách").Visible(false);
+                                        columns.AddFor(m => m.LoaiKhach).Caption("Loại khách").Visible(false).Lookup(lookup => lookup.DataSource(new JS("loaikhach")).ValueExpr("id").DisplayExpr("name"));
 
                                         columns.AddFor(m => m.Sanluong).Caption("Sản lượng").Visible(false);
 

@@ -47,6 +47,7 @@ namespace pmkd.Models
         public string ModifiedBy { get; set; }
         public string Vanchuyen { get; set; }
         public string Bocxep { get; set; }
+        [Required]
         public string LoaiKhach { get; set; }
         public string NguoiKy1 { get; set; }
         public string ChucVu1 { get; set; }
