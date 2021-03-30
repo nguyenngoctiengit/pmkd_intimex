@@ -76,12 +76,12 @@
                                         .Columns(columns => {
 
                                             columns.AddFor(m => m.Macn).Caption("Mã chi nhánh").Visible(false).Lookup(lookup => lookup.DataSource(d => d.Mvc().Controller("lookup").LoadAction("getdonvi").Key("Id"))
-                                                                                                                                      .DisplayExpr("NameE").ValueExpr("Id"));
-                                            columns.AddFor(m => m.Systemref).Caption("ID hệ thống").Fixed(true);
+                                                                                                                                      .DisplayExpr("NameE").ValueExpr("Id")).AllowEditing(false);
+                                            columns.AddFor(m => m.Systemref).Caption("ID hệ thống").Fixed(true).AllowEditing(false);
 
-                                            columns.AddFor(m => m.Ref).Caption("Ref").Fixed(true);
+                                            columns.AddFor(m => m.Ref).Caption("Ref").Fixed(true).AllowEditing(false);
 
-                                            columns.AddFor(m => m.Sohd).Caption("Số HĐ");
+                                            columns.AddFor(m => m.Sohd).Caption("Số HĐ").AllowEditing(false);
 
                                             columns.AddFor(m => m.Trangthai).GroupIndex(1).Caption("Trạng thái").Lookup(lookup => lookup.DataSource(new JS("Trangthai")).ValueExpr("id").DisplayExpr("name"));
 
@@ -99,7 +99,7 @@
 
                                             columns.AddFor(m => m.ClientKy).Caption("Khách kí").CalculateCellValue("khachky");
 
-                                            columns.AddFor(m => m.Nguoilam).Caption("Người làm").Visible(false);
+                                            columns.AddFor(m => m.Nguoilam).Caption("Người làm").Visible(false).AllowEditing(false);
 
                                             columns.AddFor(m => m.Ghichu).Caption("Ghi chú").Visible(false);
 
@@ -119,7 +119,7 @@
 
                                             columns.AddFor(m => m.Thanhtoan).Caption("CT thanh toán").Visible(false);
 
-                                            columns.AddFor(m => m.Ngaylam).Caption("Ngày làm").Visible(false);
+                                            columns.AddFor(m => m.Ngaylam).Caption("Ngày làm").Visible(false).AllowEditing(false);
 
                                             columns.AddFor(m => m.TrangthaiGhep).Caption("Trạng thái ghép").Visible(false);
 

@@ -1,4 +1,4 @@
-﻿@model ViewModelHDMB
+﻿@model Hdmb
 @{
     ViewData["Title"] = "addhdmb";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,6 +8,7 @@
     <div class="">
         <div class="col-md-12 col-sm-12">
             <form method="post" asp-action="themhopdong1" asp-controller="hopdong">
+
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>Thêm<small>hợp đồng</small></h2>
@@ -46,419 +47,373 @@
                     </div>
                     <div class="x_content">
                         <br />
-                        <div class="form-group row">
-                            <div class="form-group col-md-4">
-                                <div style="width:200px ; border:1px dashed;border-color:black;">
+                        @using (Html.DevExtreme().ValidationGroup())
+                        {
+                            <div class="form-group row">
+                                <div class="form-group col-md-4">
+                                    <div style="width:200px ; border:1px dashed;border-color:black;">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.TypeKd)"  value="false" checked>
+                                            <label class="form-check-label" for="inlineRadio1">Trực tiếp</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.TypeKd)"  value="true">
+                                            <label class="form-check-label" for="inlineRadio2">Ủy thác</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-7" style="border:1px dashed;border-color:black">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.hdmb.TypeKd)" id="inlineRadio1" value="false" checked>
-                                        <label class="form-check-label" for="inlineRadio1">Trực tiếp</label>
+                                        <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)"  value="MUA" checked>
+                                        <label class="form-check-label" for="inlineRadio1">Mua hàng</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="true">
-                                        <label class="form-check-label" for="inlineRadio2">Ủy thác</label>
+                                        <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)"  value="BAN">
+                                        <label class="form-check-label" for="inlineRadio2">Bàn hàng</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" onclick="show2();" name="@Html.NameFor(m => m.MuaBan)"  value="MUON">
+                                        <label class="form-check-label" for="inlineRadio3">Mượn hàng</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)"  value="CMUON">
+                                        <label class="form-check-label" for="inlineRadio3">Cho mượn</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" onclick="show();" name="@Html.NameFor(m => m.MuaBan)"  value="KTRA">
+                                        <label class="form-check-label" for="inlineRadio3">Khách trả</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-7" style="border:1px dashed;border-color:black">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.hdmb.MuaBan)" id="inlineRadio1" value="MUA" checked>
-                                    <label class="form-check-label" for="inlineRadio1">Mua hàng</label>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2 col-sm-2">System ID</label>
+                                <div class="col-md-4 col-sm-4">
+                                    @(Html.DevExtreme().TextBoxFor(m => m.Systemref))
                                 </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.hdmb.MuaBan)" id="inlineRadio2" value="BAN">
-                                    <label class="form-check-label" for="inlineRadio2">Bàn hàng</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" onclick="show2();" name="@Html.NameFor(m => m.hdmb.MuaBan)" id="inlineRadio3" value="MUON">
-                                    <label class="form-check-label" for="inlineRadio3">Mượn hàng</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.hdmb.MuaBan)" id="inlineRadio3" value="CMUON">
-                                    <label class="form-check-label" for="inlineRadio3">Cho mượn</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" onclick="show();" name="@Html.NameFor(m => m.hdmb.MuaBan)" id="inlineRadio3" value="KTRA">
-                                    <label class="form-check-label" for="inlineRadio3">Khách trả</label>
+                                <label class="col-form-label col-md-2 col-sm-2">Ref</label>
+                                <div class="col-md-4 col-sm-4">
+                                    @Html.DevExtreme().TextBoxFor(m => m.Ref)
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-2 col-sm-2">System ID</label>
-                            <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" onblur="funchange()" id="sysref" asp-for="hdmb.Systemref">
-                            </div>
-                            <label class="col-form-label col-md-2 col-sm-2">Ref</label>
-                            <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" asp-for="hdmb.Ref">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-2 col-sm-2">Tiền tệ</label>
-                            <div class="col-md-4 col-sm-4">
-                                <select class="form-control" asp-for="hdmb.Tiente">
-                                    <option value="VND">VND</option>
-                                    <option value="USD">USD</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 col-sm-6">
-                                <input class="form-check-input js-switch" name="@Html.NameFor(a => a.hdmb.Pakd)" type="checkbox" style="margin-left:20px" checked>
-                                <input type="hidden" value="false" name="@Html.NameFor(a => a.hdmb.Pakd)">
-                                <label class="form-check-label" for="inlineCheckbox1" style="font-size:18px">Hợp đồng bắt buộc có PAKD</label>
-                                <input class="form-check-input js-switch" name="@Html.NameFor(a => a.hdmb.IsNoKhoDoi)" type="checkbox" value="true" style="margin-left:30px">
-                                <input type="hidden" value="false" name="@Html.NameFor(a => a.hdmb.IsNoKhoDoi)">
-                                <label class="form-check-label" for="inlineCheckbox1" style="font-size:18px">Hợp đồng nợ khó đòi</label>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-2 col-sm-2">Khách hàng</label>
-                            <div class="col-md-4 col-sm-4">
-                                <input list="khachhang" class="form-control" asp-for="hdmb.Makhach" required>
-                                <datalist id="khachhang">
-                                    @{
-                                        foreach (var a in ViewBag.kh)
-                                        {
-                                            <option value="@a.MaKhach">@a.MaKhach || @a.TenKhach || @a.TenFull</option>
-                                        }
-                                    }
-
-                                </datalist>
-                            </div>
-                            <label class="col-form-label col-md-2 col-sm-2">Vận chuyển</label>
-                            <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="vanchuyentextbox" required placeholder="Vận chuyển" asp-for="hdmb.VanChuyen">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-2 col-sm-2">Số hợp đồng</label>
-                            <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="hdmb.Sohd" required>
-                            </div>
-                            <label class="col-form-label col-md-2 col-sm-2" style="display:none" id="divhdchomuon">Hợp đồng cho mượn</label>
-                            <div class="col-form-label col-md-4 col-sm-4" style="display:none" id="divhdchomuon1">
-                                <input list="hdchomuon" class="form-control" asp-for="hdmb.HdcmuonId">
-                                <datalist id="hdchomuon">
-                                    @{
-                                        foreach (var item in ViewBag.hdchomuon)
-                                        {
-                                            <option value="@item.Systemref">@item.Ref || @item.Sohd || @item.Makhach</option>
-                                        }
-                                    }
-
-                                </datalist>
-                                <span asp-validation-for="hdmb.HdcmuonId" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-2 col-sm-2">INT ký</label>
-                            <div class="col-md-4 col-sm-4">
-                                <input list="intky" class="form-control" asp-for="hdmb.IntKy" required>
-                                <datalist id="intky">
-                                    @{
-                                        foreach (var item in ViewBag.intky)
-                                        {
-                                            <option value="@item.MaKhach@item.Stt"> || @item.Nguoiky chức vụ @item.Chucvu</option>
-                                        }
-                                    }
-
-                                </datalist>
-                            </div>
-                            <label class="col-form-label col-md-2 col-sm-2">Khách ký</label>
-                            <div class="col-md-4 col-sm-4">
-                                <input list="browsers" class="form-control" asp-for="hdmb.ClientKy">
-                                <datalist id="browsers">
-                                    @{
-                                        foreach (var item in ViewBag.client)
-                                        {
-                                            <option value="@item.MaKhach@item.Stt"> || @item.Nguoiky chức vụ @item.Chucvu</option>
-                                        }
-                                    }
-                                </datalist>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-2 col-sm-2">Thanh toán</label>
-                            <div class="col-md-4 col-sm-4">
-                                <input list="thanhtoan" class="form-control" asp-for="hdmb.ThanhtoanId" required>
-                                <datalist id="thanhtoan">
-                                    @{
-                                        foreach (var item in ViewBag.thanhtoan)
-                                        {
-                                            <option value="@item.Id">@item.Matt || @item.TenTt</option>
-                                        }
-                                    }
-
-                                </datalist>
-                            </div>
-                            <label class="col-form-label col-md-2 col-sm-2">Hình thức giá</label>
-                            <div class="col-md-4 col-sm-4">
-                                <label class="radio-inline">
-                                    <input type="radio" value="true" name="@Html.NameFor(m => m.hdmb.IsFix)" checked><span style="font-size:20px">Giá outright</span>
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" value="false" name="@Html.NameFor(m => m.hdmb.IsFix)" style="margin-left:15px"><span style="font-size:20px">Giá trừ lùi</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-2 col-sm-2">Địa điểm giao hàng</label>
-                            <div class="col-md-10 col-sm-10">
-                                <input list="diadiemgiaohang" class="form-control" asp-for="hdmb.DiaDiemGiaoHang" required>
-                                <datalist id="diadiemgiaohang">
-                                    @{
-                                        foreach (var item1 in ViewBag.diadiemgiaohang)
-                                        {
-                                            <option value="@item1.DiaDiemGiaoHang">@*@item1.DiaDiemGiaoHang*@</option>
-                                        }
-                                    }
-
-                                </datalist>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-2 col-sm-2">Tạm ứng theo HĐ</label>
-                            <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" placeholder="Ngân hàng" asp-for="hdmb.TienUngHd" required>
-                            </div>
-                            <label class="col-form-label col-md-2 col-sm-2">Tạm ứng thực tế</label>
-                            <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" placeholder="Ngân hàng" asp-for="hdmb.TienUngTt" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-2 col-sm-2">Ngày hợp đồng</label>
-                            <div class="col-md-4 col-sm-4">
-                                <input type="date" class="form-control" asp-for="hdmb.Ngayky" required>
-                            </div>
-                            <label class="col-form-label col-md-2 col-sm-2">Ngày giao hàng</label>
-                            <div class="col-md-4 col-sm-4">
-                                <input type="date" class="form-control" asp-for="hdmb.Ngaygiao">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-2 col-sm-2">Ngày hiệu lực</label>
-                            <div class="col-md-4 col-sm-4">
-                                <input type="date" class="form-control" asp-for="hdmb.Ngayhl">
-                            </div>
-                            <label class="col-form-label col-md-2 col-sm-2" id="ngaytra" style="display:none">Ngày trả</label>
-                            <div class="col-md-4 col-sm-4" id="ngaytra1" style="display:none">
-                                <input type="date" class="form-control" id="inputSuccess2" asp-for="hdmb.NgayTraPhaitra">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-2 col-sm-2">Ghi chú</label>
-                            <div class="col-md-10 col-sm-10">
-                                <textarea type="text" class="form-control" id="inputSuccess2" asp-for="hdmb.Ghichu"></textarea>
-                            </div>
-                        </div>
-                        <div class="ln_solid"></div>
-                    </div>
-                    <div class="col-md-12 col-sm-12  ">
-                        <div class="x_panel">
-                            <div class="x_title">
-                                <h2><i class="fa fa-bars"></i>Thêm chi tiết hợp đồng</h2>
-                                <ul class="nav navbar-right panel_toolbox">
-                                    <li>
-                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">Settings 1</a>
-                                            <a class="dropdown-item" href="#">Settings 2</a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a class="close-link"><i class="fa fa-close"></i></a>
-                                    </li>
-                                </ul>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="x_content">
-
-                                <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Chi tiết hợp đồng</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Chi tiết hợp đồng Outright</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content" id="myTabContent">
-                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2 col-sm-2">Mã hàng</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <input list="dropdownHH1" id="dropdownHH" class="form-control" asp-for="ctHdmb.Mahang" />
-                                                <datalist id="dropdownHH1" onchange="funcMahang()">
-                                                    @{
-                                                        foreach (var a in ViewBag.hh)
-                                                        {
-                                                            <option value="@a.Mahang">@a.Mahang || @a.Tenhang || @a.MaNhom</option>
-                                                        }
-                                                    }
-                                                </datalist>
-
-                                            </div>
-                                            <label class="col-form-label col-md-2 col-sm-2">Giá TT</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <input type="text" class="form-control" id="inputSuccess3" asp-for="ctHdmb.Giatt">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2 col-sm-2">Đơn vị tính theo HĐ</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <select class="form-control" asp-for="ctHdmb.DvtTheoHd">
-                                                    <option value="KGS">KGS</option>
-                                                    <option value="MTS">MTS</option>
-                                                    <option value="LBS">LBS</option>
-                                                </select>
-                                            </div>
-                                            <label class="col-form-label col-md-2 col-sm-2">Thuế VAT</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <select class="form-control" asp-for="ctHdmb.Vat">
-                                                    <option value="0">0</option>
-                                                    <option value="5" selected>5</option>
-                                                    <option value="10">10</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2 col-sm-2">Số lượng</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Soluong">
-                                            </div>
-                                            <label class="col-form-label col-md-2 col-sm-2">Sig</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <select class="form-control" asp-for="ctHdmb.Sig">
-                                                    <option value="+">+</option>
-                                                    <option value="-">-</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2 col-sm-2">Trọng lượng</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Trongluong">
-                                            </div>
-                                            <label class="col-form-label col-md-2 col-sm-2">Mức trừ hoặc cộng</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <input type="text" class="form-control" id="inputSuccess3" asp-for="ctHdmb.Diff">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2 col-sm-2">Số LOT</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Solot">
-                                            </div>
-                                            <label class="col-form-label col-md-2 col-sm-2">Ngày chốt cuối</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <input type="date" class="form-control" id="inputSuccess3" asp-for="ctHdmb.FNgayfix">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2 col-sm-2">Giá tháng</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Giathang">
-                                            </div>
-                                            <label class="col-form-label col-md-2 col-sm-2">Mức stoploss</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <input type="text" class="form-control" id="inputSuccess3" asp-for="ctHdmb.Stoploss">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2 col-sm-2">Giá năm</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Gianam">
-                                            </div>
-                                            <label class="col-form-label col-md-2 col-sm-2"></label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <input type="checkbox" class="js-switch" name="@Html.NameFor(m => m.ctHdmb.ChuyenThang)" value="true" style="margin-left:5px" /> Chuyển tháng
-                                                <input type="hidden" class="js-switch" name="@Html.NameFor(m => m.ctHdmb.ChuyenThang)" value="false" style="margin-left:5px" />
-                                            </div>
-
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2 col-sm-2">Giá thị trường</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Giathitruong">
-                                            </div>
-                                            <label class="col-form-label col-md-2 col-sm-2">Mức thưởng</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <input type="text" class="form-control" id="inputSuccess3">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2 col-sm-2">Mã hàng</label>
-                                            <div class="col-md-2 col-sm-2">
-                                                <input list="dropdownHH1" id="dropdownHH" class="form-control" asp-for="ctHdmb.Mahang">
-                                                <datalist id="dropdownHH1" onchange="funcMahang()">
-                                                    @{
-                                                        foreach (var a in ViewBag.hh)
-                                                        {
-                                                            <option value="@a.Mahang">@a.Mahang || @a.Tenhang || @a.MaNhom</option>
-                                                        }
-                                                    }
-                                                </datalist>
-                                            </div>
-                                            <label class="col-form-label col-md-2 col-sm-2">Đơn vị tính theo HĐ</label>
-                                            <div class="col-md-2 col-sm-2">
-                                                <select class="form-control" asp-for="ctHdmb.DvtTheoHd">
-                                                    <option value="KGS" selected>KGS</option>
-                                                    <option value="MTS">MTS</option>
-                                                    <option value="LBS">LBS</option>
-                                                </select>
-                                            </div>
-                                            <label class="col-form-label col-md-2 col-sm-2">Thuế VAT</label>
-                                            <div class="col-md-2 col-sm-2">
-                                                <select class="form-control" asp-for="ctHdmb.Vat">
-                                                    <option value="0">0</option>
-                                                    <option value="5" selected>5</option>
-                                                    <option value="10">10</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2 col-sm-2">Số lượng</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Soluong">
-                                            </div>
-                                            <label class="col-form-label col-md-2 col-sm-2">Trọng lượng</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Trongluong">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2 col-sm-2">Giá Outright theo HĐ</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.GiaTheoHd">
-                                            </div>
-                                            <label class="col-form-label col-md-2 col-sm-2">Giá Outright</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Giact">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2 col-sm-2">Giá thị trường</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Giathitruong">
-                                            </div>
-                                            <label class="col-form-label col-md-2 col-sm-2">Mức thưởng</label>
-                                            <div class="col-md-4 col-sm-4">
-                                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ctHdmb.Mucthuong">
-                                            </div>
-                                        </div>
-                                        <div class="ln_solid"></div>
-                                    </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2 col-sm-2">Tiền tệ</label>
+                                <div class="col-md-4 col-sm-4">
+                                    @Html.DevExtreme().SelectBoxFor(m => m.Tiente).DataSource(new[] { "VND", "USD" })
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-check-input js-switch" name="@Html.NameFor(a => a.Pakd)" type="checkbox" style="margin-left:20px" checked>
+                                    <input type="hidden" value="false" name="@Html.NameFor(a => a.Pakd)">
+                                    <label class="form-check-label" for="inlineCheckbox1" style="font-size:18px">Hợp đồng bắt buộc có PAKD</label>
+                                    <input class="form-check-input js-switch" name="@Html.NameFor(a => a.IsNoKhoDoi)" type="checkbox" value="true" style="margin-left:30px">
+                                    <input type="hidden" value="false" name="@Html.NameFor(a => a.IsNoKhoDoi)">
+                                    <label class="form-check-label" for="inlineCheckbox1" style="font-size:18px">Hợp đồng nợ khó đòi</label>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-md-9 col-sm-9  offset-md-5">
-                        <button type="submit" asp-action="themhopdong1" asp-controller="hopdong" class="btn btn-primary" style="margin-top: 30px">Submit</button>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2 col-sm-2">Khách hàng</label>
+                                <div class="col-md-4 col-sm-4">
+                                    @(Html.DevExtreme().DropDownBoxFor(m => m.Makhach)
+                                        .ValueExpr("MaKhach")
+                                        .DisplayExpr("TenFull")
+                                        .DataSource(d => d.Mvc()
+                                            .Controller("lookup")
+                                            .LoadAction("getkhachhang")
+                                            .LoadMode(DataSourceLoadMode.Raw)
+                                            .Key("MaKhach")
+                                        )
+                                        .Placeholder("Select a value...")
+                                        .ShowClearButton(true)
+                                        .OnValueChanged("valuechange_khachhang")
+                                        .ContentTemplate(new TemplateName("template_khachhang"))
+                                        )
+                                    @using (Html.DevExtreme().NamedTemplate("template_khachhang"))
+                                    {
+                                        @(Html.DevExtreme().DataGrid()
+                                            .ID("khachhang")
+                                            .DataSource(new JS(@"component.getDataSource()"))
+                                            .Columns(columns => {
+                                                columns.Add().DataField("MaKhach");
+                                                columns.Add().DataField("TenKhach");
+                                                columns.Add().DataField("TenFull");
+                                            })
+                                            .HoverStateEnabled(true)
+                                            .Paging(p => p.PageSize(10))
+                                            .FilterRow(f => f.Visible(true))
+                                            .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+                                            .Height(345)
+                                            .Selection(s => s.Mode(SelectionMode.Single))
+                                            .SelectedRowKeys(new JS(@"[component.option(""value"")]"))
+                                            .OnSelectionChanged(@<text>
+                                                function(selectedItems) {
+                                                    var keys = selectedItems.selectedRowKeys;
+                                                    component.option("value", keys);
+                                                    component.close();
+                                                }
+                                            </text>)
+                                        )
+                                    }
+                                </div>
+                                <label class="col-form-label col-md-2 col-sm-2">Vận chuyển</label>
+                                <div class="col-md-4 col-sm-4">
+                                    @Html.DevExtreme().TextBoxFor(m => m.VanChuyen)
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2 col-sm-2">Số hợp đồng</label>
+                                <div class="col-md-4 col-sm-4">
+                                    @Html.DevExtreme().TextBoxFor(m => m.Sohd)
+                                </div>
+                                <label class="col-form-label col-md-2 col-sm-2" style="display:none" id="divhdchomuon">Hợp đồng cho mượn</label>
+                                <div class="col-form-label col-md-4 col-sm-4" style="display:none" id="divhdchomuon1">
+                                    @(Html.DevExtreme().DropDownBoxFor(m => m.HdcmuonId)
+                                        .ValueExpr("Systemref")
+                                        .DisplayExpr(new JS("displayexpr_hdmbchomuon"))
+                                        .DataSource(d => d.Mvc()
+                                            .Controller("lookup")
+                                            .LoadAction("gethdmbchomuon")
+                                            .LoadMode(DataSourceLoadMode.Raw)
+                                            .Key("Systemref")
+                                        )
+                                        .Placeholder("Select a value...")
+                                        .ShowClearButton(true)
+                                        .OnValueChanged("valuechange_hdmbchomuon")
+                                        .ContentTemplate(new TemplateName("template_hdmbchomuon"))
+                                        )
+                                    @using (Html.DevExtreme().NamedTemplate("template_hdmbchomuon"))
+                                    {
+                                        @(Html.DevExtreme().DataGrid()
+                                            .ID("hdmbchomuon")
+                                            .DataSource(new JS(@"component.getDataSource()"))
+                                            .Columns(columns => {
+                                                columns.Add().DataField("Systemref");
+                                                columns.Add().DataField("Ref");
+                                                columns.Add().DataField("Sohd");
+                                            })
+                                            .HoverStateEnabled(true)
+                                            .Paging(p => p.PageSize(10))
+                                            .FilterRow(f => f.Visible(true))
+                                            .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+                                            .Height(345)
+                                            .Selection(s => s.Mode(SelectionMode.Single))
+                                            .SelectedRowKeys(new JS(@"[component.option(""value"")]"))
+                                            .OnSelectionChanged(@<text>
+                                                function(selectedItems) {
+                                                    var keys = selectedItems.selectedRowKeys;
+                                                    component.option("value", keys);
+                                                    component.close();
+                                                }
+                                            </text>)
+                                        )
+                                    }
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2 col-sm-2">INT ký</label>
+                                <div class="col-md-4 col-sm-4">
+                                    @(Html.DevExtreme().DropDownBoxFor(m => m.IntKy)
+                                        .ValueExpr("Id")
+                                        .DisplayExpr(new JS("displayexpr_intky"))
+                                        .DataSource(d => d.Mvc()
+                                            .Controller("lookup")
+                                            .LoadAction("getintky")
+                                            .LoadMode(DataSourceLoadMode.Raw)
+                                            .Key("Id")
+                                        )
+                                        .Placeholder("Select a value...")
+                                        .ShowClearButton(true)
+                                        .OnValueChanged("valuechange_intky")
+                                        .ContentTemplate(new TemplateName("template_intky"))
+                                        )
+                                    @using (Html.DevExtreme().NamedTemplate("template_intky"))
+                                    {
+                                        @(Html.DevExtreme().DataGrid()
+                                            .ID("intky")
+                                            .DataSource(new JS(@"component.getDataSource()"))
+                                            .Columns(columns => {
+                                                columns.Add().DataField("MaKhach");
+                                                columns.Add().DataField("Stt");
+                                                columns.Add().DataField("Nguoiky");
+                                                columns.Add().DataField("Chucvu");
+                                            })
+                                            .HoverStateEnabled(true)
+                                            .Paging(p => p.PageSize(10))
+                                            .FilterRow(f => f.Visible(true))
+                                            .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+                                            .Height(345)
+                                            .Selection(s => s.Mode(SelectionMode.Single))
+                                            .SelectedRowKeys(new JS(@"[component.option(""value"")]"))
+                                            .OnSelectionChanged(@<text>
+                                                function(selectedItems) {
+                                                    var keys = selectedItems.selectedRowKeys;
+                                                    var item_return = document.getElementById('textboxintky');
+                                                    item_return.value = keys;
+                                                    component.option("value", keys);
+                                                    component.close();
+                                                }
+                                            </text>)
+                                        )
+                                    }
+                                    <input type="text" id="textboxintky" asp-for="IntKy">
+                                </div>
+                                <label class="col-form-label col-md-2 col-sm-2">Khách ký</label>
+                                <div class="col-md-4 col-sm-4">
+                                    @(Html.DevExtreme().DropDownBoxFor(m => m.ClientKy)
+                                        .ValueExpr("Id")
+                                        .DisplayExpr(new JS("displayexpr_khachky"))
+                                        .DataSource(d => d.Mvc()
+                                            .Controller("lookup")
+                                            .LoadAction("getkhachky")
+                                            .LoadMode(DataSourceLoadMode.Raw)
+                                            .Key("Id")
+                                        )
+                                        .Placeholder("Select a value...")
+                                        .ShowClearButton(true)
+                                        .OnValueChanged("valuechange_khachky")
+                                        .ContentTemplate(new TemplateName("template_khachky"))
+                                        )
+                                    @using (Html.DevExtreme().NamedTemplate("template_khachky"))
+                                    {
+                                        @(Html.DevExtreme().DataGrid()
+                                            .ID("khachky")
+                                            .DataSource(new JS(@"component.getDataSource()"))
+                                            .Columns(columns => {
+                                                columns.Add().DataField("MaKhach");
+                                                columns.Add().DataField("Stt");
+                                                columns.Add().DataField("Nguoiky");
+                                                columns.Add().DataField("Chucvu");
+                                            })
+                                            .HoverStateEnabled(true)
+                                            .Paging(p => p.PageSize(10))
+                                            .FilterRow(f => f.Visible(true))
+                                            .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+                                            .Height(345)
+                                            .Selection(s => s.Mode(SelectionMode.Single))
+                                            .SelectedRowKeys(new JS("displayexpr_khachky"))
+                                            .OnSelectionChanged(@<text>
+                                                function(selectedItems) {
+                                                    var keys = selectedItems.selectedRowKeys;
+                                                    component.option("value", keys);
+                                                    component.close();
+                                                }
+                                            </text>)
+                                        )
+                                    }
+                                    
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2 col-sm-2">Thanh toán</label>
+                                <div class="col-md-4 col-sm-4">
+                                    @(Html.DevExtreme().DropDownBoxFor(m => m.ThanhtoanId)
+                                        .ValueExpr("Id")
+                                        .DisplayExpr(new JS("displayexpr_thanhtoan"))
+                                        .DataSource(d => d.Mvc()
+                                            .Controller("lookup")
+                                            .LoadAction("getthanhtoan")
+                                            .LoadMode(DataSourceLoadMode.Raw)
+                                            .Key("Id")
+                                        )
+                                        .Placeholder("Select a value...")
+                                        .ShowClearButton(true)
+                                        .OnValueChanged("valuechange_thanhtoan")
+                                        .ContentTemplate(new TemplateName("template_thanhtoan"))
+                                        )
+                                    @using (Html.DevExtreme().NamedTemplate("template_thanhtoan"))
+                                    {
+                                        @(Html.DevExtreme().DataGrid()
+                                            .ID("thanhtoan")
+                                            .DataSource(new JS(@"component.getDataSource()"))
+                                            .Columns(columns => {
+                                                columns.Add().DataField("Matt");
+                                                columns.Add().DataField("TenTt");
+                                                columns.Add().DataField("Mucung");
+                                            })
+                                            .HoverStateEnabled(true)
+                                            .Paging(p => p.PageSize(10))
+                                            .FilterRow(f => f.Visible(true))
+                                            .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+                                            .Height(345)
+                                            .Selection(s => s.Mode(SelectionMode.Single))
+                                            .SelectedRowKeys("Id")
+                                            .OnSelectionChanged(@<text>
+                                                function(selectedItems) {
+                                                    var keys = selectedItems.selectedRowKeys;
+                                                    component.option("value", keys);
+                                                    component.close();
+                                                }
+                                            </text>)
+                                        )
+                                    }
+                                </div>
+                                <label class="col-form-label col-md-2 col-sm-2">Hình thức giá</label>
+                                <div class="col-md-4 col-sm-4">
+                                    <label class="radio-inline">
+                                        <input type="radio" value="true" name="@Html.NameFor(m => m.IsFix)" checked><span style="font-size:20px">Giá outright</span>
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" value="false" name="@Html.NameFor(m => m.IsFix)" style="margin-left:15px"><span style="font-size:20px">Giá trừ lùi</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2 col-sm-2">Địa điểm giao hàng</label>
+                                <div class="col-md-10 col-sm-10">
+                                    <input list="diadiemgiaohang" class="form-control" asp-for="DiaDiemGiaoHang" >
+                                    <datalist id="diadiemgiaohang">
+                                        @{
+                                            foreach (var item1 in ViewBag.diadiemgiaohang)
+                                            {
+                                                <option value="@item1.DiaDiemGiaoHang">@*@item1.DiaDiemGiaoHang*@</option>
+                                            }
+                                        }
+
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2 col-sm-2">Tạm ứng theo HĐ</label>
+                                <div class="col-md-4 col-sm-4">
+                                    <input type="text" class="form-control" placeholder="Ngân hàng" asp-for="TienUngHd" >
+                                </div>
+                                <label class="col-form-label col-md-2 col-sm-2">Tạm ứng thực tế</label>
+                                <div class="col-md-4 col-sm-4">
+                                    <input type="text" class="form-control" placeholder="Ngân hàng" asp-for="TienUngTt" >
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2 col-sm-2">Ngày hợp đồng</label>
+                                <div class="col-md-4 col-sm-4">
+                                    <input type="date" class="form-control" asp-for="Ngayky" >
+                                </div>
+                                <label class="col-form-label col-md-2 col-sm-2">Ngày giao hàng</label>
+                                <div class="col-md-4 col-sm-4">
+                                    <input type="date" class="form-control" asp-for="Ngaygiao">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2 col-sm-2">Ngày hiệu lực</label>
+                                <div class="col-md-4 col-sm-4">
+                                    <input type="date" class="form-control" asp-for="Ngayhl">
+                                </div>
+                                <label class="col-form-label col-md-2 col-sm-2" id="ngaytra" style="display:none">Ngày trả</label>
+                                <div class="col-md-4 col-sm-4" id="ngaytra1" style="display:none">
+                                    <input type="date" class="form-control" id="inputSuccess2" asp-for="NgayTraPhaitra">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2 col-sm-2">Ghi chú</label>
+                                <div class="col-md-10 col-sm-10">
+                                    <textarea type="text" class="form-control" id="inputSuccess2" asp-for="Ghichu"></textarea>
+                                </div>
+                            </div>
+                            <div class="ln_solid"></div>
+                            <div class="form-group row">
+                                <div class="col-md-9 col-sm-9  offset-md-5">
+                                    <button type="submit" asp-action="themhopdong1" asp-controller="hopdong" class="btn btn-primary" style="margin-top: 30px">Submit</button>
+                                </div>
+                            </div>
+                        }
+
                     </div>
                 </div>
             </form>

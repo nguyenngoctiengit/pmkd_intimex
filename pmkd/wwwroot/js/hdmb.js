@@ -1,4 +1,45 @@
-﻿
+﻿function valuechange_khachhang(e) {
+    var dataGrid = $("#khachhang").dxDataGrid("instance");
+    if (dataGrid.length) {
+        dataGrid.selectRows(e.value, false);
+    }
+}
+function valuechange_hdmbchomuon(e) {
+    var dataGrid = $("#hdmbchomuon").dxDataGrid("instance");
+    if (dataGrid.length) {
+        dataGrid.selectRows(e.value, false);
+    }
+}
+function valuechange_intky(e) {
+    var dataGrid = $("#intky").dxDataGrid("instance");
+    if (dataGrid.length) {
+        dataGrid.selectRows(e.value, false);
+    }
+}
+function valuechange_khachky(e) {
+    var dataGrid = $("#khachky").dxDataGrid("instance");
+    if (dataGrid.length) {
+        dataGrid.selectRows(e.value, false);
+    }
+}
+function valuechange_thanhtoan(e) {
+    var dataGrid = $("#thanhtoan").dxDataGrid("instance");
+    if (dataGrid.length) {
+        dataGrid.selectRows(e.value, false);
+    }
+}
+function displayexpr_intky(item) {
+    return item && item.Nguoiky + " chức vụ " + item.Chucvu;
+}
+function displayexpr_khachky(item) {
+    return item && item.Nguoiky + " chức vụ " + item.Chucvu;
+}
+function displayexpr_thanhtoan(item) {
+    return item && item.Matt + "<" + item.TenTt + ">";
+}
+function displayexpr_hdmbchomuon(item) {
+    return item && item.Systemref + " < " + item.Sohd + " > ";
+}
 function onSelectionChanged(selectionChangedArgs, component) {
     var setValue = component.option('setValue');
     var selectedRowKey = selectionChangedArgs.selectedRowKeys[0];
@@ -69,9 +110,3 @@ function toolbarcthdmb(e) {
         }
     });
 }
-
-
-
-
-
-

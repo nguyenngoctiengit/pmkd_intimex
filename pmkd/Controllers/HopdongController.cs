@@ -52,44 +52,41 @@ namespace pmkd.Controllers
         }
         //function thêm hợp đồng và chi tiết hợp đồng
         [HttpPost]
-        public IActionResult themhopdong1(ViewModelHDMB viewModelHDMB)
+        public IActionResult themhopdong1(Hdmb hdmb)
         {
             
             var hdchomuon = (from a in _context.Hdmbs where a.MuaBan == "CMUON" select a).ToList();
             var phuongthucthanhtoan = (from a in _context.PortfolioPayments select a).ToList();
-            viewModelHDMB.hdmb.Macn = HttpContext.Session.GetString("UnitName");
-            viewModelHDMB.hdmb.Trangthai = 1;
-            viewModelHDMB.hdmb.Nguoilam = HttpContext.Session.GetString("userId");
+            hdmb.Macn = HttpContext.Session.GetString("UnitName");
+            hdmb.Trangthai = 1;
+            hdmb.Nguoilam = HttpContext.Session.GetString("userId");
             foreach (var item in phuongthucthanhtoan)
             {
-                if (item.Id == viewModelHDMB.hdmb.ThanhtoanId)
+                if (item.Id == hdmb.ThanhtoanId)
                 {
-                    viewModelHDMB.hdmb.Thanhtoan = (from a in _context.PortfolioPayments where viewModelHDMB.hdmb.ThanhtoanId == item.Id select a.Matt).FirstOrDefault();
+                    hdmb.Thanhtoan = (from a in _context.PortfolioPayments where hdmb.ThanhtoanId == item.Id select a.Matt).FirstOrDefault();
                 }
             }
-            if (viewModelHDMB.hdmb.HdcmuonId == null)
+            if (hdmb.HdcmuonId == null)
             {
-                viewModelHDMB.hdmb.HdcmuonId = "";
-                viewModelHDMB.hdmb.SoHdcmuon = "";
+                hdmb.HdcmuonId = "";
+                hdmb.SoHdcmuon = "";
             }
             else
             {
                 foreach (var item in hdchomuon)
                 {
-                    if (item.Systemref == viewModelHDMB.hdmb.HdcmuonId)
+                    if (item.Systemref == hdmb.HdcmuonId)
                     {
-                        viewModelHDMB.hdmb.HdcmuonId = item.Systemref;
-                        viewModelHDMB.hdmb.SoHdcmuon = (from a in _context.Hdmbs where viewModelHDMB.hdmb.HdcmuonId == item.Systemref select a.Sohd).FirstOrDefault().ToString();
+                        hdmb.HdcmuonId = item.Systemref;
+                        hdmb.SoHdcmuon = (from a in _context.Hdmbs where hdmb.HdcmuonId == item.Systemref select a.Sohd).FirstOrDefault().ToString();
                     }
                 }
             }
-            viewModelHDMB.hdmb.TrangthaiGhep = true;
-            viewModelHDMB.hdmb.Ngaylam = DateTime.Now;
-            viewModelHDMB.ctHdmb.Systemref = viewModelHDMB.hdmb.Systemref;
-            viewModelHDMB.ctHdmb.Ref = viewModelHDMB.hdmb.Systemref;
-            _context.Hdmbs.Add(viewModelHDMB.hdmb);
-            _context.CtHdmbs.Add(viewModelHDMB.ctHdmb);
-                _context.SaveChanges();
+            hdmb.TrangthaiGhep = true;
+            hdmb.Ngaylam = DateTime.Now;
+            _context.Hdmbs.Add(hdmb);
+            _context.SaveChanges();
             return RedirectToAction("hdmb");
         }
         [Route("hopdong/hopdong/addcthdoutright/{id?}")]
@@ -184,9 +181,8 @@ namespace pmkd.Controllers
             return View("addcthd");
         }
         [HttpPost]
-        
         //function thêm chi tiết hợp đồng
-        public IActionResult addcthd(CtHdmb ctHdmb)
+        public IActionResult functionaddcthd(CtHdmb ctHdmb)
         {
             int t = 0;
             if (ctHdmb.FNgayfix == null)
@@ -292,12 +288,6 @@ namespace pmkd.Controllers
                 i.Dichvu,
                 i.Tenfull
             });
-
-            // If you work with a large amount of data, consider specifying the PaginateViaPrimaryKey and PrimaryKey properties.
-            // In this case, keys and data are loaded in separate queries. This can make the SQL execution plan more efficient.
-            // Refer to the topic https://github.com/DevExpress/DevExtreme.AspNet.Data/issues/336.
-            // loadOptions.PrimaryKey = new[] { "Systemref" };
-            // loadOptions.PaginateViaPrimaryKey = true;
 
             return Json(await DataSourceLoader.LoadAsync(hdmbs, loadOptions));
         }

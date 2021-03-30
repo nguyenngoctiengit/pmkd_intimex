@@ -1,5 +1,6 @@
 ﻿using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using pmkd.Models;
 using System;
@@ -66,6 +67,64 @@ namespace pmkd.Controllers
         public IActionResult getdiadiemgiaohang()
         {
             return Json(_context.HdmbGiaohangs.ToList());
+        }
+        public async Task<IActionResult> getkhachhang(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = _context.KhachHangs.Select(i => new
+            {
+                i.MaKhach,
+                i.TenKhach,
+                i.TenFull
+
+            });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
+        public async Task<IActionResult> gethdmbchomuon(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = _context.Hdmbs.Where(a => a.MuaBan == "CMUON").Select(i => new
+            {
+                i.Systemref,
+                i.Ref,
+                i.Sohd
+
+            });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
+        public async Task<IActionResult> getintky(DataSourceLoadOptions loadOptions)
+        {
+            var unitname = HttpContext.Session.GetString("UnitName");
+            var item_return = _context.Signers.Where(m => m.MaKhach == unitname).Select(i => new { 
+            i.Id,
+            i.MaKhach,
+            i.Nguoiky,
+            i.Stt,
+            i.Chucvu
+            });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
+        public async Task<IActionResult> getkhachky(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = _context.Signers.Select(i => new
+            {
+                i.Id,
+                i.MaKhach,
+                i.Nguoiky,
+                i.Stt,
+                i.Chucvu
+
+            });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
+        public async Task<IActionResult> getthanhtoan(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = _context.PortfolioPayments.Select(i => new
+            {
+                i.Id,
+                i.Matt,
+                i.TenTt,
+                i.Mucung
+            });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
         }
     }
 }

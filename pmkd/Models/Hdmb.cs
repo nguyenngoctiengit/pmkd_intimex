@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
 
 #nullable disable
 
@@ -8,9 +10,13 @@ namespace pmkd.Models
     public partial class Hdmb
     {
         public string Macn { get; set; }
+        [Required]
         public string Systemref { get; set; }
+
         public string Ref { get; set; }
+
         public string Sohd { get; set; }
+
         public int? Trangthai { get; set; }
         public string MuaBan { get; set; }
         public string Makhach { get; set; }
