@@ -63,13 +63,11 @@
                     <div class="x_content">
                         <div class="row">
                             <div class="col-sm-12">
-                                <a asp-action="themkhachhang" asp-controller="danhmuc"><button type="button" class="btn btn-outline-dark" style="">Thêm KH</button></a>
                                 <div class="card-box table-responsive">
                                     @(Html.DevExtreme().DataGrid<pmkd.Models.KhachHang>()
                                     .DataSource(ds => ds.Mvc()
                                         .Controller("Danhmuc")
                                         .LoadAction("GetKH")
-                                        .InsertAction("PostKH")
                                         .UpdateAction("PutKH")
                                         .DeleteAction("DeleteKH")
                                         .Key("Idkhach", "MaKhach")
@@ -149,11 +147,11 @@
                                     .Editing(e => e
                                         .Mode(GridEditMode.Popup)
                                         .Popup(p => p.Title("Khách hàng").ShowTitle(true).Width(700).Height(500))
-                                        .AllowAdding(true)
                                         .AllowUpdating(true)
                                         .AllowDeleting(true)
                                         .UseIcons(true)
                                     )
+                                    .OnToolbarPreparing("toolbar_khachhang")
                                     .MasterDetail(m => m.Enabled(true).Template(new TemplateName("gridContainer-details")))
                                     .Selection(s => s.Mode(SelectionMode.Single))
                                     .HoverStateEnabled(true)

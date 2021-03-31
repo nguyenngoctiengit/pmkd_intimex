@@ -95,9 +95,43 @@
 
                                             columns.AddFor(m => m.Ngayhl).Caption("Ngày hiệu lực");
 
-                                            columns.AddFor(m => m.IntKy).Caption("INT kí").CalculateCellValue("intky");
+                                            columns.AddFor(m => m.IntKy).Caption("INT kí").CalculateCellValue(@<text>
+                                                function(data){
+                                                    var array = @Html.Raw(Json.Serialize(ViewBag.signer));
+                                                    var chuoi = [];
+                                                    var a = data.IntKy;
+                                                    var c = a.length;
+                                                    if (c > 0){
+                                                        var str = a.substr(-1);
+                                                        for (var i = 0; i @Html.Raw("<") array.length; i++) {
+                                                            chuoi[i] = array[i];
+                                                            if (chuoi[i].MaKhach == data.Macn.trim() && chuoi[i].Stt == str) {
+                                                                return chuoi[i].Nguoiky + " chức vụ " + chuoi[i].Chucvu;
+                                                            }
+                                                        };
+                                                    }
+                                                }
 
-                                            columns.AddFor(m => m.ClientKy).Caption("Khách kí").CalculateCellValue("khachky");
+
+                                            </text>);
+
+                                            columns.AddFor(m => m.ClientKy).Caption("Khách kí").CalculateCellValue(@<text>
+                                                function(data){
+                                                    var array = @Html.Raw(Json.Serialize(ViewBag.signer));
+                                                    var chuoi = [];
+                                                    var a = data.ClientKy;
+                                                    var c = a.length;
+                                                    if (c > 0){
+                                                        var str = a.substr(-1);
+                                                        for (var i = 0; i @Html.Raw("<") array.length; i++) {
+                                                            chuoi[i] = array[i];
+                                                            if (chuoi[i].MaKhach == data.Makhach.trim() && chuoi[i].Stt == str) {
+                                                                return chuoi[i].Nguoiky + " chức vụ " + chuoi[i].Chucvu;
+                                                            }
+                                                        };
+                                                    }
+                                                }
+                                            </text>);
 
                                             columns.AddFor(m => m.Nguoilam).Caption("Người làm").Visible(false).AllowEditing(false);
 

@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="images/favicon.ico" type="image/ico" />
+    <link rel="icon" href="~/public/images/icon_main.ico" type="image/ico" />
 
     <title>Công ty CP tập đoàn Intimex</title>
     <!-- Bootstrap -->
@@ -735,40 +735,19 @@
     <!-- Custom Theme Scripts -->
     <script src="~/public/build/js/custom.min.js"></script>
     <script type="text/javascript">
-        var array = @Html.Raw(Json.Serialize(ViewBag.signer));
-        var chuoi = [];
-        for (var i = 0; i < array.length; i++) {
-            chuoi[i] = array[i];
-        };
+        function toolbar_khachhang(e) {
+            e.toolbarOptions.items.unshift({
+                location: "after",
+                widget: "dxButton",
+                options: {
+                    icon: "add",
+                    onClick: function () {
+                        location.href = "danhmuc/themkhachhang"
 
-        function intky(data) {
-            var a = data.IntKy;
-            var c = a.length;
-            if (c > 1) {
-                var str = a.substr(-1);
-                for (var i = 0; i < array.length; i++) {
-                    if (chuoi[i].MaKhach == data.Macn.trim() && chuoi[i].Stt == str) {
-                        return chuoi[i].Nguoiky + " chức vụ " + chuoi[i].Chucvu;
                     }
                 }
-            }
-
+            });
         }
-        function khachky(data) {
-            var b = data.ClientKy;
-            var d = b.length;
-            if (d > 1) {
-                var str1 = b.substr(-1);
-                for (var i = 0; i < array.length; i++) {
-                    if (chuoi[i].MaKhach == data.Makhach.trim() && chuoi[i].Stt == str1) {
-                        return chuoi[i].Nguoiky + " chức vụ " + chuoi[i].Chucvu;
-                    }
-                }
-            }
-        }
-
-
-
         /// some script divhdchomuon1 ngaytra1
         function show() {
             document.getElementById('divhdchomuon').style.display = 'block';

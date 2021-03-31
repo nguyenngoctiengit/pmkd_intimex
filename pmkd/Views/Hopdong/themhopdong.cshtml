@@ -53,34 +53,34 @@
                                 <div class="form-group col-md-4">
                                     <div style="width:200px ; border:1px dashed;border-color:black;">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.TypeKd)"  value="false" checked>
+                                            <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.TypeKd)" value="false" checked>
                                             <label class="form-check-label" for="inlineRadio1">Trực tiếp</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.TypeKd)"  value="true">
+                                            <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.TypeKd)" value="true">
                                             <label class="form-check-label" for="inlineRadio2">Ủy thác</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-7" style="border:1px dashed;border-color:black">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)"  value="MUA" checked>
+                                        <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)" value="MUA" checked>
                                         <label class="form-check-label" for="inlineRadio1">Mua hàng</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)"  value="BAN">
+                                        <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)" value="BAN">
                                         <label class="form-check-label" for="inlineRadio2">Bàn hàng</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" onclick="show2();" name="@Html.NameFor(m => m.MuaBan)"  value="MUON">
+                                        <input class="form-check-input" type="radio" onclick="show2();" name="@Html.NameFor(m => m.MuaBan)" value="MUON">
                                         <label class="form-check-label" for="inlineRadio3">Mượn hàng</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)"  value="CMUON">
+                                        <input class="form-check-input" type="radio" onclick="show1();" name="@Html.NameFor(m => m.MuaBan)" value="CMUON">
                                         <label class="form-check-label" for="inlineRadio3">Cho mượn</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" onclick="show();" name="@Html.NameFor(m => m.MuaBan)"  value="KTRA">
+                                        <input class="form-check-input" type="radio" onclick="show();" name="@Html.NameFor(m => m.MuaBan)" value="KTRA">
                                         <label class="form-check-label" for="inlineRadio3">Khách trả</label>
                                     </div>
                                 </div>
@@ -209,8 +209,8 @@
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2">INT ký</label>
-                                <div class="col-md-4 col-sm-4">
-                                    @(Html.DevExtreme().DropDownBoxFor(m => m.IntKy)
+                                <div class="col-md-10 col-sm-10">
+                                    @(Html.DevExtreme().DropDownBox()
                                         .ValueExpr("Id")
                                         .DisplayExpr(new JS("displayexpr_intky"))
                                         .DataSource(d => d.Mvc()
@@ -231,7 +231,7 @@
                                             .DataSource(new JS(@"component.getDataSource()"))
                                             .Columns(columns => {
                                                 columns.Add().DataField("MaKhach");
-                                                columns.Add().DataField("Stt");
+                                                columns.Add().DataField("Stt").Width(150);
                                                 columns.Add().DataField("Nguoiky");
                                                 columns.Add().DataField("Chucvu");
                                             })
@@ -242,22 +242,32 @@
                                             .Height(345)
                                             .Selection(s => s.Mode(SelectionMode.Single))
                                             .SelectedRowKeys(new JS(@"[component.option(""value"")]"))
-                                            .OnSelectionChanged(@<text>
-                                                function(selectedItems) {
-                                                    var keys = selectedItems.selectedRowKeys;
-                                                    var item_return = document.getElementById('textboxintky');
-                                                    item_return.value = keys;
-                                                    component.option("value", keys);
-                                                    component.close();
-                                                }
-                                            </text>)
+                                            .OnSelectionChanged(@<text>function selectedchange_intky(selectedItems) {
+                                                            var keys = selectedItems.selectedRowKeys;
+                                                            var item_return = document.getElementById('textboxintky');
+
+                                                            var array = @Html.Raw(Json.Serialize(ViewBag.signer));
+                                                            var chuoi = [];
+                                                            for (var i = 0; i @Html.Raw("<") array.length; i++) {
+                                                                chuoi[i] = array[i];
+                                                                if (chuoi[i].Id == keys)
+                                                                {
+                                                                    item_return.value = chuoi[i].MaKhach + chuoi[i].Stt;
+                                                                }
+
+                                                            };
+                                                            component.option("value", keys);
+                                                            component.close();
+                                                            }</text>)
                                         )
                                     }
-                                    <input type="text" id="textboxintky" asp-for="IntKy">
+                                    <input type="hidden" id="textboxintky" asp-for="IntKy">
                                 </div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2">Khách ký</label>
-                                <div class="col-md-4 col-sm-4">
-                                    @(Html.DevExtreme().DropDownBoxFor(m => m.ClientKy)
+                                <div class="col-md-10 col-sm-10">
+                                    @(Html.DevExtreme().DropDownBox()
                                         .ValueExpr("Id")
                                         .DisplayExpr(new JS("displayexpr_khachky"))
                                         .DataSource(d => d.Mvc()
@@ -278,7 +288,7 @@
                                             .DataSource(new JS(@"component.getDataSource()"))
                                             .Columns(columns => {
                                                 columns.Add().DataField("MaKhach");
-                                                columns.Add().DataField("Stt");
+                                                columns.Add().DataField("Stt").Width(150);
                                                 columns.Add().DataField("Nguoiky");
                                                 columns.Add().DataField("Chucvu");
                                             })
@@ -292,13 +302,24 @@
                                             .OnSelectionChanged(@<text>
                                                 function(selectedItems) {
                                                     var keys = selectedItems.selectedRowKeys;
+                                                    var item_return = document.getElementById('textboxkhachky');
+                                                    var array = @Html.Raw(Json.Serialize(ViewBag.signer));
+                                                    var chuoi = [];
+                                                    for (var i = 0; i @Html.Raw("<") array.length; i++) {
+                                                        chuoi[i] = array[i];
+                                                        if (chuoi[i].Id == keys)
+                                                        {
+                                                            item_return.value = chuoi[i].MaKhach + chuoi[i].Stt;
+                                                        }
+
+                                                    };
                                                     component.option("value", keys);
                                                     component.close();
                                                 }
                                             </text>)
                                         )
                                     }
-                                    
+                                    <input type="hidden" id="textboxkhachky" asp-for="ClientKy">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -358,7 +379,7 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2">Địa điểm giao hàng</label>
                                 <div class="col-md-10 col-sm-10">
-                                    <input list="diadiemgiaohang" class="form-control" asp-for="DiaDiemGiaoHang" >
+                                    <input list="diadiemgiaohang" class="form-control" asp-for="DiaDiemGiaoHang" required>
                                     <datalist id="diadiemgiaohang">
                                         @{
                                             foreach (var item1 in ViewBag.diadiemgiaohang)
@@ -373,43 +394,48 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2">Tạm ứng theo HĐ</label>
                                 <div class="col-md-4 col-sm-4">
-                                    <input type="text" class="form-control" placeholder="Ngân hàng" asp-for="TienUngHd" >
+                                    @Html.DevExtreme().TextBoxFor(m => m.TienUngHd)
                                 </div>
                                 <label class="col-form-label col-md-2 col-sm-2">Tạm ứng thực tế</label>
                                 <div class="col-md-4 col-sm-4">
-                                    <input type="text" class="form-control" placeholder="Ngân hàng" asp-for="TienUngTt" >
+                                    @Html.DevExtreme().TextBoxFor(m => m.TienUngTt)
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2">Ngày hợp đồng</label>
                                 <div class="col-md-4 col-sm-4">
-                                    <input type="date" class="form-control" asp-for="Ngayky" >
+                                    @Html.DevExtreme().DateBoxFor(m => m.Ngayky)
                                 </div>
                                 <label class="col-form-label col-md-2 col-sm-2">Ngày giao hàng</label>
                                 <div class="col-md-4 col-sm-4">
-                                    <input type="date" class="form-control" asp-for="Ngaygiao">
+                                    @Html.DevExtreme().DateBoxFor(m => m.Ngaygiao)
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2">Ngày hiệu lực</label>
                                 <div class="col-md-4 col-sm-4">
-                                    <input type="date" class="form-control" asp-for="Ngayhl">
+                                    @Html.DevExtreme().DateBoxFor(m => m.Ngayhl)
                                 </div>
                                 <label class="col-form-label col-md-2 col-sm-2" id="ngaytra" style="display:none">Ngày trả</label>
                                 <div class="col-md-4 col-sm-4" id="ngaytra1" style="display:none">
-                                    <input type="date" class="form-control" id="inputSuccess2" asp-for="NgayTraPhaitra">
+                                    @Html.DevExtreme().DateBoxFor(m => m.NgayTraPhaitra)
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2">Ghi chú</label>
                                 <div class="col-md-10 col-sm-10">
-                                    <textarea type="text" class="form-control" id="inputSuccess2" asp-for="Ghichu"></textarea>
+                                    @Html.DevExtreme().TextAreaFor(m => m.Ghichu)
                                 </div>
                             </div>
                             <div class="ln_solid"></div>
                             <div class="form-group row">
                                 <div class="col-md-9 col-sm-9  offset-md-5">
-                                    <button type="submit" asp-action="themhopdong1" asp-controller="hopdong" class="btn btn-primary" style="margin-top: 30px">Submit</button>
+                                    @(Html.DevExtreme().Button()
+                                        .ID("button")
+                                        .Text("Submit")
+                                        .Type(ButtonType.Success)
+                                        .UseSubmitBehavior(true)
+                                    )
                                 </div>
                             </div>
                         }

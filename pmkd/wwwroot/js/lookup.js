@@ -60,4 +60,33 @@ var isfix = [{
     "id": true, "name": "Giá trừ lùi"
 }
 ];
+var loaikhach = [{
+    "id": 0, "name": "MB lâu dài"
+}, {
+    "id": 1, "name": "MB theo từng PA"
+}, {
+    "id": 2, "name": "MB theo ủy thác"
+}, {
+    "id": 3, "name": "Khách lập bảng kê"
+}
+];
+var loaikhach = [{
+    "id": 0, "name": "MB lâu dài"
+}, {
+    "id": 1, "name": "MB theo từng PA"
+}, {
+    "id": 2, "name": "MB theo ủy thác"
+}, {
+    "id": 3, "name": "Khách lập bảng kê"
+}
+];
+var giaodich = [{
+    "id": 0, "name": "Chờ duyệt"
+}, {
+    "id": 1, "name": "Đang giao dịch"
+}, {
+    "id": 2, "name": "Ngừng giao dịch"
+}
+];
+
 

@@ -40,6 +40,7 @@ namespace pmkd.Controllers
         //view thêm hợp đồng
         public IActionResult themhopdong()
         {
+            ViewBag.signer = _context.Signers.ToList();
             ViewBag.hh = _context.Hanghoas.ToList();
             ViewBag.kh = _context.KhachHangs.ToList();
             var uniname = HttpContext.Session.GetString("UnitName");
@@ -48,6 +49,7 @@ namespace pmkd.Controllers
             ViewBag.diadiemgiaohang = _context.HdmbGiaohangs.ToList();
             ViewBag.hdchomuon = _context.Hdmbs.Where(a => a.MuaBan == "CMUON").ToList();
             ViewBag.client = _context.Signers.ToList();
+            
             return View("themhopdong");
         }
         //function thêm hợp đồng và chi tiết hợp đồng
@@ -87,6 +89,7 @@ namespace pmkd.Controllers
             hdmb.Ngaylam = DateTime.Now;
             _context.Hdmbs.Add(hdmb);
             _context.SaveChanges();
+            TempData["alertMessage"] = "thêm hợp đồng thành công";
             return RedirectToAction("hdmb");
         }
         [Route("hopdong/hopdong/addcthdoutright/{id?}")]

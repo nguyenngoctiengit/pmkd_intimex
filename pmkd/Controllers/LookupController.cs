@@ -2,6 +2,7 @@
 using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using pmkd.Models;
 using System;
 using System.Collections.Generic;
@@ -126,5 +127,16 @@ namespace pmkd.Controllers
             });
             return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
         }
+        public async Task<IActionResult> getkhuvuc(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = _context.Khuvucs.Select(i => new
+            {
+                i.MaKhuvuc,
+                i.TenKhuvuc
+
+            });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
+
     }
 }

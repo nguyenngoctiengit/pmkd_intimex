@@ -297,7 +297,7 @@ namespace pmkd.Controllers
             ViewBag.tenqg = _context.Quocgia.ToList();
             return View("khachhang/khachhang",_context.KhachHangs.Where(a => a.Visible == true).ToList());
         }
-
+        [Route("danhmuc/danhmuc/themkhachhang")]
         //View thêm khách hàng
         public IActionResult themkhachhang()
         {
@@ -306,6 +306,7 @@ namespace pmkd.Controllers
             return View("khachhang/themkhachhang");
         }
         //function thêm khách hàng
+        
         [HttpPost]
         public IActionResult themkhachhang(KhachHang kh)
         {

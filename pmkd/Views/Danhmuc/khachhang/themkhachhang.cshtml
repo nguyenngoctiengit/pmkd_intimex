@@ -63,139 +63,128 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">ID khách hàng</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="Idkhach" required>
+                                @Html.DevExtreme().TextBoxFor(m => m.Idkhach)
                             </div>
                             <label class="col-form-label col-md-2 col-sm-2">Mã khách</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="MaKhach" required>
+                                @Html.DevExtreme().TextBoxFor(m => m.MaKhach)
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Tên tắt</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="TenKhach" required>
+                                @Html.DevExtreme().TextBoxFor(m => m.TenKhach)
                             </div>
                             <label class="col-form-label col-md-2 col-sm-2">MST/CMND</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="MaSoThue">
+                                @Html.DevExtreme().TextBoxFor(m => m.MaSoThue)
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Tên khách</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="TenFull" required>
+                                @Html.DevExtreme().TextBoxFor(m => m.TenFull)
                             </div>
                             <label class="col-form-label col-md-2 col-sm-2">Điện thoại</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="DienThoai" required>
+                                @Html.DevExtreme().TextBoxFor(m => m.DienThoai)
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Địa chỉ</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="DiaChi" required>
+                                @Html.DevExtreme().TextBoxFor(m => m.DiaChi)
                             </div>
                             <label class="col-form-label col-md-2 col-sm-2">FAX</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="Fax">
+                                @Html.DevExtreme().TextBoxFor(m => m.Fax)
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Loại khách</label>
                             <div class="col-md-4 col-sm-4">
-                                <select asp-for="LoaiKhach" class="form-control">
-                                    <option value="0">MB lâu dài</option>
-                                    <option value="1">MB theo từng PA</option>
-                                    <option value="2">MB theo ủy thác</option>
-                                    <option value="3">Khách lập bảng kê</option>
-                                </select>
+                                @Html.DevExtreme().SelectBoxFor(m => m.LoaiKhach).DataSource(new JS("loaikhach")).DisplayExpr("name").ValueExpr("id")
                             </div>
                             <label class="col-form-label col-md-2 col-sm-2">Email</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="email" class="form-control" id="inputSuccess2" asp-for="Email" required>
+                                @Html.DevExtreme().TextBoxFor(m => m.Email)
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Tài khoản</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="TaiKhoan">
+                                @Html.DevExtreme().TextBoxFor(m => m.TaiKhoan)
                             </div>
                             <label class="col-form-label col-md-2 col-sm-2">Ngân hàng</label>
                             <div class="col-md-4 col-sm-4">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="NganHang">
+                                @Html.DevExtreme().TextBoxFor(m => m.NganHang)
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Giấy phép</label>
                             <div class="col-md-2 col-sm-2">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="GiayPhep">
+                                @Html.DevExtreme().TextBoxFor(m => m.GiayPhep)
                             </div>
                             <label class="col-form-label col-md-1 col-sm-1">Ngày cấp</label>
                             <div class="col-md-3 col-sm-3">
-                                <input type="date" class="form-control" id="inputSuccess2" asp-for="NgayCap">
+                                @Html.DevExtreme().TextBoxFor(m => m.NgayCap)
                             </div>
                             <label class="col-form-label col-md-1 col-sm-1">Tỉnh/TP</label>
                             <div class="col-md-3 col-sm-3">
-                                <select asp-for="MaKhuvuc" class="form-control">
-                                    @{
-                                        foreach (var item in ViewBag.khuvuc)
-                                        {
-                                            <option value="@item.MaKhuvuc">@item.TenKhuvuc</option>
-                                        }
-                                    }
-                                </select>
+                                @Html.DevExtreme().SelectBoxFor(m => m.MaKhuvuc).DataSource(p => p
+                                                                                        .Mvc()
+                                                                                        .Controller("lookup")
+                                                                                        .LoadAction("getkhuvuc")
+                                                                                        .LoadMode(DataSourceLoadMode.Raw)
+                                                                                        .Key("MaKhuvuc")
+                                                                                        ).DisplayExpr("TenKhuvuc").ValueExpr("MaKhuvuc").SearchEnabled(true)
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Ghi chú</label>
                             <div class="col-md-10 col-sm-10">
-                                <textarea type="text" class="form-control" id="inputSuccess2" asp-for="GhiChu"></textarea>
+                                @Html.DevExtreme().TextAreaFor(m => m.GhiChu)
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Quốc gia</label>
                             <div class="col-md-2 col-sm-2">
-                                <input type="text" asp-for="TenQg" id="tenqg" style="display:none">
-                                    @(Html.DevExtreme().SelectBox()
+                                    @(Html.DevExtreme().SelectBoxFor(m => m.TenQg)
                                         .ID("quocgia")
                                         .DataSource(d => d
                                             .Mvc()
                                             .Controller("lookup")
                                             .LoadAction("getquocgia")
                                             .LoadMode(DataSourceLoadMode.Raw)
-                                            .Key("Name")
-                                            
-
+                                            .Key("Name")                                           
                                         )
                                         .DisplayExpr("Name")
                                         .ValueExpr("Name")
                                         .SearchEnabled(true)
-                                        .OnValueChanged("valueChange_tenqg")
-                                        
-                                        
+                                              
                                     )
                             </div>
                             <label class="col-form-label col-md-1 col-sm-1">Tòa kinh tế</label>
                             <div class="col-md-3 col-sm-3">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="ToaKinhTe">
+                                @Html.DevExtreme().TextBoxFor(m => m.ToaKinhTe)
                             </div>
                             <label class="col-form-label col-md-1 col-sm-1">Bốc xếp</label>
                             <div class="col-md-3 col-sm-3">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="Bocxep">
+                                @Html.DevExtreme().TextBoxFor(m => m.Bocxep)
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Vận chuyển</label>
                             <div class="col-md-2 col-sm-2">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="Vanchuyen" required>
+                                @Html.DevExtreme().TextBoxFor(m => m.Vanchuyen)
                             </div>
                             <label class="col-form-label col-md-1 col-sm-1">Diện tích(m²)</label>
                             <div class="col-md-3 col-sm-3">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="Dientich" required>
+                                @Html.DevExtreme().TextBoxFor(m => m.Dientich)
                             </div>
                             <label class="col-form-label col-md-1 col-sm-1">Sản lượng(kg)</label>
                             <div class="col-md-3 col-sm-3">
-                                <input type="text" class="form-control" id="inputSuccess2" asp-for="Sanluong" required>
+                                @Html.DevExtreme().TextBoxFor(m => m.Sanluong)
                             </div>
                         </div>
                         <div class="form-group row">
@@ -206,11 +195,7 @@
                             </div>
                             <label class="col-form-label col-md-1 col-sm-1">Giao dịch</label>
                             <div class="col-md-3 col-sm-3">
-                                <select asp-for="GiaoDich" class="form-control">
-                                    <option value="0">Chờ duyệt</option>
-                                    <option value="1">Đang giao dịch</option>
-                                    <option value="2">Ngừng giao dịch</option>
-                                </select>
+                                @Html.DevExtreme().SelectBoxFor(m => m.GiaoDich).DataSource(new JS("giaodich")).DisplayExpr("name").ValueExpr("id")
                             </div>
                             <div class="col-md-4 col-sm-4">
                                 <input class="form-check-input js-switch" type="checkbox" name="@Html.NameFor(a => a.GiaoDichMua)" checked>
