@@ -100,8 +100,7 @@
                                                     var array = @Html.Raw(Json.Serialize(ViewBag.signer));
                                                     var chuoi = [];
                                                     var a = data.IntKy;
-                                                    var c = a.length;
-                                                    if (c > 0){
+                                                    if (a){
                                                         var str = a.substr(-1);
                                                         for (var i = 0; i @Html.Raw("<") array.length; i++) {
                                                             chuoi[i] = array[i];
@@ -120,8 +119,7 @@
                                                     var array = @Html.Raw(Json.Serialize(ViewBag.signer));
                                                     var chuoi = [];
                                                     var a = data.ClientKy;
-                                                    var c = a.length;
-                                                    if (c > 0){
+                                                    if (a){
                                                         var str = a.substr(-1);
                                                         for (var i = 0; i @Html.Raw("<") array.length; i++) {
                                                             chuoi[i] = array[i];

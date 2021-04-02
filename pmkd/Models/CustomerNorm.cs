@@ -17,7 +17,6 @@ namespace pmkd.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
 
         public string Nhomhang { get; set; }
-        [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string Macn { get; set; }
         public decimal ValueNorm { get; set; }

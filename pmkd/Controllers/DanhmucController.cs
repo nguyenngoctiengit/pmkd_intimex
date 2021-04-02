@@ -734,6 +734,7 @@ namespace pmkd.Controllers
             model.DateCreate = DateTime.Now;
             model.GdMua = false;
             model.GdBan = false;
+            model.Macn = HttpContext.Session.GetString("UnitName");
             var result = _context.CustomerNorms.Add(model);
             await _context.SaveChangesAsync();
 

@@ -638,7 +638,6 @@ C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\Microsoft.DotNet.Platfo
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\Microsoft.Extensions.DependencyModel.dll
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Shared\_DevExtremeLayout.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\hanghoa\themnhomhang.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\addcthd.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\addcthdoutright.cshtml.g.cs

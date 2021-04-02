@@ -52,7 +52,7 @@ namespace pmkd.Controllers
             
             return View("themhopdong");
         }
-        //function thêm hợp đồng và chi tiết hợp đồng
+        // function thêm hợp đồng 
         [HttpPost]
         public IActionResult themhopdong1(Hdmb hdmb)
         {
@@ -218,6 +218,7 @@ namespace pmkd.Controllers
             TempData["alertMessage"] = "thêm chi tiết hợp đồng thành công";
             return RedirectToAction("hdmb");
         }
+        //View update chi tiết hợp đồng
         public IActionResult updatecthd(long id)
         {
             ViewBag.systemId = (from a in _context.Hdmbs
@@ -237,6 +238,7 @@ namespace pmkd.Controllers
             var cthdmb = _context.CtHdmbs.Where(a => a.Id == id).FirstOrDefault();
             return View("updatecthd", cthdmb);
         }
+        //function update chi tiết hợp đồng
         [HttpPost]
         public IActionResult updatecthd(CtHdmb ctHdmb,long id)
         {
@@ -250,6 +252,7 @@ namespace pmkd.Controllers
             TempData["alertMessage"] = "cập nhật chi tiết hợp đồng thành công";
             return RedirectToAction("hdmb");
         }
+        //lấy dữ liệu hợp đồng mua bán
         [HttpGet]
         public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
         {
@@ -294,6 +297,7 @@ namespace pmkd.Controllers
 
             return Json(await DataSourceLoader.LoadAsync(hdmbs, loadOptions));
         }
+        //lấy dữ liệu chi tiết hợp đồng mua bán
         [HttpGet]
         public async Task<IActionResult> Getcthdmb(DataSourceLoadOptions loadOptions, string id)
         {
@@ -345,6 +349,7 @@ namespace pmkd.Controllers
                           };
             return Json(await DataSourceLoader.LoadAsync(cthdmbs, loadOptions));
         }
+        //update hợp đồng mua bán
         [HttpPut]
         public async Task<IActionResult> Put(string key, string values)
         {
@@ -374,13 +379,15 @@ namespace pmkd.Controllers
                     }
                 }
             }
+            var ctthanhtoan = (_context.PortfolioPayments.Where(a => a.Id == model.ThanhtoanId).Select(a => a.Matt)).FirstOrDefault();
+            model.Thanhtoan = ctthanhtoan;
             model.Macn = HttpContext.Session.GetString("UnitName");
             model.TrangthaiGhep = true;
             _context.Hdmbs.Update(model);
             await _context.SaveChangesAsync();
             return Ok();
         }
-
+        //xóa hợp đồng mua bán
         [HttpDelete]
         public async Task<IActionResult> Delete(string key)
         {

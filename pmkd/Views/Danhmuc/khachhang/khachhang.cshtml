@@ -227,7 +227,7 @@
                                                 .DataSource(d => d.Mvc().Controller("lookup").LoadAction("getdonvi").Key("Id"))
                                                 .DisplayExpr("Id")
                                                 .ValueExpr("Id")
-                                                );
+                                                ).AllowEditing(false);
 
                                                 columns.AddFor(m => m.NguoiGd).Caption("Người GD");
 
@@ -241,6 +241,8 @@
 
                                             })
                                             .Editing(e => e
+                                                .Mode(GridEditMode.Popup)
+                                                .Popup(p => p.Title("Định mức khách hàng").ShowTitle(true).Width(700).Height(500))
                                                 .AllowAdding(true)
                                                 .AllowUpdating(true)
                                                 .AllowDeleting(true)
@@ -301,6 +303,8 @@
 
                                             })
                                             .Editing(e => e
+                                                .Mode(GridEditMode.Popup)
+                                                .Popup(p => p.Title("Người đại diện").ShowTitle(true).Width(700).Height(500))
                                                 .AllowAdding(true)
                                                 .AllowUpdating(true)
                                                 .AllowDeleting(true)
