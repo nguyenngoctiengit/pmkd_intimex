@@ -137,6 +137,15 @@ namespace pmkd.Controllers
             });
             return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
         }
+        public async Task<IActionResult> getloaibao(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = _context.BagTypes.Select(i => new
+            {
+                i.BagTypeId,
+                i.Name
 
+            });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
     }
 }

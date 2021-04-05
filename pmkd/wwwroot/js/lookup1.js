@@ -1,4 +1,28 @@
-﻿var loaikhach = [{
+﻿var giaodich = [{
+    "id": 0, "name": "Chờ duyệt"
+}, {
+    "id": 1, "name": "Đang giao dịch"
+}, {
+    "id": 2, "name": "Ngừng giao dịch"
+}
+];
+var trangthaichoxeptai = [{
+    "id": 1, "name": "Đang chờ xác nhận KCS"
+}, {
+    "id": 2, "name": "Đạt nếm thử"
+}, {
+    "id": 3, "name": "Không đạt nếm thử"
+}
+];
+var aprove_xeptai = [{
+    "id": 0, "name": "Đồng ý nhập"
+}, {
+    "id": 1, "name": "Trả về"
+}, {
+    "id": 2, "name": "Chờ xử lí"
+}
+];
+var loaikhach = [{
     "id": 0, "name": "MB lâu dài"
 }, {
     "id": 1, "name": "MB theo từng PA"
@@ -80,13 +104,6 @@ var loaikhach = [{
     "id": 3, "name": "Khách lập bảng kê"
 }
 ];
-var giaodich = [{
-    "id": 0, "name": "Chờ duyệt"
-}, {
-    "id": 1, "name": "Đang giao dịch"
-}, {
-    "id": 2, "name": "Ngừng giao dịch"
-}
-];
+
 
 

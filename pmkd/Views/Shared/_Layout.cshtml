@@ -203,6 +203,44 @@
                                     </ul>
                                 </li>
                                 <li>
+                                    <a><i class="fa fa-sitemap"></i> Nhập - Xuất kho <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a>Số liệu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li>
+                                                    <a asp-action="hanghoa" asp-controller="danhmuc">Phiếu KCS</a>
+                                                </li>
+                                                <li>
+                                                    <a asp-action="khachhang" asp-controller="danhmuc">Cân trọng lượng</a>
+                                                </li>
+                                                <li><a href="form_validation.html">Cắt chuyển</a></li>
+                                                <li><a asp-action="dangkynhapkho" asp-controller="kho">Đăng ký nhập kho</a></li>
+                                                <li><a href="form_upload.html">Thẻ kho</a></li>
+                                                <li><a href="form_buttons.html">Lệnh giao hàng</a></li>
+                                                <li><a href="form_buttons.html">Tách phiếu Xuất</a></li>
+                                                <li><a href="form_buttons.html">Tính giá trị hàng NK</a></li>
+                                                <li><a href="form_buttons.html">Phiếu Nhập kho</a></li>
+                                                <li><a href="form_buttons.html">Phiếu Xuất kho</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a>Báo biểu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">Bảng kê nhập xuất kho</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">Tổng hợp chất lượng đầu vào</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Báo cáo KCS</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
                                     <a><i class="fa fa-sitemap"></i>Hợp đồng<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li>
@@ -688,7 +726,7 @@
         </div>
     </div>
     <!-- datepicker -->
-    <script src="~/js/lookup.js"></script>
+    <script src="~/js/lookup1.js"></script>
     <script src="~/js/hanghoa.js"></script>
     <script src="~/js/hdmb.js"></script>
     
@@ -748,6 +786,7 @@
                 }
             });
         }
+
         /// some script divhdchomuon1 ngaytra1
         function show() {
             document.getElementById('divhdchomuon').style.display = 'block';

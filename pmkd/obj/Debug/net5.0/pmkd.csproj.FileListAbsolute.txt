@@ -642,3 +642,4 @@ C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\han
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\addcthd.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\addcthdoutright.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\Razor\Views\Danhmuc\khachhang\khachhang.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Kho\dangkynhapkho.cshtml.g.cs
