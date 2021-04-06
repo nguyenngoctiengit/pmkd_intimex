@@ -773,6 +773,23 @@
     <!-- Custom Theme Scripts -->
     <script src="~/public/build/js/custom.min.js"></script>
     <script type="text/javascript">
+        function valuechange_hanghoa(e) {
+            var dataGrid = $("#hanghoa").dxDataGrid("instance");
+            if (dataGrid.length) {
+                dataGrid.selectRows(e.value, false);
+            }
+        }
+        function getOrderDay(rowData) {
+            return rowData.NgayVao;
+        }
+        function calculateFilterExpression() {
+            var d = new Date()
+            var dd = d.getDate();
+            var mm = d.getMonth() + 1;
+            var yyyy = d.getFullYear();
+            var today = mm + '-' + dd + '-' + yyyy;
+            return [[getOrderDay, '=', today]];
+        }
         function toolbar_khachhang(e) {
             e.toolbarOptions.items.unshift({
                 location: "after",

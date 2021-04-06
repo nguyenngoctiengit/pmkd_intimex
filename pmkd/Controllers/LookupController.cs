@@ -147,5 +147,27 @@ namespace pmkd.Controllers
             });
             return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
         }
+        public async Task<IActionResult> gethanghoa(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = _context.Hanghoas.Select(i => new
+            {
+                i.Idhanghoa,
+                i.Mahang,
+                i.Tenhang,
+                i.MaNhom
+
+            });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
+        public async Task<IActionResult> gethopdong(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = _context.Hdmbs.Select(i => new
+            {
+                i.Systemref,
+                i.Sohd,
+                i.Tenfull
+            });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
     }
 }

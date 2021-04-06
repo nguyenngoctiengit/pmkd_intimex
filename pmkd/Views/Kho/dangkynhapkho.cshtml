@@ -65,65 +65,130 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive">
+                                    @{
+                                        var filterValue = new object[]
+                                        {
+                                            new object[] { "NgayVao", DateTime.Now }
+};
+                                    }
                                     @(Html.DevExtreme().DataGrid<pmkd.Models.XepTai>()
-                                        .ID("grid")
-                                        .DataSource(d => d.Mvc().Controller("kho")
-                                        .LoadAction("GetXepTai")
-                                        .InsertAction("InsertXepTai")
-                                        .UpdateAction("UpdateXeptai")
-                                        .DeleteAction("DeleteXepTai")
-                                        .Key("Id"))
-                                        .Columns(columns => {
+                                                    .ID("grid")
+                                                    .DataSource(d => d.Mvc().Controller("kho")
+                                                    .LoadAction("GetXepTai")
+                                                    .InsertAction("InsertXepTai")
+                                                    .UpdateAction("UpdateXeptai")
+                                                    .DeleteAction("DeleteXepTai")
+                                                    .Key("Id"))
+                                                    .Columns(columns => {
 
-                                            columns.AddFor(m => m.SoXe).Caption("Số xe").Fixed(true);
+                                                        columns.AddFor(m => m.SoXe).Caption("Số xe").Fixed(true);
 
-                                            columns.AddFor(m => m.Xeptaiso).Caption("Tài");
+                                                        columns.AddFor(m => m.Xeptaiso).Caption("Tài");
 
-                                            columns.AddFor(m => m.KhoId).Caption("Mã kho");
+                                                        columns.AddFor(m => m.KhoId).Caption("Mã kho");
 
-                                            columns.AddFor(m => m.KhoName).Caption("Tên kho");
+                                                        columns.AddFor(m => m.KhoName).Caption("Tên kho");
 
-                                            columns.AddFor(m => m.NgayVao).Caption("Ngày vào");
+                                                        columns.AddFor(m => m.NgayVao).Caption("Ngày vào");
 
-                                            columns.AddFor(m => m.Ngaycan).Caption("Ngày cân");
+                                                        columns.AddFor(m => m.Ngaycan).Caption("Ngày cân");
 
-                                            columns.AddFor(m => m.MaKhach).Caption("Mã khách");
+                                                        columns.AddFor(m => m.MaKhach).Caption("Mã khách").Lookup(lookup => lookup
+                                                                                                                        .DataSource(d => d.Mvc().Controller("lookup").LoadAction("getkhachhang").Key("MaKhach"))
+                                                                                                                        .ValueExpr("MaKhach")
+                                                                                                                        .DisplayExpr("TenKhach")
+                                                                                                                        .AllowClearing(true))
+                                                                                                                   .EditCellTemplate(new TemplateName("DropDownBoxTemplate_khachhang"));
 
-                                            columns.AddFor(m => m.KhachHang).Caption("Tên khách hàng").AllowEditing(false);
+                                                        columns.AddFor(m => m.KhachHang).Caption("Tên khách hàng").Visible(false);
 
-                                            columns.AddFor(m => m.Mahang).Caption("Mã hàng");
+                                                        columns.AddFor(m => m.Mahang).Caption("Mã hàng").Lookup(lookup => lookup
+                                                                                                                        .DataSource(d => d.Mvc().Controller("lookup").LoadAction("gethanghoa").Key("Mahang"))
+                                                                                                                        .ValueExpr("Mahang")
+                                                                                                                        .DisplayExpr("Tenhang")
+                                                                                                                        .AllowClearing(true))
+                                                                                                                   .EditCellTemplate(new TemplateName("DropDownBoxTemplate_hanghoa"));
 
-                                            columns.AddFor(m => m.Tenhang).Caption("Tên hàng").AllowEditing(false);
+                                                        columns.AddFor(m => m.Tenhang).Caption("Tên hàng").Visible(false);
 
-                                            columns.AddFor(m => m.HopDong).Caption("Hợp đồng");
+                                                        columns.AddFor(m => m.HopDong).Caption("Hợp đồng").Lookup(lookup => lookup
+                                                                                                                        .DataSource(d => d.Mvc().Controller("lookup").LoadAction("gethopdong").Key("Sohd"))
+                                                                                                                        .ValueExpr("Sohd")
+                                                                                                                        .DisplayExpr("Sohd")
+                                                                                                                        .AllowClearing(true))
+                                                                                                                   .EditCellTemplate(new TemplateName("DropDownBoxTemplate_hdmb"));
 
-                                            columns.AddFor(m => m.BagTypeId).Caption("Loại bao").Lookup(lookup => lookup.DataSource(d => d.Mvc().Controller("lookup").LoadAction("getloaibao").Key("BagTypeId")).DisplayExpr("Name").ValueExpr("BagTypeId"));
+                                                        columns.AddFor(m => m.BagTypeId).Caption("Loại bao").Lookup(lookup => lookup.DataSource(d => d.Mvc().Controller("lookup").LoadAction("getloaibao").Key("BagTypeId")).DisplayExpr("Name").ValueExpr("BagTypeId")).Width(500);
 
-                                            columns.AddFor(m => m.SoBao).Caption("Số bao");
+                                                        columns.AddFor(m => m.SoBao).Caption("Số bao");
 
-                                            columns.AddFor(m => m.TlBaobi).Caption("TL Bao");
+                                                        columns.AddFor(m => m.TlBaobi).Caption("TL Bao");
 
-                                            columns.AddFor(m => m.Status).Caption("Trạng thái").GroupIndex(0).Lookup(lookup => lookup.DataSource(new JS("trangthaichoxeptai")).DisplayExpr("name").ValueExpr("id"));
+                                                        columns.AddFor(m => m.Status).Caption("Trạng thái").GroupIndex(0).Lookup(lookup => lookup.DataSource(new JS("trangthaichoxeptai")).DisplayExpr("name").ValueExpr("id"));
 
-                                            columns.AddFor(m => m.Aprove).Caption("Duyệt mẫu").Lookup(lookup => lookup.DataSource(new JS("aprove_xeptai")).DisplayExpr("name").ValueExpr("id"));
+                                                        columns.AddFor(m => m.Aprove).Caption("Duyệt mẫu").Lookup(lookup => lookup.DataSource(new JS("aprove_xeptai")).DisplayExpr("name").ValueExpr("id"));
 
-                                            columns.AddFor(m => m.IsHoanThanh).Caption("Hoàn thành ?");
+                                                        columns.AddFor(m => m.IsHoanThanh).Caption("Hoàn thành ?");
 
-                                        })
-                                        .Editing(e => e
-                                            .Mode(GridEditMode.Popup)
-                                            .Popup(p => p.Title("Nhập kho").ShowTitle(true).Width(700).Height(500))
-                                            .AllowUpdating(true)
-                                            .AllowDeleting(true)
-                                            .AllowAdding(true)
-                                            .UseIcons(true)
-
+                                                    })
+                                                    .Editing(e => e
+                                                        .Mode(GridEditMode.Popup)
+                                                        .Popup(p => p.Title("Nhập kho").ShowTitle(true).Width(700).Height(500))
+                                                        .AllowUpdating(true)
+                                                        .AllowDeleting(true)
+                                                        .AllowAdding(true)
+                                                        .UseIcons(true)
+                                                        .Form(f => f.Items(item => {
+                                                            item.AddGroup()
+                                                                    .ColCount(2)
+                                                                    .ColSpan(2)
+                                                                    .Items(groupitem =>
+                                                                    {
+                                                                        groupitem.AddSimpleFor(m => m.SoXe);
+                                                                        groupitem.AddSimpleFor(m => m.Xeptaiso);
+                                                                        groupitem.AddSimpleFor(m => m.KhoId);
+                                                                        groupitem.AddSimpleFor(m => m.KhoName);
+                                                                        groupitem.AddSimpleFor(m => m.NgayVao);
+                                                                        groupitem.AddSimpleFor(m => m.Ngaycan);
+                                                                        groupitem.AddSimpleFor(m => m.MaKhach).ColSpan(2);
+                                                                        groupitem.AddSimpleFor(m => m.Mahang).ColSpan(2);
+                                                                        groupitem.AddSimpleFor(m => m.HopDong).ColSpan(2);
+                                                                        groupitem.AddSimpleFor(m => m.BagTypeId);
+                                                                        groupitem.AddSimpleFor(m => m.SoBao);
+                                                                        groupitem.AddSimpleFor(m => m.TlBaobi);
+                                                                        groupitem.AddSimpleFor(m => m.Status);
+                                                                        groupitem.AddSimpleFor(m => m.Aprove);
+                                                                        groupitem.AddSimpleFor(m => m.IsHoanThanh);
+                                                                    });
+                                                        }))
                                         )
+
                                         .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
+                                        .FilterPanel(f => f.Visible(true))
                                         .HoverStateEnabled(true)
                                         .Export(e => e.Enabled(true))
                                         .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
                                         .HeaderFilter(hearder => hearder.Visible(true))
+                                        .FilterValue(filterValue)
+                                        .FilterBuilder(f =>
+                                        f.CustomOperations(co =>
+                                        {
+                                            var o = co.Add();
+                                            o.Name("today");
+                                            o.Caption("today");
+                                            o.DataTypes(new[] { FilterBuilderFieldDataType.DateTime });
+                                            o.Icon("check");
+                                            o.HasValue(false);
+                                            o.CalculateFilterExpression("calculateFilterExpression");
+                                        })
+                                        .AllowHierarchicalFields(true))
+                                        .FilterBuilderPopup(p =>
+                                        p.Position(pos =>
+                                            pos.At(HorizontalAlignment.Center, VerticalAlignment.Top)
+                                                .My(HorizontalAlignment.Center, VerticalAlignment.Top)
+                                                .Offset(0, 10)
+                                            )
+                                        )
                                         .AllowColumnResizing(true)
                                         .AllowColumnReordering(true)
                                         .ColumnAutoWidth(true)
@@ -140,10 +205,118 @@
                                             paper.AllowedPageSizes(new[] { 5, 10, 20, 50 });
                                             paper.ShowInfo(true);
                                         })
+                                     )
+                                    @using (Html.DevExtreme().NamedTemplate("DropDownBoxTemplate_khachhang"))
+                                    {
+                                        @(Html.DevExtreme().DropDownBox()
+                                            .DataSource(d => d.Mvc().Controller("lookup").LoadAction("getkhachhang").Key("MaKhach"))
+                                            .Value(new JS("value"))
+                                            .ValueExpr("MaKhach")
+                                            .DisplayExpr("TenKhach")
+                                            .DropDownOptions(options => options.Width(500))
+                                            .Option("setValue", new JS("setValue"))
+                                            .ContentTemplate(new TemplateName("ContentTemplate_khachhang"))
+                                        )
+                                    }
+                                    @using (Html.DevExtreme().NamedTemplate("ContentTemplate_khachhang"))
+                                    {
+                                        @(Html.DevExtreme().DataGrid()
+                                                .DataSource(d => d.Mvc().Controller("lookup").LoadAction("getkhachhang").Key("MaKhach"))
+                                                .RemoteOperations(true)
+                                                .Height(250)
+                                                .Width(500)
+                                                .Columns(c =>
+                                                {
+                                                    c.Add().DataField("MaKhach").Caption("Mã khách");
+                                                    c.Add().DataField("TenKhach").Caption("Tên khách");
+                                                    c.Add().DataField("TenFull").Caption("Tên full");
+                                                })
+                                                .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+                                                .HoverStateEnabled(true)
+                                                .RemoteOperations(true)
+                                                .Selection(s => s.Mode(SelectionMode.Single))
+                                                .SelectedRowKeys(new JS("[component.option('value')]"))
+                                                .FocusedRowEnabled(true)
+                                                .FocusedRowKey(new JS("component.option('value')"))
+                                                .OnSelectionChanged("function(selectionChangedArgs) { onSelectionChanged(selectionChangedArgs, component) }")
+                                                .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
 
+                                        )
+                                    }
+                                    @using (Html.DevExtreme().NamedTemplate("DropDownBoxTemplate_hanghoa"))
+                                    {
+                                        @(Html.DevExtreme().DropDownBox()
+                                            .DataSource(d => d.Mvc().Controller("lookup").LoadAction("gethanghoa").Key("Mahang"))
+                                            .Value(new JS("value"))
+                                            .ValueExpr("Mahang")
+                                            .DisplayExpr("Tenhang")
+                                            .DropDownOptions(options => options.Width(500))
+                                            .Option("setValue", new JS("setValue"))
+                                            .ContentTemplate(new TemplateName("ContentTemplate_hanghoa"))
+                                        )
+                                    }
+                                    @using (Html.DevExtreme().NamedTemplate("ContentTemplate_hanghoa"))
+                                    {
+                                        @(Html.DevExtreme().DataGrid()
+                                                .DataSource(d => d.Mvc().Controller("lookup").LoadAction("gethanghoa").Key("Mahang"))
+                                                .RemoteOperations(true)
+                                                .Height(250)
+                                                .Width(500)
+                                                .Columns(c =>
+                                                {
+                                                    c.Add().DataField("Mahang").Caption("Mã hàng");
+                                                    c.Add().DataField("Tenhang").Caption("Tên hàng");
+                                                    c.Add().DataField("MaNhom").Caption("Nhóm hàng");
+                                                })
+                                                .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+                                                .HoverStateEnabled(true)
+                                                .RemoteOperations(true)
+                                                .Selection(s => s.Mode(SelectionMode.Single))
+                                                .SelectedRowKeys(new JS("[component.option('value')]"))
+                                                .FocusedRowEnabled(true)
+                                                .FocusedRowKey(new JS("component.option('value')"))
+                                                .OnSelectionChanged("function(selectionChangedArgs) { onSelectionChanged(selectionChangedArgs, component) }")
+                                                .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
 
+                                        )
+                                    }
+                                    @using (Html.DevExtreme().NamedTemplate("DropDownBoxTemplate_hdmb"))
+                                    {
+                                        @(Html.DevExtreme().DropDownBox()
+                                            .DataSource(d => d.Mvc().Controller("lookup").LoadAction("gethopdong").Key("Sohd"))
+                                            .Value(new JS("value"))
+                                            .ValueExpr("Sohd")
+                                            .DisplayExpr("Sohd")
+                                            .DropDownOptions(options => options.Width(500))
+                                            .Option("setValue", new JS("setValue"))
+                                            .ContentTemplate(new TemplateName("ContentTemplate_hdmb"))
+                                        )
+                                    }
+                                    @using (Html.DevExtreme().NamedTemplate("ContentTemplate_hdmb"))
+                                    {
+                                        @(Html.DevExtreme().DataGrid()
+                                                .DataSource(d => d.Mvc().Controller("lookup").LoadAction("gethopdong").Key("Sohd"))
+                                                .RemoteOperations(true)
+                                                .Height(250)
+                                                .Width(500)
+                                                .Columns(c =>
+                                                {
+                                                    c.Add().DataField("Systemref").Caption("Mã hệ thống");
+                                                    c.Add().DataField("Sohd").Caption("Số hợp đồng");
+                                                    c.Add().DataField("Tenfull").Caption("Tên hợp đồng");
+                                                })
+                                                .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+                                                .HoverStateEnabled(true)
+                                                .RemoteOperations(true)
+                                                .Selection(s => s.Mode(SelectionMode.Single))
+                                                .SelectedRowKeys(new JS("[component.option('value')]"))
+                                                .FocusedRowEnabled(true)
+                                                .FocusedRowKey(new JS("component.option('value')"))
+                                                .OnSelectionChanged("function(selectionChangedArgs) { onSelectionChanged(selectionChangedArgs, component) }")
+                                                .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
 
-    )
+                                        )
+                                    }
                                 </div>
                             </div>
                         </div>

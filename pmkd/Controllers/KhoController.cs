@@ -44,6 +44,10 @@ namespace pmkd.Controllers
             {
                 newXeptai.GhiChu = "";
             }
+            var makhach = newXeptai.MaKhach;
+            newXeptai.KhachHang = (from a in _context.KhachHangs where a.MaKhach == makhach select a.TenKhach).FirstOrDefault();
+            var mahang = newXeptai.Mahang;
+            newXeptai.Tenhang = (_context.Hanghoas.Where(a => a.Mahang == mahang).Select(a => a.Tenhang)).FirstOrDefault();
             var uniname = HttpContext.Session.GetString("UnitName");
             newXeptai.Macn = uniname;
             var datetime = DateTime.Now;
@@ -64,6 +68,11 @@ namespace pmkd.Controllers
             if (!TryValidateModel(xeptai))
                 return BadRequest(GetFullErrorMessage(ModelState));
             var datetime = DateTime.Now;
+            var makhach = xeptai.MaKhach;
+            xeptai.KhachHang = (from a in _context.KhachHangs where a.MaKhach == makhach select a.TenKhach).FirstOrDefault();
+            var mahang = xeptai.Mahang;
+            xeptai.Tenhang = (_context.Hanghoas.Where(a => a.Mahang == mahang).Select(a => a.Tenhang)).FirstOrDefault();
+            var uniname = HttpContext.Session.GetString("UnitName");
             xeptai.ApproveDate = datetime.Date;
             xeptai.ApproveTime = datetime.ToString("HH:mm");
             xeptai.UserApove = HttpContext.Session.GetString("userId");
@@ -73,11 +82,20 @@ namespace pmkd.Controllers
         }
 
         [HttpDelete]
-        public void DeleteXepTai(int key)
+        public async Task<IActionResult> DeleteXepTai(int key)
         {
-            var order = _context.XepTais.First(o => o.Id == key);
-            _context.XepTais.Remove(order);
-            _context.SaveChanges();
+            var item_delete = await _context.XepTais.FirstOrDefaultAsync(a => a.Id == key);
+            var canid = _context.Cans.ToList();
+            foreach(var item in canid)
+            {
+                if (item.SystemId == item_delete.CanId)
+                {
+                    return BadRequest("xe đã cân, không xóa đc");
+                }
+            }
+            _context.XepTais.Remove(item_delete);
+            await _context.SaveChangesAsync();
+            return Ok();
         }
         private string GetFullErrorMessage(ModelStateDictionary modelState)
         {

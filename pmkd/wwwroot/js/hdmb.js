@@ -1,4 +1,5 @@
-﻿function valuechange_khachhang(e) {
+﻿
+function valuechange_khachhang(e) {
     var dataGrid = $("#khachhang").dxDataGrid("instance");
     if (dataGrid.length) {
         dataGrid.selectRows(e.value, false);
