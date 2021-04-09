@@ -169,5 +169,15 @@ namespace pmkd.Controllers
             });
             return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
         }
+        public async Task<IActionResult> getkhohang(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = _context.Stocks.Select(i => new
+            {
+                i.StockCode,
+                i.StockName
+
+            });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
     }
 }

@@ -85,9 +85,12 @@
 
                                                         columns.AddFor(m => m.Xeptaiso).Caption("Tài");
 
-                                                        columns.AddFor(m => m.KhoId).Caption("Mã kho");
+                                                        columns.AddFor(m => m.KhoId).Caption("Mã kho").Lookup(lookup => lookup.DataSource(d => d.Mvc().Controller("lookup").LoadAction("getkhohang").Key("StockCode"))
+                                                                                                                        .DisplayExpr("StockName")
+                                                                                                                        .ValueExpr("StockCode")
+                                                                                                                        .AllowClearing(true));
 
-                                                        columns.AddFor(m => m.KhoName).Caption("Tên kho");
+                                                        columns.AddFor(m => m.KhoName).Caption("Tên kho").AllowEditing(false);
 
                                                         columns.AddFor(m => m.NgayVao).Caption("Ngày vào");
 
@@ -118,7 +121,7 @@
                                                                                                                         .AllowClearing(true))
                                                                                                                    .EditCellTemplate(new TemplateName("DropDownBoxTemplate_hdmb"));
 
-                                                        columns.AddFor(m => m.BagTypeId).Caption("Loại bao").Lookup(lookup => lookup.DataSource(d => d.Mvc().Controller("lookup").LoadAction("getloaibao").Key("BagTypeId")).DisplayExpr("Name").ValueExpr("BagTypeId")).Width(500);
+                                                        columns.AddFor(m => m.BagTypeId).Caption("Loại bao").Lookup(lookup => lookup.DataSource(d => d.Mvc().Controller("lookup").LoadAction("getloaibao").Key("BagTypeId")).DisplayExpr("Name").ValueExpr("BagTypeId")).Width(190);
 
                                                         columns.AddFor(m => m.SoBao).Caption("Số bao");
 
@@ -131,36 +134,16 @@
                                                         columns.AddFor(m => m.IsHoanThanh).Caption("Hoàn thành ?");
 
                                                     })
+                                                    .OnEditorPrepared("OnEditorPrepared")
+                                                    .OnInitNewRow("OnInitNewRow")
                                                     .Editing(e => e
                                                         .Mode(GridEditMode.Popup)
-                                                        .Popup(p => p.Title("Nhập kho").ShowTitle(true).Width(700).Height(500))
                                                         .AllowUpdating(true)
                                                         .AllowDeleting(true)
                                                         .AllowAdding(true)
                                                         .UseIcons(true)
-                                                        .Form(f => f.Items(item => {
-                                                            item.AddGroup()
-                                                                    .ColCount(2)
-                                                                    .ColSpan(2)
-                                                                    .Items(groupitem =>
-                                                                    {
-                                                                        groupitem.AddSimpleFor(m => m.SoXe);
-                                                                        groupitem.AddSimpleFor(m => m.Xeptaiso);
-                                                                        groupitem.AddSimpleFor(m => m.KhoId);
-                                                                        groupitem.AddSimpleFor(m => m.KhoName);
-                                                                        groupitem.AddSimpleFor(m => m.NgayVao);
-                                                                        groupitem.AddSimpleFor(m => m.Ngaycan);
-                                                                        groupitem.AddSimpleFor(m => m.MaKhach).ColSpan(2);
-                                                                        groupitem.AddSimpleFor(m => m.Mahang).ColSpan(2);
-                                                                        groupitem.AddSimpleFor(m => m.HopDong).ColSpan(2);
-                                                                        groupitem.AddSimpleFor(m => m.BagTypeId);
-                                                                        groupitem.AddSimpleFor(m => m.SoBao);
-                                                                        groupitem.AddSimpleFor(m => m.TlBaobi);
-                                                                        groupitem.AddSimpleFor(m => m.Status);
-                                                                        groupitem.AddSimpleFor(m => m.Aprove);
-                                                                        groupitem.AddSimpleFor(m => m.IsHoanThanh);
-                                                                    });
-                                                        }))
+                                                        .Popup(e => e.OnShowing("OnShowing").Width(700).Height(500))
+
                                         )
 
                                         .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
