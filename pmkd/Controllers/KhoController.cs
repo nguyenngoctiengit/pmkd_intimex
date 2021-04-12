@@ -12,11 +12,15 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
+using config = System.Configuration.ConfigurationManager;
+using System.IO.Ports;
 
 namespace pmkd.Controllers
 {
     public class KhoController : Controller
     {
+        public SerialPort comport = new SerialPort();
         public tradingsystem_blContext _context;
         public tradingsystem_blContext db = new tradingsystem_blContext();
         public KhoController(tradingsystem_blContext context)
@@ -25,7 +29,7 @@ namespace pmkd.Controllers
         }
         public IActionResult dangkynhapkho()
         {
-            return View("dangkynhapkho");
+            return View("dangkynhapkho/dangkynhapkho");
         }
         [HttpGet]
         public object GetXepTai(DataSourceLoadOptions loadOptions)
@@ -66,62 +70,63 @@ namespace pmkd.Controllers
         {
             var xeptai = _context.XepTais.First(o => o.Id == key);
             JsonConvert.PopulateObject(values, xeptai);
-            var autoincrement_can = _context.AutomaticValuesBranches.Where(a => a.Macn == "INXBL" && a.ObjectName == "CANBLI").FirstOrDefault();
-            var autoincrement_kcs = _context.AutomaticValuesBranches.Where(a => a.Macn == "INXBL" && a.ObjectName == "KCSNNLBLI").FirstOrDefault();
+            if (xeptai.ApproveTime == null)
+            {
+                var datetime = DateTime.Now;
+                xeptai.ApproveTime = datetime.ToString("HH:mm");
+                xeptai.ApproveDate = datetime.Date;
+                var uniname = HttpContext.Session.GetString("UnitName");
+                xeptai.UserApove = HttpContext.Session.GetString("userId");
+            }
+            if (xeptai.CanId == "")
+            {
+                var autoincrement_can = _context.AutomaticValuesBranches.Where(a => a.Macn == "INXBL" && a.ObjectName == "CANBLI").FirstOrDefault();
+                var PrefixOfDefaultValueForId = autoincrement_can.PrefixOfDefaultValueForId;
+                var LengthOfDefaultValueForId = (int)autoincrement_can.LengthOfDefaultValueForId;
+                var LastValueOfColumnId = autoincrement_can.LastValueOfColumnId;
+                var oldValue = LastValueOfColumnId.Substring(6, 6);
+                var oldValueInt = Convert.ToInt32(oldValue);
+                var currentValue = oldValueInt + 1;
+                var nextValue = oldValueInt + 2;
+                var chuoi = "00000000" + Convert.ToString(currentValue);
+                var chuoinext = "00000000" + Convert.ToString(nextValue);
+                var parameterOut = PrefixOfDefaultValueForId + chuoi.Substring(chuoi.Length + PrefixOfDefaultValueForId.Length - LengthOfDefaultValueForId, 7);
+                var next = PrefixOfDefaultValueForId + chuoinext.Substring(chuoinext.Length + PrefixOfDefaultValueForId.Length - LengthOfDefaultValueForId, 7);
+                xeptai.CanId = parameterOut;
+                autoincrement_can.LastValueOfColumnId = parameterOut;
+                autoincrement_can.NextValueOfColumnId = next;
+                _context.AutomaticValuesBranches.Update(autoincrement_can);
+            }
+            if (xeptai.Kcs == "")
+            {
+                var autoincrement_kcs = _context.AutomaticValuesBranches.Where(a => a.Macn == "INXBL" && a.ObjectName == "KCSNNLBLI").FirstOrDefault();
+                var PrefixOfDefaultValueForId_kcs = autoincrement_kcs.PrefixOfDefaultValueForId;
+                var LengthOfDefaultValueForId_kcs = (int)autoincrement_kcs.LengthOfDefaultValueForId;
+                var LastValueOfColumnId_kcs = autoincrement_kcs.LastValueOfColumnId;
+                var oldValue_kcs = LastValueOfColumnId_kcs.Substring(6, 6);
+                var oldValueInt_kcs = Convert.ToInt32(oldValue_kcs);
+                var currentValue_kcs = oldValueInt_kcs + 1;
+                var nextValue_kcs = oldValueInt_kcs + 2;
+                var chuoi_kcs = "00000000" + Convert.ToString(currentValue_kcs);
+                var chuoinext_kcs = "00000000" + Convert.ToString(nextValue_kcs);
+                var parameterOut_kcs = PrefixOfDefaultValueForId_kcs + chuoi_kcs.Substring(chuoi_kcs.Length + PrefixOfDefaultValueForId_kcs.Length - LengthOfDefaultValueForId_kcs, 7);
+                var next_kcs = PrefixOfDefaultValueForId_kcs + chuoinext_kcs.Substring(chuoinext_kcs.Length + PrefixOfDefaultValueForId_kcs.Length - LengthOfDefaultValueForId_kcs, 7);
+                xeptai.Kcs = parameterOut_kcs;
+                autoincrement_kcs.LastValueOfColumnId = parameterOut_kcs;
+                autoincrement_kcs.NextValueOfColumnId = next_kcs;
+                _context.AutomaticValuesBranches.Update(autoincrement_kcs);
+            }
             if (!TryValidateModel(xeptai))
                 return BadRequest(GetFullErrorMessage(ModelState));
-            var datetime = DateTime.Now;
             var makhach = xeptai.MaKhach;
             xeptai.KhachHang = (from a in _context.KhachHangs where a.MaKhach == makhach select a.TenKhach).FirstOrDefault();
             var mahang = xeptai.Mahang;
             xeptai.Tenhang = (_context.Hanghoas.Where(a => a.Mahang == mahang).Select(a => a.Tenhang)).FirstOrDefault();
-            var uniname = HttpContext.Session.GetString("UnitName");
-            xeptai.ApproveDate = datetime.Date;
-            xeptai.ApproveTime = datetime.ToString("HH:mm");
-            xeptai.UserApove = HttpContext.Session.GetString("userId");
-            var PrefixOfDefaultValueForId_kcs = autoincrement_kcs.PrefixOfDefaultValueForId;
-            var LengthOfDefaultValueForId_kcs = autoincrement_kcs.LengthOfDefaultValueForId;
-            var LastValueOfColumnId_kcs = autoincrement_kcs.LastValueOfColumnId;
-            var oldValue_kcs = LastValueOfColumnId_kcs.Substring(6, 5);
-            var oldValueInt_kcs = Convert.ToInt32(oldValue_kcs);
-            
-            var PrefixOfDefaultValueForId = (from a in _context.AutomaticValuesBranches 
-                                             where a.Macn == "INXBL" && a.ObjectName == "CANBLI" 
-                                             select a.PrefixOfDefaultValueForId).FirstOrDefault();
-            var LengthOfDefaultValueForId = (int)(from a in _context.AutomaticValuesBranches
-                                             where a.Macn == "INXBL" && a.ObjectName == "CANBLI"
-                                             select a.LengthOfDefaultValueForId).FirstOrDefault();
-            var LastValueOfColumnId = (from a in _context.AutomaticValuesBranches
-                                      where a.Macn == "INXBL" && a.ObjectName == "CANBLI"
-                                      select a.LastValueOfColumnId).FirstOrDefault();
-            var currentValue_kcs = oldValueInt_kcs + 1;
-            var nextValue_kcs = oldValueInt_kcs + 2;
-            var chuoi_kcs = "00000000" + Convert.ToString(currentValue_kcs);
-            var chuoinext_kcs = "00000000" + Convert.ToString(nextValue_kcs);
-            var parameterOut_kcs = PrefixOfDefaultValueForId + chuoi_kcs.Substring(chuoi_kcs.Length + PrefixOfDefaultValueForId.Length + 1 - LengthOfDefaultValueForId, 6);
-            var next_kcs = PrefixOfDefaultValueForId + chuoinext_kcs.Substring(chuoinext_kcs.Length + PrefixOfDefaultValueForId.Length + 1 - LengthOfDefaultValueForId, 6);
-            xeptai.Kcs = parameterOut_kcs;
             xeptai.Canfinish = true;
-            autoincrement_kcs.LastValueOfColumnId = parameterOut_kcs;
-            autoincrement_kcs.NextValueOfColumnId = next_kcs;
-            var oldValue = LastValueOfColumnId.Substring(6, 5);
-            var oldValueInt = Convert.ToInt32(oldValue);
-            var currentValue = oldValueInt + 1;
-            var nextValue = oldValueInt + 2;
-            var chuoi = "00000000" + Convert.ToString(currentValue);
-            var chuoinext = "00000000" + Convert.ToString(nextValue);
-            var parameterOut = PrefixOfDefaultValueForId + chuoi.Substring(chuoi.Length + PrefixOfDefaultValueForId.Length + 1 - LengthOfDefaultValueForId, 6);
-            var next = PrefixOfDefaultValueForId + chuoinext.Substring(chuoinext.Length + PrefixOfDefaultValueForId.Length + 1 - LengthOfDefaultValueForId, 6);
-            xeptai.CanId = parameterOut;
-            autoincrement_can.LastValueOfColumnId = parameterOut;
-            autoincrement_can.NextValueOfColumnId = next;
-            _context.AutomaticValuesBranches.Update(autoincrement_can);
-            _context.AutomaticValuesBranches.Update(autoincrement_kcs);
             _context.SaveChanges();
-
             return Ok(xeptai);
         }
-
+        
         [HttpDelete]
         public async Task<IActionResult> DeleteXepTai(int key)
         {
@@ -150,5 +155,21 @@ namespace pmkd.Controllers
 
             return String.Join(" ", messages);
         }
+        ////------------------------Cân-------------------
+        public IActionResult cantrongluong()
+        {
+            return View("can/can");
+        }
+        //---------------------------Lệnh giao hàng--------------------------
+        public IActionResult lenhgiaohang()
+        {
+            return View("lenhgiaohang/lenhgiaohang");
+        }
+        [HttpGet]
+        public object GetLenhGiaoHang(DataSourceLoadOptions loadOptions)
+        {
+            return DataSourceLoader.Load(_context.LenhGiaoHangs, loadOptions);
+        }
+
     }
 }
