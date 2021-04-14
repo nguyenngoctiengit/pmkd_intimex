@@ -773,6 +773,28 @@
     <!-- Custom Theme Scripts -->
     <script src="~/public/build/js/custom.min.js"></script>
     <script type="text/javascript">
+        var loaixuatkhau = [{
+            "id": 1, "name": "Nội địa"
+        }, {
+            "id": 2, "name": "Xuất khẩu"
+        }
+        ];
+        var loaicont = [{
+            "id": 1, "name": "Cont 20"
+        }, {
+            "id": 2, "name": "Cont 40"
+        }, {
+            "id": 3, "name": "Xe tải"
+        }
+        ];
+        var cachdongbao = [{
+            "id": 1, "name": "Đóng bao"
+        }, {
+            "id": 2, "name": "Đóng xá"
+        }, {
+            "id": 3, "name": "Đóng trên balet"
+        }
+        ];
         function OnShowing(e) {
             var component = $("#grid").dxDataGrid("instance");
             if (component.__addingStart) {
@@ -811,6 +833,14 @@
                 
         }
         function calculateFilterExpression() {
+            var d = new Date()
+            var dd = d.getDate();
+            var mm = d.getMonth() + 1;
+            var yyyy = d.getFullYear();
+            var today = mm + '-' + dd + '-' + yyyy;
+            return [[getOrderDay, '=', today]];
+        }
+        function calculateFilterExpression_lenhgiaohang() {
             var d = new Date()
             var dd = d.getDate();
             var mm = d.getMonth() + 1;

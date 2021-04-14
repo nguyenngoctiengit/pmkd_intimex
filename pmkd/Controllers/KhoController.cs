@@ -170,6 +170,19 @@ namespace pmkd.Controllers
         {
             return DataSourceLoader.Load(_context.LenhGiaoHangs, loadOptions);
         }
+        [HttpPost]
+        public IActionResult InsertLenhGiaoHang(string values)
+        {
+            var newLenhgiaohang = new LenhGiaoHang();
+            JsonConvert.PopulateObject(values, newLenhgiaohang);
 
+            if (!TryValidateModel(newLenhgiaohang))
+                return BadRequest(GetFullErrorMessage(ModelState));
+            
+            
+            _context.SaveChanges();
+
+            return Ok(newLenhgiaohang);
+        }
     }
 }
