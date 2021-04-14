@@ -175,14 +175,35 @@ namespace pmkd.Controllers
         {
             var newLenhgiaohang = new LenhGiaoHang();
             JsonConvert.PopulateObject(values, newLenhgiaohang);
-
+            var list_lenhgiaohang = _context.LenhGiaoHangs.ToList();
+            foreach(var item in list_lenhgiaohang)
+            {
+                if (newLenhgiaohang.SoLenh == item.SoLenh)
+                {
+                    return BadRequest("Số lệnh bị trùng");
+                }
+            }
+            var khoxuatid = newLenhgiaohang.KhoXuatId.ToString();
+            newLenhgiaohang.TenKhoXuat = (from a in _context.Stocks where a.StockCode == khoxuatid select a.StockName).FirstOrDefault();
+            newLenhgiaohang.TenHang = (from a in _context.Hanghoas where a.Mahang == newLenhgiaohang.MaHang select a.Tenhang).FirstOrDefault();
+            newLenhgiaohang.HdmbId = (from a in _context.Hdmbs where a.Sohd == newLenhgiaohang.Hdmb select a.Systemref).FirstOrDefault();
+            newLenhgiaohang.TenKhach = (from a in _context.KhachHangs where a.MaKhach == newLenhgiaohang.MaKhach select a.TenKhach).FirstOrDefault();
+            newLenhgiaohang.CreateBy = HttpContext.Session.GetString("userId");
+            var datetime = DateTime.Now;
+            newLenhgiaohang.CreateDate = datetime.Date;
             if (!TryValidateModel(newLenhgiaohang))
                 return BadRequest(GetFullErrorMessage(ModelState));
-            
-            
+            _context.LenhGiaoHangs.Add(newLenhgiaohang);
             _context.SaveChanges();
-
             return Ok(newLenhgiaohang);
+        }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteLenhGiaoHang(int key)
+        {
+            var item_delete = await _context.LenhGiaoHangs.FirstOrDefaultAsync(a => a.IdLenhGiaoHang == key);
+            _context.LenhGiaoHangs.Remove(item_delete);
+            await _context.SaveChangesAsync();
+            return Ok();
         }
     }
 }
