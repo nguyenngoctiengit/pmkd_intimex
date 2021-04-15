@@ -176,7 +176,7 @@ namespace pmkd.Controllers
             var newLenhgiaohang = new LenhGiaoHang();
             JsonConvert.PopulateObject(values, newLenhgiaohang);
             var list_lenhgiaohang = _context.LenhGiaoHangs.ToList();
-            foreach(var item in list_lenhgiaohang)
+            foreach (var item in list_lenhgiaohang)
             {
                 if (newLenhgiaohang.SoLenh == item.SoLenh)
                 {
@@ -204,6 +204,23 @@ namespace pmkd.Controllers
             _context.LenhGiaoHangs.Remove(item_delete);
             await _context.SaveChangesAsync();
             return Ok();
+        }
+        [HttpPut]
+        public IActionResult UpdateLenhGiaoHang(int key, string values)
+        {
+            var lenhgiaohang = _context.LenhGiaoHangs.First(o => o.IdLenhGiaoHang == key);
+            JsonConvert.PopulateObject(values, lenhgiaohang);
+            var list_lenhgiaohang = _context.LenhGiaoHangs.ToList();
+            var khoxuatid = lenhgiaohang.KhoXuatId.ToString();
+            lenhgiaohang.TenKhoXuat = (from a in _context.Stocks where a.StockCode == khoxuatid select a.StockName).FirstOrDefault();
+            lenhgiaohang.TenHang = (from a in _context.Hanghoas where a.Mahang == lenhgiaohang.MaHang select a.Tenhang).FirstOrDefault();
+            lenhgiaohang.HdmbId = (from a in _context.Hdmbs where a.Sohd == lenhgiaohang.Hdmb select a.Systemref).FirstOrDefault();
+            lenhgiaohang.TenKhach = (from a in _context.KhachHangs where a.MaKhach == lenhgiaohang.MaKhach select a.TenKhach).FirstOrDefault();
+            lenhgiaohang.CreateBy = HttpContext.Session.GetString("userId");
+            if (!TryValidateModel(lenhgiaohang))
+                return BadRequest(GetFullErrorMessage(ModelState));
+            _context.SaveChanges();
+            return Ok(lenhgiaohang);
         }
     }
 }

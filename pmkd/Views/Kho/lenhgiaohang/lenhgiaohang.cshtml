@@ -70,11 +70,9 @@
                                         var filterValue = new object[]
                                         {
                                             new object[] { "CreateDate", DateTime.Now }
-};
+            };
                                     }
-                                    @{
-                                        var xuatkhau = new[] { 1, 2 };
-                                    }
+
                                     @(Html.DevExtreme().DataGrid<pmkd.Models.LenhGiaoHang>()
                                                     .ID("gridLenhGiaoHang")
                                                     .DataSource(d => d.Mvc().Controller("kho")
@@ -186,14 +184,14 @@
                                                         .UseIcons(true)
                                                         .Popup(e => e.Width(700).Height(500))
                                                         .Form(f => f.Items(items => {
-                                                            items.AddGroup().ColCount(2).ColSpan(2).Name("basic")
+                                                            items.AddGroup().ColCount(2).ColSpan(2)
                                                                 .Items(groupItems =>
                                                                 {
                                                                     groupItems.AddSimpleFor(m => m.SoLenh);
                                                                     groupItems.AddSimpleFor(m => m.KhoXuatId);
                                                                     groupItems.AddSimpleFor(m => m.MaKhach).ColSpan(2);
                                                                     groupItems.AddSimpleFor(m => m.Hdmb).ColSpan(2);
-                                                                    groupItems.AddSimpleFor(m => m.Xuatkhau).Editor(e => e.SelectBox().DataSource(new JS("loaixuatkhau")).DisplayExpr("name").ValueExpr("id").OnValueChanged("valuechange_xuatkhau").ID("selectedBox_xuatkhau"));
+                                                                    groupItems.AddSimpleFor(m => m.Xuatkhau);
                                                                     groupItems.AddSimpleFor(m => m.Nw);
                                                                     groupItems.AddSimpleFor(m => m.MaHang);
                                                                     groupItems.AddSimpleFor(m => m.GiamDinh);
@@ -229,8 +227,8 @@
                                                                     .ColSpan(2)
                                                                     .Items(groupItems =>
                                                                     {
-                                                                        groupItems.AddSimpleFor(m => m.KhachMua).Visible(false).ColSpan(2);
-                                                                        groupItems.AddSimpleFor(m => m.HopdongMua).Visible(false).ColSpan(2);
+                                                                        groupItems.AddSimpleFor(m => m.KhachMua).Visible(true).ColSpan(2);
+                                                                        groupItems.AddSimpleFor(m => m.HopdongMua).Visible(true).ColSpan(2);
                                                                     });
                                                         }).ID("formLenhgiaohang"))
 
@@ -392,12 +390,6 @@
 
                                         )
                                     }
-                                    @(Html.DevExtreme().DropDownBox()
-                                           .DataSource(d => d.Mvc().Controller("lookup").LoadAction("gethopdong").Key("Sohd"))
-                                            .ValueExpr("Sohd")
-                                            .DisplayExpr("Sohd")
-
-                                        )
                                 </div>
                             </div>
                         </div>
