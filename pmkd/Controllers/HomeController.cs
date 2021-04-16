@@ -19,12 +19,18 @@ namespace pmkd.Controllers
 
     public class HomeController : Controller
     {
+        private readonly tradingsystem_blContext _context;
 
+        public HomeController(tradingsystem_blContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
             var id = HttpContext.Session.Get("userId");
             if(id != null)
             {
+                ViewBag.countuser = (from a in _context.UserRights select a.UserId).Count();
                 return View();
             }
             else

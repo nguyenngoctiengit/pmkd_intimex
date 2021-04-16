@@ -20,5 +20,6 @@
     <DevExtremeUseLayout>True</DevExtremeUseLayout>
     <DevExtremeLayoutPage>~/Views/Shared/_Layout.cshtml</DevExtremeLayoutPage>
     <DevExtremeSelectedDataContextName>tradingsystem_blContext %28pmkd.Models%29</DevExtremeSelectedDataContextName>
+    <NameOfLastUsedPublishProfile>FolderProfile</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

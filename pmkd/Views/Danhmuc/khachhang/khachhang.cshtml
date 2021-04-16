@@ -210,7 +210,7 @@
                                                 .DataSource(d => d.Mvc().Controller("lookup").LoadAction("getmakhach").Key("Idkhach"))
                                                 .DisplayExpr("MaKhach")
                                                 .ValueExpr("MaKhach")
-                                                ); 
+                                                );
 
                                                 columns.AddFor(m => m.Nhomhang).Caption("Nhóm hàng").Lookup(lookup => lookup
                                                 .DataSource(d => d.Mvc().Controller("lookup").LoadAction("Getnhomhang").Key("Manhom"))
@@ -242,11 +242,27 @@
                                             })
                                             .Editing(e => e
                                                 .Mode(GridEditMode.Popup)
-                                                .Popup(p => p.Title("Định mức khách hàng").ShowTitle(true).Width(700).Height(500))
+                                                .Popup(p => p.Title("Định mức khách hàng").ShowTitle(true).Width(700).Height(400))
                                                 .AllowAdding(true)
                                                 .AllowUpdating(true)
                                                 .AllowDeleting(true)
                                                 .UseIcons(true)
+                                                .Form(f => f.Items(items => {
+                                                    items.AddGroup()
+                                                        .ColSpan(2)
+                                                        .ColCount(2)
+                                                        .Items(groupItems =>
+                                                        {
+                                                            groupItems.AddSimpleFor(m => m.Makhach);
+                                                            groupItems.AddSimpleFor(m => m.Nhomhang);
+                                                            groupItems.AddSimpleFor(m => m.ValueNorm);
+                                                            groupItems.AddSimpleFor(m => m.NguoiGd);
+                                                            groupItems.AddSimpleFor(m => m.ChucvuNguoigd).ColSpan(2);
+                                                            groupItems.AddSimpleFor(m => m.Ghichu).ColSpan(2).Editor(e => e.TextArea().Height(70));
+                                                        });
+
+
+                                                }))
                                             )
                                             .Selection(s => s.Mode(SelectionMode.Single))
                                             .HoverStateEnabled(true)

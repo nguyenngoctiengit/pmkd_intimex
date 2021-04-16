@@ -75,7 +75,7 @@
                                     .RemoteOperations(true)
                                     .Columns(columns => {
 
-                                        columns.AddFor(m => m.Idhanghoa).Visible(false).Caption("ID hàng hóa");
+                                        columns.AddFor(m => m.Idhanghoa).Visible(false).Caption("ID hàng hóa").AllowEditing(false);
 
                                         columns.AddFor(m => m.Mahang).Fixed(true).Caption("Mã hàng");
 
@@ -97,7 +97,7 @@
                                         .DataSource(new[] { "0","5","10"})
                                         );
 
-                                        columns.AddFor(m => m.Sudung).Caption("Sử dụng").Visible(false);
+                                        columns.AddFor(m => m.Sudung).Caption("Sử dụng").Visible(false).Lookup(lookup => lookup.DataSource(new JS("sudung_hanghoa")).ValueExpr("id").DisplayExpr("name"));
 
                                         columns.AddFor(m => m.Fullname).Caption("Tên đầy đủ").Visible(false);
 
@@ -115,7 +115,29 @@
                                         .AllowUpdating(true)
                                         .AllowDeleting(true)
                                         .UseIcons(true)
+                                        .Form(f => f.Items(items => {
+                                            items.AddGroup()
+                                                    .ColCount(2)
+                                                    .ColSpan(2)
+                                                    .Items(groupItems =>
+                                                    {
+                                                        groupItems.AddSimpleFor(m => m.Mahang);
+                                                        groupItems.AddSimpleFor(m => m.Tenhang);
+                                                        groupItems.AddSimpleFor(m => m.Tenhangvat);
+                                                        groupItems.AddSimpleFor(m => m.Dvt);
+                                                        groupItems.AddSimpleFor(m => m.Vat);
+                                                        groupItems.AddSimpleFor(m => m.Sudung);
+                                                        groupItems.AddSimpleFor(m => m.Fullname).ColSpan(2);
+                                                        groupItems.AddSimpleFor(m => m.Quicach).ColSpan(2).Editor(e => e.TextArea().Height(70));
+                                                        groupItems.AddSimpleFor(m => m.Baobi).ColSpan(2).Editor(e => e.TextArea().Height(70));
+                                                        groupItems.AddSimpleFor(m => m.Kiemdinh).ColSpan(2).Editor(e => e.TextArea().Height(70));
+
+                                                    });
+
+
+                                        }))
                                     )
+
                                     .OnToolbarPreparing("toolbarhanghoa")
                                     .Export(e => e.Enabled(true))
                                     .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))

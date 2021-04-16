@@ -45,6 +45,7 @@ namespace pmkd.Controllers
             {
                 return View("index");
             }
+            
             return RedirectToAction("Index", "Home");
         }
 

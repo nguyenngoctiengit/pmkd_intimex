@@ -44,7 +44,7 @@ namespace pmkd.Controllers
         }
         //hàm thêm nhóm hàng hóa
         [HttpPost]
-        public IActionResult themnhomhang(Nhom_hang_hoa nhh)
+        public IActionResult themnhomhang1(Nhom_hang_hoa nhh)
         {
             if (ModelState.IsValid)
             {
@@ -97,6 +97,8 @@ namespace pmkd.Controllers
             var model = new Hanghoa();
             var valuesDict = JsonConvert.DeserializeObject<IDictionary>(values);
             PopulateModel(model, valuesDict);
+            var ran = new Random();
+            model.Idhanghoa = "HH" + ran.Next(0000, 9999);
             if (_context.Hanghoas.Any(a => a.Idhanghoa == model.Idhanghoa) || _context.Hanghoas.Any(a => a.Mahang == model.Mahang))
             {
                 return BadRequest("Mã hàng hóa hoặc ID hàng hóa bị trùng");
@@ -310,6 +312,8 @@ namespace pmkd.Controllers
         [HttpPost]
         public IActionResult themkhachhang(KhachHang kh)
         {
+            var ran = new Random();
+            kh.Idkhach = "KH" + ran.Next(0000, 9999);
             if (_context.KhachHangs.Any(a => a.Idkhach == kh.Idkhach) || _context.KhachHangs.Any(a => a.MaKhach == kh.MaKhach))
             {
                 TempData["alertMessage1"] = "Mã khách hàng hoặc ID khách hàng bị trùng";
@@ -728,8 +732,6 @@ namespace pmkd.Controllers
             PopulateModelCN(model, valuesDict);
             if (!TryValidateModel(model))
                 return BadRequest(GetFullErrorMessage(ModelState));
-            var rand = new Random();
-            model.Id = rand.Next(0000, 9999);
             model.UserCreate = HttpContext.Session.GetString("userId");
             model.DateCreate = DateTime.Now;
             model.GdMua = false;
