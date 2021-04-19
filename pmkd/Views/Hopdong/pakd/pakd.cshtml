@@ -1,0 +1,176 @@
+﻿
+@{
+    ViewData["Title"] = "pakd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="right_col" role="main" style="height: 500px">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Hợp đồng mua bán</h3>
+            </div>
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @{
+            if (TempData["alertMessage"] != null)
+            {
+                <div style="color:red;font-size:30px">
+                    @TempData["alertMessage"].ToString()
+                </div>
+            }
+        }
+        @{
+            if (TempData["alertMessage1"] != null)
+            {
+                <div style="color:red;font-size:30px">
+                    @TempData["alertMessage1"].ToString()
+                </div>
+            }
+        }
+        <div class="clearfix"></div>
+        <div class="row" style="display: block;">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Phương án kinh doanh</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Settings 1</a>
+                                    <a class="dropdown-item" href="#">Settings 2</a>
+                                </div>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box table-responsive">
+                                    @(Html.DevExtreme().DataGrid<pmkd.Models.Plan>()
+                                        .DataSource(ds => ds.Mvc()
+                                            .Controller("hopdong")
+                                            .LoadAction("getpakd")
+                                            .UpdateAction("updatepakd")
+                                            .InsertAction("insertpakd")
+                                            .DeleteAction("deletepakd")
+                                            .Key("SystemId")
+                                        )
+                                        .RemoteOperations(true)
+                                        .Columns(columns => {
+
+                                            columns.AddFor(m => m.SystemId).Caption("System ID").Fixed(true);
+
+                                            columns.AddFor(m => m.SoPa).Caption("Số PA").Fixed(true);
+
+                                            columns.AddFor(m => m.NgayPa).Caption("Ngày").Fixed(true);
+
+                                            columns.AddFor(m => m.DoiTacMua).Caption("Đối tác INT bán");
+
+                                            columns.AddFor(m => m.HdMua).Caption("HĐ bán");
+
+                                            columns.AddFor(m => m.DanhGiaMua).Caption("Đánh giá KH INT bán");
+
+                                            columns.AddFor(m => m.DoiTacBan).Caption("Đối tác INT mua");
+
+                                            columns.AddFor(m => m.HdBan).Caption("HĐ mua");
+
+                                            columns.AddFor(m => m.DanhGiaBan).Caption("Đánh giá KH INT mua");
+
+                                            columns.AddFor(m => m.HangHoa).Caption("Hàng hóa");
+
+                                            columns.AddFor(m => m.Trongluong).Caption("Trọng lượng");
+
+                                            columns.AddFor(m => m.Dvt).Caption("DVT");
+
+                                            columns.AddFor(m => m.TyGia).Caption("Tỷ giá dự tính");
+
+                                            columns.AddFor(m => m.NguonVon).Caption("Nguồn vốn");
+
+                                            columns.AddFor(m => m.Songay).Caption("TG sử dụng vốn");
+
+                                            columns.AddFor(m => m.DienGiaiNguonVon).Caption("Diễn giải NVSD");
+
+                                            columns.AddFor(m => m.LaiSuat).Caption("Lãi xuất(%/năm)");
+
+                                            columns.AddFor(m => m.Dieukiengiao).Caption("ĐK bán hàng");
+
+                                            columns.AddFor(m => m.CangGiaoHang).Caption("Cảng giao hàng");
+
+                                            columns.AddFor(m => m.NoiNhanHang).Caption("Nơi nhận hàng");
+
+                                            columns.AddFor(m => m.Ngaygiao).Caption("TG giao hàng");
+
+                                            columns.AddFor(m => m.SoCont).Caption("Số cont");
+
+                                            columns.AddFor(m => m.ThanhToanMua).Caption("PTT mua");
+
+                                            columns.AddFor(m => m.ThanhToanBan).Caption("PTT bán");
+
+                                            columns.AddFor(m => m.GhiChu).Caption("Ghi chú");
+
+
+                                        })
+                                        .Editing(e => e
+                                            .Mode(GridEditMode.Popup)
+                                            .Popup(p => p.Title("Hợp đồng").ShowTitle(true).Width(700).Height(500))
+                                            .AllowUpdating(true)
+                                            .AllowDeleting(true)
+                                            .AllowAdding(true)
+                                            .UseIcons(true)
+
+                                        )
+                                        .ID("hdmb")
+                                        .MasterDetail(m => m.Enabled(true).Template(new TemplateName("cthdmb")))
+                                        .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
+                                        .HoverStateEnabled(true)
+                                        .Export(e => e.Enabled(true))
+                                        .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                        .HeaderFilter(hearder => hearder.Visible(true))
+                                        .AllowColumnResizing(true)
+                                        .AllowColumnReordering(true)
+                                        .ColumnAutoWidth(true)
+                                        .ColumnChooser(c => c.Enabled(true))
+                                        .ColumnFixing(c => c.Enabled(true))
+                                        .ShowBorders(true)
+                                        .Grouping(group => group.AutoExpandAll(true))
+                                        .SearchPanel(searchPanel => searchPanel.Visible(true))
+                                        .GroupPanel(groupPanel => groupPanel.Visible(true))
+                                        .Paging(paging => paging.PageSize(10))
+                                        .Pager(paper =>
+                                        {
+                                            paper.ShowPageSizeSelector(true);
+                                            paper.AllowedPageSizes(new[] { 5, 10, 20, 50 });
+                                            paper.ShowInfo(true);
+                                        })
+                                    )
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->
+<!-- /page content -->
+<!-- footer content -->

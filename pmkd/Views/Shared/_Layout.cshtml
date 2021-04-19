@@ -247,13 +247,13 @@
                                             <a>Số liệu<span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
                                                 <li class="sub_menu">
-                                                    <a href="level2.html">Phương án kinh doanh</a>
+                                                    <a asp-action="pakd" asp-controller="hopdong">Phương án kinh doanh mới</a>
                                                 </li>
                                                 <li>
                                                     <a asp-action="hdmb" asp-controller="hopdong">Hợp đồng mua bán</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#level2_2">Ghép phương án kinh doanh</a>
+                                                    <a asp-action="test" asp-controller="hopdong">Ghép phương án kinh doanh</a>
                                                 </li>
                                                 <li>
                                                     <a href="#level2_2">Giao nhận hàng hóa</a>
@@ -281,9 +281,6 @@
                                                 </li>
                                                 <li>
                                                     <a href="#level2_2">Điều khoản chất lượng</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Phương án kinh doanh mới</a>
                                                 </li>
                                                 <li>
                                                     <a href="#level2_2">Tra cứu HĐMB từ invoice</a>
@@ -556,13 +553,10 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
+                                    <a><i class="fa fa-bar-chart-o"></i> About <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="chartjs.html">Chart JS</a></li>
-                                        <li><a href="chartjs2.html">Chart JS2</a></li>
-                                        <li><a href="morisjs.html">Moris JS</a></li>
-                                        <li><a href="echarts.html">ECharts</a></li>
-                                        <li><a href="other_charts.html">Other Charts</a></li>
+                                        <li><a asp-action="help" asp-controller="About">Help</a></li>
+                                        <li><a asp-action="info" asp-controller="about">Info</a></li>
                                     </ul>
                                 </li>
                                 <li>

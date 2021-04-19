@@ -12,5 +12,9 @@ namespace pmkd.Controllers
         {
             return View();
         }
+        public IActionResult help()
+        {
+            return View("help");
+        }
     }
 }

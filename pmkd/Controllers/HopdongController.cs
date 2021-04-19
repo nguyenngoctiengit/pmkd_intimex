@@ -658,5 +658,102 @@ namespace pmkd.Controllers
             return String.Join(" ", messages);
         }
 
+        //--------------------------------------Phương án kinh doanh--------------------------------------
+
+        public IActionResult pakd()
+        {
+            return View("pakd/pakd");
+        }
+        public async Task<IActionResult> getpakd(DataSourceLoadOptions loadOptions)
+        {
+            var pakd = _context.Plans.Select(i => new {
+                i.SystemId,
+                i.SoPa,
+                i.NgayPa,
+                i.DoiTacBan,
+                i.DanhGiaBan,
+                i.HdBan,
+                i.DoiTacMua,
+                i.DanhGiaMua,
+                i.HdMua,
+                i.HangHoa,
+                i.Dvt,
+                i.Trongluong,
+                i.TyGia,
+                i.NguonVon,
+                i.LaiSuat,
+                i.Songay,
+                i.Dieukiengiao,
+                i.Ngaygiao,
+                i.ThanhToanMua,
+                i.ThanhToanBan,
+                i.GiaBan,
+                i.GiaBanU,
+                i.Tienteban,
+                i.TriGiaBan,
+                i.TriGiaBanU,
+                i.GiaMua,
+                i.GiaMuaU,
+                i.Tientemua,
+                i.TriGiaMua,
+                i.TriGiaMuaU,
+                i.LaiGop,
+                i.Tongchiphi,
+                i.CpVanTai,
+                i.CpHoaHong,
+                i.CpGiaoNhan,
+                i.CpLaiVay,
+                i.CpQuanLy,
+                i.CpKhac,
+                i.LaiRong,
+                i.Duyet,
+                i.Macn,
+                i.TrangthaiGhep,
+                i.Chenhlechmuaban,
+                i.Tientechenhlech,
+                i.Isfix,
+                i.GhiChu,
+                i.Trangthai,
+                i.DienGiaiNguonVon,
+                i.CtTinhLaiVay,
+                i.TienTeGn,
+                i.TienTeHh,
+                i.TienTeVc,
+                i.CangGiaoHang,
+                i.NoiNhanHang,
+                i.CpCuocTau,
+                i.CpBaoHiem,
+                i.CpThc,
+                i.CpKhuTrung,
+                i.TienTeQly,
+                i.TienTeCuocTau,
+                i.TienTeBaoHiem,
+                i.TienTeThc,
+                i.TienTeKhuTrung,
+                i.TienTeLaiVay,
+                i.TienTeKhac,
+                i.SoCont,
+                i.DvtCt,
+                i.DvtVcnd,
+                i.DvtBh,
+                i.DvtHh,
+                i.DvtGn,
+                i.DvtGd,
+                i.DvtThc,
+                i.DvtKt,
+                i.DvtLv,
+                i.DvtKhac,
+                i.IsNew,
+                i.LoiNhuanSx,
+                i.ChiPhiSx,
+
+            });
+
+            return Json(await DataSourceLoader.LoadAsync(pakd, loadOptions));
+        }
+        public IActionResult test()
+        {
+            return View();
+        }
     }
 }

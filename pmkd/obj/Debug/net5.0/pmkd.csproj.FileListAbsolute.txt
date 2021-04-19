@@ -664,3 +664,6 @@ C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\Razor\Views\Kho\can\can
 C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\Razor\Views\Kho\dangkynhapkho.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\Razor\Views\Kho\dangkynhapkho\dangkynhapkho.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\Razor\Views\Kho\lenhgiaohang\lenhgiaohang.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\About\help.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\pakd\pakd.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\test.cshtml.g.cs
