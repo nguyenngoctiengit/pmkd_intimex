@@ -773,6 +773,72 @@
     <!-- Custom Theme Scripts -->
     <script src="~/public/build/js/custom.min.js"></script>
     <script type="text/javascript">
+        var hinhthuccan = [{
+            "id": 0, "name": "Cân nhập hàng"
+        }, {
+            "id": 1, "name": "Cân xuất hàng"
+        }, {
+            "id": 2, "name": "Cân dịch vụ"
+        }
+        ];
+        var array = @Html.Raw(Json.Serialize(ViewBag.listcan));
+        var chuoi = [];
+        function SelectionChanged_can(selectedItems) {
+            var data = selectedItems.selectedRowsData[0];
+            var soxe = document.getElementById("soxe1");
+            var mahang = document.getElementById("mahang");
+            var hopdong = document.getElementById("hopdong");
+            var tenhang = document.getElementById("tenhang");
+            var loaibao = document.getElementById("loaibao");
+            var tenbao = document.getElementById("tenbao");
+            var chatluongbao = document.getElementById("chatluongbao");
+            var sobao = document.getElementById("sobao");
+            var tlbaobi = document.getElementById("tlbaobi");
+            var makhach = document.getElementById("makhach");
+            var tenkhach = document.getElementById("tenkhach");
+            var tenkhach1 = document.getElementById("tenkhach1");
+            if (data) {
+                for (var i = 0; i < array.length; i++) {
+                    chuoi[i] = array[i];
+                    if (data.SystemId == chuoi[i].SystemId) {
+                        soxe.value = chuoi[i].TruckNo;
+                        hopdong.value = chuoi[i].Sohd;
+                        mahang.value = chuoi[i].ProdCode;
+                        tenhang.value = chuoi[i].ProdName;
+                        loaibao.value = chuoi[i].LoaiBao;
+                        tenbao.value = chuoi[i].BagName;
+                        chatluongbao.value = chuoi[i].Quanlitybag;
+                        sobao.value = chuoi[i].SoBao;
+                        tlbaobi.value = chuoi[i].TlBao;
+                        makhach.value = chuoi[i].CustCode;
+                        tenkhach.value = chuoi[i].CustName;
+                        tenkhach1.value = chuoi[i].CustName;
+                        if (chuoi[i].Status == 2) {
+                            $("#trangthai").text("MẪU ĐẠT THỬ NẾM")
+                        } else if (chuoi[i].Status == 3) {
+                            $("#trangthai").text("NHẬP CHẠY HÀNG THƯỜNG")
+                        } else if (chuoi[i].Aprove == 0) {
+                            $("#trangthai").text("MẪU KHÔNG ĐẠT")
+                        }
+                        if (chuoi[i].CachCan == 0) {
+                            $("#cachcan").val("0");
+                        } else if (chuoi[i].CachCan == 1) {
+                            $("#cachcan").val("1");
+                        }
+                        if (chuoi[i].HinhThucCan == 0) {
+                            $("#loaican").val("0");
+                        } else if (chuoi[i].HinhThucCan == 1) {
+                            $("#loaican").val("1");
+                        } else if (chuoi[i].HinhThucCan == 2) {
+                            $("#loaican").val("2");
+                        }
+                    }
+                }
+                
+                
+                
+            }
+        }
         /// some script divhdchomuon1 ngaytra1
         function show() {
             document.getElementById('divhdchomuon').style.display = 'block';

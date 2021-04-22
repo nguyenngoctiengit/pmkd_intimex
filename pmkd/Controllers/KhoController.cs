@@ -68,6 +68,7 @@ namespace pmkd.Controllers
         [HttpPut]
         public IActionResult UpdateXeptai(int key, string values)
         {
+            var can = new Can();
             var xeptai = _context.XepTais.First(o => o.Id == key);
             JsonConvert.PopulateObject(values, xeptai);
             if (xeptai.ApproveTime == null)
@@ -78,6 +79,11 @@ namespace pmkd.Controllers
                 var uniname = HttpContext.Session.GetString("UnitName");
                 xeptai.UserApove = HttpContext.Session.GetString("userId");
             }
+            var makhach = xeptai.MaKhach;
+            xeptai.KhachHang = (from a in _context.KhachHangs where a.MaKhach == makhach select a.TenKhach).FirstOrDefault();
+            var mahang = xeptai.Mahang;
+            xeptai.Tenhang = (_context.Hanghoas.Where(a => a.Mahang == mahang).Select(a => a.Tenhang)).FirstOrDefault();
+            xeptai.Canfinish = true;
             if (xeptai.CanId == "")
             {
                 var autoincrement_can = _context.AutomaticValuesBranches.Where(a => a.Macn == "INXBL" && a.ObjectName == "CANBLI").FirstOrDefault();
@@ -95,6 +101,17 @@ namespace pmkd.Controllers
                 xeptai.CanId = parameterOut;
                 autoincrement_can.LastValueOfColumnId = parameterOut;
                 autoincrement_can.NextValueOfColumnId = next;
+                can.SystemId = parameterOut;
+                can.TruckNo = xeptai.SoXe;
+                can.IdXepTai = xeptai.Id;
+                can.SoBao = xeptai.SoBao;
+                var tenbao = (from a in _context.BagTypes where a.BagTypeId == xeptai.BagTypeId select a.Name).FirstOrDefault();
+                var qualitybao = (from a in _context.BagTypes where a.BagTypeId == xeptai.BagTypeId select a.Quantity).FirstOrDefault();
+                can.LoaiBao = xeptai.BagTypeId;
+                can.BagName = tenbao;
+                can.TlBao = xeptai.TlBaobi;
+                can.Quanlitybag = qualitybao;
+
                 _context.AutomaticValuesBranches.Update(autoincrement_can);
             }
             if (xeptai.Kcs == "")
@@ -118,11 +135,8 @@ namespace pmkd.Controllers
             }
             if (!TryValidateModel(xeptai))
                 return BadRequest(GetFullErrorMessage(ModelState));
-            var makhach = xeptai.MaKhach;
-            xeptai.KhachHang = (from a in _context.KhachHangs where a.MaKhach == makhach select a.TenKhach).FirstOrDefault();
-            var mahang = xeptai.Mahang;
-            xeptai.Tenhang = (_context.Hanghoas.Where(a => a.Mahang == mahang).Select(a => a.Tenhang)).FirstOrDefault();
-            xeptai.Canfinish = true;
+
+            
             _context.SaveChanges();
             return Ok(xeptai);
         }
@@ -158,7 +172,12 @@ namespace pmkd.Controllers
         ////------------------------Cân-------------------
         public IActionResult cantrongluong()
         {
+            ViewBag.listcan = _context.Cans.ToList();
             return View("can/can");
+        }
+        public object GetCan(DataSourceLoadOptions loadOptions)
+        {
+            return DataSourceLoader.Load(_context.Cans, loadOptions);
         }
         //---------------------------Lệnh giao hàng--------------------------
         public IActionResult lenhgiaohang()
