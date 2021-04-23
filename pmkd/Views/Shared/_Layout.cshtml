@@ -796,7 +796,7 @@
             var tlbaobi = document.getElementById("tlbaobi");
             var makhach = document.getElementById("makhach");
             var tenkhach = document.getElementById("tenkhach");
-            var tenkhach1 = document.getElementById("tenkhach1");
+            var systemId = document.getElementById("systemId");
             if (data) {
                 for (var i = 0; i < array.length; i++) {
                     chuoi[i] = array[i];
@@ -812,7 +812,7 @@
                         tlbaobi.value = chuoi[i].TlBao;
                         makhach.value = chuoi[i].CustCode;
                         tenkhach.value = chuoi[i].CustName;
-                        tenkhach1.value = chuoi[i].CustName;
+                        systemId.value = chuoi[i].SystemId;
                         if (chuoi[i].Status == 2) {
                             $("#trangthai").text("MẪU ĐẠT THỬ NẾM")
                         } else if (chuoi[i].Status == 3) {

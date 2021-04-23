@@ -13,6 +13,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
+using System.Threading;
 using config = System.Configuration.ConfigurationManager;
 using System.IO.Ports;
 
@@ -20,9 +21,11 @@ namespace pmkd.Controllers
 {
     public class KhoController : Controller
     {
+        public event System.IO.Ports.SerialDataReceivedEventHandler DataReceived;   
         public SerialPort comport = new SerialPort();
         public tradingsystem_blContext _context;
         public tradingsystem_blContext db = new tradingsystem_blContext();
+        
         public KhoController(tradingsystem_blContext context)
         {
             _context = context;
@@ -39,6 +42,7 @@ namespace pmkd.Controllers
         [HttpPost]
         public IActionResult InsertXepTai(string values)
         {
+            
             var newXeptai = new XepTai();
             JsonConvert.PopulateObject(values, newXeptai);
 
@@ -68,7 +72,7 @@ namespace pmkd.Controllers
         [HttpPut]
         public IActionResult UpdateXeptai(int key, string values)
         {
-            var can = new Can();
+            
             var xeptai = _context.XepTais.First(o => o.Id == key);
             JsonConvert.PopulateObject(values, xeptai);
             if (xeptai.ApproveTime == null)
@@ -86,35 +90,64 @@ namespace pmkd.Controllers
             xeptai.Canfinish = true;
             if (xeptai.CanId == "")
             {
-                var autoincrement_can = _context.AutomaticValuesBranches.Where(a => a.Macn == "INXBL" && a.ObjectName == "CANBLI").FirstOrDefault();
-                var PrefixOfDefaultValueForId = autoincrement_can.PrefixOfDefaultValueForId;
-                var LengthOfDefaultValueForId = (int)autoincrement_can.LengthOfDefaultValueForId;
-                var LastValueOfColumnId = autoincrement_can.LastValueOfColumnId;
-                var oldValue = LastValueOfColumnId.Substring(6, 6);
-                var oldValueInt = Convert.ToInt32(oldValue);
-                var currentValue = oldValueInt + 1;
-                var nextValue = oldValueInt + 2;
-                var chuoi = "00000000" + Convert.ToString(currentValue);
-                var chuoinext = "00000000" + Convert.ToString(nextValue);
-                var parameterOut = PrefixOfDefaultValueForId + chuoi.Substring(chuoi.Length + PrefixOfDefaultValueForId.Length - LengthOfDefaultValueForId, 7);
-                var next = PrefixOfDefaultValueForId + chuoinext.Substring(chuoinext.Length + PrefixOfDefaultValueForId.Length - LengthOfDefaultValueForId, 7);
-                xeptai.CanId = parameterOut;
-                autoincrement_can.LastValueOfColumnId = parameterOut;
-                autoincrement_can.NextValueOfColumnId = next;
-                can.SystemId = parameterOut;
-                can.TruckNo = xeptai.SoXe;
-                can.IdXepTai = xeptai.Id;
-                can.SoBao = xeptai.SoBao;
-                var tenbao = (from a in _context.BagTypes where a.BagTypeId == xeptai.BagTypeId select a.Name).FirstOrDefault();
-                var qualitybao = (from a in _context.BagTypes where a.BagTypeId == xeptai.BagTypeId select a.Quantity).FirstOrDefault();
-                can.LoaiBao = xeptai.BagTypeId;
-                can.BagName = tenbao;
-                can.TlBao = xeptai.TlBaobi;
-                can.Quanlitybag = qualitybao;
-
-                _context.AutomaticValuesBranches.Update(autoincrement_can);
+                using (var transaction = _context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var can = new Can();
+                        var autoincrement_can = _context.AutomaticValuesBranches.Where(a => a.Macn == "INXBL" && a.ObjectName == "CANBLI").FirstOrDefault();
+                        var PrefixOfDefaultValueForId = autoincrement_can.PrefixOfDefaultValueForId;
+                        var LengthOfDefaultValueForId = (int)autoincrement_can.LengthOfDefaultValueForId;
+                        var LastValueOfColumnId = autoincrement_can.LastValueOfColumnId;
+                        var oldValue = LastValueOfColumnId.Substring(6, 6);
+                        var oldValueInt = Convert.ToInt32(oldValue);
+                        var currentValue = oldValueInt + 1;
+                        var nextValue = oldValueInt + 2;
+                        var chuoi = "00000000" + Convert.ToString(currentValue);
+                        var chuoinext = "00000000" + Convert.ToString(nextValue);
+                        var parameterOut = PrefixOfDefaultValueForId + chuoi.Substring(chuoi.Length + PrefixOfDefaultValueForId.Length - LengthOfDefaultValueForId, 7);
+                        var next = PrefixOfDefaultValueForId + chuoinext.Substring(chuoinext.Length + PrefixOfDefaultValueForId.Length - LengthOfDefaultValueForId, 7);
+                        xeptai.CanId = parameterOut;
+                        autoincrement_can.LastValueOfColumnId = parameterOut;
+                        autoincrement_can.NextValueOfColumnId = next;
+                        _context.AutomaticValuesBranches.Update(autoincrement_can);
+                        can.SystemId = parameterOut;
+                        can.TruckNo = xeptai.SoXe;
+                        can.IdXepTai = xeptai.Id;
+                        can.SoBao = xeptai.SoBao;
+                        var tenbao = (from a in _context.BagTypes where a.BagTypeId == xeptai.BagTypeId select a.Name).FirstOrDefault();
+                        var qualitybao = (from a in _context.BagTypes where a.BagTypeId == xeptai.BagTypeId select a.Quantity).FirstOrDefault();
+                        can.LoaiBao = xeptai.BagTypeId;
+                        can.BagName = tenbao;
+                        can.TlBao = xeptai.TlBaobi;
+                        can.Quanlitybag = qualitybao;
+                        can.Aprove = 1;
+                        can.Status = 1;
+                        can.Macn = HttpContext.Session.GetString("UnitName");
+                        can.DateIn = xeptai.ApproveDate;
+                        can.CustCode = xeptai.MaKhach;
+                        can.CustName = xeptai.KhachHang;
+                        can.ProdCode = xeptai.Mahang;
+                        can.ProdName = xeptai.Tenhang;
+                        can.Xeptai1 = xeptai.Xeptaiso;
+                        can.Sohd = xeptai.HopDong;
+                        can.CachCan = 1;
+                        can.KhoId = xeptai.KhoId;
+                        var idhopdong = (from a in _context.Hdmbs where a.Sohd == xeptai.HopDong select a.Systemref).FirstOrDefault();
+                        can.Idhopdong = idhopdong;
+                        _context.Cans.Add(can);
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        return BadRequest("Error occurred" + ex);
+                    }
+                }
+                 
+                
             }
-            if (xeptai.Kcs == "")
+/*            if (xeptai.Kcs == "")
             {
                 var autoincrement_kcs = _context.AutomaticValuesBranches.Where(a => a.Macn == "INXBL" && a.ObjectName == "KCSNNLBLI").FirstOrDefault();
                 var PrefixOfDefaultValueForId_kcs = autoincrement_kcs.PrefixOfDefaultValueForId;
@@ -132,7 +165,7 @@ namespace pmkd.Controllers
                 autoincrement_kcs.LastValueOfColumnId = parameterOut_kcs;
                 autoincrement_kcs.NextValueOfColumnId = next_kcs;
                 _context.AutomaticValuesBranches.Update(autoincrement_kcs);
-            }
+            }*/
             if (!TryValidateModel(xeptai))
                 return BadRequest(GetFullErrorMessage(ModelState));
 
@@ -172,8 +205,30 @@ namespace pmkd.Controllers
         ////------------------------Cân-------------------
         public IActionResult cantrongluong()
         {
+            StringComparer stringComparer = StringComparer.OrdinalIgnoreCase;
+            comport = new SerialPort();
+            comport.BaudRate = 9600;
+            comport.Parity = Parity.None;
+            comport.StopBits = StopBits.One;
+            comport.DataBits = 8;
+            comport.Handshake = Handshake.None;
+            comport.RtsEnable = true;
+            comport.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
+            try
+            {
+                comport.Open();
+                string message = comport.ReadLine();
+                ViewBag.message = message;
+            }
+            catch (TimeoutException) { }
             ViewBag.listcan = _context.Cans.ToList();
             return View("can/can");
+        }
+        private static void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
+        {
+            SerialPort sp = (SerialPort)sender;
+            string indata = sp.ReadExisting();
+            Console.WriteLine(indata);
         }
         public object GetCan(DataSourceLoadOptions loadOptions)
         {
