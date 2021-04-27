@@ -38,6 +38,7 @@
     <link href="~/public/build/css/custom.min.css" rel="stylesheet">
     <!-- devexpress-->
     <!-- jquery file -->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
     <!-- DevExtreme file -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.0.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.9/jspdf.plugin.autotable.min.js"></script>
@@ -58,6 +59,7 @@
     <!-- dialog-->
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+
     <!-- datepicker -->
     <!-- Custom Theme Style -->
     <style>
@@ -72,7 +74,13 @@
 
     <script type="text/javascript">
         /// some script
-
+        $(document).ready(function () {
+            setInterval(function () {
+                var dt = new Date();
+                var input = document.getElementById("datetime_reload");
+                input.value = dt.getDate() + "/" + dt.getMonth() + "/" + dt.getFullYear() + " " + "  " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+            }, 1000);
+        });
         // jquery ready start
         $(document).ready(function () {
             // jQuery code
@@ -732,6 +740,7 @@
 
     <!-- dialog -->
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
     <!-- Bootstrap -->
     <script src="~/public/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- FastClick -->
@@ -773,6 +782,16 @@
     <!-- Custom Theme Scripts -->
     <script src="~/public/build/js/custom.min.js"></script>
     <script type="text/javascript">
+        function aaaaa() {
+            $("#auto_reload").load("can_txt.txt");
+            setInterval(function () {
+                aaaaa();
+
+            }, 1000);
+        }
+        $(document).ready(function () {
+            aaaaa();
+        });
         var hinhthuccan = [{
             "id": 0, "name": "Cân nhập hàng"
         }, {
@@ -783,8 +802,10 @@
         ];
         var array = @Html.Raw(Json.Serialize(ViewBag.listcan));
         var chuoi = [];
+        function getDataGridCan() {
+            return $("#dataGridCan").dxDataGrid("instance");
+        }
         function SelectionChanged_can(selectedItems) {
-            var data = selectedItems.selectedRowsData[0];
             var soxe = document.getElementById("soxe1");
             var mahang = document.getElementById("mahang");
             var hopdong = document.getElementById("hopdong");
@@ -797,47 +818,59 @@
             var makhach = document.getElementById("makhach");
             var tenkhach = document.getElementById("tenkhach");
             var systemId = document.getElementById("systemId");
-            if (data) {
-                for (var i = 0; i < array.length; i++) {
-                    chuoi[i] = array[i];
-                    if (data.SystemId == chuoi[i].SystemId) {
-                        soxe.value = chuoi[i].TruckNo;
-                        hopdong.value = chuoi[i].Sohd;
-                        mahang.value = chuoi[i].ProdCode;
-                        tenhang.value = chuoi[i].ProdName;
-                        loaibao.value = chuoi[i].LoaiBao;
-                        tenbao.value = chuoi[i].BagName;
-                        chatluongbao.value = chuoi[i].Quanlitybag;
-                        sobao.value = chuoi[i].SoBao;
-                        tlbaobi.value = chuoi[i].TlBao;
-                        makhach.value = chuoi[i].CustCode;
-                        tenkhach.value = chuoi[i].CustName;
-                        systemId.value = chuoi[i].SystemId;
-                        if (chuoi[i].Status == 2) {
-                            $("#trangthai").text("MẪU ĐẠT THỬ NẾM")
-                        } else if (chuoi[i].Status == 3) {
-                            $("#trangthai").text("NHẬP CHẠY HÀNG THƯỜNG")
-                        } else if (chuoi[i].Aprove == 0) {
-                            $("#trangthai").text("MẪU KHÔNG ĐẠT")
-                        }
-                        if (chuoi[i].CachCan == 0) {
-                            $("#cachcan").val("0");
-                        } else if (chuoi[i].CachCan == 1) {
-                            $("#cachcan").val("1");
-                        }
-                        if (chuoi[i].HinhThucCan == 0) {
-                            $("#loaican").val("0");
-                        } else if (chuoi[i].HinhThucCan == 1) {
-                            $("#loaican").val("1");
-                        } else if (chuoi[i].HinhThucCan == 2) {
-                            $("#loaican").val("2");
+            var tlin = document.getElementById("tlin");
+            getDataGridCan().getSelectedRowsData().done(function (rowData) {
+                if (rowData) {
+                    for (var i = 0; i < rowData.length; i++) {
+                        for (var j = 0; j < array.length; j++) {
+                            chuoi[j] = array[j];
+                            if (rowData[i].SystemId == chuoi[j].SystemId) {
+                                soxe.value = chuoi[j].TruckNo;
+                                hopdong.value = chuoi[j].Sohd;
+                                mahang.value = chuoi[j].ProdCode;
+                                tenhang.value = chuoi[j].ProdName;
+                                loaibao.value = chuoi[j].LoaiBao;
+                                tenbao.value = chuoi[j].BagName;
+                                chatluongbao.value = chuoi[j].Quanlitybag;
+                                sobao.value = chuoi[j].SoBao;
+                                tlbaobi.value = chuoi[j].TlBao;
+                                makhach.value = chuoi[j].CustCode;
+                                tenkhach.value = chuoi[j].CustName;
+                                systemId.value = chuoi[j].SystemId;
+                                tlin.value = chuoi[j].TlIn;
+                                if (chuoi[j].Status == 2) {
+                                    $("#trangthai").text("MẪU ĐẠT THỬ NẾM")
+                                } else if (chuoi[j].Status == 3) {
+                                    $("#trangthai").text("NHẬP CHẠY HÀNG THƯỜNG")
+                                } else if (chuoi[j].Aprove == 0) {
+                                    $("#trangthai").text("MẪU KHÔNG ĐẠT")
+                                }
+                                if (chuoi[j].CachCan == 0) {
+                                    $("#cachcan").val("0");
+                                } else if (chuoi[j].CachCan == 1) {
+                                    $("#cachcan").val("1");
+                                }
+                                if (chuoi[j].HinhThucCan == 0) {
+                                    $("#loaican").val("0");
+                                } else if (chuoi[j].HinhThucCan == 1) {
+                                    $("#loaican").val("1");
+                                } else if (chuoi[j].HinhThucCan == 2) {
+                                    $("#loaican").val("2");
+                                }
+                            }
                         }
                     }
                 }
-                
-                
-                
-            }
+            })
+        }
+        function savetl() {
+            getDataGridCan().getSelectedRowsData().done(function (rowData) {
+                if (rowData) {
+                    for (var i = 0; i < rowData.length; i++) {
+                        location.href = "kho/updatetlin/" + rowData[i].SystemId;
+                    }
+                }
+            })
         }
         /// some script divhdchomuon1 ngaytra1
         function show() {

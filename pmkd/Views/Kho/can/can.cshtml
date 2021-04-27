@@ -5,12 +5,12 @@
 }
 
 
-@model IEnumerable<KhachHang>
+@model Can
 <div class="right_col" role="main" style="height: 500px">
     <div class="x_content">
         <div class="row">
             <div class="col-sm-12">
-                <form class="form-label-left input_mask" method="post" role="form">
+                <form class="form-label-left input_mask" method="post" role="form" asp-controller="kho" asp-action="updatetlin" asp-route-id="BL1160000004">
                     <div class="form-group row">
                         <label class="col-form-label col-md-2 col-sm-2">TL hiện tại trên cân</label>
                         <label class="col-form-label col-md-2 col-sm-2">TL xe và Hàng NK</label>
@@ -21,10 +21,10 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-2 col-sm-2">
-                            <input type="text" class="form-control" style="height:50px" value="@ViewBag.message">
+                            <input type="text" class="form-control" style="height:50px" id="auto_reload" @*value="@ViewBag.trongluong"*@ asp-for="TlIn">
                         </div>
                         <div class="col-md-2 col-sm-2">
-                            <input type="text" class="form-control" style="height:50px">
+                            <input type="text" class="form-control" style="height:50px" asp-for="TlIn" id="tlin">
                         </div>
                         <div class="col-md-2 col-sm-2">
                             <input type="text" class="form-control" style="height:50px">
@@ -74,6 +74,7 @@
                                                     .DataSource(d => d.Mvc().Controller("kho")
                                                     .LoadAction("GetCan")
                                                     .Key("SystemId"))
+                                                    .ID("dataGridCan")
                                                     .Columns(columns => {
 
                                                         columns.AddFor(m => m.SystemId).Visible(false);
@@ -102,7 +103,7 @@
 
                                                     )
                                                     .OnSelectionChanged("SelectionChanged_can")
-                                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                                    .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
                                                     .FilterPanel(f => f.Visible(true))
                                                     .HoverStateEnabled(true)
                                                     .Export(e => e.Enabled(true))
@@ -140,8 +141,8 @@
                                                     .Paging(paging => paging.PageSize(5))
                                                  )
                         <div class="form-group row">
-                            <div class="col-md-12 col-sm-12" style="margin-top:30px">
-                                <input type="text" class="form-control" style="height:60px">
+                            <div class="col-md-12 col-sm-12" style="margin-top:10px">
+                                <input type="text" class="form-control" style="height:50px" id="datetime_reload">
                             </div>
                         </div>
                     </div>
@@ -234,10 +235,10 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Mã khách</label>
-                            <div class="col-md-5 col-sm-5" style="padding:5px 0px 0px 5px">
+                            <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
                                 <input type="text" class="form-control" style="height:30px" id="makhach">
                             </div>
-                            <div class="col-md-5 col-sm-5" style="padding:5px 0px 0px 5px">
+                            <div class="col-md-6 col-sm-6" style="padding:5px 0px 0px 5px">
                                 <input type="text" class="form-control" style="height:30px" id="tenkhach">
                             </div>
                         </div>
@@ -347,7 +348,7 @@
                                     <button type="button">New</button>
                                 </div>
                                 <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
-                                    <button type="button">Save</button>
+                                    <button type="submit">Save</button>
                                 </div>
                                 <div class="col-md-3 col-sm-3" style="padding:5px 0px 0px 5px">
                                     <button type="button">Weight Notes</button>
@@ -362,7 +363,6 @@
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>

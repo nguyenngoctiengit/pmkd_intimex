@@ -13,16 +13,10 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
-using System.Threading;
-using config = System.Configuration.ConfigurationManager;
-using System.IO.Ports;
-
 namespace pmkd.Controllers
 {
     public class KhoController : Controller
     {
-        public event System.IO.Ports.SerialDataReceivedEventHandler DataReceived;   
-        public SerialPort comport = new SerialPort();
         public tradingsystem_blContext _context;
         public tradingsystem_blContext db = new tradingsystem_blContext();
         
@@ -205,34 +199,28 @@ namespace pmkd.Controllers
         ////------------------------Cân-------------------
         public IActionResult cantrongluong()
         {
-            StringComparer stringComparer = StringComparer.OrdinalIgnoreCase;
-            comport = new SerialPort();
-            comport.BaudRate = 9600;
-            comport.Parity = Parity.None;
-            comport.StopBits = StopBits.One;
-            comport.DataBits = 8;
-            comport.Handshake = Handshake.None;
-            comport.RtsEnable = true;
-            comport.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
-            try
+            FileStream fileStream = new FileStream("can_txt.txt", FileMode.Open);
+            using (StreamReader reader = new StreamReader(fileStream))
             {
-                comport.Open();
-                string message = comport.ReadLine();
-                ViewBag.message = message;
+                string line = reader.ReadLine();
+                ViewBag.trongluong = line;
             }
-            catch (TimeoutException) { }
+
             ViewBag.listcan = _context.Cans.ToList();
             return View("can/can");
-        }
-        private static void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
-        {
-            SerialPort sp = (SerialPort)sender;
-            string indata = sp.ReadExisting();
-            Console.WriteLine(indata);
         }
         public object GetCan(DataSourceLoadOptions loadOptions)
         {
             return DataSourceLoader.Load(_context.Cans, loadOptions);
+        }
+        [HttpPost]
+        public IActionResult updatetlin(Can can,string id)
+        {
+            var item_return = _context.Cans.Where(a => a.SystemId == id).FirstOrDefault();
+            item_return.TlIn = can.TlIn;
+            _context.Cans.Update(item_return);
+            _context.SaveChanges();
+            return RedirectToAction("cantrongluong");
         }
         //---------------------------Lệnh giao hàng--------------------------
         public IActionResult lenhgiaohang()
