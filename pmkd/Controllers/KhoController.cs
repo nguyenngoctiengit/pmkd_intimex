@@ -64,7 +64,7 @@ namespace pmkd.Controllers
             return Ok(newXeptai);
         }
         [HttpPut]
-        public IActionResult UpdateXeptai(int key, string values)
+        public async Task<IActionResult> UpdateXeptai(int key, string values)
         {
             
             var xeptai = _context.XepTais.First(o => o.Id == key);
@@ -164,7 +164,7 @@ namespace pmkd.Controllers
                 return BadRequest(GetFullErrorMessage(ModelState));
 
             
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return Ok(xeptai);
         }
         
@@ -199,13 +199,6 @@ namespace pmkd.Controllers
         ////------------------------Cân-------------------
         public IActionResult cantrongluong()
         {
-            FileStream fileStream = new FileStream("can_txt.txt", FileMode.Open);
-            using (StreamReader reader = new StreamReader(fileStream))
-            {
-                string line = reader.ReadLine();
-                ViewBag.trongluong = line;
-            }
-
             ViewBag.listcan = _context.Cans.ToList();
             return View("can/can");
         }
@@ -213,11 +206,14 @@ namespace pmkd.Controllers
         {
             return DataSourceLoader.Load(_context.Cans, loadOptions);
         }
-        [HttpPost]
+        [HttpPost][Route("kho/kho/updatetlin/{id?}")]
         public IActionResult updatetlin(Can can,string id)
         {
+            var datetime = DateTime.Now;
             var item_return = _context.Cans.Where(a => a.SystemId == id).FirstOrDefault();
             item_return.TlIn = can.TlIn;
+            item_return.TimeIn = datetime.ToString("HH:mm");
+            item_return.DateIn = datetime.Date;
             _context.Cans.Update(item_return);
             _context.SaveChanges();
             return RedirectToAction("cantrongluong");

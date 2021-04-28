@@ -10,7 +10,7 @@
     <div class="x_content">
         <div class="row">
             <div class="col-sm-12">
-                <form class="form-label-left input_mask" method="post" role="form" asp-controller="kho" asp-action="updatetlin" asp-route-id="BL1160000004">
+                <form class="form-label-left input_mask" method="post" role="form" action="kho/updatetlin/BL1160000001" id="formCan">
                     <div class="form-group row">
                         <label class="col-form-label col-md-2 col-sm-2">TL hiện tại trên cân</label>
                         <label class="col-form-label col-md-2 col-sm-2">TL xe và Hàng NK</label>
@@ -20,23 +20,23 @@
                         <label class="col-form-label col-md-2 col-sm-2">Trọng lượng hàng</label>
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-2 col-sm-2">
-                            <input type="text" class="form-control" style="height:50px" id="auto_reload" @*value="@ViewBag.trongluong"*@ asp-for="TlIn">
+                        <div class="col-md-2 col-sm-2" >
+                            <input type="text" class="form-control" style="height:50px;background-color:aqua;border: 2px solid black" id="auto_reload" asp-for="TlIn">
+                        </div>
+                        <div class="col-md-2 col-sm-2" >
+                            <input type="text" class="form-control" style="height:50px;background-color:aqua;border: 2px solid black" id="tlin">
+                        </div>
+                        <div class="col-md-2 col-sm-2" >
+                            <input type="text" class="form-control" style="height:50px;background-color:aqua;border: 2px solid black">
                         </div>
                         <div class="col-md-2 col-sm-2">
-                            <input type="text" class="form-control" style="height:50px" asp-for="TlIn" id="tlin">
+                            <input type="text" class="form-control" style="height:50px;background-color:aqua;border: 2px solid black">
                         </div>
                         <div class="col-md-2 col-sm-2">
-                            <input type="text" class="form-control" style="height:50px">
+                            <input type="text" class="form-control" style="height:50px;background-color:aqua;border: 2px solid black">
                         </div>
                         <div class="col-md-2 col-sm-2">
-                            <input type="text" class="form-control" style="height:50px">
-                        </div>
-                        <div class="col-md-2 col-sm-2">
-                            <input type="text" class="form-control" style="height:50px">
-                        </div>
-                        <div class="col-md-2 col-sm-2">
-                            <input type="text" class="form-control" style="height:50px">
+                            <input type="text" class="form-control" style="height:50px;background-color:aqua;border: 2px solid black">
                         </div>
                     </div>
                     <div class="form-group row">
