@@ -13,10 +13,15 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
+using System.IO.Ports;
+
 namespace pmkd.Controllers
 {
     public class KhoController : Controller
     {
+        string _1stDataIn;
+        SerialPort serialPort = new SerialPort();
+        SerialPort port1 = new SerialPort();
         public tradingsystem_blContext _context;
         public tradingsystem_blContext db = new tradingsystem_blContext();
         
@@ -112,13 +117,23 @@ namespace pmkd.Controllers
                         var tenbao = (from a in _context.BagTypes where a.BagTypeId == xeptai.BagTypeId select a.Name).FirstOrDefault();
                         var qualitybao = (from a in _context.BagTypes where a.BagTypeId == xeptai.BagTypeId select a.Quantity).FirstOrDefault();
                         can.LoaiBao = xeptai.BagTypeId;
+                        can.HinhThucCan = 0;
+                        can.TlCont = 0;
+                        can.TlCont1 = 0;
+                        can.TlIn = 0;
+                        can.ContNo = "";
+                        can.ContNo1 = "";
+                        can.SealNo = "";
+                        can.SealNo1 = "";
+                        can.TypeCont = true;
                         can.BagName = tenbao;
                         can.TlBao = xeptai.TlBaobi;
                         can.Quanlitybag = qualitybao;
-                        can.Aprove = 1;
-                        can.Status = 1;
+                        can.Aprove = xeptai.Aprove;
+                        can.Status = xeptai.Status;
                         can.Macn = HttpContext.Session.GetString("UnitName");
                         can.DateIn = xeptai.ApproveDate;
+                        can.TimeIn = xeptai.ApproveTime;
                         can.CustCode = xeptai.MaKhach;
                         can.CustName = xeptai.KhachHang;
                         can.ProdCode = xeptai.Mahang;
@@ -197,8 +212,34 @@ namespace pmkd.Controllers
             return String.Join(" ", messages);
         }
         ////------------------------Cân-------------------
+        #region can
+        private void open_port (object sender,EventArgs e)
+        {
+            try
+            {
+                
+                serialPort.PortName = "COM4";
+                serialPort.BaudRate = 9600;
+                serialPort.Open();
+            }
+            catch(Exception error)
+            {
+                Console.WriteLine(error);
+            }
+        }
         public IActionResult cantrongluong()
         {
+            ViewBag.nhanvien = (from k in _context.Cans
+                                select k.NhanVien).Distinct().ToList();
+            ViewBag.baove = (from k in _context.Cans
+                             select k.BaoVe ).Distinct().ToList();
+            ViewBag.thukho = (from k in _context.Cans
+                              select k.ThuKho ).Distinct().ToList();
+            ViewBag.nguoilap = (from k in _context.Cans
+                                select k.TimeOut).Distinct().ToList();
+            ViewBag.lanhdao = (from k in _context.Cans
+                               select k.LanhDao).Distinct().ToList();
+            ViewBag.stock = _context.Stocks.ToList();
             ViewBag.listcan = _context.Cans.ToList();
             return View("can/can");
         }
@@ -211,13 +252,19 @@ namespace pmkd.Controllers
         {
             var datetime = DateTime.Now;
             var item_return = _context.Cans.Where(a => a.SystemId == id).FirstOrDefault();
+            if (item_return.TlIn != 0)
+            {
+                item_return.TlOut = can.TlIn;
+            }
             item_return.TlIn = can.TlIn;
             item_return.TimeIn = datetime.ToString("HH:mm");
             item_return.DateIn = datetime.Date;
+            
             _context.Cans.Update(item_return);
             _context.SaveChanges();
             return RedirectToAction("cantrongluong");
         }
+        #endregion
         //---------------------------Lệnh giao hàng--------------------------
         public IActionResult lenhgiaohang()
         {

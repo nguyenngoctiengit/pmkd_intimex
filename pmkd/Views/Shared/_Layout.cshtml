@@ -76,8 +76,8 @@
         $(document).ready(function () {
             setInterval(function () {
                 var dt = new Date();
-                var input = document.getElementById("datetime_reload");
-                input.value = dt.getDate() + "/" + dt.getMonth() + "/" + dt.getFullYear() + " " + "  " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+                var month = dt.getMonth() + 1;
+                $('#datetime_reload').html(dt.getDate() + "/" + month + "/" + dt.getFullYear() + " " + "  " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds())
             }, 1000);
         });
         // jquery ready start
@@ -780,16 +780,72 @@
     <!-- Custom Theme Scripts -->
     <script src="~/public/build/js/custom.min.js"></script>
     <script type="text/javascript">
-        const file = 'https://localhost:44334/can_txt.txt';
+@*        const file = 'https://localhost:44334/can_txt.txt';
         function readFile() {
             fetch(file).then(respone => respone.text())
                 .then(data => {
                     var item = document.getElementById("auto_reload");
                     item.value = data;
                 });
+        }*@
+@*
+        setInterval(readFile, 1000);*@
+        var port, textEncoder, writableStreamClosed, writer;
+        async function connectSerial() {
+            try {
+                // Prompt user to select any serial port.
+                port = await navigator.serial.requestPort();
+                await port.open({ baudRate: 9600 });
+                listenToPort();
+
+                textEncoder = new TextEncoderStream();
+                writableStreamClosed = textEncoder.readable.pipeTo(port.writable);
+                alert("connect successful")
+                writer = textEncoder.writable.getWriter();
+            } catch {
+                alert("Serial Connection Failed");
+            }
+        }
+        async function sendSerialLine() {
+            dataToSend = document.getElementById("lineToSend").value;
+            appendToTerminal(dataToSend);
+            await writer.write(dataToSend);
+            var data = document.getElementById("lineToSend");
+            data.value = "";
+        }
+        async function listenToPort() {
+            const textDecoder = new TextDecoderStream();
+            const readableStreamClosed = port.readable.pipeTo(textDecoder.writable);
+            const reader = textDecoder.readable.getReader();
+
+            // Listen to data coming from the serial device.
+            while (true) {
+                const { value, done } = await reader.read();
+                if (done) {
+                    // Allow the serial port to be closed later.
+                    //reader.releaseLock();
+                    break;
+                }
+                // value is a string.
+                appendToTerminal(value);
+            }
+        }
+        const serialResultsDiv = document.getElementById("serialResults");
+
+        async function appendToTerminal(newStuff) {
+@*            serialResultsDiv.innerHTML += newStuff;*@
+            serialResultsDiv.value = newStuff
+@*            if (serialResultsDiv.innerHTML.length > 3000) serialResultsDiv.innerHTML = serialResultsDiv.innerHTML.slice(serialResultsDiv.innerHTML.length - 3000);
+
+            //scroll down to bottom of div
+            serialResultsDiv.scrollTop = serialResultsDiv.scrollHeight;*@
         }
 
-        setInterval(readFile, 1000);
+        document.getElementById("lineToSend").addEventListener("keyup", async function (event) {
+            if (event.keyCode === 13) {
+                sendSerialLine();
+            }
+        })
         var hinhthuccan = [{
             "id": 0, "name": "Cân nhập hàng"
         }, {
@@ -804,6 +860,7 @@
             return $("#dataGridCan").dxDataGrid("instance");
         }
         function SelectionChanged_can(selectedItems) {
+            var time_in = document.getElementById("time_in");
             var soxe = document.getElementById("soxe1");
             var mahang = document.getElementById("mahang");
             var hopdong = document.getElementById("hopdong");
@@ -817,13 +874,22 @@
             var tenkhach = document.getElementById("tenkhach");
             var systemId = document.getElementById("systemId");
             var tlin = document.getElementById("tlin");
+            var tlout = document.getElementById("tlout");
+            var tlhang = document.getElementById("tlhang");
+            var timeout = document.getElementById("timeout");
+            var trongluong = document.getElementById("trongluong");
             getDataGridCan().getSelectedRowsData().done(function (rowData) {
                 if (rowData) {
                     for (var i = 0; i < rowData.length; i++) {
                         for (var j = 0; j < array.length; j++) {
                             chuoi[j] = array[j];
                             if (rowData[i].SystemId == chuoi[j].SystemId) {
-                                $("#formCan").attr("action", "kho/updatetlin/" + chuoi[j].SystemId)
+                                $("#formCan").attr("action", "kho/updatetlin/" + chuoi[j].SystemIds)
+                                trongluong.value = "TL:" + chuoi[j].TlNet + "kgs";
+                                timeout.value = chuoi[j].TimeOut;
+                                tlout.value = chuoi[j].TlOut;
+                                tlhang.value = Math.abs(chuoi[j].TlIn - chuoi[j].TlOut);
+                                time_in.value = chuoi[j].TimeIn;
                                 soxe.value = chuoi[j].TruckNo;
                                 hopdong.value = chuoi[j].Sohd;
                                 mahang.value = chuoi[j].ProdCode;
