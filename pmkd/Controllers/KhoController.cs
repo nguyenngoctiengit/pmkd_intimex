@@ -19,9 +19,6 @@ namespace pmkd.Controllers
 {
     public class KhoController : Controller
     {
-        string _1stDataIn;
-        SerialPort serialPort = new SerialPort();
-        SerialPort port1 = new SerialPort();
         public tradingsystem_blContext _context;
         public tradingsystem_blContext db = new tradingsystem_blContext();
         
@@ -213,20 +210,6 @@ namespace pmkd.Controllers
         }
         ////------------------------Cân-------------------
         #region can
-        private void open_port (object sender,EventArgs e)
-        {
-            try
-            {
-                
-                serialPort.PortName = "COM4";
-                serialPort.BaudRate = 9600;
-                serialPort.Open();
-            }
-            catch(Exception error)
-            {
-                Console.WriteLine(error);
-            }
-        }
         public IActionResult cantrongluong()
         {
             ViewBag.nhanvien = (from k in _context.Cans
@@ -236,7 +219,7 @@ namespace pmkd.Controllers
             ViewBag.thukho = (from k in _context.Cans
                               select k.ThuKho ).Distinct().ToList();
             ViewBag.nguoilap = (from k in _context.Cans
-                                select k.TimeOut).Distinct().ToList();
+                                select k.NguoiLap).Distinct().ToList();
             ViewBag.lanhdao = (from k in _context.Cans
                                select k.LanhDao).Distinct().ToList();
             ViewBag.stock = _context.Stocks.ToList();

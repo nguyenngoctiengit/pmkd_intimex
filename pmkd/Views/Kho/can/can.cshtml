@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "View";
+    ViewData["Title"] = "can";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -21,7 +21,6 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-2 col-sm-2" >
-@*                            <div id="serialResults" class="form-control" style="height:50px;background-color:aqua;border: 2px solid black"></div>*@
                             <input type="text" class="form-control" style="height:50px;background-color:aqua;border: 2px solid black" id="serialResults" asp-for="TlIn">
                         </div>
                         <div class="col-md-2 col-sm-2" >
@@ -68,8 +67,9 @@
                             var filterValue = new object[]
                             {
                                                     new object[]{ "HinhThucCan",FilterBuilderFieldFilterOperations.Equal, 0 },
-                                                    new object[] { "DateIn", DateTime.Now }
-};
+                                                    new object[]{ "DateIn", DateTime.Now },
+                                                    new object[]{ "SystemId", "aaaa"}
+                            };
                         }
                         @(Html.DevExtreme().DataGrid<pmkd.Models.Can>()
                                                     .DataSource(d => d.Mvc().Controller("kho")
@@ -115,9 +115,9 @@
                                                     f.CustomOperations(co =>
                                                     {
                                                         var o = co.Add();
-                                                        o.Name("today");
-                                                        o.Caption("today");
-                                                        o.DataTypes(new[] { FilterBuilderFieldDataType.DateTime });
+                                                        o.Name("aaaa");
+                                                        o.Caption("aaaa");
+                                                        o.DataTypes(new[] { FilterBuilderFieldDataType.String });
                                                         o.Icon("check");
                                                         o.HasValue(false);
                                                         o.CalculateFilterExpression("calculateFilterExpression");
@@ -305,7 +305,7 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Ng giao/Lái xe</label>
                                 <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
-                                    <input @*list="ports"*@ class="form-control" style="height:30px">
+                                    <input @*list="ports"*@ class="form-control" style="height:30px" id="LaiXe">
                                     @*<datalist id="ports">
                                         @{
                                             foreach (var a in ViewBag.ports)
@@ -317,7 +317,7 @@
                                 </div>
                                 <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Người lập phiếu</label>
                                 <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
-                                    <input list="nguoilap" class="form-control" style="height:30px">
+                                    <input list="nguoilap" class="form-control" style="height:30px" id="NguoiLap">
                                     <datalist id="nguoilap">
                                         @{
                                             foreach (var a in ViewBag.nguoilap)
@@ -331,7 +331,7 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Nhân viên cân</label>
                                 <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
-                                    <input list="nhanvien" class="form-control" style="height:30px">
+                                    <input list="nhanvien" class="form-control" style="height:30px" id="NhanVien">
                                     <datalist id="nhanvien">
                                         @{
                                             foreach (var a in ViewBag.nhanvien)
@@ -343,7 +343,7 @@
                                 </div>
                                 <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Thủ kho</label>
                                 <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
-                                    <input list="thukho" class="form-control" style="height:30px">
+                                    <input list="thukho" class="form-control" style="height:30px" id="ThuKho">
                                     <datalist id="thukho">
                                         @{
                                             foreach (var a in ViewBag.thukho)
@@ -357,7 +357,7 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Bảo vệ</label>
                                 <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
-                                    <input list="baove" class="form-control" style="height:30px">
+                                    <input list="baove" class="form-control" style="height:30px" id="BaoVe">
                                     <datalist id="baove">
                                         @{
                                             foreach (var a in ViewBag.baove)
@@ -369,7 +369,7 @@
                                 </div>
                                 <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">LĐạo B.Phận</label>
                                 <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
-                                    <input list="lanhdao" class="form-control" style="height:30px">
+                                    <input list="lanhdao" class="form-control" style="height:30px" id="LanhDao">
                                     <datalist id="lanhdao">
                                         @{
                                             foreach (var a in ViewBag.lanhdao)

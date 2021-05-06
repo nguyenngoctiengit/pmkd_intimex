@@ -1,4 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
+@{ 
+    var ViewName = ViewData["title"];
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -729,14 +732,9 @@
         </div>
     </div>
     <!-- datepicker -->
-
-    <script src="~/js/js_create/dangkynhapkho.js"></script>
-    <script src="~/js/js_create/hdmb.js"></script>
-    <script src="~/js/js_create/hanghoa.js"></script>
-    <script src="~/js/js_create/lenhgiaohang.js"></script>
-    <script src="~/js/js_create/lookup1.js"></script>
-    <script src="~/js/js_create/khachhang1.js"></script>
-
+    <script src="~/js/js_create/@(ViewName).js"></script>
+    <script src="~/js/js_create/lookup.js"></script>
+    <script src="~/js/js_create/hdmb1.js"></script>
     <!-- dialog -->
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <!-- Bootstrap -->
@@ -780,86 +778,18 @@
     <!-- Custom Theme Scripts -->
     <script src="~/public/build/js/custom.min.js"></script>
     <script type="text/javascript">
-@*        const file = 'https://localhost:44334/can_txt.txt';
-        function readFile() {
-            fetch(file).then(respone => respone.text())
-                .then(data => {
-                    var item = document.getElementById("auto_reload");
-                    item.value = data;
-                });
-        }*@
-@*
-        setInterval(readFile, 1000);*@
-        var port, textEncoder, writableStreamClosed, writer;
-        async function connectSerial() {
-            try {
-                // Prompt user to select any serial port.
-                port = await navigator.serial.requestPort();
-                await port.open({ baudRate: 9600 });
-                listenToPort();
-
-                textEncoder = new TextEncoderStream();
-                writableStreamClosed = textEncoder.readable.pipeTo(port.writable);
-                alert("connect successful")
-                writer = textEncoder.writable.getWriter();
-            } catch {
-                alert("Serial Connection Failed");
-            }
-        }
-        async function sendSerialLine() {
-            dataToSend = document.getElementById("lineToSend").value;
-            appendToTerminal(dataToSend);
-            await writer.write(dataToSend);
-            var data = document.getElementById("lineToSend");
-            data.value = "";
-        }
-        async function listenToPort() {
-            const textDecoder = new TextDecoderStream();
-            const readableStreamClosed = port.readable.pipeTo(textDecoder.writable);
-            const reader = textDecoder.readable.getReader();
-
-            // Listen to data coming from the serial device.
-            while (true) {
-                const { value, done } = await reader.read();
-                if (done) {
-                    // Allow the serial port to be closed later.
-                    //reader.releaseLock();
-                    break;
-                }
-                // value is a string.
-                appendToTerminal(value);
-            }
-        }
-        const serialResultsDiv = document.getElementById("serialResults");
-
-        async function appendToTerminal(newStuff) {
-@*            serialResultsDiv.innerHTML += newStuff;*@
-            serialResultsDiv.value = newStuff
-@*            if (serialResultsDiv.innerHTML.length > 3000) serialResultsDiv.innerHTML = serialResultsDiv.innerHTML.slice(serialResultsDiv.innerHTML.length - 3000);
-
-            //scroll down to bottom of div
-            serialResultsDiv.scrollTop = serialResultsDiv.scrollHeight;*@
-        }
-
-        document.getElementById("lineToSend").addEventListener("keyup", async function (event) {
-            if (event.keyCode === 13) {
-                sendSerialLine();
-            }
-        })
-        var hinhthuccan = [{
-            "id": 0, "name": "Cân nhập hàng"
-        }, {
-            "id": 1, "name": "Cân xuất hàng"
-        }, {
-            "id": 2, "name": "Cân dịch vụ"
-        }
-        ];
         var array = @Html.Raw(Json.Serialize(ViewBag.listcan));
         var chuoi = [];
         function getDataGridCan() {
             return $("#dataGridCan").dxDataGrid("instance");
         }
         function SelectionChanged_can(selectedItems) {
+            var NguoiLap = document.getElementById("NguoiLap");
+            var LanhDao = document.getElementById("LanhDao");
+            var ThuKho = document.getElementById("ThuKho");
+            var NhanVien = document.getElementById("NhanVien");
+            var BaoVe = document.getElementById("BaoVe");
+            var LaiXe = document.getElementById("LaiXe");
             var time_in = document.getElementById("time_in");
             var soxe = document.getElementById("soxe1");
             var mahang = document.getElementById("mahang");
@@ -872,7 +802,7 @@
             var tlbaobi = document.getElementById("tlbaobi");
             var makhach = document.getElementById("makhach");
             var tenkhach = document.getElementById("tenkhach");
-            var systemId = document.getElementById("systemId");
+            var systemId = document.getElementById("systemId"); 
             var tlin = document.getElementById("tlin");
             var tlout = document.getElementById("tlout");
             var tlhang = document.getElementById("tlhang");
@@ -886,6 +816,12 @@
                             if (rowData[i].SystemId == chuoi[j].SystemId) {
                                 $("#formCan").attr("action", "kho/updatetlin/" + chuoi[j].SystemIds)
                                 trongluong.value = "TL:" + chuoi[j].TlNet + "kgs";
+                                LanhDao.value = chuoi[j].LanhDao;
+                                NguoiLap.value = chuoi[j].NguoiLap;
+                                ThuKho.value = chuoi[j].ThuKho;
+                                BaoVe.value = chuoi[j].BaoVe;
+                                NhanVien.value = chuoi[j].NhanVien;
+                                LaiXe.value = chuoi[j].LaiXe;
                                 timeout.value = chuoi[j].TimeOut;
                                 tlout.value = chuoi[j].TlOut;
                                 tlhang.value = Math.abs(chuoi[j].TlIn - chuoi[j].TlOut);
