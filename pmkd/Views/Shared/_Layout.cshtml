@@ -221,7 +221,7 @@
                                             <a>Số liệu<span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
                                                 <li>
-                                                    <a asp-action="hanghoa" asp-controller="danhmuc">Phiếu KCS</a>
+                                                    <a asp-action="kcs" asp-controller="kho">Phiếu KCS</a>
                                                 </li>
                                                 <li>
                                                     <a asp-action="cantrongluong" asp-controller="kho">Cân trọng lượng</a>
@@ -814,7 +814,7 @@
                         for (var j = 0; j < array.length; j++) {
                             chuoi[j] = array[j];
                             if (rowData[i].SystemId == chuoi[j].SystemId) {
-                                $("#formCan").attr("action", "kho/updatetlin/" + chuoi[j].SystemIds)
+                                $("#formCan").attr("action", "kho/updatetlin/" + chuoi[j].SystemId)
                                 trongluong.value = "TL:" + chuoi[j].TlNet + "kgs";
                                 LanhDao.value = chuoi[j].LanhDao;
                                 NguoiLap.value = chuoi[j].NguoiLap;

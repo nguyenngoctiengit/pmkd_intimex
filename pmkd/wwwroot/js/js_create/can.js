@@ -1,8 +1,8 @@
 ﻿function calculateFilterExpression(rowData) {
-    return [getSystemId, "=", "BL1160000001"]
+    return [getPhieuNX, "=", ""]
 }
-function getSystemId(rowData) {
-    return rowData.SystemId;
+function getPhieuNX(rowData) {
+    return rowData.PhieuNx;
 }
 var port, textEncoder, writableStreamClosed, writer;
 async function connectSerial() {

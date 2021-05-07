@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewData["Title"] = "kcs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="right_col" role="main" style="height: 500px">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Kiểm tra chất lượng</h3>
+            </div>
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @{
+            if (TempData["alertMessage"] != null)
+            {
+                <div style="color:red;font-size:30px">
+                    @TempData["alertMessage"].ToString()
+                </div>
+            }
+        }
+        @{
+            if (TempData["alertMessage1"] != null)
+            {
+                <div style="color:red;font-size:30px">
+                    @TempData["alertMessage1"].ToString()
+                </div>
+            }
+        }
+        <div class="clearfix"></div>
+        <div class="row" style="display: block;">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Kiểm tra chất lượng</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Settings 1</a>
+                                    <a class="dropdown-item" href="#">Settings 2</a>
+                                </div>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box table-responsive">
+                                     @(Html.DevExtreme().DataGrid<pmkd.Models.Kc>()
+                                        .ID("gridKcs")
+                                        .DataSource(d => d.Mvc().LoadAction("getKcs").Controller("kho").Key("SoPhieu"))
+                                        .RemoteOperations(true)
+                                        .Columns(colunms => {
+                                            colunms.AddFor(m => m.SoPhieu).Caption("Số phiếu");
+
+                                            colunms.AddFor(m => m.XeVc).Caption("Số xe");
+
+                                            colunms.AddFor(m => m.NgayNhap).Caption("Ngày cân");
+
+                                            colunms.AddFor(m => m.KhachHang).Caption("Khách hàng");
+
+                                            colunms.AddFor(m => m.LoaiBao).Caption("Loại bao");
+
+                                            colunms.AddFor(m => m.TenHang).Caption("Hàng hóa");
+
+                                            colunms.AddFor(m => m.SoLuong).Caption("Số bao");
+
+                                            colunms.AddFor(m => m.TrongLuong).Caption("Trọng lượng GW");
+
+                                            colunms.AddFor(m => m.TrongLuongNw).Caption("Trọng lượng NW");
+
+                                            colunms.AddFor(m => m.NguonHang).Caption("Nguồn hàng");
+
+                                            colunms.AddFor(m => m.NguoiKiem).Caption("Người kiểm");
+
+                                            colunms.AddFor(m => m.NguoiLayMau).Caption("Người lấy mẫu");
+
+                                            colunms.AddFor(m => m.PhuTrach).Caption("Người phụ trách");
+
+                                            colunms.AddFor(m => m.Ghichu).Caption("Ghi chú");
+
+                                        })
+                                        .MasterDetail(m => m.Enabled(true).Template(@<text>tiến</text>))
+                                        .Selection(s => s.Mode(SelectionMode.Single))
+                                        .HoverStateEnabled(true)
+                                        .Export(e => e.Enabled(true))
+                                        .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                        .HeaderFilter(header => header.Visible(true))
+                                        .AllowColumnReordering(true)
+                                        .AllowColumnResizing(true)
+                                        .ColumnAutoWidth(true)
+                                        .ColumnChooser(c => c.Enabled(true))
+                                        .ColumnFixing(c => c.Enabled(true))
+                                        .ShowBorders(true)
+                                        .Grouping(group => group.AutoExpandAll(true))
+                                        .SearchPanel(searchPanel => searchPanel.Visible(true))
+                                        .GroupPanel(groupPanel => groupPanel.Visible(true))
+                                        .Paging(paging => paging.PageSize(10))
+                                        .Pager(paper =>
+                                        {
+                                            paper.ShowPageSizeSelector(true);
+                                            paper.AllowedPageSizes(new[] { 5, 10, 20 });
+                                            paper.ShowInfo(true);
+                                        })
+                                    )
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->
+<!-- /page content -->
+<!-- footer content -->

@@ -68,7 +68,8 @@
                             {
                                                     new object[]{ "HinhThucCan",FilterBuilderFieldFilterOperations.Equal, 0 },
                                                     new object[]{ "DateIn", DateTime.Now },
-                                                    new object[]{ "SystemId", "aaaa"}
+                                                    new object[]{ "PhieuNx", "" },
+                                                    new object[]{"PhieuNx", FilterBuilderFieldFilterOperations.NotEqual}
                             };
                         }
                         @(Html.DevExtreme().DataGrid<pmkd.Models.Can>()
@@ -85,6 +86,8 @@
                                                         columns.AddFor(m => m.Xeptai1).Caption("Xếp tài");
 
                                                         columns.AddFor(m => m.DateIn).Caption("Ngày vào").Visible(false);
+
+                                                        columns.AddFor(m => m.PhieuNx).Caption("Phiếu NX").Visible(false);
 
                                                         columns.AddFor(m => m.TruckNo).Caption("Số xe");
 
@@ -115,13 +118,14 @@
                                                     f.CustomOperations(co =>
                                                     {
                                                         var o = co.Add();
-                                                        o.Name("aaaa");
-                                                        o.Caption("aaaa");
+                                                        o.Name("");
+                                                        o.Caption("Chưa hoàn thành");
                                                         o.DataTypes(new[] { FilterBuilderFieldDataType.String });
                                                         o.Icon("check");
                                                         o.HasValue(false);
                                                         o.CalculateFilterExpression("calculateFilterExpression");
                                                     })
+                                                    
                                                     .AllowHierarchicalFields(true))
                                                     .FilterBuilderPopup(p =>
                                                     p.Position(pos =>

@@ -228,7 +228,7 @@ namespace pmkd.Controllers
         }
         public object GetCan(DataSourceLoadOptions loadOptions)
         {
-            return DataSourceLoader.Load(_context.Cans, loadOptions);
+            return DataSourceLoader.Load(_context.Cans.OrderBy(a => a.Xeptai1), loadOptions);
         }
         [HttpPost][Route("kho/kho/updatetlin/{id?}")]
         public IActionResult updatetlin(Can can,string id)
@@ -249,6 +249,7 @@ namespace pmkd.Controllers
         }
         #endregion
         //---------------------------Lệnh giao hàng--------------------------
+        #region lệnh giao hàng
         public IActionResult lenhgiaohang()
         {
             return View("lenhgiaohang/lenhgiaohang");
@@ -309,6 +310,17 @@ namespace pmkd.Controllers
                 return BadRequest(GetFullErrorMessage(ModelState));
             _context.SaveChanges();
             return Ok(lenhgiaohang);
+        }
+        #endregion
+        //---------------------------Kiểm tra chất lượng--------------------
+        public IActionResult kcs()
+        {
+            return View("kcs/kcs");
+        }
+        [HttpGet]
+        public object getKcs(DataSourceLoadOptions loadOptions)
+        {
+            return DataSourceLoader.Load(_context.Kcs, loadOptions);
         }
     }
 }
