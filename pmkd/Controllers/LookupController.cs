@@ -179,5 +179,30 @@ namespace pmkd.Controllers
             });
             return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
         }
+        public async Task<IActionResult> getxevc(DataSourceLoadOptions loadOptions)
+        {
+            var uniname = HttpContext.Session.GetString("UnitName");
+            var item_return = from c in _context.Cans
+                              join x in _context.XepTais on c.IdXepTai equals x.Id
+                              where c.Macn == uniname && x.Aprove == 1 && x.Kcs == ""
+                              select new
+                              {
+                                  c.TruckNo,
+                                  x.Mahang,
+                                  x.Tenhang,
+                                  x.MaKhach,
+                                  x.KhachHang,
+                                  x.CanId,
+                                  x.BagTypeId,
+                                  x.SoBao,
+                                  x.TlBaobi,
+                                  Tl_Net = (c.TlIn > 0 && c.TlOut > 0) ? c.TlNet : 0,
+                                  x.Id,
+                                  x.Ngaycan,
+                                  ghi_chu = x.GhiChu + " " + (x.Status == 2 ? "Đạt thử nếm" : "Không đạt thử nếm"),
+                                  x.KhoId
+                              };
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
     }
 }

@@ -322,5 +322,10 @@ namespace pmkd.Controllers
         {
             return DataSourceLoader.Load(_context.Kcs, loadOptions);
         }
+        [Route("kho/kho/themkcs")]
+        public IActionResult themkcs()
+        {
+            return View("kcs/themkcs");
+        }
     }
 }

@@ -667,3 +667,4 @@ C:\Users\User\Desktop\pmkd_intimex\pmkd\obj\Debug\net5.0\Razor\Views\Kho\lenhgia
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\About\help.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\pakd\pakd.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Kho\kcs\kcs.cshtml.g.cs
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Kho\kcs\themkcs.cshtml.g.cs

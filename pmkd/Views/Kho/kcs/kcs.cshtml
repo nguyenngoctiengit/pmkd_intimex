@@ -64,9 +64,14 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive">
-                                     @(Html.DevExtreme().DataGrid<pmkd.Models.Kc>()
+                                    @(Html.DevExtreme().DataGrid<pmkd.Models.Kc>()
                                         .ID("gridKcs")
-                                        .DataSource(d => d.Mvc().LoadAction("getKcs").Controller("kho").Key("SoPhieu"))
+                                        .DataSource(d => d.Mvc().LoadAction("getKcs")
+                                                                .Controller("kho")
+                                                                .Key("SoPhieu")
+                                                                .InsertAction("insertKcs")
+                                                                .UpdateAction("updateKcs")
+                                                                .DeleteAction("deleteKcs"))
                                         .RemoteOperations(true)
                                         .Columns(colunms => {
                                             colunms.AddFor(m => m.SoPhieu).Caption("Số phiếu");
@@ -98,7 +103,102 @@
                                             colunms.AddFor(m => m.Ghichu).Caption("Ghi chú");
 
                                         })
-                                        .MasterDetail(m => m.Enabled(true).Template(@<text>tiến</text>))
+                                        .MasterDetail(m => m.Enabled(true).Template(@<text>
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-4 col-sm-4">Tiêu chuẩn chất lượng</label>
+                                                <label class="col-form-label col-md-1 col-sm-1">Độ ẩm</label>
+                                                <label class="col-form-label col-md-1 col-sm-1">Tạp chất</label>
+                                                <label class="col-form-label col-md-1 col-sm-1">Độ vỡ</label>
+                                                <label class="col-form-label col-md-1 col-sm-1">Mốc</label>
+                                                <label class="col-form-label col-md-1 col-sm-1">Nâu</label>
+                                                <label class="col-form-label col-md-1 col-sm-1">K.loài</label>
+                                                <label class="col-form-label col-md-1 col-sm-1">Tr.Xốp</label>
+                                                <label class="col-form-label col-md-1 col-sm-1">H.cháy</label>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-4 col-sm-4"></label>
+                                                <div class="col-md-1 col-sm-1">
+                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.DoAm%>" readonly>
+                                                </div>
+                                                <div class="col-md-1 col-sm-1">
+                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.TapChat%>" readonly>
+                                                </div>
+                                                <div class="col-md-1 col-sm-1">
+                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.DenVo%>" readonly>
+                                                </div>
+                                                <div class="col-md-1 col-sm-1">
+                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.HatMoc%>" readonly>
+                                                </div>
+                                                <div class="col-md-1 col-sm-1">
+                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.HatNau%>" readonly>
+                                                </div>
+                                                <div class="col-md-1 col-sm-1">
+                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.HatCxk%>" readonly>
+                                                </div>
+                                                <div class="col-md-1 col-sm-1">
+                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.TrangXop%>" readonly>
+                                                </div>
+                                                <div class="col-md-1 col-sm-1">
+                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.HatChay%>" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-2 col-sm-2">Tiêu chuẩn cơ lý</label>
+                                                <label class="col-form-label col-md-1 col-sm-1">Sàng 20</label>
+                                                <label class="col-form-label col-md-1 col-sm-1">Sàng 19</label>
+                                                <label class="col-form-label col-md-1 col-sm-1">Sàng 18</label>
+                                                <label class="col-form-label col-md-1 col-sm-1">Sàng 17</label>
+                                                <label class="col-form-label col-md-1 col-sm-1">Sàng 16</label>
+                                                <label class="col-form-label col-md-1 col-sm-1">Sàng 15</label>
+                                                <label class="col-form-label col-md-1 col-sm-1">Sàng 14</label>
+                                                <label class="col-form-label col-md-1 col-sm-1">Sàng 13</label>
+                                                <label class="col-form-label col-md-1 col-sm-1">Sàng 12</label>
+                                                <label class="col-form-label col-md-1 col-sm-1">Sàng 8</label>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-2 col-sm-2"></label>
+                                                <div class="col-md-1 col-sm-1">
+                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.Sang20%>" readonly>
+                                                </div>
+                                                <div class="col-md-1 col-sm-1">
+                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.Sang19%>" readonly>
+                                                </div>
+                                                <div class="col-md-1 col-sm-1">
+                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.Sang18%>" readonly>
+                                                </div>
+                                                <div class="col-md-1 col-sm-1">
+                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.Sang17%>" readonly>
+                                                </div>
+                                                <div class="col-md-1 col-sm-1">
+                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.Sang16%>" readonly>
+                                                </div>
+                                                <div class="col-md-1 col-sm-1">
+                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.Sang15%>" readonly> 
+                                                </div>
+                                                <div class="col-md-1 col-sm-1">
+                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.Sang14%>" readonly>
+                                                </div>
+                                                <div class="col-md-1 col-sm-1">
+                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.Sang13%>" readonly>
+                                                </div>
+                                                <div class="col-md-1 col-sm-1">
+                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.Sang12%>" readonly>
+                                                </div>
+                                                <div class="col-md-1 col-sm-1">
+                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.Sang8%>" readonly>
+                                                </div>
+                                            </div>
+                                        </text>))
+                                        .Editing(e => e.Mode(GridEditMode.Popup)
+                                                        .AllowUpdating(true)
+                                                        .AllowDeleting(true)
+                                                        .UseIcons(true)
+                                                        .Popup(p => p.Title("Kcs")
+                                                                     .ShowTitle(true)
+                                                                     .Width(700)
+                                                                     .Height(500))
+                                                       )
+                                        .OnToolbarPreparing("toolbar_kcs")
                                         .Selection(s => s.Mode(SelectionMode.Single))
                                         .HoverStateEnabled(true)
                                         .Export(e => e.Enabled(true))

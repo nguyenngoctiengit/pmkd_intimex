@@ -778,6 +778,24 @@
     <!-- Custom Theme Scripts -->
     <script src="~/public/build/js/custom.min.js"></script>
     <script type="text/javascript">
+        function valuechange_xevc(e) {
+            var dataGrid = $("#xevc").dxDataGrid("instance");
+            if (dataGrid.length) {
+                dataGrid.selectRows(e.value, false);
+            }
+        }
+        function toolbar_kcs(e) {
+            e.toolbarOptions.items.unshift({
+                location: "after",
+                widget: "dxButton",
+                options: {
+                    icon: "add",
+                    onClick: function () {
+                        location.href = "kho/themkcs";
+                    }
+                }
+            });
+        }
         var array = @Html.Raw(Json.Serialize(ViewBag.listcan));
         var chuoi = [];
         function getDataGridCan() {
