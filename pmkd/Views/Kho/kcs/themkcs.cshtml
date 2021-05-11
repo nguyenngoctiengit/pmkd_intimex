@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "hdmb1";
+    ViewData["Title"] = "kcs";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model Kc
@@ -83,49 +83,83 @@
                                             .Height(345)
                                             .Selection(s => s.Mode(SelectionMode.Single))
                                             .SelectedRowKeys(new JS(@"component.option(""value"") ? [component.option(""value"")] : []"))
-                                            .OnSelectionChanged(@<text>
-                                                function(selectedItems) {
-                                                    var keys = selectedItems.selectedRowKeys;
-                                                    component.option("value", keys);
-                                                    component.close();
+                                            .OnSelectionChanged(@<text>function(selectedItems) {
+                                                var array = @Html.Raw(Json.Serialize(ViewBag.xeptai));
+                                                var chuoi = [];
+@*                                                var array1 = @Html.Raw(Json.Serialize(ViewBag.can));
+                                                var chuoi1 = [];*@
+                                                var txtKhachhang = document.getElementById("txtKhachhang");
+                                                var keys = selectedItems.selectedRowKeys;
+                                                for (var i = 0;i @Html.Raw("<") array.length; i++)
+                                                {
+                                                    chuoi[i] = array[i];
+                                                    if (chuoi[i].Id == keys){
+                                                        $("#txtKhachhang").dxTextBox("instance").option("value", chuoi[i].MaKhach);
+                                                        $("#txtTenkhach").dxTextBox("instance").option("value", chuoi[i].KhachHang);
+                                                        $("#dateNgaynhap").dxDateBox("instance").option("value", chuoi[i].Ngaycan);
+                                                        $("#txtMahang").dxTextBox("instance").option("value", chuoi[i].Mahang);
+                                                        $("#txtTenhang").dxTextBox("instance").option("value", chuoi[i].Tenhang);
+                                                        $("#txtSoluong").dxTextBox("instance").option("value", chuoi[i].SoBao);
+                                                        $("#selectLoaibao").dxSelectBox("instance").option("value", chuoi[i].BagTypeId);
+                                                        @*for (var j = 0;j @Html.Raw("<") array1.length;j++){
+                                                            chuoi1[j] = array1[j];
+                                                            console.log(chuoi1[j]);
+                                                            
+
+                                                        }*@
+                                                    }
                                                 }
-                                            </text>)
+                                                component.option("value", keys);
+                                                component.close();
+                                            }</text>)
                                         )
                                     }
                                 </div>
                                 <label class="col-form-label col-md-1 col-sm-1">Ngày cân</label>
                                 <div class="col-form-label col-md-5 col-sm-5">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().DateBoxFor(m => m.NgayNhap).ID("dateNgaynhap"))
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-1 col-sm-1">Khách hàng</label>
-                                <div class="col-md-5 col-sm-5">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                <div class="col-md-2 col-sm-2">
+                                    @(Html.DevExtreme().TextBoxFor(m => m.KhachHang).ID("txtKhachhang"))
+                                </div>
+                                <div class="col-md-3 col-sm-3">
+                                    @(Html.DevExtreme().TextBoxFor(m => m.TenKhach).ID("txtTenkhach"))
                                 </div>
                                 <label class="col-form-label col-md-1 col-sm-1">Hàng hóa</label>
-                                <div class="col-form-label col-md-5 col-sm-5">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                <div class="col-form-label col-md-2 col-sm-2">
+                                    @(Html.DevExtreme().TextBoxFor(m => m.Mahang).ID("txtMahang"))
+                                </div>
+                                <div class="col-form-label col-md-3 col-sm-3">
+                                    @(Html.DevExtreme().TextBoxFor(m => m.TenHang).ID("txtTenhang"))
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-1 col-sm-1">Số bao</label>
                                 <div class="col-md-5 col-sm-5">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.SoLuong).ID("txtSoluong"))
                                 </div>
                                 <label class="col-form-label col-md-1 col-sm-1">Loại bao</label>
                                 <div class="col-form-label col-md-5 col-sm-5">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().SelectBoxFor(m => m.LoaiBao)
+                                                            .DataSource(d => d.Mvc().Controller("lookup")
+                                                                                    .LoadAction("getloaibao")
+                                                                                    )
+                                                            .DisplayExpr("Name")
+                                                            .ValueExpr("BagTypeId")
+                                                            .ID("selectLoaibao"))
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2">Trọng lượng(GW)</label>
                                 <div class="col-md-4 col-sm-4">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.TrongLuong))
                                 </div>
                                 <label class="col-form-label col-md-2 col-sm-2">Trọng lượng(NW)</label>
                                 <div class="col-form-label col-md-4 col-sm-4">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.TrongLuongNw))
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -142,28 +176,28 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2"></label>
                                 <div class="col-md-1 col-sm-1">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.DoAm))
                                 </div>
                                 <div class="col-md-1 col-sm-1">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.TapChat))
                                 </div>
                                 <div class="col-md-1 col-sm-1">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.DenVo))
                                 </div>
                                 <div class="col-md-1 col-sm-1">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.HatMoc))
                                 </div>
                                 <div class="col-md-1 col-sm-1">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.HatNau))
                                 </div>
                                 <div class="col-md-1 col-sm-1">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.HatCxk))
                                 </div>
                                 <div class="col-md-1 col-sm-1">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.TrangXop))
                                 </div>
                                 <div class="col-md-1 col-sm-1">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.HatChay))
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -182,34 +216,34 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2"></label>
                                 <div class="col-md-1 col-sm-1">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.Sang20))
                                 </div>
                                 <div class="col-md-1 col-sm-1">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.Sang19))
                                 </div>
                                 <div class="col-md-1 col-sm-1">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.Sang18))
                                 </div>
                                 <div class="col-md-1 col-sm-1">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.Sang17))
                                 </div>
                                 <div class="col-md-1 col-sm-1">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.Sang16))
                                 </div>
                                 <div class="col-md-1 col-sm-1">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.Sang15))
                                 </div>
                                 <div class="col-md-1 col-sm-1">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.Sang14))
                                 </div>
                                 <div class="col-md-1 col-sm-1">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.Sang13))
                                 </div>
                                 <div class="col-md-1 col-sm-1">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.Sang12))
                                 </div>
                                 <div class="col-md-1 col-sm-1">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.Sang8))
                                 </div>
                             </div>
                             <div class="form-group row">

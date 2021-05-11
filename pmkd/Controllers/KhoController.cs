@@ -90,7 +90,7 @@ namespace pmkd.Controllers
                 {
                     try
                     {
-                        var can = new Can();
+                        Can can = new Can();
                         var autoincrement_can = _context.AutomaticValuesBranches.Where(a => a.Macn == "INXBL" && a.ObjectName == "CANBLI").FirstOrDefault();
                         var PrefixOfDefaultValueForId = autoincrement_can.PrefixOfDefaultValueForId;
                         var LengthOfDefaultValueForId = (int)autoincrement_can.LengthOfDefaultValueForId;
@@ -104,6 +104,7 @@ namespace pmkd.Controllers
                         var parameterOut = PrefixOfDefaultValueForId + chuoi.Substring(chuoi.Length + PrefixOfDefaultValueForId.Length - LengthOfDefaultValueForId, 7);
                         var next = PrefixOfDefaultValueForId + chuoinext.Substring(chuoinext.Length + PrefixOfDefaultValueForId.Length - LengthOfDefaultValueForId, 7);
                         xeptai.CanId = parameterOut;
+                        xeptai.Aprove = 1;
                         autoincrement_can.LastValueOfColumnId = parameterOut;
                         autoincrement_can.NextValueOfColumnId = next;
                         _context.AutomaticValuesBranches.Update(autoincrement_can);
@@ -315,6 +316,9 @@ namespace pmkd.Controllers
         //---------------------------Kiểm tra chất lượng--------------------
         public IActionResult kcs()
         {
+            var yesterday = DateTime.Today.AddDays(-1);
+            var today = DateTime.Now;
+            var aa = (from a in _context.Cans where a.DateIn > yesterday select a).ToList();
             return View("kcs/kcs");
         }
         [HttpGet]
@@ -325,6 +329,8 @@ namespace pmkd.Controllers
         [Route("kho/kho/themkcs")]
         public IActionResult themkcs()
         {
+            ViewBag.xeptai = _context.XepTais.ToList();
+            ViewBag.aaa = _context.KhachHangs.ToList();
             return View("kcs/themkcs");
         }
     }
