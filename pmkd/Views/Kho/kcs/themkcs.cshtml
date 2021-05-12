@@ -1,14 +1,13 @@
 ﻿
 @{
-    ViewData["Title"] = "kcs";
+    ViewData["Title"] = "hdmb1";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model Kc
 <div class="right_col" role="main" style="height:800px">
     <div class="">
         <div class="col-md-12 col-sm-12">
-            <form method="post" asp-action="themhopdong1" asp-controller="hopdong">
-
+            <form method="post" asp-action="themkcs1" asp-controller="kho"> 
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>Thêm<small>KCS</small></h2>
@@ -35,24 +34,21 @@
                                 </div>
                             }
                         }
-                        @{
-                            if (TempData["alertMessage1"] != null)
-                            {
-                                <div style="color:red;font-size:30px">
-                                    @TempData["alertMessage1"].ToString()
-                                </div>
-                            }
-                        }
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
                         <br />
+                        @{
+                            var item = new[] { "cafe", "gạo" };
+                        }
                         @using (Html.DevExtreme().ValidationGroup())
                         {
+
+                            @(Html.DevExtreme().RadioGroupFor(m => m.Manhom).Items(item).Value("cafe").Layout(Orientation.Horizontal))
                             <div class="form-group row">
                                 <label class="col-form-label col-md-1 col-sm-1">Số xe</label>
                                 <div class="col-md-5 col-sm-5">
-                                    @(Html.DevExtreme().DropDownBoxFor(m => m.XeVc)
+                                    @(Html.DevExtreme().DropDownBoxFor(m => m.XeptaiId)
                                         .ValueExpr("Id")
                                         .DisplayExpr("TruckNo")
                                         .DataSource(d => d.Mvc()
@@ -86,8 +82,8 @@
                                             .OnSelectionChanged(@<text>function(selectedItems) {
                                                 var array = @Html.Raw(Json.Serialize(ViewBag.xeptai));
                                                 var chuoi = [];
-@*                                                var array1 = @Html.Raw(Json.Serialize(ViewBag.can));
-                                                var chuoi1 = [];*@
+                                                var array1 = @Html.Raw(Json.Serialize(ViewBag.can));
+                                                var chuoi1 = [];
                                                 var txtKhachhang = document.getElementById("txtKhachhang");
                                                 var keys = selectedItems.selectedRowKeys;
                                                 for (var i = 0;i @Html.Raw("<") array.length; i++)
@@ -101,12 +97,18 @@
                                                         $("#txtTenhang").dxTextBox("instance").option("value", chuoi[i].Tenhang);
                                                         $("#txtSoluong").dxTextBox("instance").option("value", chuoi[i].SoBao);
                                                         $("#selectLoaibao").dxSelectBox("instance").option("value", chuoi[i].BagTypeId);
-                                                        @*for (var j = 0;j @Html.Raw("<") array1.length;j++){
+                                                        for (var j = 0;j @Html.Raw("<") array1.length;j++){
                                                             chuoi1[j] = array1[j];
-                                                            console.log(chuoi1[j]);
-                                                            
-
-                                                        }*@
+                                                            if (chuoi1[j].SystemId == chuoi[i].CanId){
+                                                                $("#trongluongGW").dxTextBox("instance").option("value", chuoi1[j].TlBao + chuoi1[j].TlNet);
+                                                                $("#trongluongNW").dxTextBox("instance").option("value", chuoi1[j].TlNet);
+                                                            }
+                                                        }
+                                                        if (chuoi[i].Status == 2){
+                                                            $("#txtGhichu").dxTextBox("instance").option("value", "Đạt nếm thử");
+                                                        }else{
+                                                            $("#txtGhichu").dxTextBox("instance").option("value", "Không đạt nếm thử");
+                                                        }
                                                     }
                                                 }
                                                 component.option("value", keys);
@@ -146,24 +148,26 @@
                                     @(Html.DevExtreme().SelectBoxFor(m => m.LoaiBao)
                                                             .DataSource(d => d.Mvc().Controller("lookup")
                                                                                     .LoadAction("getloaibao")
+                                                                                    .LoadMode(DataSourceLoadMode.Raw)
                                                                                     )
                                                             .DisplayExpr("Name")
                                                             .ValueExpr("BagTypeId")
-                                                            .ID("selectLoaibao"))
+                                                            .ID("selectLoaibao")
+                                                            )
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2">Trọng lượng(GW)</label>
                                 <div class="col-md-4 col-sm-4">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.TrongLuong))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.TrongLuong).ID("trongluongGW"))
                                 </div>
                                 <label class="col-form-label col-md-2 col-sm-2">Trọng lượng(NW)</label>
                                 <div class="col-form-label col-md-4 col-sm-4">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.TrongLuongNw))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.TrongLuongNw).ID("trongluongNW"))
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2 col-sm-2">Tiêu chuẩn chất lượng</label>
+                                <label class="col-form-label col-md-2 col-sm-2" style="color:red;font-size:16px">Tiêu chuẩn chất lượng</label>
                                 <label class="col-form-label col-md-1 col-sm-1">Độ ẩm</label>
                                 <label class="col-form-label col-md-1 col-sm-1">Tạp chất</label>
                                 <label class="col-form-label col-md-1 col-sm-1">Độ vỡ</label>
@@ -201,7 +205,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2 col-sm-2">Tiêu chuẩn cơ lý</label>
+                                <label class="col-form-label col-md-2 col-sm-2" style="color:red;font-size:20px">Tiêu chuẩn cơ lý</label>
                                 <label class="col-form-label col-md-1 col-sm-1">Sàng 20</label>
                                 <label class="col-form-label col-md-1 col-sm-1">Sàng 19</label>
                                 <label class="col-form-label col-md-1 col-sm-1">Sàng 18</label>
@@ -247,33 +251,44 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2 col-sm-2">Nguồn hàng</label>
+                                <label class="col-form-label col-md-2 col-sm-2" style="color:red;font-size:20px">Nguồn hàng</label>
                                 <div class="col-md-10 col-sm-10">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.NguonHang))
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2">Người kiểm hàng</label>
                                 <div class="col-md-10 col-sm-10">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.NguoiKiem).Value(ViewBag.name))
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2">Người lấy mẫu</label>
                                 <div class="col-md-10 col-sm-10">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.NguoiLayMau))
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2">Phụ trách Bp</label>
                                 <div class="col-md-10 col-sm-10">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.PhuTrach))
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2">Ghi chú</label>
                                 <div class="col-md-10 col-sm-10">
-                                    @(Html.DevExtreme().TextBoxFor(m => m.XeVc))
+                                    @(Html.DevExtreme().TextBoxFor(m => m.Ghichu).ID("txtGhichu"))
+                                </div>
+                            </div>
+                            <div class="ln_solid"></div>
+                            <div class="form-group row">
+                                <div class="col-md-9 col-sm-9  offset-md-5">
+                                    @(Html.DevExtreme().Button()
+                                        .ID("button")
+                                        .Text("Submit")
+                                        .Type(ButtonType.Success)
+                                        .UseSubmitBehavior(true)
+                                    )
                                 </div>
                             </div>
                         }
