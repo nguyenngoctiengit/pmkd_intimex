@@ -309,7 +309,7 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Ng giao/Lái xe</label>
                                 <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
-                                    <input @*list="ports"*@ class="form-control" style="height:30px" id="LaiXe">
+                                    <input type="text" class="form-control" style="height:30px" id="LaiXe" asp-for="LaiXe">
                                     @*<datalist id="ports">
                                         @{
                                             foreach (var a in ViewBag.ports)
@@ -321,7 +321,7 @@
                                 </div>
                                 <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Người lập phiếu</label>
                                 <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
-                                    <input list="nguoilap" class="form-control" style="height:30px" id="NguoiLap">
+                                    <input list="nguoilap" class="form-control" style="height:30px" id="NguoiLap" asp-for="NguoiLap">
                                     <datalist id="nguoilap">
                                         @{
                                             foreach (var a in ViewBag.nguoilap)
@@ -335,7 +335,7 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Nhân viên cân</label>
                                 <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
-                                    <input list="nhanvien" class="form-control" style="height:30px" id="NhanVien">
+                                    <input list="nhanvien" class="form-control" style="height:30px" id="NhanVien" asp-for="NhanVien">
                                     <datalist id="nhanvien">
                                         @{
                                             foreach (var a in ViewBag.nhanvien)
@@ -347,7 +347,7 @@
                                 </div>
                                 <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Thủ kho</label>
                                 <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
-                                    <input list="thukho" class="form-control" style="height:30px" id="ThuKho">
+                                    <input list="thukho" class="form-control" style="height:30px" id="ThuKho" asp-for="ThuKho">
                                     <datalist id="thukho">
                                         @{
                                             foreach (var a in ViewBag.thukho)
@@ -361,7 +361,7 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Bảo vệ</label>
                                 <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
-                                    <input list="baove" class="form-control" style="height:30px" id="BaoVe">
+                                    <input list="baove" class="form-control" style="height:30px" id="BaoVe" asp-for="BaoVe">
                                     <datalist id="baove">
                                         @{
                                             foreach (var a in ViewBag.baove)
@@ -373,7 +373,7 @@
                                 </div>
                                 <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">LĐạo B.Phận</label>
                                 <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
-                                    <input list="lanhdao" class="form-control" style="height:30px" id="LanhDao">
+                                    <input list="lanhdao" class="form-control" style="height:30px" id="LanhDao" asp-for="LanhDao">
                                     <datalist id="lanhdao">
                                         @{
                                             foreach (var a in ViewBag.lanhdao)

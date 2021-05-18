@@ -68,10 +68,24 @@
                                             .ID("xevc")
                                             .DataSource(new JS(@"component.getDataSource()"))
                                             .Columns(columns => {
-                                                columns.Add().DataField("TruckNo");
-                                                columns.Add().DataField("Tenhang");
-                                                columns.Add().DataField("KhachHang");
+                                                columns.Add().DataField("TruckNo").Caption("Số xe");
+                                                columns.Add().DataField("Tenhang").Caption("Tên hàng");
+                                                columns.Add().DataField("KhachHang").Caption("Khách hàng");
+                                                columns.Add().DataField("Mahang").Caption("Mã hàng");
+                                                columns.Add().DataField("CanId").Caption("Mã cân");
+                                                columns.Add().DataField("BagTypeId").Caption("Mã túi");
+                                                columns.Add().DataField("SoBao").Caption("Số bao");
+                                                columns.Add().DataField("TlBaobi").Caption("Trọng lương bao bì");
+                                                columns.Add().DataField("Tl_Net").Caption("Trọng lượng");
+                                                columns.Add().DataField("Id").Caption("Mã");
+                                                columns.Add().DataField("Ngaycan").Caption("Ngày cân");
+                                                columns.Add().DataField("ghi_chu").Caption("Ghi chú");
                                             })
+                                            .AllowColumnReordering(true)
+                                            .AllowColumnResizing(true)
+                                            .ColumnAutoWidth(true)
+                                            .ColumnFixing(c => c.Enabled(true))
+                                            .ShowBorders(true)
                                             .HoverStateEnabled(true)
                                             .Paging(p => p.PageSize(10))
                                             .FilterRow(f => f.Visible(true))

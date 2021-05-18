@@ -215,14 +215,32 @@ namespace pmkd.Controllers
         {
             var datetime = DateTime.Now;
             var item_return = _context.Cans.Where(a => a.SystemId == id).FirstOrDefault();
-            if (item_return.TlIn != 0)
+            if (can.TlIn != null)
             {
-                item_return.TlOut = can.TlIn;
+                if (item_return.TlIn == 0 || item_return.TlIn == null)
+                {
+                    item_return.TlIn = can.TlIn;
+                    item_return.TimeIn = datetime.ToString("HH:mm");
+                    item_return.DateIn = datetime.Date;
+                }
+                else if (item_return.TlIn != 0 || item_return.TlIn != null)
+                {
+                    item_return.TlOut = can.TlIn;
+                    item_return.TimeOut = datetime.ToString("HH:mm");
+                    item_return.DateIn = datetime.Date;
+
+                }
+                if ((item_return.TlIn != 0 || item_return.TlIn != null) && (item_return.TlOut != 0 || item_return != null))
+                {
+                    item_return.TlNet = Math.Abs(Convert.ToDecimal(item_return.TlIn - item_return.TlOut - item_return.TlBao));
+                }
             }
-            item_return.TlIn = can.TlIn;
-            item_return.TimeIn = datetime.ToString("HH:mm");
-            item_return.DateIn = datetime.Date;
-            
+            item_return.LaiXe = can.LaiXe;
+            item_return.NguoiLap = can.NguoiLap;
+            item_return.NhanVien = can.NhanVien;
+            item_return.ThuKho = can.ThuKho;
+            item_return.BaoVe = can.BaoVe;
+            item_return.LanhDao = can.LanhDao;
             _context.Cans.Update(item_return);
             _context.SaveChanges();
             return RedirectToAction("cantrongluong");
@@ -321,12 +339,21 @@ namespace pmkd.Controllers
                 TempData["alertMessage"] = "Xe đã được lập KCS, vui lòng kiểm tra lại";
                 return RedirectToAction("themkcs");
             }
+            var canid = _context.XepTais.Where(a => a.Id == kc.XeptaiId).Select(a => a.CanId).FirstOrDefault();
+            if (_context.Cans.Where(a => a.SystemId == canid).Select(a => a.TlIn).FirstOrDefault() == 0 || 
+                _context.Cans.Where(a => a.SystemId == canid).Select(a => a.TlOut).FirstOrDefault() == 0 || 
+                _context.Cans.Where(a => a.SystemId == canid).Select(a => a.TlNet).FirstOrDefault() == 0)
+            {
+                TempData["alertMessage"] = "Xe chưa hoàn tất cân hàng, làm ơn hoàn tất cân hàng trước khi lập kcs";
+                return RedirectToAction("themkcs");
+            }
+
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
                     Kc kc1 = new Kc();
-                    XepTai xepTai = new XepTai();
+                    XepTai xepTai = _context.XepTais.Where(a => a.Id == kc.XeptaiId).FirstOrDefault();
                     var autoincrement_kcs = _context.AutomaticValuesBranches.Where(a => a.Macn == "INXBL" && a.ObjectName == "KCSNNLBLI").FirstOrDefault();
                     var PrefixOfDefaultValueForId_kcs = autoincrement_kcs.PrefixOfDefaultValueForId;
                     var LengthOfDefaultValueForId_kcs = (int)autoincrement_kcs.LengthOfDefaultValueForId;
@@ -359,16 +386,16 @@ namespace pmkd.Controllers
                     kc1.PhuTrach = kc.PhuTrach;
                     kc1.NguonHang = kc.NguonHang;
                     kc1.Dvt = "kgs";
-                    var canid = (from a in _context.XepTais where a.Id == kc.XeptaiId select a.CanId).FirstOrDefault();
+                    var canid1 = (from a in _context.XepTais where a.Id == kc.XeptaiId select a.CanId).FirstOrDefault();
                     var khoid = (from a in _context.XepTais where a.Id == kc.XeptaiId select a.KhoId).FirstOrDefault();
-                    kc1.CanId = canid;
+                    kc1.CanId = canid1;
                     kc1.KhoId = khoid;
                     kc1.TrongLuongNw = kc.TrongLuongNw;
                     kc1.NguoiLayMau = kc.NguoiLayMau;
                     kc1.XeptaiId = kc.XeptaiId;
                     kc1.Macn = HttpContext.Session.GetString("UnitName");
                     kc1.NguoiTao = HttpContext.Session.GetString("userId");
-                    kc1.NgayPhieu = DateTime.Now;
+                    kc1.NgayPhieu = kc1.NgayNhap;
                     kc1.TenKhach = kc.TenKhach;
                     kc1.LoaiBao = kc.LoaiBao;
                     kc1.TrongLuong = kc.TrongLuong;

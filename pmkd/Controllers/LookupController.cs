@@ -184,7 +184,7 @@ namespace pmkd.Controllers
             var uniname = HttpContext.Session.GetString("UnitName");
             var item_return = from c in _context.Cans
                               join x in _context.XepTais on c.IdXepTai equals x.Id
-                              where c.Macn == uniname && x.Aprove == 1 && x.Kcs == ""
+                              where c.Macn == uniname && x.Aprove == 1 && x.Kcs == "" && c.TlNet != 0 
                               select new
                               {
                                   c.TruckNo,

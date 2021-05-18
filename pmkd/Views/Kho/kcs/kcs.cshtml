@@ -56,6 +56,12 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive">
+                                    @{
+                                        var filterValue = new object[]
+                                        {
+                                            new object[]{ "NgayNhap", DateTime.Now }
+                                        };
+                                    }
                                     @(Html.DevExtreme().DataGrid<pmkd.Models.Kc>()
                                         .ID("gridKcs")
                                         .DataSource(d => d.Mvc().LoadAction("getKcs")
@@ -165,7 +171,7 @@
                                                     <input type="text" class="form-control" style="height:30px" value="<%- data.Sang16%>" readonly>
                                                 </div>
                                                 <div class="col-md-1 col-sm-1">
-                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.Sang15%>" readonly> 
+                                                    <input type="text" class="form-control" style="height:30px" value="<%- data.Sang15%>" readonly>
                                                 </div>
                                                 <div class="col-md-1 col-sm-1">
                                                     <input type="text" class="form-control" style="height:30px" value="<%- data.Sang14%>" readonly>
@@ -181,15 +187,29 @@
                                                 </div>
                                             </div>
                                         </text>))
-                                        .Editing(e => e.Mode(GridEditMode.Popup)
-                                                        .AllowUpdating(true)
-                                                        .AllowDeleting(true)
-                                                        .UseIcons(true)
-                                                        .Popup(p => p.Title("Kcs")
-                                                                     .ShowTitle(true)
-                                                                     .Width(700)
-                                                                     .Height(500))
-                                                       )
+                                        .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                        .FilterPanel(f => f.Visible(true))
+                                        .HeaderFilter(hearder => hearder.Visible(true))
+                                        .FilterValue(filterValue)
+                                        .FilterBuilder(f =>
+                                        f.CustomOperations(co =>
+                                        {
+                                            var o = co.Add();
+                                            o.Name("today");
+                                            o.Caption("today");
+                                            o.DataTypes(new[] { FilterBuilderFieldDataType.DateTime });
+                                            o.Icon("check");
+                                            o.HasValue(false);
+                                            o.CalculateFilterExpression("calculateFilterExpression_kcs");
+                                        })
+                                        .AllowHierarchicalFields(true))
+                                        .FilterBuilderPopup(p =>
+                                        p.Position(pos =>
+                                            pos.At(HorizontalAlignment.Center, VerticalAlignment.Top)
+                                                .My(HorizontalAlignment.Center, VerticalAlignment.Top)
+                                                .Offset(0, 10)
+                                            )
+                                        )
                                         .OnToolbarPreparing("toolbar_kcs")
                                         .Selection(s => s.Mode(SelectionMode.Single))
                                         .HoverStateEnabled(true)
