@@ -12,5 +12,9 @@ namespace pmkd.Controllers
         {
             return View();
         }
+        public IActionResult thongtinnhansu()
+        {
+            return View("thongtinnhansu");
+        }
     }
 }

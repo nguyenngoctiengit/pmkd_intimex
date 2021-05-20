@@ -8,6 +8,7 @@
         $formContainer.dxForm('instance').itemOption('KhoName', 'visible', false);
         $formContainer.dxForm('instance').itemOption('KhachHang', 'visible', false);
         $formContainer.dxForm('instance').itemOption('Tenhang', 'visible', false);
+        $formContainer.dxForm('instance').itemOption('Xeptaiso', 'visible', false);
         component.__addingStart = false;
     }
 }
@@ -33,7 +34,9 @@ function OnEditorPrepared(e) {
     if (e.component.__addingStart && e.dataField == "KhoName") {
         e.component.__editor = e.editorElement;
     }
-
+    if (e.component.__addingStart && e.dataField == "Xeptaiso") {
+        e.component.__editor = e.editorElement;
+    }
 }
 function calculateFilterExpression() {
     var d = new Date()

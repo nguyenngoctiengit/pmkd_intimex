@@ -48,6 +48,15 @@ namespace pmkd.Controllers
             {
                 newXeptai.GhiChu = "";
             }
+            var datetime = DateTime.Now.Date;
+            var idxeptaitoday = _context.XepTais.Where(a => a.Ngaycan == datetime).Select(a => a.Xeptaiso).Count();
+            if (idxeptaitoday == 0)
+            {
+                newXeptai.Xeptaiso = 1;
+            }else
+            {
+                newXeptai.Xeptaiso = idxeptaitoday + 1;
+            }
             var makhach = newXeptai.MaKhach;
             newXeptai.KhachHang = (from a in _context.KhachHangs where a.MaKhach == makhach select a.TenKhach).FirstOrDefault();
             var mahang = newXeptai.Mahang;
@@ -67,8 +76,7 @@ namespace pmkd.Controllers
         }
         [HttpPut]
         public async Task<IActionResult> UpdateXeptai(int key, string values)
-        {
-            
+        {            
             var xeptai = _context.XepTais.First(o => o.Id == key);
             JsonConvert.PopulateObject(values, xeptai);
             if (xeptai.ApproveTime == null)
@@ -418,5 +426,16 @@ namespace pmkd.Controllers
             return RedirectToAction("kcs");
 
         }
+        [HttpPut]
+        public async Task<IActionResult> updateKcs(string key, string values)
+        {
+
+            var xeptai = _context.Kcs.First(o => o.SoPhieu == key);
+            JsonConvert.PopulateObject(values, xeptai);
+            _context.Kcs.Update(xeptai);
+            await _context.SaveChangesAsync();
+            return Ok(xeptai);
+        }
+
     }
 }

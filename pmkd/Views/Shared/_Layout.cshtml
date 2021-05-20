@@ -475,7 +475,7 @@
                                             <a>Số liệu<span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
                                                 <li class="sub_menu">
-                                                    <a href="level2.html">Thông tin nhân sự</a>
+                                                    <a asp-action="thongtinnhansu" asp-controller="quanlinhansu">Thông tin nhân sự</a>
                                                 </li>
                                                 <li>
                                                     <a href="#level2_1">Phòng ban</a>
@@ -778,31 +778,13 @@
     <!-- Custom Theme Scripts -->
     <script src="~/public/build/js/custom.min.js"></script>
     <script type="text/javascript">
-        function valuechange_xevc(e) {
-            var dataGrid = $("#xevc").dxDataGrid("instance");
-            if (dataGrid.length) {
-                alert(e.value);
-                dataGrid.selectRows(e.value, false);
-            }
-        }
-        function toolbar_kcs(e) {
-            e.toolbarOptions.items.unshift({
-                location: "after",
-                widget: "dxButton",
-                options: {
-                    icon: "add",
-                    onClick: function () {
-                        location.href = "kho/themkcs";
-                    }
-                }
-            });
-        }
-        var array = @Html.Raw(Json.Serialize(ViewBag.listcan));
-        var chuoi = [];
+
         function getDataGridCan() {
             return $("#dataGridCan").dxDataGrid("instance");
         }
         function SelectionChanged_can(selectedItems) {
+            var array = @Html.Raw(Json.Serialize(ViewBag.listcan));
+            var chuoi = [];
             var NguoiLap = document.getElementById("NguoiLap");
             var LanhDao = document.getElementById("LanhDao");
             var ThuKho = document.getElementById("ThuKho");
@@ -821,7 +803,7 @@
             var tlbaobi = document.getElementById("tlbaobi");
             var makhach = document.getElementById("makhach");
             var tenkhach = document.getElementById("tenkhach");
-            var systemId = document.getElementById("systemId"); 
+            var systemId = document.getElementById("systemId");
             var tlin = document.getElementById("tlin");
             var tlout = document.getElementById("tlout");
             var tlhang = document.getElementById("tlhang");
@@ -883,14 +865,7 @@
                 }
             })
         }
-        function calculateFilterExpression_kcs() {
-            var d = new Date()
-            var dd = d.getDate();
-            var mm = d.getMonth() + 1;
-            var yyyy = d.getFullYear();
-            var today = mm + '-' + dd + '-' + yyyy;
-            return [[getOrderDay, '=', today]];
-        }
+
         /// some script divhdchomuon1 ngaytra1
         function show() {
             document.getElementById('divhdchomuon').style.display = 'block';
