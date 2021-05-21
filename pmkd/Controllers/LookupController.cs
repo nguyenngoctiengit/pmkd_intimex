@@ -204,5 +204,65 @@ namespace pmkd.Controllers
                               };
             return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
         }
+        public async Task<IActionResult> gettongiao(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = _context.NsDmtongiaos.Select(i => new
+            {
+                i.MaTongiao,
+                i.TenTongiao
+
+            });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
+        public async Task<IActionResult> getdantoc(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = _context.NsDmdantocs.Select(i => new
+            {
+                i.MaDantoc,
+                i.TenDantoc
+
+            });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
+        public async Task<IActionResult> getbophan(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = _context.Departments.Select(i => new
+            {
+                i.DepartmentCode,
+                i.DepartmentName
+
+            });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
+        public async Task<IActionResult> getchucvu(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = _context.NsDmchucvus.Select(i => new
+            {
+                i.MaChucvu,
+                i.TenChucvu
+
+            });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
+        public async Task<IActionResult> gettrinhdo(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = _context.NsDmtds.Select(i => new
+            {
+                i.MaTd,
+                i.DienGiai
+
+            });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
+        public async Task<IActionResult> getchinhanh(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = _context.Branches.Select(i => new
+            {
+                i.Id,
+                i.NameV
+
+            });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
     }
 }
