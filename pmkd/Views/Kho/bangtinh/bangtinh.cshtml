@@ -1,0 +1,189 @@
+﻿@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment env
+@{
+    ViewData["Title"] = "bangtinh";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="right_col" role="main" style="height: 500px">
+    <div class="">
+        <div class="row" style="display: block;">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Bảng tính giá trị nhập</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Settings 1</a>
+                                    <a class="dropdown-item" href="#">Settings 2</a>
+                                </div>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        @{
+                            if (TempData["alertMessage"] != null)
+                            {
+                                <div style="color:red;font-size:30px">
+                                    @TempData["alertMessage"].ToString()
+                                </div>
+                            }
+                        }
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box table-responsive">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-4 col-sm-4" style="border:1px solid black;height:473px">
+                                            @(Html.DevExtreme().DataGrid<pmkd.Models.PobangTinh>()
+                                                    .DataSource(d => d.Mvc().Controller("kho")
+                                                    .LoadAction("getBangTinh")
+                                                    .Key("Idbt"))
+                                                    .ID("dataGridCan")
+                                                    .Columns(columns => {
+
+                                                        columns.AddFor(m => m.Idbt).Caption("Bảng tính");
+
+                                                        columns.AddFor(m => m.SoXe).Caption("Số xe");
+
+                                                        columns.AddFor(m => m.NgayP).Caption("Ngày phiếu");
+
+                                                    }
+
+                                                    )
+                                                    .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
+                                                    .FilterPanel(f => f.Visible(true))
+                                                    .HoverStateEnabled(true)
+                                                    .Export(e => e.Enabled(true))
+                                                    .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                    .HeaderFilter(hearder => hearder.Visible(true))
+                                                    .AllowColumnResizing(true)
+                                                    .AllowColumnReordering(true)
+                                                    .ColumnAutoWidth(true)
+                                                    .ColumnChooser(c => c.Enabled(true))
+                                                    .ColumnFixing(c => c.Enabled(true))
+                                                    .ShowBorders(true)
+                                                    .Grouping(group => group.AutoExpandAll(true))
+                                                    .SearchPanel(searchPanel => searchPanel.Visible(true))
+                                                    .GroupPanel(groupPanel => groupPanel.Visible(true))
+                                                    .Paging(paging => paging.PageSize(7))
+                                                 )
+
+                                        </div>
+                                        <div class="col-md-8 col-sm-8" style="border:1px solid black;height:473px;color:black">
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Kho nhập</label>
+                                                <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                                    <input type="text" class="form-control" id="soxe1" style="height:30px">
+                                                </div>
+                                                <label class="col-form-label col-md-2 col-sm-2">Số xe</label>
+                                                <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                                    <input type="text" class="form-control" style="height:30px">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Người giao</label>
+                                                <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                                    <input type="text" class="form-control" id="soxe1" style="height:30px">
+                                                </div>
+                                                <label class="col-form-label col-md-2 col-sm-2">Đ.vị giao hàng</label>
+                                                <div class="col-md-1 col-sm-1" style="padding:5px 0px 0px 5px">
+                                                    <input type="text" class="form-control" style="height:30px">
+                                                </div>
+                                                <div class="col-md-3 col-sm-3" style="padding:5px 0px 0px 5px">
+                                                    <input type="text" class="form-control" style="height:30px">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">H.đồng</label>
+                                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                                    <input type="text" class="form-control" id="soxe1" style="height:30px">
+                                                </div>
+                                                <label class="col-form-label col-md-1 col-sm-1" style="font-size:11px">Ngày HĐ</label>
+                                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                                    <input type="text" class="form-control" style="height:30px">
+                                                </div>
+                                                <label class="col-form-label col-md-2 col-sm-2">Người nhập hàng</label>
+                                                <div class="col-md-3 col-sm-3" style="padding:5px 0px 0px 5px">
+                                                    <input type="text" class="form-control" style="height:30px">
+                                                </div>
+                                                <div class="col-md-1 col-sm-1" style="padding:5px 0px 0px 5px">
+                                                    @(Html.DevExtreme().CheckBox())
+                                                    <label>G/L</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">Số KCS</label>
+                                                <div class="col-md-3 col-sm-3" style="padding:5px 0px 0px 5px">
+                                                    <input type="text" class="form-control" id="soxe1" style="height:30px">
+                                                </div>
+                                                <label class="col-form-label col-md-1 col-sm-1">P.nhập</label>
+                                                <div class="col-md-3 col-sm-3" style="padding:5px 0px 0px 5px">
+                                                    <input type="text" class="form-control" style="height:30px">
+                                                </div>
+                                                <label class="col-form-label col-md-1 col-sm-1" style="font-size:11px">Kho nhập</label>
+                                                <div class="col-md-3 col-sm-3" style="padding:5px 0px 0px 5px">
+                                                    <input type="text" class="form-control" style="height:30px">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Hàng hóa</label>
+                                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                                    <input type="text" class="form-control" id="soxe1" style="height:30px">
+                                                </div>
+                                                <div class="col-md-3 col-sm-3" style="padding:5px 0px 0px 5px">
+                                                    <input type="text" class="form-control" id="soxe1" style="height:30px">
+                                                </div>
+                                                <label class="col-form-label col-md-1 col-sm-1">Số bao</label>
+                                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                                    <input type="text" class="form-control" style="height:30px">
+                                                </div>
+                                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                                    <input type="text" class="form-control" style="height:30px">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Trọng lượng(GW)</label>
+                                                <div class="col-md-3 col-sm-3" style="padding:5px 0px 0px 5px">
+                                                    <input type="text" class="form-control" id="soxe1" style="height:30px">
+                                                </div>
+                                                <div class="col-md-1 col-sm-1" style="padding:5px 0px 0px 5px">
+                                                    <input type="text" class="form-control" id="soxe1" style="height:30px">
+                                                </div>
+                                                <label class="col-form-label col-md-2 col-sm-2">TL bao bì</label>
+                                                <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                                    <input type="text" class="form-control" style="height:30px">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Trọng lượng tịnh(NW)</label>
+                                                <div class="col-md-10 col-sm-10" style="padding:5px 0px 0px 5px">
+                                                    <input type="text" class="form-control" id="soxe1" style="height:30px">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-12 col-sm-12" style="font-size:12px;padding:5px 0px 0px 5px">I. SỐ LƯỢNG VÀ CHẤT LƯỢNG THỰC TẾ</label>
+                                            </div>
+                                            <div class="form-group row">
+
+                                                @(Html.Devexpress())
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

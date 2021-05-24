@@ -436,6 +436,20 @@ namespace pmkd.Controllers
             await _context.SaveChangesAsync();
             return Ok(xeptai);
         }
-
+        //-------------------------------------Bảng tính----------------------------------------------
+        public IActionResult bangtinh()
+        {
+            return View("bangtinh/bangtinh");
+        }
+        [HttpGet]
+        public object getBangTinh(DataSourceLoadOptions loadOptions)
+        {
+            var item = _context.PobangTinhs.Select(i => new {
+                i.Idbt,
+                i.SoXe,
+                i.NgayP,
+            }).Distinct().OrderByDescending(i => i.Idbt).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
+        }
     }
 }
