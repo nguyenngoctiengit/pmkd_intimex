@@ -33,6 +33,13 @@ using pmkd;
 #line hidden
 #nullable disable
 #nullable restore
+#line 5 "C:\Users\User\Desktop\pmkd_project\pmkd\Views\_ViewImports.cshtml"
+using DevExpress.AspNetCore;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 1 "C:\Users\User\Desktop\pmkd_project\pmkd\Views\Hopdong\hdmb.cshtml"
 using System.Linq;
 
@@ -40,7 +47,7 @@ using System.Linq;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"debb448c265cecb72213a791355bac3cd6875ad3", @"/Views/Hopdong/hdmb.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"e2f3fdee9548d5779914426f2f6cb4c3005f9059", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d6bb5032fc71ad384771cb309a8213e095deb506", @"/Views/_ViewImports.cshtml")]
     public class Views_Hopdong_hdmb : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<IEnumerable<Hdmb>>
     {
         #pragma warning disable 1998

@@ -20,6 +20,9 @@ namespace pmkd
     using AspNet.Security.OpenIdConnect.Primitives;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Options;
+    using Microsoft.Extensions.FileProviders;
+    using System.IO;
+    using Microsoft.AspNetCore.Mvc;
 
     public class Startup
     {
@@ -48,6 +51,10 @@ namespace pmkd
             services.AddScoped<tradingsystem_blContext, tradingsystem_blContext>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<tradingsystem_blContext>(ServiceLifetime.Transient);
+            services.AddMvc().AddRazorPagesOptions(o =>
+            {
+                o.Conventions.ConfigureFilter(new IgnoreAntiforgeryTokenAttribute());
+            });
             services.AddMvc();
             services.AddControllersWithViews();
         }
@@ -72,6 +79,11 @@ namespace pmkd
             app.UseCookiePolicy();
             app.UseStaticFiles();
             app.UseSession();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "node_modules")),
+                RequestPath = "/node_modules"
+            });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

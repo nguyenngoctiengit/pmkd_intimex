@@ -33,8 +33,15 @@ using pmkd;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "C:\Users\User\Desktop\pmkd_project\pmkd\Views\_ViewImports.cshtml"
+using DevExpress.AspNetCore;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"74ed929c714f47960506748bce3a7f976b79023c", @"/Views/Danhmuc/khachhang/themkhachhang.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"e2f3fdee9548d5779914426f2f6cb4c3005f9059", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d6bb5032fc71ad384771cb309a8213e095deb506", @"/Views/_ViewImports.cshtml")]
     public class Views_Danhmuc_khachhang_themkhachhang : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<KhachHang>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("type", new global::Microsoft.AspNetCore.Html.HtmlString("submit"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -156,7 +163,7 @@ using pmkd;
 #line hidden
 #nullable disable
             WriteLiteral("                    <div class=\"clearfix\"></div>\r\n                </div>\r\n                <div class=\"x_content\">\r\n                    <br />\r\n\r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "74ed929c714f47960506748bce3a7f976b79023c10025", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "74ed929c714f47960506748bce3a7f976b79023c10201", async() => {
                 WriteLiteral("\r\n                        <div class=\"form-group row\">\r\n                            <label class=\"col-form-label col-md-2 col-sm-2\">Mã khách</label>\r\n                            <div class=\"col-md-10 col-sm-10\">\r\n                                ");
 #nullable restore
 #line 53 "C:\Users\User\Desktop\pmkd_project\pmkd\Views\Danhmuc\khachhang\themkhachhang.cshtml"
@@ -546,7 +553,7 @@ WriteAttributeValue("", 13888, Html.NameFor(a => a.ThanhToanBan), 13888, 34, fal
                         <div class=""form-group row"">
                             <div class=""col-md-9 col-sm-9  offset-md-5"">
                                 ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("button", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "74ed929c714f47960506748bce3a7f976b79023c31622", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("button", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "74ed929c714f47960506748bce3a7f976b79023c31798", async() => {
                     WriteLiteral("Submit");
                 }
                 );

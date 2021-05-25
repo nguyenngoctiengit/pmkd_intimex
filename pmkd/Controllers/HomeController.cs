@@ -13,6 +13,7 @@ using AutoMapper;
 using System.Security.Claims;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
+using DevExpress.AspNetCore.Spreadsheet;
 
 namespace pmkd.Controllers
 {
@@ -49,8 +50,5 @@ namespace pmkd.Controllers
         {
             return View("_DevExtremeLayout");
         }
-
-
-
     }
 }

@@ -14,6 +14,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
 using System.IO.Ports;
+using DevExpress.AspNetCore.Spreadsheet;
+using DevExpress.Spreadsheet;
 
 namespace pmkd.Controllers
 {
@@ -451,5 +453,13 @@ namespace pmkd.Controllers
             }).Distinct().OrderByDescending(i => i.Idbt).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
+        [HttpPost]
+        [HttpGet]
+        public IActionResult DxDocRequest()
+        {
+            return SpreadsheetRequestProcessor.GetResponse(HttpContext);
+        }
+/*        Worksheet worksheet = workbook.Worksheets[0];
+        string[] array = new string[] { "aaa", "bbbb" };*/
     }
 }
