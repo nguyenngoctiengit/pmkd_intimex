@@ -441,6 +441,7 @@ namespace pmkd.Controllers
         //-------------------------------------Bảng tính----------------------------------------------
         public IActionResult bangtinh()
         {
+            ViewBag.bangtinh = _context.PobangTinhs.ToList();
             return View("bangtinh/bangtinh");
         }
         [HttpGet]
@@ -450,9 +451,10 @@ namespace pmkd.Controllers
                 i.Idbt,
                 i.SoXe,
                 i.NgayP,
-            }).Distinct().OrderByDescending(i => i.Idbt).ToList();
+            }).Distinct().ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
+
         [HttpPost]
         [HttpGet]
         public IActionResult DxDocRequest()

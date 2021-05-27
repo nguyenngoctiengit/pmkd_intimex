@@ -40,172 +40,195 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive">
-                                    <div class="col-md-12 col-sm-12">
-                                        <div class="col-md-4 col-sm-4" style="border:1px solid black;height:400px">
+                                    <div class="col-md-12 col-sm-12" style="height:auto">
+                                        <div class="col-md-4 col-sm-4" style="border:1px solid black;height:900px">
                                             @(Html.DevExtreme().DataGrid<pmkd.Models.PobangTinh>()
-                                                    .DataSource(d => d.Mvc().Controller("kho")
-                                                    .LoadAction("getBangTinh")
-                                                    .Key("Idbt"))
-                                                    .ID("dataGridCan")
-                                                    .Columns(columns => {
+                                                .DataSource(d => d.Mvc().Controller("kho")
+                                                .LoadAction("getBangTinh")
+                                                .Key("Idbt"))
+                                                .ID("dataGridbangtinh")
+                                                .Columns(columns => {
 
-                                                        columns.AddFor(m => m.Idbt).Caption("Bảng tính");
+                                                    columns.AddFor(m => m.Idbt).Caption("Bảng tính");
 
-                                                        columns.AddFor(m => m.SoXe).Caption("Số xe");
+                                                    columns.AddFor(m => m.SoXe).Caption("Số xe");
 
-                                                        columns.AddFor(m => m.NgayP).Caption("Ngày phiếu");
+                                                    columns.AddFor(m => m.NgayP).Caption("Ngày phiếu");
 
-                                                    }
+                                                }
 
-                                                    )
-                                                    .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
-                                                    .FilterPanel(f => f.Visible(true))
-                                                    .HoverStateEnabled(true)
-                                                    .Export(e => e.Enabled(true))
-                                                    .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
-                                                    .HeaderFilter(hearder => hearder.Visible(true))
-                                                    .AllowColumnResizing(true)
-                                                    .AllowColumnReordering(true)
-                                                    .ColumnAutoWidth(true)
-                                                    .ColumnChooser(c => c.Enabled(true))
-                                                    .ColumnFixing(c => c.Enabled(true))
-                                                    .ShowBorders(true)
-                                                    .Grouping(group => group.AutoExpandAll(true))
-                                                    .SearchPanel(searchPanel => searchPanel.Visible(true))
-                                                    .GroupPanel(groupPanel => groupPanel.Visible(true))
-                                                    .Paging(paging => paging.PageSize(5))
+                                                )
+                                                .OnSelectionChanged("selectChange_bangtinh")
+                                                .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
+                                                .FilterPanel(f => f.Visible(true))
+                                                .HoverStateEnabled(true)
+                                                .Export(e => e.Enabled(true))
+                                                .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                .HeaderFilter(hearder => hearder.Visible(true))
+                                                .AllowColumnResizing(true)
+                                                .AllowColumnReordering(true)
+                                                .ColumnAutoWidth(true)
+                                                .ColumnChooser(c => c.Enabled(true))
+                                                .ColumnFixing(c => c.Enabled(true))
+                                                .ShowBorders(true)
+                                                .Grouping(group => group.AutoExpandAll(true))
+                                                .SearchPanel(searchPanel => searchPanel.Visible(true))
+                                                .GroupPanel(groupPanel => groupPanel.Visible(true))
+                                                .Paging(paging => paging.PageSize(20))
                                                  )
 
                                         </div>
-                                        <div class="col-md-8 col-sm-8" style="border:1px solid black;height:400px;color:black">
+                                        <div class="col-md-8 col-sm-8" style="border:1px solid black;color:black">
                                             <div class="form-group row">
                                                 <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Kho nhập</label>
-                                                <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
                                                     <input type="text" class="form-control" id="khonhap" style="height:30px">
                                                 </div>
                                                 <label class="col-form-label col-md-2 col-sm-2">Số xe</label>
-                                                <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
                                                     <input type="text" class="form-control" style="height:30px" id="SoXe">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Người giao</label>
-                                                <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
                                                     <input type="text" class="form-control" id="nguoigiao" style="height:30px">
                                                 </div>
                                                 <label class="col-form-label col-md-2 col-sm-2">Đ.vị giao hàng</label>
-                                                <div class="col-md-1 col-sm-1" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-1 col-sm-1" style="padding:0px 0px 0px 0px">
                                                     <input type="text" class="form-control" style="height:30px" id="MaKh">
                                                 </div>
-                                                <div class="col-md-3 col-sm-3" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 10px">
                                                     <input type="text" class="form-control" style="height:30px" id="TenKh">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">H.đồng</label>
-                                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
                                                     <input type="text" class="form-control" id="SoHd" style="height:30px">
                                                 </div>
                                                 <label class="col-form-label col-md-1 col-sm-1" style="font-size:11px">Ngày HĐ</label>
-                                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
                                                     <input type="text" class="form-control" style="height:30px" id="NgayHd">
                                                 </div>
                                                 <label class="col-form-label col-md-2 col-sm-2">Người nhập hàng</label>
-                                                <div class="col-md-3 col-sm-3" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
                                                     <input type="text" class="form-control" style="height:30px" id="Nvnhap">
                                                 </div>
-                                                <div class="col-md-1 col-sm-1" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-1 col-sm-1" style="padding:0px 0px 0px 10px">
                                                     @(Html.DevExtreme().CheckBox())
                                                     <label>G/L</label>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">Số KCS</label>
-                                                <div class="col-md-3 col-sm-3" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
                                                     <input type="text" class="form-control" id="SoPkcs" style="height:30px">
                                                 </div>
                                                 <label class="col-form-label col-md-1 col-sm-1">P.nhập</label>
-                                                <div class="col-md-3 col-sm-3" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
                                                     <input type="text" class="form-control" style="height:30px" id="SoPn">
                                                 </div>
                                                 <label class="col-form-label col-md-1 col-sm-1" style="font-size:11px">Kho nhập</label>
-                                                <div class="col-md-3 col-sm-3" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
                                                     <input type="text" class="form-control" style="height:30px" id="TenKhoN">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Hàng hóa</label>
-                                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
                                                     <input type="text" class="form-control" id="MaMh" style="height:30px">
                                                 </div>
-                                                <div class="col-md-3 col-sm-3" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 10px">
                                                     <input type="text" class="form-control" id="TenMh" style="height:30px">
                                                 </div>
                                                 <label class="col-form-label col-md-1 col-sm-1">Số bao</label>
-                                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
                                                     <input type="text" class="form-control" style="height:30px" id="SoBao">
                                                 </div>
-                                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 10px">
                                                     <input type="text" class="form-control" style="height:30px" id="Dvtsb">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Trọng lượng(GW)</label>
-                                                <div class="col-md-3 col-sm-3" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
                                                     <input type="text" class="form-control" id="SoLuong" style="height:30px">
                                                 </div>
-                                                <div class="col-md-1 col-sm-1" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-1 col-sm-1" style="padding:0px 0px 0px 10px">
                                                     <input type="text" class="form-control" id="Dvtsl" style="height:30px">
                                                 </div>
                                                 <label class="col-form-label col-md-2 col-sm-2">TL bao bì</label>
-                                                <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
                                                     <input type="text" class="form-control" style="height:30px" id="TlbaoBi">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Trọng lượng tịnh(NW)</label>
-                                                <div class="col-md-10 col-sm-10" style="padding:5px 0px 0px 5px">
+                                                <div class="col-md-10 col-sm-10" style="padding:0px 0px 0px 0px">
                                                     <input type="text" class="form-control" id="Tltinh" style="height:30px">
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12">
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-12 col-sm-12" style="font-size:18px;padding:5px 0px 0px 5px;color:red"><b>I/ SỐ LƯỢNG VÀ CHẤT LƯỢNG THỰC TẾ</b></label>
-                                        </div>
-                                        <div class="form-group row">
-                                            @(Html.DevExpress().Spreadsheet("spreadsheet")
-                                                    .Height("200px")
-                                                    .Width("100%")
-                                                    .DocumentRequestHandlerUrl(Url.Action("DxDocRequest"))
-                                                    .Open("bangtinh.xlsx")
-                                                )
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12">
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-12 col-sm-12" style="font-size:18px;padding:5px 0px 0px 5px;color:red"><b>II/ GIÁ TRỊ THANH TOÁN </b></label>
-                                        </div>
-                                        <div class="form-group row">
-                                            <table class="table table-bordered">
-                                                <tr>
-                                                    <th>Hợp đồng</th>
-                                                    <th>Số lượng</th>
-                                                    <th>Đơn giá</th>
-                                                    <th>Tiền hàng</th>
-                                                    <th>VAT</th>
-                                                    <th>Tổng</th>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                            </table>
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-12 col-sm-12" style="font-size:18px;padding:5px 0px 0px 5px;color:red"><b>I/ SỐ LƯỢNG VÀ CHẤT LƯỢNG THỰC TẾ</b></label>
+                                            </div>
+                                            <div class="form-group row">
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <th>Tiêu chuẩn (%)</th>
+                                                        <th>TC cho phép</th>
+                                                        <th>TC thực tế</th>
+                                                        <th>Vượt (+)</th>
+                                                        <th>% trừ</th>
+                                                        <th>Số lượng (-)</th>
+                                                        <th>Điều chỉnh SL (-)</th>
+                                                    </tr>
+                                                    @{
+                                                        for (var i = 0; i <= 10; i++)
+                                                        {
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                        }
+                                                    }
+
+                                                </table>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-12 col-sm-12" style="font-size:18px;padding:5px 0px 0px 5px;color:red"><b>II/ GIÁ TRỊ THANH TOÁN </b></label>
+                                            </div>
+                                            <div class="form-group row">
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <th>Hợp đồng</th>
+                                                        <th>Số lượng</th>
+                                                        <th>Đơn giá</th>
+                                                        <th>Tiền hàng</th>
+                                                        <th>VAT</th>
+                                                        <th>Tổng</th>
+                                                    </tr>
+                                                    @{
+                                                        for (var i = 0; i <= 3; i++)
+                                                        {
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                        }
+                                                    }
+
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

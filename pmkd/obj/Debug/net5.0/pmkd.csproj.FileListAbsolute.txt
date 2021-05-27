@@ -200,7 +200,6 @@ C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\zh-Hans\Microsoft.CodeA
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\runtimes\win-arm\lib\net5.0\dotnet-aspnet-codegenerator-design.exe
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\runtimes\win-arm64\lib\net5.0\dotnet-aspnet-codegenerator-design.exe
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.csprojAssemblyReference.cache
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.AssemblyInfoInputs.cache
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.AssemblyInfo.cs
@@ -710,3 +709,5 @@ C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\DevExpress.Sparkline.v2
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\DevExpress.Spreadsheet.v20.2.Core.dll
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\DevExpress.Xpo.v20.2.dll
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\package-lock.json
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\test.cshtml.g.cs

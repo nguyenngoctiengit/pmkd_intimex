@@ -784,6 +784,49 @@
     <!-- Custom Theme Scripts -->
     <script src="~/public/build/js/custom.min.js"></script>
     <script type="text/javascript">
+        function getDataGridBangtinh() {
+            return $("#dataGridbangtinh").dxDataGrid("instance");
+        }
+        function selectChange_bangtinh(selectedItems) {
+            var array = @Html.Raw(Json.Serialize(ViewBag.bangtinh));
+            chuoi = [];
+            var SoXe = document.getElementById("SoXe"); var SoBao = document.getElementById("SoBao");
+            var MaKh = document.getElementById("MaKh"); var Dvtsb = document.getElementById("Dvtsb"); 
+            var TenKh = document.getElementById("TenKh"); var SoLuong = document.getElementById("SoLuong");
+            var SoHd = document.getElementById("SoHd"); var Dvtsl = document.getElementById("Dvtsl");
+            var NgayHd = document.getElementById("NgayHd"); var TlbaoBi = document.getElementById("TlbaoBi");
+            var Nvnhap = document.getElementById("Nvnhap"); var Tltinh = document.getElementById("Tltinh");
+            var SoPkcs = document.getElementById("SoPkcs"); var Dvtsl = document.getElementById("Dvtsl");
+            var SoPn = document.getElementById("SoPn"); var MaMh = document.getElementById("MaMh");
+            var TenKhoN = document.getElementById("TenKhoN"); var TenMh = document.getElementById("TenMh");
+            getDataGridBangtinh().getSelectedRowsData().done(function (rowData) {
+                for (var i = 0; i < rowData.length; i++) {
+                    for (var j = 0; j < array.length; j++) {
+                        chuoi[j] = array[j];
+                        if (rowData[i].Idbt == chuoi[j].Idbt && chuoi[j].Iddong == 1) {
+                            SoXe.value = chuoi[j].SoXe; TenKhoN.value = chuoi[j].TenKhoN;
+                            MaMh.value = chuoi[j].MaMh;
+                            TenMh.value = chuoi[j].TenMh;
+                            SoBao.value = chuoi[j].SoBao;
+                            Dvtsb.value = chuoi[j].Dvtsb;
+                            SoLuong.value = chuoi[j].SoLuong;
+                            Dvtsl.value = chuoi[j].Dvtsl;
+                            TlbaoBi.value = chuoi[j].TlbaoBi;
+                            Tltinh.value = chuoi[j].Tltinh;
+                            Dvtsl.value = chuoi[j].Dvtsl;
+                            MaKh.value = chuoi[j].MaKh;
+                            TenKh.value = chuoi[j].TenKh;
+                            SoHd.value = chuoi[j].SoHd;
+                            NgayHd.value = chuoi[j].NgayHd;
+                            Nvnhap.value = chuoi[j].Nvnhap;
+                            SoPkcs.value = chuoi[j].SoPkcs;
+                            SoPn.value = chuoi[j].SoPn;
+                            
+                        }
+                    }
+                }
+            })
+        }
         function getDataGridCan() {
             return $("#dataGridCan").dxDataGrid("instance");
         }
