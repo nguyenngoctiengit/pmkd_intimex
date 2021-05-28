@@ -441,6 +441,8 @@ namespace pmkd.Controllers
         //-------------------------------------Bảng tính----------------------------------------------
         public IActionResult bangtinh()
         {
+            ViewBag.nhapkho = (from a in _context.NhapKhoKs join b in _context.NhapKhoChiTietKs 
+                               on a.Id equals b.NhapKhoId select new { b.Rnw, b.DonGia, a.BangTinhId }).ToList();
             ViewBag.bangtinh = _context.PobangTinhs.ToList();
             return View("bangtinh/bangtinh");
         }
