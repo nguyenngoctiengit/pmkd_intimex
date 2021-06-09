@@ -442,8 +442,11 @@ namespace pmkd.Controllers
         public IActionResult bangtinh()
         {
             ViewBag.nhapkho = (from a in _context.NhapKhoKs join b in _context.NhapKhoChiTietKs 
-                               on a.Id equals b.NhapKhoId select new { b.Rnw, b.DonGia, a.BangTinhId }).ToList();
-            ViewBag.bangtinh = _context.PobangTinhs.ToList();
+                               on a.Id equals b.NhapKhoId select new {b.Rnw, b.DonGia,a.BangTinhId,b.RhopDong,b.Id }).ToList().OrderBy(a => a.BangTinhId);
+            ViewBag.bangtinh = _context.PobangTinhs.OrderBy(a => a.Idbt).ToList();
+            ViewBag.aaa = (from a in _context.NhapKhoKs
+                           join b in _context.NhapKhoChiTietKs
+                            on a.Id equals b.NhapKhoId where a.BangTinhId == null select new { b.Rnw, b.DonGia, a.BangTinhId, b.RhopDong, b.Id }).ToList();
             return View("bangtinh/bangtinh");
         }
         [HttpGet]
