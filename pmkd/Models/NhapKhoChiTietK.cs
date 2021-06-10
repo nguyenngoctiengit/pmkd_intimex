@@ -7,6 +7,7 @@ namespace pmkd.Models
 {
     public partial class NhapKhoChiTietK
     {
+        public long stt;
         public long Id { get; set; }
         public string NhapKhoId { get; set; }
         public string RsoPhieu { get; set; }

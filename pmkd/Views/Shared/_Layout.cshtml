@@ -805,7 +805,7 @@
             var y1 = document.getElementById("chitietnhapkho").rows[1].cells;
             var y2 = document.getElementById("chitietnhapkho").rows[2].cells;
             var SoXe = document.getElementById("SoXe"); var SoBao = document.getElementById("SoBao");
-            var MaKh = document.getElementById("MaKh"); var Dvtsb = document.getElementById("Dvtsb"); 
+            var MaKh = document.getElementById("MaKh"); var Dvtsb = document.getElementById("Dvtsb");
             var TenKh = document.getElementById("TenKh"); var SoLuong = document.getElementById("SoLuong");
             var SoHd = document.getElementById("SoHd"); var Dvtsl = document.getElementById("Dvtsl");
             var NgayHd = document.getElementById("NgayHd"); var TlbaoBi = document.getElementById("TlbaoBi");
@@ -844,15 +844,12 @@
                             x1[6].innerHTML = chuoi[j].LuongTruDc;
                             for (var k = 0; k < array1.length; k++) {
                                 var count = 0;
+                                var length = array1.length
                                 if (array1[k].BangTinhId == rowData[i].Idbt) {
-                                    for (var n in array1[k].BangTinhId) {
-                                        alert(n);
-                                    }
-                                    
+                                    array1.length = array1.length - 1;
+                                    var min = 
                                 }
                             }
-
-
                         }
                         if (rowData[i].Idbt == chuoi[j].Idbt && chuoi[j].Iddong == 2) {
                             x2[0].innerHTML = chuoi[j].QuiCach;
@@ -936,7 +933,7 @@
                             x10[6].innerHTML = chuoi[j].LuongTruDc;
                         }
                     }
-                    
+
 @*                        if (chuoi1[k].BangTinhId == rowData[i].Idbt) {
                             var bangtinh = [];
                             bangtinh.push(array1[k].RhopDong);
@@ -950,8 +947,8 @@
                             y1[0].innerHTML = chuoi1[k].RhopDong;
                             console.log(count.length);
                         }*@
-                        
-                    
+
+
                 }
             })
         }
