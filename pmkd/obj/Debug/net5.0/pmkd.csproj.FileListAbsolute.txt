@@ -711,3 +711,6 @@ C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\DevExpress.Xpo.v20.2.dl
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\package-lock.json
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.csproj.AssemblyReference.cache
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\test.cshtml.g.cs
+G:\pmkd_intimex(tien)\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.dll
+G:\pmkd_intimex(tien)\pmkd_project\pmkd\obj\Debug\net5.0\ref\pmkd.dll
+G:\pmkd_intimex(tien)\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.pdb

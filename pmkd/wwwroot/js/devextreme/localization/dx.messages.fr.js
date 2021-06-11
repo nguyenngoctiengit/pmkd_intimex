@@ -1,26 +1,24 @@
 /*!
 * DevExtreme (dx.messages.fr.js)
-* Version: 20.1.3
-* Build date: Fri Apr 24 2020
+* Version: 21.1.3
+* Build date: Tue May 18 2021
 *
-* Copyright (c) 2012 - 2020 Developer Express Inc. ALL RIGHTS RESERVED
+* Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
 */
 "use strict";
 
 ! function(root, factory) {
     if ("function" === typeof define && define.amd) {
-        define(function(require) {
+        define((function(require) {
             factory(require("devextreme/localization"))
-        })
+        }))
+    } else if ("object" === typeof module && module.exports) {
+        factory(require("devextreme/localization"))
     } else {
-        if ("object" === typeof module && module.exports) {
-            factory(require("devextreme/localization"))
-        } else {
-            factory(DevExpress.localization)
-        }
+        factory(DevExpress.localization)
     }
-}(this, function(localization) {
+}(0, (function(localization) {
     localization.loadMessages({
         fr: {
             Yes: "Oui",
@@ -80,6 +78,7 @@
             "dxFileUploader-upload": "T\xe9l\xe9charger",
             "dxFileUploader-uploaded": "T\xe9l\xe9charg\xe9",
             "dxFileUploader-readyToUpload": "Pr\xeat \xe0 t\xe9l\xe9charger",
+            "dxFileUploader-uploadAbortedMessage": "TODO",
             "dxFileUploader-uploadFailedMessage": "\xc9chec du t\xe9l\xe9chargement",
             "dxFileUploader-invalidFileExtension": "Type de fichier non autoris\xe9",
             "dxFileUploader-invalidMaxFileSize": "Fichier trop volumineux",
@@ -173,6 +172,7 @@
             "dxTreeList-editingAddRowToNode": "Ajouter",
             "dxPager-infoText": "Page {0} sur {1} ({2} \xe9lements)",
             "dxPager-pagesCountText": "sur",
+            "dxPager-pageSizesAllText": "Tous",
             "dxPivotGrid-grandTotal": "Total g\xe9n\xe9ral",
             "dxPivotGrid-total": "Total {0}",
             "dxPivotGrid-fieldChooserTitle": "Liste des champs",
@@ -282,8 +282,55 @@
             "dxHtmlEditor-dialogImageAltField": "Texte alternatif",
             "dxHtmlEditor-dialogImageWidthField": "Largeur (px)",
             "dxHtmlEditor-dialogImageHeightField": "Hauteur (px)",
+            "dxHtmlEditor-dialogInsertTableRowsField": "!TODO",
+            "dxHtmlEditor-dialogInsertTableColumnsField": "!TODO",
+            "dxHtmlEditor-dialogInsertTableCaption": "!TODO",
             "dxHtmlEditor-heading": "Titre",
             "dxHtmlEditor-normalText": "Texte normal",
+            "dxHtmlEditor-background": "TODO",
+            "dxHtmlEditor-bold": "TODO",
+            "dxHtmlEditor-color": "TODO",
+            "dxHtmlEditor-font": "TODO",
+            "dxHtmlEditor-italic": "TODO",
+            "dxHtmlEditor-link": "TODO",
+            "dxHtmlEditor-image": "TODO",
+            "dxHtmlEditor-size": "TODO",
+            "dxHtmlEditor-strike": "TODO",
+            "dxHtmlEditor-subscript": "TODO",
+            "dxHtmlEditor-superscript": "TODO",
+            "dxHtmlEditor-underline": "TODO",
+            "dxHtmlEditor-blockquote": "TODO",
+            "dxHtmlEditor-header": "TODO",
+            "dxHtmlEditor-increaseIndent": "TODO",
+            "dxHtmlEditor-decreaseIndent": "TODO",
+            "dxHtmlEditor-orderedList": "TODO",
+            "dxHtmlEditor-bulletList": "TODO",
+            "dxHtmlEditor-alignLeft": "TODO",
+            "dxHtmlEditor-alignCenter": "TODO",
+            "dxHtmlEditor-alignRight": "TODO",
+            "dxHtmlEditor-alignJustify": "TODO",
+            "dxHtmlEditor-codeBlock": "TODO",
+            "dxHtmlEditor-variable": "TODO",
+            "dxHtmlEditor-undo": "TODO",
+            "dxHtmlEditor-redo": "TODO",
+            "dxHtmlEditor-clear": "TODO",
+            "dxHtmlEditor-insertTable": "TODO",
+            "dxHtmlEditor-insertRowAbove": "TODO",
+            "dxHtmlEditor-insertRowBelow": "TODO",
+            "dxHtmlEditor-insertColumnLeft": "TODO",
+            "dxHtmlEditor-insertColumnRight": "TODO",
+            "dxHtmlEditor-deleteColumn": "TODO",
+            "dxHtmlEditor-deleteRow": "TODO",
+            "dxHtmlEditor-deleteTable": "TODO",
+            "dxHtmlEditor-list": "TODO",
+            "dxHtmlEditor-ordered": "TODO",
+            "dxHtmlEditor-bullet": "TODO",
+            "dxHtmlEditor-align": "TODO",
+            "dxHtmlEditor-center": "TODO",
+            "dxHtmlEditor-left": "TODO",
+            "dxHtmlEditor-right": "TODO",
+            "dxHtmlEditor-indent": "TODO",
+            "dxHtmlEditor-justify": "TODO",
             "dxFileManager-newDirectoryName": "R\xe9pertoire sans titre",
             "dxFileManager-rootDirectoryName": "Fichiers",
             "dxFileManager-errorNoAccess": "Acc\xe8s interdit. L'op\xe9ration ne peut se terminer.",
@@ -295,6 +342,7 @@
             "dxFileManager-errorMaxFileSizeExceeded": "Taille du fichier d\xe9passe la limite maximum permise.",
             "dxFileManager-errorInvalidSymbols": "Ce nom contient des caract\xe8res invalides.",
             "dxFileManager-errorDefault": "Erreur non sp\xe9cifi\xe9.",
+            "dxFileManager-errorDirectoryOpenFailed": "TODO",
             "dxFileManager-commandCreate": "Nouveau r\xe9pertoire",
             "dxFileManager-commandRename": "Renommer",
             "dxFileManager-commandMove": "D\xe9placer",
@@ -306,6 +354,7 @@
             "dxFileManager-commandThumbnails": "Mode vignette",
             "dxFileManager-commandDetails": "Mode d\xe9tails",
             "dxFileManager-commandClearSelection": "Vider s\xe9lection",
+            "dxFileManager-commandShowNavPane": "TODO",
             "dxFileManager-dialogDirectoryChooserTitle": "S\xe9lectionner r\xe9pertoire de destination",
             "dxFileManager-dialogDirectoryChooserButtonText": "S\xe9lectionner",
             "dxFileManager-dialogRenameItemTitle": "Renommer",
@@ -524,7 +573,8 @@
             "dxGantt-deleteSelectedTask": "TODO",
             "dxGantt-zoomIn": "TODO",
             "dxGantt-zoomOut": "TODO",
-            "dxGantt-fullScreen": "TODO"
+            "dxGantt-fullScreen": "TODO",
+            "dxGantt-quarter": "TODO"
         }
     })
-});
+}));

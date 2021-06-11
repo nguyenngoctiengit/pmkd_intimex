@@ -1,26 +1,24 @@
 /*!
 * DevExtreme (dx.messages.sv.js)
-* Version: 20.1.3
-* Build date: Fri Apr 24 2020
+* Version: 21.1.3
+* Build date: Tue May 18 2021
 *
-* Copyright (c) 2012 - 2020 Developer Express Inc. ALL RIGHTS RESERVED
+* Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
 */
 "use strict";
 
 ! function(root, factory) {
     if ("function" === typeof define && define.amd) {
-        define(function(require) {
+        define((function(require) {
             factory(require("devextreme/localization"))
-        })
+        }))
+    } else if ("object" === typeof module && module.exports) {
+        factory(require("devextreme/localization"))
     } else {
-        if ("object" === typeof module && module.exports) {
-            factory(require("devextreme/localization"))
-        } else {
-            factory(DevExpress.localization)
-        }
+        factory(DevExpress.localization)
     }
-}(this, function(localization) {
+}(0, (function(localization) {
     localization.loadMessages({
         sv: {
             Yes: "Ja",
@@ -80,6 +78,7 @@
             "dxFileUploader-upload": "Ladda upp",
             "dxFileUploader-uploaded": "Uppladdad",
             "dxFileUploader-readyToUpload": "Klar att ladda upp",
+            "dxFileUploader-uploadAbortedMessage": "TODO",
             "dxFileUploader-uploadFailedMessage": "Uppladdning misslyckades",
             "dxFileUploader-invalidFileExtension": "",
             "dxFileUploader-invalidMaxFileSize": "",
@@ -173,6 +172,7 @@
             "dxTreeList-editingAddRowToNode": "L\xe4gg till",
             "dxPager-infoText": "Sida {0} av {1} ({2} uppgifter)",
             "dxPager-pagesCountText": "av",
+            "dxPager-pageSizesAllText": "Allt",
             "dxPivotGrid-grandTotal": "Totalsumma",
             "dxPivotGrid-total": "{0} Summa",
             "dxPivotGrid-fieldChooserTitle": "F\xe4ltv\xe4ljare",
@@ -282,8 +282,55 @@
             "dxHtmlEditor-dialogImageAltField": "!TODO!",
             "dxHtmlEditor-dialogImageWidthField": "!TODO!",
             "dxHtmlEditor-dialogImageHeightField": "!TODO!",
+            "dxHtmlEditor-dialogInsertTableRowsField": "!TODO",
+            "dxHtmlEditor-dialogInsertTableColumnsField": "!TODO",
+            "dxHtmlEditor-dialogInsertTableCaption": "!TODO",
             "dxHtmlEditor-heading": "!TODO!",
             "dxHtmlEditor-normalText": "!TODO!",
+            "dxHtmlEditor-background": "TODO",
+            "dxHtmlEditor-bold": "TODO",
+            "dxHtmlEditor-color": "TODO",
+            "dxHtmlEditor-font": "TODO",
+            "dxHtmlEditor-italic": "TODO",
+            "dxHtmlEditor-link": "TODO",
+            "dxHtmlEditor-image": "TODO",
+            "dxHtmlEditor-size": "TODO",
+            "dxHtmlEditor-strike": "TODO",
+            "dxHtmlEditor-subscript": "TODO",
+            "dxHtmlEditor-superscript": "TODO",
+            "dxHtmlEditor-underline": "TODO",
+            "dxHtmlEditor-blockquote": "TODO",
+            "dxHtmlEditor-header": "TODO",
+            "dxHtmlEditor-increaseIndent": "TODO",
+            "dxHtmlEditor-decreaseIndent": "TODO",
+            "dxHtmlEditor-orderedList": "TODO",
+            "dxHtmlEditor-bulletList": "TODO",
+            "dxHtmlEditor-alignLeft": "TODO",
+            "dxHtmlEditor-alignCenter": "TODO",
+            "dxHtmlEditor-alignRight": "TODO",
+            "dxHtmlEditor-alignJustify": "TODO",
+            "dxHtmlEditor-codeBlock": "TODO",
+            "dxHtmlEditor-variable": "TODO",
+            "dxHtmlEditor-undo": "TODO",
+            "dxHtmlEditor-redo": "TODO",
+            "dxHtmlEditor-clear": "TODO",
+            "dxHtmlEditor-insertTable": "TODO",
+            "dxHtmlEditor-insertRowAbove": "TODO",
+            "dxHtmlEditor-insertRowBelow": "TODO",
+            "dxHtmlEditor-insertColumnLeft": "TODO",
+            "dxHtmlEditor-insertColumnRight": "TODO",
+            "dxHtmlEditor-deleteColumn": "TODO",
+            "dxHtmlEditor-deleteRow": "TODO",
+            "dxHtmlEditor-deleteTable": "TODO",
+            "dxHtmlEditor-list": "TODO",
+            "dxHtmlEditor-ordered": "TODO",
+            "dxHtmlEditor-bullet": "TODO",
+            "dxHtmlEditor-align": "TODO",
+            "dxHtmlEditor-center": "TODO",
+            "dxHtmlEditor-left": "TODO",
+            "dxHtmlEditor-right": "TODO",
+            "dxHtmlEditor-indent": "TODO",
+            "dxHtmlEditor-justify": "TODO",
             "dxFileManager-newDirectoryName": "TODO",
             "dxFileManager-rootDirectoryName": "TODO",
             "dxFileManager-errorNoAccess": "TODO",
@@ -295,6 +342,7 @@
             "dxFileManager-errorMaxFileSizeExceeded": "TODO",
             "dxFileManager-errorInvalidSymbols": "TODO",
             "dxFileManager-errorDefault": "TODO",
+            "dxFileManager-errorDirectoryOpenFailed": "TODO",
             "dxDiagram-categoryGeneral": "TODO",
             "dxDiagram-categoryFlowchart": "TODO",
             "dxDiagram-categoryOrgChart": "TODO",
@@ -459,7 +507,8 @@
             "dxGantt-deleteSelectedTask": "TODO",
             "dxGantt-zoomIn": "TODO",
             "dxGantt-zoomOut": "TODO",
-            "dxGantt-fullScreen": "TODO"
+            "dxGantt-fullScreen": "TODO",
+            "dxGantt-quarter": "TODO"
         }
     })
-});
+}));

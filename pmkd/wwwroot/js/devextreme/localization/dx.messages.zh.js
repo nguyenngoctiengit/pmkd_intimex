@@ -1,26 +1,24 @@
 /*!
 * DevExtreme (dx.messages.zh.js)
-* Version: 20.1.3
-* Build date: Fri Apr 24 2020
+* Version: 21.1.3
+* Build date: Tue May 18 2021
 *
-* Copyright (c) 2012 - 2020 Developer Express Inc. ALL RIGHTS RESERVED
+* Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
 */
 "use strict";
 
 ! function(root, factory) {
     if ("function" === typeof define && define.amd) {
-        define(function(require) {
+        define((function(require) {
             factory(require("devextreme/localization"))
-        })
+        }))
+    } else if ("object" === typeof module && module.exports) {
+        factory(require("devextreme/localization"))
     } else {
-        if ("object" === typeof module && module.exports) {
-            factory(require("devextreme/localization"))
-        } else {
-            factory(DevExpress.localization)
-        }
+        factory(DevExpress.localization)
     }
-}(this, function(localization) {
+}(0, (function(localization) {
     localization.loadMessages({
         zh: {
             Yes: "\u662f",
@@ -80,6 +78,7 @@
             "dxFileUploader-upload": "\u4e0a\u4f20",
             "dxFileUploader-uploaded": "\u5df2\u4e0a\u4f20",
             "dxFileUploader-readyToUpload": "\u51c6\u5907\u4e0a\u4f20",
+            "dxFileUploader-uploadAbortedMessage": "TODO",
             "dxFileUploader-uploadFailedMessage": "\u4e0a\u4f20\u5931\u8d25",
             "dxFileUploader-invalidFileExtension": "\u6587\u4ef6\u7c7b\u578b\u9519\u8bef",
             "dxFileUploader-invalidMaxFileSize": "\u6587\u4ef6\u8fc7\u5927",
@@ -173,6 +172,7 @@
             "dxTreeList-editingAddRowToNode": "\u6dfb\u52a0",
             "dxPager-infoText": "\u7b2c{0}\u9875,\u5171{1}\u9875 ({2} \u4e2a\u9879\u76ee)",
             "dxPager-pagesCountText": "\u5230",
+            "dxPager-pageSizesAllText": "\u5168\u90e8",
             "dxPivotGrid-grandTotal": "\u5408\u8ba1",
             "dxPivotGrid-total": "{0} \u603b\u8ba1",
             "dxPivotGrid-fieldChooserTitle": "\u5b57\u6bb5\u9009\u62e9\u5668",
@@ -282,8 +282,55 @@
             "dxHtmlEditor-dialogImageAltField": "\u66ff\u4ee3\u6587\u5b57",
             "dxHtmlEditor-dialogImageWidthField": "\u5bbd (px)",
             "dxHtmlEditor-dialogImageHeightField": "\u957f (px)",
+            "dxHtmlEditor-dialogInsertTableRowsField": "!TODO",
+            "dxHtmlEditor-dialogInsertTableColumnsField": "!TODO",
+            "dxHtmlEditor-dialogInsertTableCaption": "!TODO",
             "dxHtmlEditor-heading": "\u6807\u9898",
             "dxHtmlEditor-normalText": "\u6b63\u6587",
+            "dxHtmlEditor-background": "TODO",
+            "dxHtmlEditor-bold": "TODO",
+            "dxHtmlEditor-color": "TODO",
+            "dxHtmlEditor-font": "TODO",
+            "dxHtmlEditor-italic": "TODO",
+            "dxHtmlEditor-link": "TODO",
+            "dxHtmlEditor-image": "TODO",
+            "dxHtmlEditor-size": "TODO",
+            "dxHtmlEditor-strike": "TODO",
+            "dxHtmlEditor-subscript": "TODO",
+            "dxHtmlEditor-superscript": "TODO",
+            "dxHtmlEditor-underline": "TODO",
+            "dxHtmlEditor-blockquote": "TODO",
+            "dxHtmlEditor-header": "TODO",
+            "dxHtmlEditor-increaseIndent": "TODO",
+            "dxHtmlEditor-decreaseIndent": "TODO",
+            "dxHtmlEditor-orderedList": "TODO",
+            "dxHtmlEditor-bulletList": "TODO",
+            "dxHtmlEditor-alignLeft": "TODO",
+            "dxHtmlEditor-alignCenter": "TODO",
+            "dxHtmlEditor-alignRight": "TODO",
+            "dxHtmlEditor-alignJustify": "TODO",
+            "dxHtmlEditor-codeBlock": "TODO",
+            "dxHtmlEditor-variable": "TODO",
+            "dxHtmlEditor-undo": "TODO",
+            "dxHtmlEditor-redo": "TODO",
+            "dxHtmlEditor-clear": "TODO",
+            "dxHtmlEditor-insertTable": "TODO",
+            "dxHtmlEditor-insertRowAbove": "TODO",
+            "dxHtmlEditor-insertRowBelow": "TODO",
+            "dxHtmlEditor-insertColumnLeft": "TODO",
+            "dxHtmlEditor-insertColumnRight": "TODO",
+            "dxHtmlEditor-deleteColumn": "TODO",
+            "dxHtmlEditor-deleteRow": "TODO",
+            "dxHtmlEditor-deleteTable": "TODO",
+            "dxHtmlEditor-list": "TODO",
+            "dxHtmlEditor-ordered": "TODO",
+            "dxHtmlEditor-bullet": "TODO",
+            "dxHtmlEditor-align": "TODO",
+            "dxHtmlEditor-center": "TODO",
+            "dxHtmlEditor-left": "TODO",
+            "dxHtmlEditor-right": "TODO",
+            "dxHtmlEditor-indent": "TODO",
+            "dxHtmlEditor-justify": "TODO",
             "dxFileManager-newDirectoryName": "TODO",
             "dxFileManager-rootDirectoryName": "TODO",
             "dxFileManager-errorNoAccess": "TODO",
@@ -295,6 +342,7 @@
             "dxFileManager-errorMaxFileSizeExceeded": "TODO",
             "dxFileManager-errorInvalidSymbols": "TODO",
             "dxFileManager-errorDefault": "TODO",
+            "dxFileManager-errorDirectoryOpenFailed": "TODO",
             "dxDiagram-categoryGeneral": "TODO",
             "dxDiagram-categoryFlowchart": "TODO",
             "dxDiagram-categoryOrgChart": "TODO",
@@ -459,7 +507,8 @@
             "dxGantt-deleteSelectedTask": "TODO",
             "dxGantt-zoomIn": "TODO",
             "dxGantt-zoomOut": "TODO",
-            "dxGantt-fullScreen": "TODO"
+            "dxGantt-fullScreen": "TODO",
+            "dxGantt-quarter": "TODO"
         }
     })
-});
+}));
