@@ -687,6 +687,14 @@ C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\Microsoft.AspNetCore.Mv
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\QuanLiNhanSu\thongtinnhansu.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Kho\bangtinh\bangtinh.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\package.json
+C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\package-lock.json
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\test.cshtml.g.cs
+G:\pmkd_intimex(tien)\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.dll
+G:\pmkd_intimex(tien)\pmkd_project\pmkd\obj\Debug\net5.0\ref\pmkd.dll
+G:\pmkd_intimex(tien)\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.pdb
+C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Kho\bangtinh\themBT.cshtml.g.cs
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\DevExpress.AspNetCore.Common.v20.2.dll
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\DevExpress.AspNetCore.Core.v20.2.dll
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\DevExpress.AspNetCore.Spreadsheet.v20.2.dll
@@ -708,9 +716,3 @@ C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\DevExpress.RichEdit.v20
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\DevExpress.Sparkline.v20.2.Core.dll
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\DevExpress.Spreadsheet.v20.2.Core.dll
 C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\DevExpress.Xpo.v20.2.dll
-C:\Users\User\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\package-lock.json
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.csproj.AssemblyReference.cache
-C:\Users\User\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Hopdong\test.cshtml.g.cs
-G:\pmkd_intimex(tien)\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.dll
-G:\pmkd_intimex(tien)\pmkd_project\pmkd\obj\Debug\net5.0\ref\pmkd.dll
-G:\pmkd_intimex(tien)\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.pdb

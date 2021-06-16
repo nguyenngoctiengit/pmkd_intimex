@@ -63,6 +63,7 @@
     <script src="~/node_modules/devexpress-aspnetcore-spreadsheet/dist/dx-aspnetcore-spreadsheet.js"></script>
     <link href="~/node_modules/devexpress-aspnetcore-spreadsheet/dist/dx-aspnetcore-spreadsheet.css" rel="stylesheet" />
     <!-- delete -->
+
     <!-- dialog-->
 
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
@@ -804,6 +805,7 @@
             var x10 = document.getElementById("tbl_bangtinh").rows[10].cells;
             var y1 = document.getElementById("chitietnhapkho").rows[1].cells;
             var y2 = document.getElementById("chitietnhapkho").rows[2].cells;
+            var y3 = document.getElementById("chitietnhapkho").rows[3].cells;
             var SoXe = document.getElementById("SoXe"); var SoBao = document.getElementById("SoBao");
             var MaKh = document.getElementById("MaKh"); var Dvtsb = document.getElementById("Dvtsb");
             var TenKh = document.getElementById("TenKh"); var SoLuong = document.getElementById("SoLuong");
@@ -842,13 +844,6 @@
                             x1[4].innerHTML = chuoi[j].Ptru + "%";
                             x1[5].innerHTML = chuoi[j].LuongTru;
                             x1[6].innerHTML = chuoi[j].LuongTruDc;
-                            console.log(array1);
-                            for (var k = 0; k < array1.length; k++) {
-                                var count = 0;
-                                if (array1[k].BangTinhId == rowData[i].Idbt) {
-                                    console.log(array1[k]);
-                                }
-                            }
                         }
                         if (rowData[i].Idbt == chuoi[j].Idbt && chuoi[j].Iddong == 2) {
                             x2[0].innerHTML = chuoi[j].QuiCach;
@@ -932,22 +927,43 @@
                             x10[6].innerHTML = chuoi[j].LuongTruDc;
                         }
                     }
-
-@*                        if (chuoi1[k].BangTinhId == rowData[i].Idbt) {
-                            var bangtinh = [];
-                            bangtinh.push(array1[k].RhopDong);
-                            console.log(bangtinh);
-                            count = count + 1;
-                            y1[0].innerHTML = chuoi1[k].RhopDong;
-                            y1[0].innerHTML = chuoi1[k].RhopDong;
-                            y1[0].innerHTML = chuoi1[k].RhopDong;
-                            y1[0].innerHTML = chuoi1[k].RhopDong;
-                            y1[0].innerHTML = chuoi1[k].RhopDong;
-                            y1[0].innerHTML = chuoi1[k].RhopDong;
-                            console.log(count.length);
-                        }*@
-
-
+                    for (var k = 0; k < array1.length; k++) {
+                        var count = 0;
+                        if (array1[k].BangTinhId == rowData[i].Idbt && array1[k].stt == 1) {
+                            y1[0].innerHTML = array1[k].RhopDong;
+                            y1[1].innerHTML = array1[k].Rnw;
+                            y1[2].innerHTML = array1[k].DonGia;
+                            y2[0].innerHTML = "";
+                            y2[1].innerHTML = "";
+                            y2[2].innerHTML = "";
+                            y3[0].innerHTML = "";
+                            y3[1].innerHTML = "";
+                            y3[2].innerHTML = "";
+                        } else
+                        if (array1[k].BangTinhId == rowData[i].Idbt && array1[k].stt == 2) {
+                            console.log(k);
+                            y1[0].innerHTML = array1[k].RhopDong;
+                            y1[1].innerHTML = array1[k].Rnw;
+                            y1[2].innerHTML = array1[k].DonGia;
+                            y2[0].innerHTML = array1[k + 1].RhopDong;
+                            y2[1].innerHTML = array1[k + 1].Rnw;
+                            y2[2].innerHTML = array1[k + 1].DonGia;
+                            y3[0].innerHTML = "";
+                            y3[1].innerHTML = "";
+                            y3[2].innerHTML = "";
+                        } else
+                        if (array1[k].BangTinhId == rowData[i].Idbt && array1[k].stt == 3) {
+                            y1[0].innerHTML = array1[k].RhopDong;
+                            y1[1].innerHTML = array1[k].Rnw;
+                            y1[2].innerHTML = array1[k].DonGia;
+                            y2[0].innerHTML = array1[k + 1].RhopDong;
+                            y2[1].innerHTML = array1[k + 1].Rnw;
+                            y2[2].innerHTML = array1[k + 1].DonGia;
+                            y3[0].innerHTML = array1[k + 2].RhopDong;
+                            y3[1].innerHTML = array1[k + 2].Rnw;
+                            y3[2].innerHTML = array1[k + 2].DonGia;
+                        }
+                    }
                 }
             })
         }
@@ -1037,8 +1053,6 @@
                 }
             })
         }
-
-        /// some script divhdchomuon1 ngaytra1
         function show() {
             document.getElementById('divhdchomuon').style.display = 'block';
             document.getElementById('ngaytra').style.display = 'none';

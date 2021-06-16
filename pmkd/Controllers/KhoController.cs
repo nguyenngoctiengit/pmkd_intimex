@@ -16,6 +16,7 @@ using System.IO;
 using System.IO.Ports;
 using DevExpress.AspNetCore.Spreadsheet;
 using DevExpress.Spreadsheet;
+using DevExpress.Web.Mvc;
 
 namespace pmkd.Controllers
 {
@@ -442,11 +443,8 @@ namespace pmkd.Controllers
         public IActionResult bangtinh()
         {
             ViewBag.nhapkho = (from a in _context.NhapKhoKs join b in _context.NhapKhoChiTietKs 
-                               on a.Id equals b.NhapKhoId select new {b.Rnw, b.DonGia,a.BangTinhId,b.RhopDong,b.Id}).ToList().OrderBy(a => a.BangTinhId);
+                               on a.Id equals b.NhapKhoId select new {b.Rnw, b.DonGia,a.BangTinhId,b.RhopDong,b.Id,b.stt}).ToList().OrderBy(a => a.Id);
             ViewBag.bangtinh = _context.PobangTinhs.OrderBy(a => a.Idbt).ToList();
-            ViewBag.aaa = (from a in _context.NhapKhoKs
-                           join b in _context.NhapKhoChiTietKs
-                            on a.Id equals b.NhapKhoId where a.BangTinhId == null select new { b.Rnw, b.DonGia, a.BangTinhId, b.RhopDong, b.Id }).ToList();
             return View("bangtinh/bangtinh");
         }
         [HttpGet]
@@ -466,7 +464,20 @@ namespace pmkd.Controllers
         {
             return SpreadsheetRequestProcessor.GetResponse(HttpContext);
         }
-/*        Worksheet worksheet = workbook.Worksheets[0];
-        string[] array = new string[] { "aaa", "bbbb" };*/
+        public IActionResult themBT()
+        {
+            return View("bangtinh/themBT");
+        }
+        public static class SpreadsheetSettingsHelper
+        {
+            public static SpreadsheetSettings SpreadsheetSettings()
+            {
+                SpreadsheetSettings settings = new SpreadsheetSettings();
+                settings.Name = "SpreadsheetName";
+                settings.CallbackRouteValues = new { Controller = "Kho", Action = "SpreadsheetPartial" };
+                return settings;
+            }
+            
+        }
     }
 }

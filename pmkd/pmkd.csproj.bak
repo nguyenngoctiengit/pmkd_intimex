@@ -19,33 +19,34 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AspNet.Security.OpenIdConnect.Primitives" Version="2.0.0" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Bootstrap.Datepicker" Version="1.8.0.1" />
-    <PackageReference Include="DevExpress.Reporting.Core" Version="20.1.3" />
-    <PackageReference Include="jQuery.Validation" Version="1.19.2" />
+    <PackageReference Include="DevExpress.AspNetCore.Spreadsheet" Version="21.1.3" />
+    <PackageReference Include="DevExpress.Reporting.Core" Version="21.1.3" />
+    <PackageReference Include="jQuery.Validation" Version="1.19.3" />
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.0">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.7" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="5.0.0" />
-    <PackageReference Include="Microsoft.jQuery.Unobtrusive.Validation" Version="3.2.11" />
+    <PackageReference Include="Microsoft.jQuery.Unobtrusive.Validation" Version="3.2.12" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Moment.js" Version="2.29.1" />
-    <PackageReference Include="ServiceStack.Interfaces.Core" Version="5.10.4" />
+    <PackageReference Include="ServiceStack.Interfaces.Core" Version="5.11.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
     <PackageReference Include="System.Console" Version="4.3.1" />
     <PackageReference Include="System.IO.Ports" Version="5.0.1" />
@@ -54,7 +55,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Vanphongdientu\" />
-    <PackageReference Include="DevExtreme.AspNet.Core" Version="20.1.3" />
-    <PackageReference Include="DevExtreme.AspNet.Data" Version="2.6.1" />
+    <PackageReference Include="DevExtreme.AspNet.Core" Version="21.1.3" />
+    <PackageReference Include="DevExtreme.AspNet.Data" Version="2.8.5" />
   </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties DismissedDevExtremeVersion="20.1.6" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

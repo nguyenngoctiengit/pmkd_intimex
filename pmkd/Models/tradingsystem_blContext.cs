@@ -8241,6 +8241,8 @@ namespace pmkd.Models
             {
                 entity.ToTable("NhapKhoChiTietK");
 
+                entity.Property(e => e.stt).HasColumnName("stt");
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Approve).HasColumnName("approve");
