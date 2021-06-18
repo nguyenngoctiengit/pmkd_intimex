@@ -82,6 +82,24 @@
     </style>
 
     <script type="text/javascript">
+        function onCustomCommandExecuted(s, e) {
+            switch (e.commandName) {
+                case 'save':
+                    var spreadsheetState = spreadsheet.getSpreadsheetState();
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("SaveToBytes")',
+                        data: { spreadsheetState: spreadsheetState }
+                    });
+                    break;
+                case 'download':
+                    var spreadsheetState = spreadsheet.getSpreadsheetState();
+                    $("#formExport").attr('action', '@Url.Action("Download")');
+                    $("input[name='SpreadsheetWorkSessionId']").val(spreadsheetState.SpreadsheetWorkSessionId);
+                    $("#formExport").submit();
+                    break;
+            }
+        }
         /// some script
         $(document).ready(function () {
             setInterval(function () {

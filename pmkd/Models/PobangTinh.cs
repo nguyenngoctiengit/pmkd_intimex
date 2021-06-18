@@ -51,5 +51,6 @@ namespace pmkd.Models
         public decimal? LuongTru { get; set; }
         public decimal? LuongTruDc { get; set; }
         public string Iddk { get; set; }
+        public Byte[] docs { get; set; }
     }
 }

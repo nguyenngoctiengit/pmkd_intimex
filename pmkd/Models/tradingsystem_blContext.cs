@@ -12865,6 +12865,8 @@ namespace pmkd.Models
                     .HasMaxLength(50)
                     .HasColumnName("IDBT");
 
+                entity.Property(e => e.docs).HasMaxLength(255).HasColumnName("docs");
+
                 entity.Property(e => e.Iddong).HasColumnName("IDDong");
 
                 entity.Property(e => e.ChatLuongHd)

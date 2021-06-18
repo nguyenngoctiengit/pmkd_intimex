@@ -17,6 +17,7 @@ using System.IO.Ports;
 using DevExpress.AspNetCore.Spreadsheet;
 using DevExpress.Spreadsheet;
 using DevExpress.Web.Mvc;
+using static pmkd.Models.SpreadsheetViewModel;
 
 namespace pmkd.Controllers
 {
@@ -444,7 +445,7 @@ namespace pmkd.Controllers
         {
             ViewBag.nhapkho = (from a in _context.NhapKhoKs join b in _context.NhapKhoChiTietKs 
                                on a.Id equals b.NhapKhoId select new {b.Rnw, b.DonGia,a.BangTinhId,b.RhopDong,b.Id,b.stt}).ToList().OrderBy(a => a.Id);
-            ViewBag.bangtinh = _context.PobangTinhs.OrderBy(a => a.Idbt).ToList();
+            ViewBag.bangtinh = (from a in _context.PobangTinhs select a).ToList();
             return View("bangtinh/bangtinh");
         }
         [HttpGet]
@@ -466,18 +467,30 @@ namespace pmkd.Controllers
         }
         public IActionResult themBT()
         {
-            return View("bangtinh/themBT");
-        }
-        public static class SpreadsheetSettingsHelper
-        {
-            public static SpreadsheetSettings SpreadsheetSettings()
+            var model = new SpreadsheetData()
             {
-                SpreadsheetSettings settings = new SpreadsheetSettings();
-                settings.Name = "SpreadsheetName";
-                settings.CallbackRouteValues = new { Controller = "Kho", Action = "SpreadsheetPartial" };
-                return settings;
-            }
-            
+                DocumentId = Guid.NewGuid().ToString(),
+                DocumentFormat = DocumentFormat.Xlsx,
+                Document = SpreadsheetViewModel.GetDocument()
+            };
+            return View("bangtinh/themBT",model);
+        }
+        public void SaveToBytes(SpreadsheetClientState spreadsheetState)
+        {
+            var spreadsheet = SpreadsheetRequestProcessor.GetSpreadsheetFromState(spreadsheetState);
+            string documentId = spreadsheet.DocumentId;
+            byte[] documentContent = spreadsheet.SaveCopy(DocumentFormat.Xlsx);
+            SpreadsheetViewModel.SaveDocument(documentContent);
+        }
+        public IActionResult Download(SpreadsheetClientState spreadsheetState)
+        {
+            const string XlsxContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            var spreadsheet = SpreadsheetRequestProcessor.GetSpreadsheetFromState(spreadsheetState);
+            MemoryStream stream = new MemoryStream();
+            spreadsheet.SaveCopy(stream, DocumentFormat.Xlsx);
+            stream.Position = 0;
+            return File(stream, XlsxContentType, "bangtinh.xlsx");
+
         }
     }
 }
