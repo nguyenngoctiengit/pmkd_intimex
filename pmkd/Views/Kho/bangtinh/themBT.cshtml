@@ -47,9 +47,58 @@
                                                 <input type="text" class="form-control" id="khonhap" style="height:30px">
                                             </div>
                                             <label class="col-form-label col-md-2 col-sm-2">Số xe</label>
-                                            <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
-                                                <input type="text" class="form-control" style="height:30px" id="SoXe">
-                                            </div>
+                                            @(Html.DevExtreme().DropDownBox()
+                                                .ValueExpr("Id")
+                                                .DisplayExpr("TruckNo")
+                                                .DataSource(d => d.Mvc()
+                                                    .Controller("lookup")
+                                                    .LoadAction("getxevc_bt")
+                                                    .LoadMode(DataSourceLoadMode.Raw)
+                                                    .Key("Id")
+                                                )
+                                                .Placeholder("Select a value...")
+                                                .ShowClearButton(true)
+                                                .OnValueChanged("valuechange_xevc_bt")
+                                                .ContentTemplate(new TemplateName("template_xevc_bt"))
+                                                )
+
+                                            @using (Html.DevExtreme().NamedTemplate("template_xevc_bt"))
+                                            {
+                                                @(Html.DevExtreme().DataGrid()
+                                                .ID("xevc")
+                                                .DataSource(new JS(@"component.getDataSource()"))
+                                                .Columns(columns => {
+                                                    columns.Add().DataField("TruckNo").Caption("Số xe");
+                                                    columns.Add().DataField("Tenhang").Caption("Tên hàng");
+                                                    columns.Add().DataField("KhachHang").Caption("Khách hàng");
+                                                    columns.Add().DataField("Mahang").Caption("Mã hàng");
+                                                    columns.Add().DataField("CanId").Caption("Mã cân");
+                                                    columns.Add().DataField("BagTypeId").Caption("Mã túi");
+                                                    columns.Add().DataField("SoBao").Caption("Số bao");
+                                                    columns.Add().DataField("TlBaobi").Caption("Trọng lương bao bì");
+                                                    columns.Add().DataField("Tl_Net").Caption("Trọng lượng");
+                                                    columns.Add().DataField("Id").Caption("Mã");
+                                                    columns.Add().DataField("Ngaycan").Caption("Ngày cân");
+                                                    columns.Add().DataField("ghi_chu").Caption("Ghi chú");
+                                                })
+                                                .AllowColumnReordering(true)
+                                                .AllowColumnResizing(true)
+                                                .ColumnAutoWidth(true)
+                                                .ColumnFixing(c => c.Enabled(true))
+                                                .ShowBorders(true)
+                                                .HoverStateEnabled(true)
+                                                .Paging(p => p.PageSize(10))
+                                                .FilterRow(f => f.Visible(true))
+                                                .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+                                                .Height(345)
+                                                .Selection(s => s.Mode(SelectionMode.Single))
+                                                .SelectedRowKeys(new JS(@"component.option(""value"") ? [component.option(""value"")] : []"))
+                                                .OnSelectionChanged(@<text>function(selectedItems) {
+                                                    component.option("value", keys);
+                                                    component.close();
+                                            }</text>)
+                                        )
+                                            }
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Người giao</label>
