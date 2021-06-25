@@ -82,6 +82,14 @@
     </style>
 
     <script type="text/javascript">
+        function SubmitValueBT() {
+            var spreadsheetStateId = spreadsheet.getSpreadsheetState().SpreadsheetWorkSessionId;
+            var param = { spreadsheetStateID: "'" + spreadsheetStateId + "'" };
+            $.post("/kho/updatespreadsheet", param, function (result) {
+                $("#spreadsheetBT").html(result);
+
+            });
+        }
         function onCustomCommandExecuted(s, e) {
             switch (e.commandName) {
                 case 'save':
@@ -91,7 +99,7 @@
                         url: '@Url.Action("SaveToBytes")',
                         data: { spreadsheetState: spreadsheetState }
                     });
-                    alert("Save thành công")
+                    alert("Save thành công");
                     break;
                 case 'download':
                     var spreadsheetState = spreadsheet.getSpreadsheetState();
@@ -760,7 +768,6 @@
     <!-- datepicker -->
     <script src="~/js/js_create/@(ViewName).js"></script>
     <script src="~/js/js_create/lookup.js"></script>
-    <script src="~/js/js_create/hdmb1.js"></script>
     <!-- dialog -->
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <!-- Bootstrap -->

@@ -1,9 +1,9 @@
 ﻿
 @{
-    ViewData["Title"] = "themBT";
+    ViewData["Title"] = "bangtinh";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@model SpreadsheetViewModel
 <div class="right_col" role="main" style="height: 500px">
     <div class="">
         <div class="row" style="display: block;">
@@ -42,89 +42,103 @@
                                 <div class="card-box table-responsive">
                                     <div class="col-md-12 col-sm-12" style="height:auto">
                                         <div class="form-group row">
-                                            <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Kho nhập</label>
-                                            <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
-                                                <input type="text" class="form-control" id="khonhap" style="height:30px">
-                                            </div>
-                                            <label class="col-form-label col-md-2 col-sm-2">Số xe</label>
-                                            @(Html.DevExtreme().DropDownBox()
-                                                .ValueExpr("Id")
-                                                .DisplayExpr("TruckNo")
-                                                .DataSource(d => d.Mvc()
-                                                    .Controller("lookup")
-                                                    .LoadAction("getxevc_bt")
-                                                    .LoadMode(DataSourceLoadMode.Raw)
-                                                    .Key("Id")
-                                                )
-                                                .Placeholder("Select a value...")
-                                                .ShowClearButton(true)
-                                                .OnValueChanged("valuechange_xevc_bt")
-                                                .ContentTemplate(new TemplateName("template_xevc_bt"))
-                                                )
+                                            <label class="col-form-label col-md-1 col-sm-1">Số xe</label>
+                                            <div class="col-md-5 col-sm-5" style="padding:0px 0px 0px 0px">
+                                                @(Html.DevExtreme().DropDownBox()
+                                                        .ValueExpr("Id")
+                                                        .DisplayExpr("SoXe")
+                                                        .DataSource(d => d.Mvc()
+                                                            .Controller("lookup")
+                                                            .LoadAction("getxevc_bt")
+                                                            .LoadMode(DataSourceLoadMode.Raw)
+                                                            .Key("Id")
+                                                        )
+                                                        .Placeholder("Select a value...")
+                                                        .ShowClearButton(true)
+                                                        .OnValueChanged("valuechange_xevc_bt")
+                                                        .ContentTemplate(new TemplateName("template_xevc_bt"))
+                                                        )
+                                                @using (Html.DevExtreme().NamedTemplate("template_xevc_bt"))
+                                                {
+                                                    @(Html.DevExtreme().DataGrid()
+                                                    .ID("xevc_bt")
+                                                    .DataSource(new JS(@"component.getDataSource()"))
+                                                    .Columns(columns => {
+                                                        columns.Add().DataField("SoXe").Caption("Số xe");
+                                                        columns.Add().DataField("HopDong").Caption("Hợp đồng");
+                                                        columns.Add().DataField("Ngaycan").Caption("Ngày cân");
+                                                    })
+                                                    .AllowColumnReordering(true)
+                                                    .AllowColumnResizing(true)
+                                                    .ColumnAutoWidth(true)
+                                                    .ColumnFixing(c => c.Enabled(true))
+                                                    .ShowBorders(true)
+                                                    .HoverStateEnabled(true)
+                                                    .Paging(p => p.PageSize(10))
+                                                    .FilterRow(f => f.Visible(true))
+                                                    .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+                                                    .Height(345)
+                                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                                    .SelectedRowKeys(new JS(@"component.option(""value"") ? [component.option(""value"")] : []"))
+                                                    .OnSelectionChanged(@<text>function(selectedItems) {
+                                                        var keys = selectedItems.selectedRowKeys;
+                                                        var array = @Html.Raw(Json.Serialize(ViewBag.xeptai));
+                                                        var chuoi = [];
+                                                        var array1 = @Html.Raw(Json.Serialize(ViewBag.can));
+                                                        var chuoi1 = [];
+                                                        for (var i = 0;i @Html.Raw("<") array.length; i++)
+                                                        {
+                                                            chuoi[i] = array[i];
+                                                            if (chuoi[i].Id == keys){
+                                                                $("#HopDong").dxTextBox("instance").option("value", chuoi[i].HopDong);
+                                                                $("#NgayHd").dxDateBox("instance").option("value", chuoi[i].NgayHd);
+                                                                $("#MaKhach").dxTextBox("instance").option("value", chuoi[i].MaKhach);
+                                                                $("#KhachHang").dxTextBox("instance").option("value", chuoi[i].KhachHang);
+                                                                $("#Kcs").dxTextBox("instance").option("value", chuoi[i].Kcs);
+                                                                $("#PhieuNhapKho").dxTextBox("instance").option("value", chuoi[i].PhieuNhapKho);
+                                                                $("#KhoName").dxTextBox("instance").option("value", chuoi[i].KhoName);
+                                                                $("#Mahang").dxTextBox("instance").option("value", chuoi[i].Mahang);
+                                                                $("#Tenhang").dxTextBox("instance").option("value", chuoi[i].Tenhang);
+                                                                $("#SoBao").dxTextBox("instance").option("value", chuoi[i].SoBao);
+                                                                $("#Dvt").dxTextBox("instance").option("value", chuoi[i].Dvt);
+                                                                for (var j = 0;j @Html.Raw("<") array1.length;j++){
+                                                                    chuoi1[j] = array1[j];
+                                                                    if (chuoi1[j].SystemId == chuoi[i].CanId){
+                                                                        $("#Laixe").dxTextBox("instance").option("value", chuoi1[j].LaiXe);
+                                                                        $("#GW").dxTextBox("instance").option("value", chuoi1[j].GW);
+                                                                        $("#TlBao").dxTextBox("instance").option("value", chuoi1[j].TlBao);
+                                                                        $("#TlNet").dxTextBox("instance").option("value", chuoi1[j].TlNet);
+                                                                    }
+                                                                }
 
-                                            @using (Html.DevExtreme().NamedTemplate("template_xevc_bt"))
-                                            {
-                                                @(Html.DevExtreme().DataGrid()
-                                                .ID("xevc")
-                                                .DataSource(new JS(@"component.getDataSource()"))
-                                                .Columns(columns => {
-                                                    columns.Add().DataField("TruckNo").Caption("Số xe");
-                                                    columns.Add().DataField("Tenhang").Caption("Tên hàng");
-                                                    columns.Add().DataField("KhachHang").Caption("Khách hàng");
-                                                    columns.Add().DataField("Mahang").Caption("Mã hàng");
-                                                    columns.Add().DataField("CanId").Caption("Mã cân");
-                                                    columns.Add().DataField("BagTypeId").Caption("Mã túi");
-                                                    columns.Add().DataField("SoBao").Caption("Số bao");
-                                                    columns.Add().DataField("TlBaobi").Caption("Trọng lương bao bì");
-                                                    columns.Add().DataField("Tl_Net").Caption("Trọng lượng");
-                                                    columns.Add().DataField("Id").Caption("Mã");
-                                                    columns.Add().DataField("Ngaycan").Caption("Ngày cân");
-                                                    columns.Add().DataField("ghi_chu").Caption("Ghi chú");
-                                                })
-                                                .AllowColumnReordering(true)
-                                                .AllowColumnResizing(true)
-                                                .ColumnAutoWidth(true)
-                                                .ColumnFixing(c => c.Enabled(true))
-                                                .ShowBorders(true)
-                                                .HoverStateEnabled(true)
-                                                .Paging(p => p.PageSize(10))
-                                                .FilterRow(f => f.Visible(true))
-                                                .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
-                                                .Height(345)
-                                                .Selection(s => s.Mode(SelectionMode.Single))
-                                                .SelectedRowKeys(new JS(@"component.option(""value"") ? [component.option(""value"")] : []"))
-                                                .OnSelectionChanged(@<text>function(selectedItems) {
-                                                    component.option("value", keys);
-                                                    component.close();
-                                            }</text>)
-                                        )
-                                            }
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Người giao</label>
-                                            <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
-                                                <input type="text" class="form-control" id="nguoigiao" style="height:30px">
+                                                            }
+                                                        }
+                                                        component.option("value", keys);
+                                                        component.close();
+                                                    }</text>)
+                                                )
+                                                }
                                             </div>
                                             <label class="col-form-label col-md-2 col-sm-2">Đ.vị giao hàng</label>
                                             <div class="col-md-1 col-sm-1" style="padding:0px 0px 0px 0px">
-                                                <input type="text" class="form-control" style="height:30px" id="MaKh">
+                                                @(Html.DevExtreme().TextBox().ID("MaKhach"))
                                             </div>
                                             <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 10px">
-                                                <input type="text" class="form-control" style="height:30px" id="TenKh">
+                                                @(Html.DevExtreme().TextBox().ID("KhachHang"))
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">H.đồng</label>
                                             <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
-                                                <input type="text" class="form-control" id="SoHd" style="height:30px">
+                                                @(Html.DevExtreme().TextBox().ID("HopDong"))
                                             </div>
                                             <label class="col-form-label col-md-1 col-sm-1" style="font-size:11px">Ngày HĐ</label>
                                             <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
-                                                <input type="text" class="form-control" style="height:30px" id="NgayHd">
+                                                @(Html.DevExtreme().DateBox().ID("NgayHd"))
                                             </div>
                                             <label class="col-form-label col-md-2 col-sm-2">Người nhập hàng</label>
                                             <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
-                                                <input type="text" class="form-control" style="height:30px" id="Nvnhap">
+                                                @(Html.DevExtreme().TextBox().ID("Laixe"))
                                             </div>
                                             <div class="col-md-1 col-sm-1" style="padding:0px 0px 0px 10px">
                                                 @(Html.DevExtreme().CheckBox())
@@ -134,113 +148,65 @@
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">Số KCS</label>
                                             <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
-                                                <input type="text" class="form-control" id="SoPkcs" style="height:30px">
+                                                @(Html.DevExtreme().TextBox().ID("Kcs"))
                                             </div>
                                             <label class="col-form-label col-md-1 col-sm-1">P.nhập</label>
                                             <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
-                                                <input type="text" class="form-control" style="height:30px" id="SoPn">
+                                                @(Html.DevExtreme().TextBox().ID("PhieuNhapKho"))
                                             </div>
                                             <label class="col-form-label col-md-1 col-sm-1" style="font-size:11px">Kho nhập</label>
                                             <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
-                                                <input type="text" class="form-control" style="height:30px" id="TenKhoN">
+                                                @(Html.DevExtreme().TextBox().ID("KhoName"))
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Hàng hóa</label>
                                             <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
-                                                <input type="text" class="form-control" id="MaMh" style="height:30px">
+                                                @(Html.DevExtreme().TextBox().ID("Mahang"))
                                             </div>
                                             <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 10px">
-                                                <input type="text" class="form-control" id="TenMh" style="height:30px">
+                                                @(Html.DevExtreme().TextBox().ID("Tenhang"))
                                             </div>
                                             <label class="col-form-label col-md-1 col-sm-1">Số bao</label>
                                             <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
-                                                <input type="text" class="form-control" style="height:30px" id="SoBao">
+                                                @(Html.DevExtreme().TextBox().ID("SoBao"))
                                             </div>
                                             <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 10px">
-                                                <input type="text" class="form-control" style="height:30px" id="Dvtsb">
+                                                @(Html.DevExtreme().TextBox().ID("Dvt"))
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Trọng lượng(GW)</label>
                                             <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
-                                                <input type="text" class="form-control" id="SoLuong" style="height:30px">
+                                                @(Html.DevExtreme().TextBox().ID("GW"))
                                             </div>
                                             <div class="col-md-1 col-sm-1" style="padding:0px 0px 0px 10px">
-                                                <input type="text" class="form-control" id="Dvtsl" style="height:30px">
+                                                @(Html.DevExtreme().TextBox().ID("Dvt"))
                                             </div>
                                             <label class="col-form-label col-md-2 col-sm-2">TL bao bì</label>
                                             <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
-                                                <input type="text" class="form-control" style="height:30px" id="TlbaoBi">
+                                                @(Html.DevExtreme().TextBox().ID("TlBao"))
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Trọng lượng tịnh(NW)</label>
                                             <div class="col-md-10 col-sm-10" style="padding:0px 0px 0px 0px">
-                                                <input type="text" class="form-control" id="Tltinh" style="height:30px">
+                                                @(Html.DevExtreme().TextBox().ID("TlNet"))
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-form-label col-md-12 col-sm-12" style="font-size:18px;padding:5px 0px 0px 5px;color:red"><b>I/ SỐ LƯỢNG VÀ CHẤT LƯỢNG THỰC TẾ</b></label>
+                                            <label class="col-form-label col-md-10 col-sm-10" style="font-size:18px;padding:5px 0px 0px 5px;color:red"><b>I/ SỐ LƯỢNG VÀ CHẤT LƯỢNG THỰC TẾ</b></label>
+                                            <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
+                                                <input type="button" onclick="SubmitValueBT()" value="Submit value">
+                                            </div>
                                         </div>
                                         <div class="form-group row">
                                             <form id="formExport" method="post">
                                                 <input name="SpreadsheetWorkSessionId" type="hidden" value="" />
                                             </form>
-                                            @(Html.DevExpress()
-                                                .Spreadsheet("spreadsheet")
-                                                .Height("500px")
-                                                .Width("100%")
-                                                .Ribbon(r => r
-                                                    .Visible(true)
-                                                    .ActiveTabIndex(0)
-                                                    .Tabs(tabs => {
-                                                        tabs.Clear();
-                                                        tabs.Add()
-                                                                .Title("File")
-                                                                    .Items(items =>
-                                                                    {
-                                                                        items.AddButton()
-                                                                                .Text("Save")
-                                                                                .CommandName("save")
-                                                                                .ShowText(true)
-                                                                                .Icon("save");
-                                                                        items.AddButton()
-                                                                                .Text("Download as XLSX")
-                                                                                .CommandName("download")
-                                                                                .ShowText(true)
-                                                                                .Icon("download");
-                                                                        items.AddPrintItem().BeginGroup(true);
-                                                                    });
-                                                        tabs.AddHomeTab()
-                                                                .Items(items =>
-                                                                {
-                                                                    items.Clear();
-                                                                    items.AddUndoItem();
-                                                                    items.AddRedoItem();
-                                                                    items.AddCutItem();
-                                                                    items.AddCopyItem();
-                                                                    items.AddPasteItem();
-                                                                });
-                                                        tabs.AddInsertTab();
-
-                                                        tabs.AddFormulasTab();
-
-                                                        tabs.AddDataTab();
-
-                                                        tabs.AddReviewTab();
-
-                                                        tabs.AddViewTab();
-                                                    })
-                                                )
-                                                .ClientSideEvents(events => {
-                                                    events.OnCustomCommandExecuted("onCustomCommandExecuted");
-
-                                                })
-                                                .ConfirmOnLosingChanges(confirm => confirm.Enabled(false))
-                                                .DocumentRequestHandlerUrl(Url.Action("DxDocRequest"))
-                                                .Open(Model.DocumentId, Model.DocumentFormat, Model.ContentAccessorByBytes)
-                                            )
+                                            <div id="spreadsheetBT">
+                                                @Html.Partial("bangtinh/SpreadsheetBT", @Model)
+                                            </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-12 col-sm-12" style="font-size:18px;padding:5px 0px 0px 5px;color:red"><b>II/ GIÁ TRỊ THANH TOÁN </b></label>

@@ -264,5 +264,39 @@ namespace pmkd.Controllers
             });
             return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
         }
+        public async Task<IActionResult> getxevc_bt(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = from x in _context.XepTais 
+                              join k in _context.Kcs on x.Kcs equals k.SoPhieu
+                              join hh in _context.Hanghoas on x.Mahang equals hh.Mahang
+                              join b in _context.BagTypes on x.BagTypeId equals b.BagTypeId
+  /*                            join nk in _context.NhapKhoChiTietKs on x.PhieuNhapKhoId equals nk.NhapKhoId*/
+                              /*where (x.BangTinhId == null || x.BangTinhId == string.Empty) && (x.PhieuNhapKhoId != null || x.PhieuNhapKhoId != string.Empty) &&
+                              (x.CanId != null) && (x.CanId != string.Empty) && (k.Aprove == true)*/
+                              select new
+                              {
+                                  x.Id,
+                                  x.SoXe,
+                                  x.HopDong,
+                                  x.Ngaycan,
+                                 /* nk.Rnw,*/
+                                  x.MaKhach,
+                                  x.Mahang,
+                                  x.KhoId,
+                                  x.SoBao,
+                                  k.SoPhieu,
+                                  x.PhieuNhapKhoId,
+                                  k.NguoiGiao,
+                                  x.Xeptaiso,
+                                  x.KhoName,
+                                  k.TenKhach,
+                                  k.TenHang,
+                                  b.Name,
+                                  x.PhieuNhapKho,
+                                  x.CanId,
+                                  hh.MaNhom
+                              };
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
     }
 }

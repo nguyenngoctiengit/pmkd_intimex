@@ -19,13 +19,14 @@ using DevExpress.Spreadsheet;
 using DevExpress.Web.Mvc;
 using static pmkd.Models.SpreadsheetViewModel;
 
+
 namespace pmkd.Controllers
 {
     public class KhoController : Controller
     {
         public tradingsystem_blContext _context;
         public tradingsystem_blContext db = new tradingsystem_blContext();
-        
+        private const string DocumentId2 = "MyDocument2";
         public KhoController(tradingsystem_blContext context)
         {
             _context = context;
@@ -467,13 +468,57 @@ namespace pmkd.Controllers
         }
         public IActionResult themBT()
         {
-            var model = new SpreadsheetData()
-            {
-                DocumentId = Guid.NewGuid().ToString(),
-                DocumentFormat = DocumentFormat.Xlsx,
-                Document = SpreadsheetViewModel.GetDocument()
-            };
+            ViewBag.can = (from c in _context.Cans
+                           select new
+                           {
+                               c.SystemId,
+                               c.LaiXe,
+                               GW = c.TlNet + c.TlBao,
+                               c.TlBao,
+                               c.TlNet
+                           }).ToList();
+            ViewBag.xeptai = (from x in _context.XepTais
+                              select new
+                              {
+                                  x.CanId,
+                                  x.Id,
+                                  x.SoXe,
+                                  x.HopDong,
+                                  x.NgayHd,
+                                  x.MaKhach,
+                                  x.KhachHang,
+                                  x.Kcs,
+                                  x.PhieuNhapKho,
+                                  x.KhoName,
+                                  x.Mahang,
+                                  x.Tenhang,
+                                  x.SoBao,
+                                  Dvt = "kgs",
+                              }).ToList();
+            string DocumentId1 = "MyDocumentId1";
+            var ByteArray = (from a in _context.PobangTinhs where ((a.Idbt == "BT1600000001") && (a.Iddong == 1)) select a.docs).FirstOrDefault();
+            byte[] byteArrayAccessor() => ByteArray;
+            var model = new SpreadsheetViewModel(DocumentId1, byteArrayAccessor);
             return View("bangtinh/themBT",model);
+        }
+        [HttpPost]
+        public IActionResult updatespreadsheet(string spreadsheetStateID)
+        {
+            string str = spreadsheetStateID.Substring(1, spreadsheetStateID.Length - 2);
+            SpreadsheetClientState st = new SpreadsheetClientState();
+            st.SpreadsheetWorkSessionId = str;
+            var spreadsheet = SpreadsheetRequestProcessor.GetSpreadsheetFromState(st);
+            Workbook workbook = new Workbook();
+            MemoryStream stream = new MemoryStream();
+            spreadsheet.SaveCopy(stream, DocumentFormat.Xlsx);
+            stream.Position = 0;
+            workbook.LoadDocument(stream);
+            Worksheet sht = workbook.Worksheets[0];
+            sht[0, 0].Value = "test";
+            byte[] docBytes = workbook.SaveDocument(DocumentFormat.Xlsx);
+            Func<byte[]> contentAccessor = () => docBytes;
+            var model = new SpreadsheetViewModel(DocumentId2, contentAccessor);
+            return PartialView("bangtinh/SpreadsheetBT", model);
         }
         public void SaveToBytes(SpreadsheetClientState spreadsheetState)
         {
