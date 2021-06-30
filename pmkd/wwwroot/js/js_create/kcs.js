@@ -19,7 +19,7 @@ function toolbar_kcs(e) {
         options: {
             icon: "add",
             onClick: function () {
-                location.href = "kho/themkcs";
+                location.href = "kcs/themkcs";
             }
         }
     });

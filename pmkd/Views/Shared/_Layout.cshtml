@@ -84,11 +84,16 @@
     <script type="text/javascript">
         function SubmitValueBT() {
             var spreadsheetStateId = spreadsheet.getSpreadsheetState().SpreadsheetWorkSessionId;
-            var param = { spreadsheetStateID: "'" + spreadsheetStateId + "'" };
-            $.post("/kho/updatespreadsheet", param, function (result) {
-                $("#spreadsheetBT").html(result);
-
-            });
+            var spreadsheetStateID = spreadsheetStateId;
+            var id = document.getElementById("idkcs").value;
+            $.ajax({
+                type: "post",
+                url: "/bangtinh/updatespreadsheet",
+                data: { spreadsheetStateID, id },
+                success: function (result) {
+                    $("#spreadsheetBT").html(result);
+                }
+            })
         }
         function onCustomCommandExecuted(s, e) {
             switch (e.commandName) {
@@ -235,10 +240,10 @@
                                     <a><i class="fa fa-edit"></i> Danh mục <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li>
-                                            <a asp-action="hanghoa" asp-controller="danhmuc">Hàng hóa</a>
+                                            <a asp-action="hanghoa" asp-controller="hanghoa">Hàng hóa</a>
                                         </li>
                                         <li>
-                                            <a asp-action="khachhang" asp-controller="danhmuc">Khách hàng</a>
+                                            <a asp-action="khachhang" asp-controller="khachhang">Khách hàng</a>
                                         </li>
                                         <li><a href="form_validation.html">Tiền tệ</a></li>
                                         <li><a href="form_wizards.html">Huyện</a></li>
@@ -255,17 +260,17 @@
                                             <a>Số liệu<span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
                                                 <li>
-                                                    <a asp-action="kcs" asp-controller="kho">Phiếu KCS</a>
+                                                    <a asp-action="kcs" asp-controller="kcs">Phiếu KCS</a>
                                                 </li>
                                                 <li>
-                                                    <a asp-action="cantrongluong" asp-controller="kho">Cân trọng lượng</a>
+                                                    <a asp-action="cantrongluong" asp-controller="can">Cân trọng lượng</a>
                                                 </li>
                                                 <li><a href="form_validation.html">Cắt chuyển</a></li>
-                                                <li><a asp-action="dangkynhapkho" asp-controller="kho">Đăng ký nhập kho</a></li>
+                                                <li><a asp-action="dangkynhapkho" asp-controller="nhapkho">Đăng ký nhập kho</a></li>
                                                 <li><a href="form_upload.html">Thẻ kho</a></li>
-                                                <li><a asp-action="lenhgiaohang" asp-controller="kho">Lệnh giao hàng</a></li>
+                                                <li><a asp-action="lenhgiaohang" asp-controller="lenhgiaohang">Lệnh giao hàng</a></li>
                                                 <li><a href="form_buttons.html">Tách phiếu Xuất</a></li>
-                                                <li><a asp-action="bangtinh" asp-controller="kho">Tính giá trị hàng NK</a></li>
+                                                <li><a asp-action="bangtinh" asp-controller="bangtinh">Tính giá trị hàng NK</a></li>
                                                 <li><a href="form_buttons.html">Phiếu Nhập kho</a></li>
                                                 <li><a href="form_buttons.html">Phiếu Xuất kho</a></li>
                                             </ul>
@@ -1029,7 +1034,7 @@
                         for (var j = 0; j < array.length; j++) {
                             chuoi[j] = array[j];
                             if (rowData[i].SystemId == chuoi[j].SystemId) {
-                                $("#formCan").attr("action", "kho/updatetlin/" + chuoi[j].SystemId)
+                                $("#formCan").attr("action", "can/updatetlin/" + chuoi[j].SystemId)
                                 trongluong.value = "TL:" + chuoi[j].TlNet + "kgs";
                                 LanhDao.value = chuoi[j].LanhDao;
                                 NguoiLap.value = chuoi[j].NguoiLap;

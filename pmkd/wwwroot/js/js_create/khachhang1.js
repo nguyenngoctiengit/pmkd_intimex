@@ -9,7 +9,7 @@ function toolbar_khachhang(e) {
         options: {
             icon: "add",
             onClick: function () {
-                location.href = "danhmuc/themkhachhang"
+                location.href = "/khachhang/themkhachhang"
 
             }
         }

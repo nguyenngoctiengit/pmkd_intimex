@@ -6,7 +6,7 @@
             text: "Thêm nhóm hàng",
             width: 150,
             onClick: function () {
-                var url = "danhmuc/themnhomhang";
+                var url = "/hanghoa/themnhomhang";
                 var formDiv1 = $('<div/>');
                 $.get(url)
                     .done(function (response) {
