@@ -81,8 +81,9 @@ namespace pmkd.Controllers
             return View("ThemBT", model);
         }
         [HttpPost]
-        public IActionResult updatespreadsheet(string spreadsheetStateID,string id)
+        public IActionResult updatespreadsheet(string spreadsheetStateID, string id)
         {
+            var item_return = (from a in _context.Kcs where a.SoPhieu == id select a).FirstOrDefault();
             string str = spreadsheetStateID;
             SpreadsheetClientState st = new SpreadsheetClientState();
             st.SpreadsheetWorkSessionId = str;
@@ -93,7 +94,13 @@ namespace pmkd.Controllers
             stream.Position = 0;
             workbook.LoadDocument(stream);
             Worksheet sht = workbook.Worksheets[0];
-            sht[0, 0].Value = id;
+            sht[1, 2].Value = item_return.DoAm; sht[2, 2].Value = item_return.TapChat; sht[3, 2].Value = item_return.DenVo;
+            sht[6, 2].Value = item_return.HatCxk; sht[5, 2].Value = item_return.HatNau; sht[4, 2].Value = item_return.HatMoc;
+            sht[7, 2].Value = item_return.TrangXop; sht[8, 2].Value = item_return.HatChay; sht[9, 2].Value = item_return.HatKhac;
+            sht[12, 2].Value = item_return.Sang13; sht[11, 2].Value = item_return.Sang12; sht[10, 2].Value = item_return.Sang8;
+            sht[13, 2].Value = item_return.Sang14; sht[14, 2].Value = item_return.Sang15; sht[15, 2].Value = item_return.Sang16;
+            sht[18, 2].Value = item_return.Sang19; sht[17, 2].Value = item_return.Sang18; sht[16, 2].Value = item_return.Sang17;
+            sht[19, 2].Value = item_return.Sang20;
             byte[] docBytes = workbook.SaveDocument(DocumentFormat.Xlsx);
             Func<byte[]> contentAccessor = () => docBytes;
             var model = new SpreadsheetViewModel(DocumentId2, contentAccessor);

@@ -86,14 +86,19 @@
             var spreadsheetStateId = spreadsheet.getSpreadsheetState().SpreadsheetWorkSessionId;
             var spreadsheetStateID = spreadsheetStateId;
             var id = document.getElementById("idkcs").value;
-            $.ajax({
-                type: "post",
-                url: "/bangtinh/updatespreadsheet",
-                data: { spreadsheetStateID, id },
-                success: function (result) {
-                    $("#spreadsheetBT").html(result);
-                }
-            })
+            if (id == null || id == "") {
+                alert("Vui lòng chọn xe");
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: "/bangtinh/updatespreadsheet",
+                    data: { spreadsheetStateID, id },
+                    success: function (result) {
+                        $("#spreadsheetBT").html(result);
+                    }
+                })
+            }
+            
         }
         function onCustomCommandExecuted(s, e) {
             switch (e.commandName) {
