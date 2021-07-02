@@ -72,5 +72,9 @@ namespace pmkd.Controllers
             _context.SaveChanges();
             return RedirectToAction("cantrongluong");
         }
+        public IActionResult phieunhapkho()
+        {
+            return View("phieunhapkho");
+        }
     }
 }

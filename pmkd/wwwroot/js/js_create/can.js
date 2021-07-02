@@ -55,6 +55,9 @@ document.getElementById("lineToSend").addEventListener("keyup", async function (
         sendSerialLine();
     }
 })
+function showPopup() {
+    alert("1");
+}
 
 
 
