@@ -82,6 +82,17 @@
     </style>
 
     <script type="text/javascript">
+        function phieunhapkho() {
+            var id = 1;
+            $.ajax({
+                type: "POST",
+                url: "can/phieunhapkho",
+                data: { id: id },
+                success: function (data) {
+                    alert(data);
+                }
+            });
+        }
         function SubmitValueBT() {
             var spreadsheetStateId = spreadsheet.getSpreadsheetState().SpreadsheetWorkSessionId;
             var spreadsheetStateID = spreadsheetStateId;

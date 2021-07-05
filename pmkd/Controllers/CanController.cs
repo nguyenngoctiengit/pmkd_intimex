@@ -34,7 +34,23 @@ namespace pmkd.Controllers
         }
         public object GetCan(DataSourceLoadOptions loadOptions)
         {
-            return DataSourceLoader.Load(_context.Cans.OrderBy(a => a.Xeptai1), loadOptions);
+            var item_return = (from a in _context.Cans
+                              select new
+                              {
+                                  a.SystemId,
+                                  a.HinhThucCan,
+                                  a.Xeptai1,
+                                  a.DateIn,
+                                  a.PhieuNx,
+                                  a.TruckNo,
+                                  a.CustName,
+                                  a.ProdCode,
+                                  a.SoBao,
+                                  a.BagName,
+                                  a.TlBao,
+                                  a.TlNet
+                              }).OrderBy(a => a.Xeptai1).ToList();
+            return DataSourceLoader.Load(item_return, loadOptions);
         }
         [HttpPost]
         [Route("can/can/updatetlin/{id?}")]
@@ -72,9 +88,10 @@ namespace pmkd.Controllers
             _context.SaveChanges();
             return RedirectToAction("cantrongluong");
         }
-        public IActionResult phieunhapkho()
+        public IActionResult phieunhapkho(int id)
         {
-            return View("phieunhapkho");
+            ViewBag.id = 1;
+            return View("phieunhapkho",id);
         }
     }
 }
