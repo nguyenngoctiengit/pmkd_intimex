@@ -90,8 +90,15 @@ namespace pmkd.Controllers
         }
         public IActionResult phieunhapkho(int id)
         {
-            ViewBag.id = 1;
-            return View("phieunhapkho",id);
+            var can = (from a in _context.Cans where a.IdXepTai == id select a).FirstOrDefault();
+            var xt = (from a in _context.XepTais where a.Id == id select a).FirstOrDefault();
+            ViewBag.tenkhach = xt.KhachHang;
+            ViewBag.makhach = xt.MaKhach;
+            ViewBag.xevc = xt.SoXe;
+            ViewBag.nguoigiao = can.LaiXe;
+            ViewBag.nw = can.TlNet;
+            ViewBag.rnw = can.TlNet;
+            return View("phieunhapkho");
         }
     }
 }

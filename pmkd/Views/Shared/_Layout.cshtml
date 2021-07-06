@@ -83,15 +83,13 @@
 
     <script type="text/javascript">
         function phieunhapkho() {
-            var id = 1;
-            $.ajax({
-                type: "POST",
-                url: "can/phieunhapkho",
-                data: { id: id },
-                success: function (data) {
-                    alert(data);
-                }
-            });
+            var id = document.getElementById("idxeptai").value;
+            if (id == "" || id == null) {
+                alert("Vui lòng chọn xe hoặc chọn xe đã đăng ký nhập kho");
+            }
+            else {
+                location.href = 'phieunhapkho/' + id;
+            }
         }
         function SubmitValueBT() {
             var spreadsheetStateId = spreadsheet.getSpreadsheetState().SpreadsheetWorkSessionId;
@@ -1044,6 +1042,7 @@
             var tlhang = document.getElementById("tlhang");
             var timeout = document.getElementById("timeout");
             var trongluong = document.getElementById("trongluong");
+            var idxeptai = document.getElementById("idxeptai");
             getDataGridCan().getSelectedRowsData().done(function (rowData) {
                 if (rowData) {
                     for (var i = 0; i < rowData.length; i++) {
@@ -1052,6 +1051,7 @@
                             if (rowData[i].SystemId == chuoi[j].SystemId) {
                                 $("#formCan").attr("action", "can/updatetlin/" + chuoi[j].SystemId)
                                 trongluong.value = "TL:" + chuoi[j].TlNet + "kgs";
+                                idxeptai.value = chuoi[j].IdXepTai;
                                 LanhDao.value = chuoi[j].LanhDao;
                                 NguoiLap.value = chuoi[j].NguoiLap;
                                 ThuKho.value = chuoi[j].ThuKho;
