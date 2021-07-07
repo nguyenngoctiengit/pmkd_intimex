@@ -92,12 +92,15 @@ namespace pmkd.Controllers
         {
             var can = (from a in _context.Cans where a.IdXepTai == id select a).FirstOrDefault();
             var xt = (from a in _context.XepTais where a.Id == id select a).FirstOrDefault();
-            ViewBag.tenkhach = xt.KhachHang;
-            ViewBag.makhach = xt.MaKhach;
-            ViewBag.xevc = xt.SoXe;
-            ViewBag.nguoigiao = can.LaiXe;
-            ViewBag.nw = can.TlNet;
-            ViewBag.rnw = can.TlNet;
+            ViewBag.tenkhach = xt.KhachHang;ViewBag.sobao = can.SoBao;
+            ViewBag.makhach = xt.MaKhach;ViewBag.loaibao = can.LoaiBao;
+            ViewBag.xevc = xt.SoXe;ViewBag.gw = can.TlNet + can.TlBao;
+            ViewBag.nguoigiao = can.LaiXe;ViewBag.nw = can.TlBao;
+            ViewBag.nw = can.TlNet;ViewBag.rnw = can.TlNet;
+            ViewBag.rnw = can.TlNet;ViewBag.tlbao = can.TlBao;
+            ViewBag.hopdong = xt.HopDong;
+            ViewBag.kho = can.KhoId;
+            ViewBag.mahang = xt.Mahang;ViewBag.tenhang = xt.Tenhang;
             return View("phieunhapkho");
         }
     }

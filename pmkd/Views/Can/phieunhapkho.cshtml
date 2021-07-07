@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@model XepTai
+@model PNKViewModel
 <div class="right_col" role="main" style="height: 500px" id="pnk">
     <div class="">
         <div class="row" style="display: block;">
@@ -45,125 +45,77 @@
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-1 col-sm-1">Số xe</label>
                                             <div class="col-md-5 col-sm-5" style="padding:0px 0px 0px 0px">
-                                                @ViewBag.id
-                                            </div>
-                                            <input type="text" id="idkcs" hidden>
+                                                @(Html.DevExtreme().TextBox().Value(ViewBag.xevc))
+                                            </div> 
                                             <label class="col-form-label col-md-2 col-sm-2">Đ.vị giao hàng</label>
                                             <div class="col-md-1 col-sm-1" style="padding:0px 0px 0px 0px">
-                                                @(Html.DevExtreme().TextBox().ID("MaKhach"))
+                                                @(Html.DevExtreme().TextBox().Value(ViewBag.makhach))
                                             </div>
                                             <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 10px">
-                                                @(Html.DevExtreme().TextBox().ID("KhachHang"))
+                                                @(Html.DevExtreme().TextBox().Value(ViewBag.tenkhach))
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">H.đồng</label>
                                             <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
-                                                @(Html.DevExtreme().TextBox().ID("HopDong"))
+                                                @(Html.DevExtreme().TextBox().Value(ViewBag.hopdong))
                                             </div>
-                                            <label class="col-form-label col-md-1 col-sm-1" style="font-size:11px">Ngày HĐ</label>
+                                            <label class="col-form-label col-md-1 col-sm-1" style="font-size:11px">Ngày chứng từ</label>
                                             <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
-                                                @(Html.DevExtreme().DateBox().ID("NgayHd"))
+                                                @(Html.DevExtreme().DateBox())
                                             </div>
-                                            <label class="col-form-label col-md-2 col-sm-2">Người nhập hàng</label>
-                                            <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
-                                                @(Html.DevExtreme().TextBox().ID("Laixe"))
+                                            <label class="col-form-label col-md-2 col-sm-2">Mã lô</label>
+                                            <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
+                                                @(Html.DevExtreme().TextBox())
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">Số KCS</label>
-                                            <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
+                                            <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">Ghi chú</label>
+                                            <div class="col-md-5 col-sm-5" style="padding:0px 0px 0px 0px">
                                                 @(Html.DevExtreme().TextBox().ID("Kcs"))
                                             </div>
-                                            <label class="col-form-label col-md-1 col-sm-1">P.nhập</label>
-                                            <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
-                                                @(Html.DevExtreme().TextBox().ID("PhieuNhapKho"))
-                                            </div>
-                                            <label class="col-form-label col-md-1 col-sm-1" style="font-size:11px">Kho nhập</label>
-                                            <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
-                                                @(Html.DevExtreme().TextBox().ID("KhoName"))
+                                            <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px">Kho nhập</label>
+                                            <div class="col-md-5 col-sm-5" style="padding:0px 0px 0px 0px">
+                                                @*@(Html.DevExtreme().TextBox().Value(ViewBag.kho))*@
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Hàng hóa</label>
                                             <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
-                                                @(Html.DevExtreme().TextBox().ID("Mahang"))
+                                                @(Html.DevExtreme().TextBox().Value(ViewBag.mahang))
                                             </div>
                                             <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 10px">
-                                                @(Html.DevExtreme().TextBox().ID("Tenhang"))
+                                                @(Html.DevExtreme().TextBox().Value(ViewBag.tenhang))
                                             </div>
                                             <label class="col-form-label col-md-1 col-sm-1">Số bao</label>
                                             <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
-                                                @(Html.DevExtreme().TextBox().ID("SoBao"))
+                                                @(Html.DevExtreme().TextBox().Value(ViewBag.sobao))
                                             </div>
                                             <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 10px">
-                                                @(Html.DevExtreme().TextBox().ID("Dvt"))
+                                                @(Html.DevExtreme().TextBox().Value(ViewBag.loaibao))
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Trọng lượng(GW)</label>
                                             <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
-                                                @(Html.DevExtreme().TextBox().ID("GW"))
+                                                @(Html.DevExtreme().TextBox().Value(ViewBag.gw))
                                             </div>
                                             <div class="col-md-1 col-sm-1" style="padding:0px 0px 0px 10px">
-                                                @(Html.DevExtreme().TextBox().ID("Dvt"))
+                                                @(Html.DevExtreme().TextBox().Value("kgs"))
                                             </div>
                                             <label class="col-form-label col-md-2 col-sm-2">TL bao bì</label>
                                             <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
-                                                @(Html.DevExtreme().TextBox().ID("TlBao"))
+                                                @(Html.DevExtreme().TextBox().Value(ViewBag.tlbao))
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Trọng lượng tịnh(NW)</label>
-                                            <div class="col-md-10 col-sm-10" style="padding:0px 0px 0px 0px">
-                                                @(Html.DevExtreme().TextBox().ID("TlNet"))
+                                            <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
+                                                @(Html.DevExtreme().TextBox().Value(ViewBag.nw))
                                             </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-10 col-sm-10" style="font-size:18px;padding:5px 0px 0px 5px;color:red"><b>I/ SỐ LƯỢNG VÀ CHẤT LƯỢNG THỰC TẾ</b></label>
-                                            <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
-                                                <input type="button" onclick="SubmitValueBT()" value="Submit value">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-12 col-sm-12" style="font-size:18px;padding:5px 0px 0px 5px;color:red"><b>II/ GIÁ TRỊ THANH TOÁN </b></label>
-                                        </div>
-                                        <div class="form-group row">
-                                            <table class="table table-bordered" id="chitietnhapkho">
-                                                <tr>
-                                                    <th>Hợp đồng</th>
-                                                    <th>Số lượng</th>
-                                                    <th>Đơn giá</th>
-                                                    <th>Tiền hàng</th>
-                                                    <th>VAT</th>
-                                                    <th>Tổng</th>
-                                                </tr>
-                                                @{
-                                                    for (var i = 0; i < 3; i++)
-                                                    {
-                                                        <tr>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                        </tr>
-                                                    }
-                                                }
-
-                                            </table>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
-                                                <a asp-action="themBT" asp-controller="kho">
-                                                    @(Html.DevExtreme().Button()
-                                                            .Text("SAVE")
-                                                            .Type(ButtonType.Default)
-                                                            .StylingMode(ButtonStylingMode.Contained)
-                                                            .Width(120)
-                                                        )
-                                                </a>
+                                            <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">RNW</label>
+                                            <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
+                                                @(Html.DevExtreme().TextBox().Value(ViewBag.rnw))
                                             </div>
                                         </div>
                                     </div>
