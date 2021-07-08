@@ -298,5 +298,10 @@ namespace pmkd.Controllers
                               };
             return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
         }
+        public async Task<IActionResult> getLo(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = (from a in _context.DanhMucLos select new { a.MaLo, a.TenLo });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
     }
 }
