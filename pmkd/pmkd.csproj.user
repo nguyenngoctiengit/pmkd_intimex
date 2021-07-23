@@ -21,6 +21,6 @@
     <DevExtremeLayoutPage>~/Views/Shared/_Layout.cshtml</DevExtremeLayoutPage>
     <DevExtremeSelectedDataContextName>tradingsystem_blContext %28pmkd.Models%29</DevExtremeSelectedDataContextName>
     <NameOfLastUsedPublishProfile>FolderProfile</NameOfLastUsedPublishProfile>
-    <DismissedDevExtremeVersion>21.1.3</DismissedDevExtremeVersion>
+    <DismissedDevExtremeVersion>21.1.4</DismissedDevExtremeVersion>
   </PropertyGroup>
 </Project>

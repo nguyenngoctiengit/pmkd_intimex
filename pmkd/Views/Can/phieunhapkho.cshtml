@@ -47,7 +47,7 @@
                                                 <label class="col-form-label col-md-1 col-sm-1">Số xe</label>
                                                 <div class="col-md-5 col-sm-5" style="padding:0px 0px 0px 0px">
                                                     @(Html.DevExtreme().TextBox().Value(ViewBag.xevc))
-                                                </div> 
+                                                </div>
                                                 <label class="col-form-label col-md-2 col-sm-2">Đ.vị giao hàng</label>
                                                 <div class="col-md-1 col-sm-1" style="padding:0px 0px 0px 0px">
                                                     @(Html.DevExtreme().TextBox().Value(ViewBag.makhach))
@@ -63,11 +63,11 @@
                                                 </div>
                                                 <label class="col-form-label col-md-1 col-sm-1" style="font-size:11px">Ngày chứng từ</label>
                                                 <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
-                                                    @(Html.DevExtreme().DateBox().Value(DateTime.Now))
+                                                    @(Html.DevExtreme().DateBoxFor(a => a.nk.NgayChungTu).Value(DateTime.Now))
                                                 </div>
                                                 <label class="col-form-label col-md-1 col-sm-1">Mã lô</label>
                                                 <div class="col-md-5 col-sm-5" style="padding:0px 0px 0px 0px">
-                                                    @(Html.DevExtreme().SelectBox().DataSource(d => d.Mvc().Controller("lookup")
+                                                    @(Html.DevExtreme().SelectBoxFor(a => a.nkct.MaLo).DataSource(d => d.Mvc().Controller("lookup")
                                                                                                         .LoadAction("getLo").LoadMode(DataSourceLoadMode.Raw)
                                                                                                         .Key("MaLo"))
                                                         .DisplayExpr("TenLo")
@@ -78,7 +78,7 @@
                                             <div class="form-group row">
                                                 <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">Ghi chú</label>
                                                 <div class="col-md-5 col-sm-5" style="padding:0px 0px 0px 0px">
-                                                    @(Html.DevExtreme().TextBox().ID("Kcs"))
+                                                    @(Html.DevExtreme().TextAreaFor(a => a.ca.GhiChu1).ID("Kcs"))
                                                 </div>
                                                 <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px">Kho nhập</label>
                                                 <div class="col-md-5 col-sm-5" style="padding:0px 0px 0px 0px">
@@ -124,7 +124,14 @@
                                                     @(Html.DevExtreme().TextBox().Value(ViewBag.rnw))
                                                 </div>
                                             </div>
-                                            <button type="submit">Submit</button>
+                                            <div class="form-group row">
+                                                <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
+                                                    <button type="submit">Submit</button>
+                                                </div>
+                                                <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
+                                                    <button type="submit">Thêm lô</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>

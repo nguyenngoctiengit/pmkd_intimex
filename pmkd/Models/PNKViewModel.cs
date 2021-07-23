@@ -8,6 +8,8 @@ namespace pmkd.Models
 {
     public class PNKViewModel
     {
+        public XuatKho xk { get; set; }
+        public XuatKhoChiTiet xktc { get; set; }
         public Can ca { get; set; }
         public XepTai xt { get; set; }
         public NhapKho nk { get; set; }
