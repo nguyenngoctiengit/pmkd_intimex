@@ -967,3 +967,4 @@ C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.RazorTargetA
 C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.Views.pdb
 C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.csproj.CopyComplete
 C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.genruntimeconfig.cache
+C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Account\chooseBranch.cshtml.g.cs

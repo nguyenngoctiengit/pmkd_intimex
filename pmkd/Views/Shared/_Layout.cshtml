@@ -63,7 +63,6 @@
     <script src="~/node_modules/devexpress-aspnetcore-spreadsheet/dist/dx-aspnetcore-spreadsheet.js"></script>
     <link href="~/node_modules/devexpress-aspnetcore-spreadsheet/dist/dx-aspnetcore-spreadsheet.css" rel="stylesheet" />
     <!-- delete -->
-
     <!-- dialog-->
 
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
@@ -80,7 +79,16 @@
             display: table-header-group
         }
     </style>
-
+    @{
+        if (ViewBag.mess != null)
+        {
+            <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.mess");
+            };
+            </script>
+        }
+    }
     <script type="text/javascript">
         function phieunhapkho() {
             var id = document.getElementById("idxeptai").value;
@@ -107,7 +115,7 @@
                     }
                 })
             }
-            
+
         }
         function onCustomCommandExecuted(s, e) {
             switch (e.commandName) {

@@ -95,7 +95,7 @@ namespace pmkd.Controllers
                     try
                     {
                         Can can = new Can();
-                        var autoincrement_can = _context.AutomaticValuesBranches.Where(a => a.Macn == "INXBL" && a.ObjectName == "CANBLI").FirstOrDefault();
+                        var autoincrement_can = _context.AutomaticValuesBranches.Where(a => a.Macn == HttpContext.Session.GetString("UnitName") && a.ObjectName == "CANBLI").FirstOrDefault();
                         var PrefixOfDefaultValueForId = autoincrement_can.PrefixOfDefaultValueForId;
                         var LengthOfDefaultValueForId = (int)autoincrement_can.LengthOfDefaultValueForId;
                         var LastValueOfColumnId = autoincrement_can.LastValueOfColumnId;

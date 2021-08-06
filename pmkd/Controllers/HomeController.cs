@@ -31,11 +31,13 @@ namespace pmkd.Controllers
             var id = HttpContext.Session.Get("userId");
             if(id != null)
             {
+                ViewBag.mess = "CS";
                 ViewBag.countuser = (from a in _context.UserRights select a.UserId).Count();
                 return View();
             }
             else
             {
+
                 return RedirectToAction("index", "Account");
             }
 

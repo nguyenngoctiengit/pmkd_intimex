@@ -116,7 +116,7 @@ namespace pmkd.Controllers
                 {
                     try
                     {
-                        var autoincrement_pnk = _context.AutomaticValuesBranches.Where(a => a.Macn == "INXBL" && a.ObjectName == "PhieuNKBLI").FirstOrDefault();
+                        var autoincrement_pnk = _context.AutomaticValuesBranches.Where(a => a.Macn == HttpContext.Session.GetString("UnitName") && a.ObjectName == "PhieuNKBLI").FirstOrDefault();
                         var PrefixOfDefaultValueForId_pnk = autoincrement_pnk.PrefixOfDefaultValueForId;
                         var LengthOfDefaultValueForId_pnk = (int)autoincrement_pnk.LengthOfDefaultValueForId;
                         var LastValueOfColumnId_pnk = autoincrement_pnk.LastValueOfColumnId;
@@ -204,7 +204,7 @@ namespace pmkd.Controllers
             }
             else
             {
-                var autoincrement_pnk = _context.AutomaticValuesBranches.Where(a => a.Macn == "INXBL" && a.ObjectName == "PhieuXKBLI").FirstOrDefault();
+                var autoincrement_pnk = _context.AutomaticValuesBranches.Where(a => a.Macn == HttpContext.Session.GetString("UnitName") && a.ObjectName == "PhieuXKBLI").FirstOrDefault();
                 var PrefixOfDefaultValueForId_pnk = autoincrement_pnk.PrefixOfDefaultValueForId;
                 var LengthOfDefaultValueForId_pnk = (int)autoincrement_pnk.LengthOfDefaultValueForId;
                 var LastValueOfColumnId_pnk = autoincrement_pnk.LastValueOfColumnId;

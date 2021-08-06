@@ -62,7 +62,7 @@ namespace pmkd.Controllers
                 {
                     Kc kc1 = new Kc();
                     XepTai xepTai = _context.XepTais.Where(a => a.Id == kc.XeptaiId).FirstOrDefault();
-                    var autoincrement_kcs = _context.AutomaticValuesBranches.Where(a => a.Macn == "INXBL" && a.ObjectName == "KCSNNLBLI").FirstOrDefault();
+                    var autoincrement_kcs = _context.AutomaticValuesBranches.Where(a => a.Macn == HttpContext.Session.GetString("UnitName") && a.ObjectName == "KCSNNLBLI").FirstOrDefault();
                     var PrefixOfDefaultValueForId_kcs = autoincrement_kcs.PrefixOfDefaultValueForId;
                     var LengthOfDefaultValueForId_kcs = (int)autoincrement_kcs.LengthOfDefaultValueForId;
                     var LastValueOfColumnId_kcs = autoincrement_kcs.LastValueOfColumnId;

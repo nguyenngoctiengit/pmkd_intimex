@@ -13,6 +13,6 @@ namespace pmkd.Models
         [Key]public string UserName1 { get; set; }
         [Required(ErrorMessage = "vui long nhap mat khau")]
         public string PassWord1 { get; set; }
-
+        public string userBranch { get; set; }
     }
 }
