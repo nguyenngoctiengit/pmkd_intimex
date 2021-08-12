@@ -25,7 +25,7 @@ namespace pmkd.Controllers
     public class KhoController : Controller
     {
         public tradingsystem_blContext _context;
-        public tradingsystem_blContext db = new tradingsystem_blContext();
+        public tradingsystem_blContext db = new tradingsystem_blContext("Data Source=DESKTOP-MO33L1P\\SQLEXPRESS;Initial Catalog=tradingsystem_bl;Integrated Security=True");
         private const string DocumentId2 = "MyDocument2";
         public KhoController(tradingsystem_blContext context)
         {

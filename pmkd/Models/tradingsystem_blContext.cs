@@ -11,10 +11,17 @@ namespace pmkd.Models
 {
     public partial class tradingsystem_blContext : DbContext
     {
-        public tradingsystem_blContext()
-        {
-        }
 
+        private readonly string _connectionString;
+
+        public tradingsystem_blContext(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(_connectionString);
+        }
         public tradingsystem_blContext(DbContextOptions<tradingsystem_blContext> options)
             : base(options)
         {
@@ -299,7 +306,7 @@ namespace pmkd.Models
         public virtual DbSet<XuatKhoChiTiet> XuatKhoChiTiets { get; set; }
         public virtual DbSet<Nhom_hang_hoa> Nhom_hang_hoas { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+/*        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
@@ -311,7 +318,7 @@ namespace pmkd.Models
                 optionsBuilder.UseSqlServer(connectionString);
                 
             }
-        }
+        }*/
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

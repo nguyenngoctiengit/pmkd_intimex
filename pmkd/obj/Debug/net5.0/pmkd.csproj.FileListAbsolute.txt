@@ -954,7 +954,6 @@ C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Kcs\K
 C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Kcs\themkcs.cshtml.g.cs
 C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Khachhang\Khachhang.cshtml.g.cs
 C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Khachhang\themkhachhang.cshtml.g.cs
-C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Lengiaohang\Lenhgiaohang.cshtml.g.cs
 C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Nhapkho\Dangkynhapkho.cshtml.g.cs
 C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\QuanLiNhanSu\Index.cshtml.g.cs
 C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\QuanLiNhanSu\thongtinnhansu.cshtml.g.cs
@@ -968,3 +967,4 @@ C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.Views.pdb
 C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.csproj.CopyComplete
 C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.genruntimeconfig.cache
 C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Account\chooseBranch.cshtml.g.cs
+C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Lenhgiaohang\lenhgiaohang.cshtml.g.cs

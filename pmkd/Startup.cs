@@ -46,15 +46,13 @@ namespace pmkd
             services.AddDbContextPool<tradingsystem_blContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("tradingsystem_blConnection")));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddDbContext<tradingsystem_blContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("tradingsystem_blConnection")));
             services.AddScoped<tradingsystem_blContext, tradingsystem_blContext>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<tradingsystem_blContext>(ServiceLifetime.Transient);
             services.AddMvc().AddRazorPagesOptions(o =>
             {
                 o.Conventions.ConfigureFilter(new IgnoreAntiforgeryTokenAttribute());
             });
+            services.AddSingleton<IConfiguration>(Configuration);
             services.AddMvc();
             services.AddControllersWithViews();
         }

@@ -10,9 +10,10 @@ namespace pmkd.Models
 {
     public class SpreadsheetViewModel 
     {
+        public tradingsystem_blContext _context = new tradingsystem_blContext("Server=DESKTOP-MO33L1P\\SQLEXPRESS;Database=tradingsystem_bl;Trusted_Connection=True;pooling=false;Timeout=60;Integrated Security=SSPI;MultipleActiveResultSets=true");
         public static void SaveDocument(byte[] bytes)
         {
-            tradingsystem_blContext context = new tradingsystem_blContext();
+            tradingsystem_blContext context = new tradingsystem_blContext("Server=DESKTOP-MO33L1P\\SQLEXPRESS;Database=tradingsystem_bl;Trusted_Connection=True;pooling=false;Timeout=60;Integrated Security=SSPI;MultipleActiveResultSets=true");
             context.PobangTinhs.FirstOrDefault().docs = bytes;
             context.SaveChanges();
         }

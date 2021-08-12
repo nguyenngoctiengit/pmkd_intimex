@@ -15,14 +15,11 @@ namespace pmkd.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly tradingsystem_blContext _context;
-
-        public IConfiguration Configuration;
-
-        public AccountController(tradingsystem_blContext context, IConfiguration configuration)
+        Configuration config;
+        private readonly tradingsystem_blContext _context = new tradingsystem_blContext("Server=DESKTOP-MO33L1P\\SQLEXPRESS;Database=SignalRChat;Trusted_Connection=True;Integrated Security=SSPI;MultipleActiveResultSets=true");
+        public AccountController()
         {
-            _context = context;
-            Configuration = configuration;
+            config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
         }
         [Route("admin")]
         public IActionResult Index()
@@ -53,7 +50,6 @@ namespace pmkd.Controllers
                 HttpContext.Session.SetString("userId", userdetails.UserName1);
                 HttpContext.Session.SetString("FullName1", userdetails.FullName1);
                 HttpContext.Session.SetString("UnitName", userdetails.UnitName);
-
             }
             else
             {
@@ -62,33 +58,36 @@ namespace pmkd.Controllers
             
             return RedirectToAction("Index", "Home");
         }
-        public IActionResult loginwithUserBranch(LoginViewModel model,DbContextOptionsBuilder optionsBuilder)
+        private void SaveConnectionString(string name,string connectionString)
+        {
+            var conStringSetting = new ConnectionStringSettings(name, connectionString);
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            config.ConnectionStrings.ConnectionStrings.Add(conStringSetting);
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appsettings");
+        }
+        private void SetDefaultConnectionString(string connectionStringName)
+        {
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            ConnectionStringsSection section = config.GetSection("ConnectionStrings") as ConnectionStringsSection;
+            section.ConnectionStrings["tradingsystem_blConnection"].ConnectionString = connectionStringName;
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("ConnectionStrings");
+        }
+        public IActionResult loginwithUserBranch(LoginViewModel model)
         {
             var userdetails = _context.UserRights.SingleOrDefault(m => m.UserName1 == model.UserName1 && m.PassWord1 == model.PassWord1);
             var userBranch = model.userBranch;
-            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             var connectionStringsSection = (ConnectionStringsSection)config.GetSection("ConnectionStrings");
             HttpContext.Session.SetString("userId", userdetails.UserName1);
             HttpContext.Session.SetString("FullName1", userdetails.FullName1);
             HttpContext.Session.SetString("UnitName", userBranch);
-            if (userBranch == "INXBL")
+/*            if (userBranch == "INXBL")
             {
-                string connectTionString = string.Format("Server=DESKTOP-MO33L1P\\SQLEXPRESS;Database=tradingsystem_bl;Trusted_Connection=True;pooling=false;Timeout=60;Integrated Security=SSPI;MultipleActiveResultSets=true");
-                try
-                {
-                    var cn = Configuration.GetConnectionString("tradingsystem_blConnection");
-                    connectionStringsSection.ConnectionStrings["tradingsystem_blConnection"].ConnectionString  = connectTionString;
-                    config.Save();
-                    ConfigurationManager.RefreshSection("connectionStrings");
-
-                }
-                catch
-                {
-                    return View("index");
-                }
-            }
-            ViewBag.mess = "Connect database fail";
-            return View("index");
+                SetDefaultConnectionString("Server=DESKTOP-MO33L1P\\SQLEXPRESS;Database=tradingsystem_bl;Trusted_Connection=True;MultipleActiveResultSets=true");
+                return RedirectToAction("Index", "Home");
+            }*/
+            return RedirectToAction("Index", "Home");
 
         }
 
