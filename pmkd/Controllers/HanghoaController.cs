@@ -16,7 +16,7 @@ namespace pmkd.Controllers.Danhmuc
 {
     public class HanghoaController : Controller
     {
-        public tradingsystem_blContext _context = new tradingsystem_blContext("Server=DESKTOP-MO33L1P\\SQLEXPRESS;Database=tradingsystem_bl;Trusted_Connection=True;pooling=false;Timeout=60;Integrated Security=SSPI;MultipleActiveResultSets=true");
+        public tradingsystem_blContext _context = new tradingsystem_blContext(Parameter.connectionString);
         public HanghoaController()
         {
         }

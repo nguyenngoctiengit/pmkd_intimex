@@ -50,5 +50,6 @@ namespace pmkd.Models
         public bool FullViewConTract { get; set; }
         public bool ExportOnReport { get; set; }
         public bool ViewAllStock { get; set; }
+        public byte Online { get; set; }
     }
 }

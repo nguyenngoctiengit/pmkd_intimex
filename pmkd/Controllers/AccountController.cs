@@ -15,11 +15,9 @@ namespace pmkd.Controllers
 {
     public class AccountController : Controller
     {
-        Configuration config;
         private readonly tradingsystem_blContext _context = new tradingsystem_blContext("Server=DESKTOP-MO33L1P\\SQLEXPRESS;Database=SignalRChat;Trusted_Connection=True;Integrated Security=SSPI;MultipleActiveResultSets=true");
         public AccountController()
         {
-            config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
         }
         [Route("admin")]
         public IActionResult Index()
@@ -44,7 +42,7 @@ namespace pmkd.Controllers
                 {
                     ViewBag.userName = userdetails.UserName1;
                     ViewBag.password = userdetails.PassWord1;
-                    ViewBag.userBranch = _context.UserBranches.Where(a => a.UserName == userdetails.UserName1).Select(a => new { BranchId = a.BranchId}).ToList();
+                    ViewBag.userBranch = _context.UserBranches.Where(a => a.UserName == userdetails.UserName1).Select(a => new { BranchId = a.BranchId }).ToList();
                     return View("chooseBranch");
                 }
                 HttpContext.Session.SetString("userId", userdetails.UserName1);
@@ -55,38 +53,31 @@ namespace pmkd.Controllers
             {
                 return View("index");
             }
-            
+
             return RedirectToAction("Index", "Home");
-        }
-        private void SaveConnectionString(string name,string connectionString)
-        {
-            var conStringSetting = new ConnectionStringSettings(name, connectionString);
-            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.ConnectionStrings.ConnectionStrings.Add(conStringSetting);
-            config.Save(ConfigurationSaveMode.Modified);
-            ConfigurationManager.RefreshSection("appsettings");
-        }
-        private void SetDefaultConnectionString(string connectionStringName)
-        {
-            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            ConnectionStringsSection section = config.GetSection("ConnectionStrings") as ConnectionStringsSection;
-            section.ConnectionStrings["tradingsystem_blConnection"].ConnectionString = connectionStringName;
-            config.Save(ConfigurationSaveMode.Modified);
-            ConfigurationManager.RefreshSection("ConnectionStrings");
         }
         public IActionResult loginwithUserBranch(LoginViewModel model)
         {
             var userdetails = _context.UserRights.SingleOrDefault(m => m.UserName1 == model.UserName1 && m.PassWord1 == model.PassWord1);
             var userBranch = model.userBranch;
-            var connectionStringsSection = (ConnectionStringsSection)config.GetSection("ConnectionStrings");
+            var userId = userdetails.UserId;
             HttpContext.Session.SetString("userId", userdetails.UserName1);
             HttpContext.Session.SetString("FullName1", userdetails.FullName1);
             HttpContext.Session.SetString("UnitName", userBranch);
-/*            if (userBranch == "INXBL")
+            if (userBranch == "INXBL")
             {
-                SetDefaultConnectionString("Server=DESKTOP-MO33L1P\\SQLEXPRESS;Database=tradingsystem_bl;Trusted_Connection=True;MultipleActiveResultSets=true");
+                var item = _context.UserRights.Where(a => a.UserId == userId).FirstOrDefault();
+                item.Online = 1;
+                _context.UserRights.Update(item).Property(a => a.UserId).IsModified = false;
+                _context.SaveChanges();
+                Parameter.connectionString = "Server=DESKTOP-MO33L1P\\SQLEXPRESS;Database=tradingsystem_bl;Trusted_Connection=True;MultipleActiveResultSets=true";
                 return RedirectToAction("Index", "Home");
-            }*/
+            }
+            else if (userBranch == "INX")
+            {
+                Parameter.connectionString = "Server=DESKTOP-MO33L1P\\SQLEXPRESS;Database=tradingsystem;Trusted_Connection=True;MultipleActiveResultSets=true";
+                return RedirectToAction("Index", "Home");
+            }
             return RedirectToAction("Index", "Home");
 
         }
@@ -94,10 +85,15 @@ namespace pmkd.Controllers
         // registration Page load
         public IActionResult Logout()
         {
+            var userName = HttpContext.Session.GetString("userId");
+            var item = _context.UserRights.Where(a => a.UserName1 == userName).FirstOrDefault();
+            item.Online = 0;
+            _context.UserRights.Update(item);
+            _context.SaveChanges();
             HttpContext.Session.Clear();
             return View("index");
         }
 
     }
-    
+
 }

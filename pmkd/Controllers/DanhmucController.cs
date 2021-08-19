@@ -17,8 +17,7 @@ namespace pmkd.Controllers
 {
     public class DanhmucController : Controller
     {
-        public tradingsystem_blContext _context;
-        public tradingsystem_blContext db = new tradingsystem_blContext("Data Source=DESKTOP-MO33L1P\\SQLEXPRESS;Initial Catalog=tradingsystem_bl;Integrated Security=True");
+        private readonly tradingsystem_blContext _context = new tradingsystem_blContext(Parameter.connectionString);
         public DanhmucController(tradingsystem_blContext context)
         {
             _context = context;
