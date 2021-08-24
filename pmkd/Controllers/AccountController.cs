@@ -15,7 +15,7 @@ namespace pmkd.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly tradingsystem_blContext _context = new tradingsystem_blContext("Server=DESKTOP-MO33L1P\\SQLEXPRESS;Database=SignalRChat;Trusted_Connection=True;Integrated Security=SSPI;MultipleActiveResultSets=true");
+        private readonly tradingsystem_blContext _context = new tradingsystem_blContext("Server=.\\SQLEXPRESS;Database=SignalRChat;Trusted_Connection=True;Integrated Security=SSPI;MultipleActiveResultSets=true");
         public AccountController()
         {
         }
@@ -70,12 +70,12 @@ namespace pmkd.Controllers
                 item.Online = 1;
                 _context.UserRights.Update(item).Property(a => a.UserId).IsModified = false;
                 _context.SaveChanges();
-                Parameter.connectionString = "Server=DESKTOP-MO33L1P\\SQLEXPRESS;Database=tradingsystem_bl;Trusted_Connection=True;MultipleActiveResultSets=true";
+                Parameter.connectionString = "Server=.\\SQLEXPRESS;Database=tradingsystem_bl;Trusted_Connection=True;MultipleActiveResultSets=true";
                 return RedirectToAction("Index", "Home");
             }
             else if (userBranch == "INX")
             {
-                Parameter.connectionString = "Server=DESKTOP-MO33L1P\\SQLEXPRESS;Database=tradingsystem;Trusted_Connection=True;MultipleActiveResultSets=true";
+                Parameter.connectionString = "Server=.\\SQLEXPRESS;Database=tradingsystem;Trusted_Connection=True;MultipleActiveResultSets=true";
                 return RedirectToAction("Index", "Home");
             }
             return RedirectToAction("Index", "Home");
@@ -88,12 +88,12 @@ namespace pmkd.Controllers
             var userName = HttpContext.Session.GetString("userId");
             var item = _context.UserRights.Where(a => a.UserName1 == userName).FirstOrDefault();
             item.Online = 0;
-            _context.UserRights.Update(item);
+            _context.UserRights.Update(item).Property(a => a.UserId).IsModified = false;
             _context.SaveChanges();
             HttpContext.Session.Clear();
             return View("index");
         }
-
+        /*public IActionResult SaveAccount()*/
     }
 
 }

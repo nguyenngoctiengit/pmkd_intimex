@@ -78,6 +78,7 @@
         tfoot {
             display: table-header-group
         }
+        
     </style>
     @{
         if (ViewBag.mess != null)
@@ -633,18 +634,32 @@
                                 <li>
                                     <a><i class="fa fa-bug"></i> User Online <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        @{ 
-                                            foreach(var item in (IEnumerable<UserRight>)ViewBag.ListUserOnline)
+                                        @{
+                                            foreach (var item in (IEnumerable<UserRight>)ViewBag.ListUserOnline)
                                             {
                                                 <li><a href="">@item.UserName1</a></li>
                                             }
                                         }
-                                        
+
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a><i class="fa fa-bug"></i> User Offline <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        @{
+                                            foreach (var item in (IEnumerable<UserRight>)ViewBag.ListUserOffline)
+                                            {
+                                                <li><a href="">@item.UserName1</a></li>
+                                            }
+                                        }
+
                                     </ul>
                                 </li>
                             </ul>
                         </div>
-
+                        
                     </div>
                     <!-- /sidebar menu -->
                     <!-- /menu footer buttons -->

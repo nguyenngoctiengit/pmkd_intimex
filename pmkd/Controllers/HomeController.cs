@@ -38,6 +38,7 @@ namespace pmkd.Controllers
                 _context.SaveChanges();
                 ViewBag.CountUserOnline = (from a in _context.UserRights where a.Online == 1 select a.UserId).Count();
                 ViewBag.ListUserOnline = (from a in _context.UserRights where a.Online == 1 select new UserRight { UserName1 = a.UserName1 }).ToList();
+                ViewBag.ListUserOffline = (from a in _context.UserRights where a.Online == 0 select new UserRight { UserName1 = a.UserName1 }).ToList();
                 ViewBag.countuser = (from a in _context.UserRights select a.UserId).Count();
                 return View();
             }

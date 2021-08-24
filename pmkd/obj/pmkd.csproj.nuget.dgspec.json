@@ -55,6 +55,10 @@
               "target": "Package",
               "version": "[8.1.1, )"
             },
+            "BCrypt.Net-Core": {
+              "target": "Package",
+              "version": "[1.6.0, )"
+            },
             "Bootstrap.Datepicker": {
               "target": "Package",
               "version": "[1.8.0.1, )"
@@ -81,7 +85,7 @@
             },
             "DevExtreme.AspNet.Data": {
               "target": "Package",
-              "version": "[2.8.5, )"
+              "version": "[2.8.6, )"
             },
             "Microsoft.AspNet.Identity.Core": {
               "target": "Package",
@@ -93,11 +97,11 @@
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[5.0.7, )"
+              "version": "[5.0.9, )"
             },
             "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
               "target": "Package",
-              "version": "[5.0.7, )"
+              "version": "[5.0.9, )"
             },
             "Microsoft.AspNetCore.Session": {
               "target": "Package",
@@ -107,25 +111,29 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[5.0.7, )"
+              "version": "[5.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[5.0.9, )"
             },
             "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
-              "version": "[5.0.7, )"
+              "version": "[5.0.9, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[5.0.7, )"
+              "version": "[5.0.9, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[5.0.7, )"
+              "version": "[5.0.9, )"
             },
             "Microsoft.Extensions.Identity.Core": {
               "target": "Package",
-              "version": "[5.0.7, )"
+              "version": "[5.0.9, )"
             },
             "Microsoft.Extensions.Options": {
               "target": "Package",
@@ -153,7 +161,7 @@
             },
             "ServiceStack.Interfaces.Core": {
               "target": "Package",
-              "version": "[5.11.0, )"
+              "version": "[5.12.0, )"
             },
             "System.Configuration.ConfigurationManager": {
               "target": "Package",

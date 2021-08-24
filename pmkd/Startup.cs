@@ -54,7 +54,7 @@ namespace pmkd
             });
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddMvc();
-            services.AddControllersWithViews();
+            services.AddDbContext<tradingsystem_blContext>(option => option.UseLazyLoadingProxies().UseSqlServer(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
