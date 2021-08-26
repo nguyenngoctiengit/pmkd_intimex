@@ -1241,3 +1241,4 @@ C:\Users\Windows 10\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\NuGet.config
 C:\Users\Windows 10\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\BCrypt.Net-Core.dll
 C:\Users\Windows 10\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\Castle.Core.dll
 C:\Users\Windows 10\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Proxies.dll
+C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Account\ActiveAccount.cshtml.g.cs

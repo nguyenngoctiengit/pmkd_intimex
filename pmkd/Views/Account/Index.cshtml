@@ -1,4 +1,4 @@
-﻿@model LoginViewModel
+﻿@model AspNetUser
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,12 +34,12 @@
                         <h1>Login Form</h1>
                         <div class="" style="color:red;text-align:center">@ViewData["message"]</div>
                         <div>
-                            <input type="text" asp-for="UserName1" class="form-control" placeholder="Username" required="" />
-                            <span asp-validation-for="UserName1" class="text-danger"></span>
+                            <input type="text" asp-for="UserName" class="form-control" placeholder="Username" required="" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
                         </div>
                         <div>
-                            <input type="password" asp-for="PassWord1" class="form-control" placeholder="Password" required="" />
-                            <span asp-validation-for="PassWord1" class="text-danger"></span>
+                            <input type="password" asp-for="PasswordHash" class="form-control" placeholder="Password" required="" />
+                            <span asp-validation-for="PasswordHash" class="text-danger"></span>
                         </div>
                         <div>
                             <input type="submit" value="Đăng nhập" name="login">
@@ -68,22 +68,22 @@
 
             <div id="register" class="animate form registration_form">
                 <section class="login_content">
-                    <form>
+                    <form method="post" asp-action="SaveAccount" asp-controller="Account">
                         <h1>Create Account</h1>
                         <div>
-                            <input type="text" class="form-control" placeholder="Username" required="" />
+                            <input type="text" class="form-control" placeholder="Username" asp-for="UserName" required="" />
                         </div>
                         <div>
-                            <input type="email" class="form-control" placeholder="Email" required="" />
+                            <input type="email" class="form-control" placeholder="Email" asp-for="Email" required="" />
                         </div>
                         <div>
-                            <input type="password" class="form-control" placeholder="Password" required="" />
+                            <input type="password" class="form-control" placeholder="Password" asp-for="PasswordHash" required="" />
                         </div>
                         <div>
-                            <input type="text" class="form-control" placeholder="Full name" required="" />
+                            <input type="text" class="form-control" placeholder="Full name" asp-for="NormalizedUserName" required="" />
                         </div>
                         <div>
-                            <a class="btn btn-default submit" href="index.html">Submit</a>
+                            <button class="btn btn-default submit" type="submit">Submit</button>
                         </div>
 
                         <div class="clearfix"></div>

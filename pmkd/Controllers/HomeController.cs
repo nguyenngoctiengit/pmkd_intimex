@@ -21,33 +21,30 @@ namespace pmkd.Controllers
 
     public class HomeController : Controller
     {
-        private readonly tradingsystem_blContext _context = new tradingsystem_blContext("Server=DESKTOP-MO33L1P\\SQLEXPRESS;Database=SignalRChat;Trusted_Connection=True;Integrated Security=SSPI;MultipleActiveResultSets=true");
+        private readonly tradingsystem_blContext _context = new tradingsystem_blContext("Server=DESKTOP-MO33L1P\\SQLEXPRESS;Database=tradingsystem;Trusted_Connection=True;Integrated Security=SSPI;MultipleActiveResultSets=true");
 
         public HomeController(tradingsystem_blContext context)
         {
         }
         public IActionResult Index()
         {
-            var id = HttpContext.Session.GetString("userId");
-            if (id != null)
-            {
-                var userName = HttpContext.Session.GetString("userId");
-                var item = _context.UserRights.Where(a => a.UserName1 == userName).FirstOrDefault();
-                item.Online = 1;
-                _context.UserRights.Update(item).Property(a => a.UserId).IsModified = false;
-                _context.SaveChanges();
-                ViewBag.CountUserOnline = (from a in _context.UserRights where a.Online == 1 select a.UserId).Count();
-                ViewBag.ListUserOnline = (from a in _context.UserRights where a.Online == 1 select new UserRight { UserName1 = a.UserName1 }).ToList();
-                ViewBag.ListUserOffline = (from a in _context.UserRights where a.Online == 0 select new UserRight { UserName1 = a.UserName1 }).ToList();
-                ViewBag.countuser = (from a in _context.UserRights select a.UserId).Count();
-                return View();
-            }
-            else
-            {
 
-                return RedirectToAction("index", "Account");
-            }
+            using (SignalRChatContext _context = new SignalRChatContext())
+            {
+                var id = HttpContext.Session.GetString("userId");
+                if (id != null)
+                {
+                    ViewBag.CountUserOnline = (from a in _context.AspNetUsers where a.Online == true select a.NormalizedUserName).Count();
+                    ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).ToList();
+                    ViewBag.countuser = (from a in _context.UserRights select a.UserId).Count();
+                    return View();
+                }
+                else
+                {
 
+                    return RedirectToAction("index", "Account");
+                }
+            }
         }
 
         public IActionResult Privacy()

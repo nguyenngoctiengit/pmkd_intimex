@@ -1,4 +1,4 @@
-﻿@model AspNetUser
+﻿@model LoginViewModel
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,64 +42,19 @@
         <div class="login_wrapper">
             <div class="animate form login_form">
                 <section class="login_content">
-                    <form asp-controller="account" asp-action="loginwithUserBranch" method="post" asp-validation-summary="ModelOnly">
-                        <h1>Login Form</h1>
+                    <form asp-controller="account" asp-action="Active" method="post" asp-validation-summary="ModelOnly">
+                        <h1>Active Form : @ViewBag.userActive</h1>
                         <div class="" style="color:red;text-align:center">@ViewData["message"]</div>
                         <div>
-                            <input type="text" class="ggg" asp-for="UserName" placeholder="Điền email" required="" value="@ViewBag.userName" hidden>
-                        </div>
-                        <div>
-                            @Html.DropDownListFor(x => x.UnitName, new SelectList(ViewBag.userBranch, "BranchId", "BranchId"), new { @class = "dropdownlistBranch" })
+                            <input type="text" class="form-control" placeholder="ActiveCode" required="" name="Activecode"/>
                         </div>
                         <div>
                             <input type="submit" value="Đăng nhập" name="login">
                             <a class="reset_pass" href="#">Lost your password?</a>
                         </div>
-
                         <div class="clearfix"></div>
 
                         <div class="separator">
-                            <p class="change_link">
-                                New to site?
-                                <a href="#signup" class="to_register"> Create Account </a>
-                            </p>
-
-                            <div class="clearfix"></div>
-                            <br />
-
-                            <div>
-                                <h1>Intimex Group</h1>
-                                <p>Công ty Cổ phần Tập đoàn Intimex</p>
-                            </div>
-                        </div>
-                    </form>
-                </section>
-            </div>
-
-            <div id="register" class="animate form registration_form">
-                <section class="login_content">
-                    <form>
-                        <h1>Create Account</h1>
-                        <div>
-                            <input type="text" class="form-control" placeholder="Username" required="" />
-                        </div>
-                        <div>
-                            <input type="email" class="form-control" placeholder="Email" required="" />
-                        </div>
-                        <div>
-                            <input type="password" class="form-control" placeholder="Password" required="" />
-                        </div>
-                        <div>
-                            <a class="btn btn-default submit" href="index.html">Submit</a>
-                        </div>
-
-                        <div class="clearfix"></div>
-
-                        <div class="separator">
-                            <p class="change_link">
-                                Already a member ?
-                                <a href="#signin" class="to_register"> Log in </a>
-                            </p>
 
                             <div class="clearfix"></div>
                             <br />
@@ -116,3 +71,4 @@
     </div>
 </body>
 </html>
+

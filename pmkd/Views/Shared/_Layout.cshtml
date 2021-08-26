@@ -227,7 +227,7 @@
                     <div class="profile clearfix">
                         @{
                             var userId = Context.Session.GetString("userId");
-                            var name = Context.Session.GetString("FullName1");
+                            var name = Context.Session.GetString("UnitName");
                             if (userId != null)
                             {
 
@@ -249,16 +249,6 @@
                         <div class="menu_section">
                             <h3>General</h3>
                             <ul class="nav side-menu">
-                                <li>
-                                    <a><i class="fa fa-home"></i> Hệ thống <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li><a href="index.html">Config System</a></li>
-                                        <li><a href="index2.html">User Manager</a></li>
-                                        <li><a href="index3.html">Admin setup</a></li>
-                                        <li><a href="index3.html">HĐMB đã ký</a></li>
-                                        <li><a href="index3.html">KH sắp hết định mức</a></li>
-                                    </ul>
-                                </li>
                                 <li>
                                     <a><i class="fa fa-edit"></i> Danh mục <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
@@ -635,23 +625,18 @@
                                     <a><i class="fa fa-bug"></i> User Online <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         @{
-                                            foreach (var item in (IEnumerable<UserRight>)ViewBag.ListUserOnline)
+                                            foreach (var item in (IEnumerable<AspNetUser>)ViewBag.ListUser)
                                             {
-                                                <li><a href="">@item.UserName1</a></li>
-                                            }
-                                        }
+                                                if (item.Online == true)
+                                                {
+                                                    <li style="background-color: #095eec"><a href="">@item.NormalizedUserName</a></li>
+                                                }
+                                                else
+                                                {
+                                                    <li  style="background-color:black"><a href="">@item.NormalizedUserName</a></li>
+                                                }
 
-                                    </ul>
-                                </li>
-                            </ul>
-                            <ul class="nav side-menu">
-                                <li>
-                                    <a><i class="fa fa-bug"></i> User Offline <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        @{
-                                            foreach (var item in (IEnumerable<UserRight>)ViewBag.ListUserOffline)
-                                            {
-                                                <li><a href="">@item.UserName1</a></li>
+
                                             }
                                         }
 
