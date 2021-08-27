@@ -24,6 +24,7 @@ namespace pmkd.Models
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
+        public virtual DbSet<Branch> Branches { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
         public virtual DbSet<UserBranch> UserBranches { get; set; }
         public virtual DbSet<UserRight> UserRights { get; set; }
@@ -137,6 +138,65 @@ namespace pmkd.Models
                     .HasForeignKey(d => d.UserId);
             });
 
+            modelBuilder.Entity<Branch>(entity =>
+            {
+                entity.ToTable("Branch");
+
+                entity.Property(e => e.Id).HasMaxLength(50);
+
+                entity.Property(e => e.AddressE)
+                    .HasMaxLength(255)
+                    .HasColumnName("Address_E");
+
+                entity.Property(e => e.AddressV)
+                    .HasMaxLength(255)
+                    .HasColumnName("Address_V");
+
+                entity.Property(e => e.Email).HasMaxLength(255);
+
+                entity.Property(e => e.Fax).HasMaxLength(255);
+
+                entity.Property(e => e.Icocode)
+                    .HasMaxLength(50)
+                    .HasColumnName("ICOCode");
+
+                entity.Property(e => e.Mst)
+                    .HasMaxLength(50)
+                    .HasColumnName("MST");
+
+                entity.Property(e => e.NameBg)
+                    .IsRequired()
+                    .HasMaxLength(250)
+                    .HasColumnName("Name_BG")
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.NameE)
+                    .HasMaxLength(255)
+                    .HasColumnName("Name_E");
+
+                entity.Property(e => e.NameV)
+                    .HasMaxLength(255)
+                    .HasColumnName("Name_V");
+
+                entity.Property(e => e.Phone).HasMaxLength(255);
+
+                entity.Property(e => e.TimeStamp)
+                    .IsRequired()
+                    .IsRowVersion()
+                    .IsConcurrencyToken();
+
+                entity.Property(e => e.TitleDocument)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.ToaKinhTe).HasMaxLength(255);
+
+                entity.Property(e => e.UnitType).HasColumnName("unit_type");
+
+                entity.Property(e => e.WebSite).HasMaxLength(255);
+            });
+
             modelBuilder.Entity<Unit>(entity =>
             {
                 entity.ToTable("Unit");
@@ -157,7 +217,7 @@ namespace pmkd.Models
 
             modelBuilder.Entity<UserBranch>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.UserBranchId);
 
                 entity.ToTable("UserBranch");
 

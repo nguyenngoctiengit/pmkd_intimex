@@ -1,4 +1,4 @@
-﻿@model LoginViewModel
+﻿@model AspNetUser
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +46,10 @@
                         <h1>Active Form : @ViewBag.userActive</h1>
                         <div class="" style="color:red;text-align:center">@ViewData["message"]</div>
                         <div>
-                            <input type="text" class="form-control" placeholder="ActiveCode" required="" name="Activecode"/>
+                            <input type="text" class="form-control" placeholder="ActiveCode" required="" name="Activecode" />
+                        </div>
+                        <div>
+                            @Html.DropDownListFor(x => x.UnitName, new SelectList(ViewBag.userBranch, "Id", "Id"), new { @class = "dropdownlistBranch" })
                         </div>
                         <div>
                             <input type="submit" value="Đăng nhập" name="login">

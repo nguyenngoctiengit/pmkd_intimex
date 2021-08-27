@@ -22,12 +22,14 @@ namespace pmkd.Controllers.Danhmuc
         }
         public IActionResult hanghoa()
         {
+            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
             return View();
 
         }
         //view thêm nhóm hàng hóa
         public IActionResult themnhomhang()
         {
+            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
             return View("themnhomhang");
         }
         //hàm thêm nhóm hàng hóa

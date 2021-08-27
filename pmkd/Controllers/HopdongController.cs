@@ -25,11 +25,13 @@ namespace pmkd.Controllers
         //Index
         public IActionResult Index()
         {
+            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
             return View();
         }
         //View HDMB
         public IActionResult hdmb()
         {
+            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
             ViewBag.signer = _context.Signers.ToList();
             ViewBag.hdmb = _context.Hdmbs.Select(i => i.IntKy);
             return View("hdmb");
@@ -47,7 +49,7 @@ namespace pmkd.Controllers
             ViewBag.diadiemgiaohang = _context.HdmbGiaohangs.ToList();
             ViewBag.hdchomuon = _context.Hdmbs.Where(a => a.MuaBan == "CMUON").ToList();
             ViewBag.client = _context.Signers.ToList();
-            
+            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
             return View("themhopdong");
         }
         // function thêm hợp đồng 

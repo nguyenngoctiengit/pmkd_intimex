@@ -21,7 +21,7 @@ namespace pmkd.Controllers
 
     public class HomeController : Controller
     {
-        private readonly tradingsystem_blContext _context = new tradingsystem_blContext("Server=DESKTOP-MO33L1P\\SQLEXPRESS;Database=tradingsystem;Trusted_Connection=True;Integrated Security=SSPI;MultipleActiveResultSets=true");
+        private readonly tradingsystem_blContext _context = new tradingsystem_blContext("Server=.\\SQLEXPRESS;Database=tradingsystem;Trusted_Connection=True;Integrated Security=SSPI;MultipleActiveResultSets=true");
 
         public HomeController(tradingsystem_blContext context)
         {
@@ -35,7 +35,7 @@ namespace pmkd.Controllers
                 if (id != null)
                 {
                     ViewBag.CountUserOnline = (from a in _context.AspNetUsers where a.Online == true select a.NormalizedUserName).Count();
-                    ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).ToList();
+                    ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
                     ViewBag.countuser = (from a in _context.UserRights select a.UserId).Count();
                     return View();
                 }

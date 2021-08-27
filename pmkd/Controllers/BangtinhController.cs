@@ -21,6 +21,7 @@ namespace pmkd.Controllers
         }
         public IActionResult bangtinh()
         {
+            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
             ViewBag.nhapkho = (from a in _context.NhapKhoKs
                                join b in _context.NhapKhoChiTietKs on a.Id equals b.NhapKhoId
                                select new { b.Rnw, b.DonGia, a.BangTinhId, b.RhopDong, b.Id, b.stt }).ToList().OrderBy(a => a.Id);
@@ -46,6 +47,7 @@ namespace pmkd.Controllers
         }
         public IActionResult themBT()
         {
+            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
             ViewBag.can = (from c in _context.Cans
                            select new
                            {
@@ -82,6 +84,7 @@ namespace pmkd.Controllers
         [HttpPost]
         public IActionResult updatespreadsheet(string spreadsheetStateID, string id)
         {
+            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
             var item_return = (from a in _context.Kcs where a.SoPhieu == id select a).FirstOrDefault();
             string str = spreadsheetStateID;
             SpreadsheetClientState st = new SpreadsheetClientState();
@@ -107,6 +110,7 @@ namespace pmkd.Controllers
         }
         public void SaveToBytes(SpreadsheetClientState spreadsheetState)
         {
+
             var spreadsheet = SpreadsheetRequestProcessor.GetSpreadsheetFromState(spreadsheetState);
             string documentId = spreadsheet.DocumentId;
             byte[] documentContent = spreadsheet.SaveCopy(DocumentFormat.Xlsx);

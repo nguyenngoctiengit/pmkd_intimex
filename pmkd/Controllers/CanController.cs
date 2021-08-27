@@ -18,6 +18,7 @@ namespace pmkd.Controllers
         }
         public IActionResult cantrongluong()
         {
+            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
             ViewBag.nhanvien = (from k in _context.Cans
                                 select k.NhanVien).Distinct().ToList();
             ViewBag.baove = (from k in _context.Cans
@@ -34,6 +35,7 @@ namespace pmkd.Controllers
         }
         public object GetCan(DataSourceLoadOptions loadOptions)
         {
+
             var item_return = (from a in _context.Cans
                               select new
                               {
@@ -90,6 +92,7 @@ namespace pmkd.Controllers
         }
         public IActionResult phieunhapkho(int id)
         {
+            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
             var can = (from a in _context.Cans where a.IdXepTai == id select a).FirstOrDefault();
             var xt = (from a in _context.XepTais where a.Id == id select a).FirstOrDefault();
             ViewBag.idxeptai = id;

@@ -117,34 +117,54 @@ namespace pmkd.Controllers
         [HttpPost]
         public IActionResult SaveAccount(AspNetUser aspNetUser)
         {
-            aspNetUser.Id = RandomHelper.RandomString(10);
-            aspNetUser.PasswordHash = BCrypt.Net.BCrypt.HashString(aspNetUser.PasswordHash.Trim());
-            aspNetUser.status = false;
-            aspNetUser.SecurityStamp = RandomHelper.RandomString(6);
-            _context.AspNetUsers.Add(aspNetUser);
-            _context.SaveChanges();
-            var mailHelper = new MailHelper(configuration);
-            string content = "Code kích hoạt tài khoản là" + aspNetUser.SecurityStamp;
-            mailHelper.Send("khocvole10c4@gmail.com", aspNetUser.Email,"Active account with code",content);
-            HttpContext.Session.SetString("username", aspNetUser.UserName);
-            return RedirectToAction("ActiveAccount");
+            if (_context.AspNetUsers.Any(a => a.UserName == aspNetUser.UserName) || _context.AspNetUsers.Any(a => a.Email == aspNetUser.Email))
+            {
+                ViewBag.Message = "email hoặc tên người dùng bị trùng, vui lòng nhập lại";
+                return View("index");
+            }
+            else
+            {
+                aspNetUser.Id = RandomHelper.RandomString(10);
+                aspNetUser.PasswordHash = BCrypt.Net.BCrypt.HashString(aspNetUser.PasswordHash.Trim());
+                aspNetUser.status = false;
+                aspNetUser.SecurityStamp = RandomHelper.RandomString(6);
+                _context.AspNetUsers.Add(aspNetUser);
+                _context.SaveChanges();
+                var mailHelper = new MailHelper(configuration);
+                string content = "Code kích hoạt tài khoản là" + aspNetUser.SecurityStamp;
+                mailHelper.Send("intimex.active@gmail.com", aspNetUser.Email, "Active account with code", content);
+                HttpContext.Session.SetString("username", aspNetUser.UserName);
+                return RedirectToAction("ActiveAccount");
+            }
         }
         public IActionResult ActiveAccount()
         {
+            ViewBag.userBranch = _context.Branches.Select(a => new { Id = a.Id }).ToList();
             ViewBag.userActive = HttpContext.Session.GetString("username");
             return View("ActiveAccount");
         }
-        public IActionResult Active(string Activecode)
+        public IActionResult Active(string Activecode,AspNetUser aspNetUser)
         {
+             
             var userName = HttpContext.Session.GetString("username");
+            
             var account = _context.AspNetUsers.SingleOrDefault(a => a.UserName == userName);
             if (account.SecurityStamp == Activecode)
             {
+                UserBranch userBranch = new UserBranch();
                 account.status = true;
+                account.Online = true;
+                account.UnitName = aspNetUser.UnitName;
+                userBranch.UserName = userName;
+                userBranch.BranchId = aspNetUser.UnitName;
+                long maxId = _context.UserBranches.Max(a => a.UserBranchId);
+                userBranch.UserBranchId = maxId + 1;
+                _context.UserBranches.Add(userBranch);
                 _context.AspNetUsers.Update(account);
                 _context.SaveChanges();
                 HttpContext.Session.SetString("userId", account.UserName);
                 HttpContext.Session.SetString("FullName1", account.NormalizedUserName);
+                HttpContext.Session.SetString("UnitName", account.UnitName);
                 return RedirectToAction("Index", "Home");
             }
             else
