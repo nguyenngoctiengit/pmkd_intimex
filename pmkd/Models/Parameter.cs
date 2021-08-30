@@ -7,6 +7,8 @@ namespace pmkd.Models
 {
     public partial class Parameter
     {
+        internal static string connectionString;
+
         public string CurrentYear { get; set; }
         public string CurrentMonth { get; set; }
         public string WelcomeMessage { get; set; }

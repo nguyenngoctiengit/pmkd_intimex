@@ -65,27 +65,27 @@
             },
             "DevExpress.AspNetCore.Spreadsheet": {
               "target": "Package",
-              "version": "[21.1.3, )"
+              "version": "[21.1.5, )"
             },
             "DevExpress.Document.Processor": {
               "target": "Package",
-              "version": "[21.1.4, )"
+              "version": "[21.1.5, )"
             },
             "DevExpress.Reporting.Core": {
               "target": "Package",
-              "version": "[21.1.3, )"
+              "version": "[21.1.5, )"
             },
             "DevExpress.Web.Mvc": {
               "target": "Package",
-              "version": "[21.1.3, )"
+              "version": "[21.1.5, )"
             },
             "DevExtreme.AspNet.Core": {
               "target": "Package",
-              "version": "[21.1.3, )"
+              "version": "[21.1.5, )"
             },
             "DevExtreme.AspNet.Data": {
               "target": "Package",
-              "version": "[2.8.6, )"
+              "version": "[2.8.2, )"
             },
             "Microsoft.AspNet.Identity.Core": {
               "target": "Package",

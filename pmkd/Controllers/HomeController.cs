@@ -21,7 +21,7 @@ namespace pmkd.Controllers
 
     public class HomeController : Controller
     {
-        private readonly tradingsystem_blContext _context = new tradingsystem_blContext("Server=.\\SQLEXPRESS;Database=tradingsystem;Trusted_Connection=True;Integrated Security=SSPI;MultipleActiveResultSets=true");
+        private readonly tradingsystem_blContext _context = new tradingsystem_blContext(Parameter.connectionString);
 
         public HomeController(tradingsystem_blContext context)
         {

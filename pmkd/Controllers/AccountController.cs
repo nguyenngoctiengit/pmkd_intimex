@@ -99,6 +99,7 @@ namespace pmkd.Controllers
                 Parameter.connectionString = "Server=.\\SQLEXPRESS;Database=tradingsystem;Trusted_Connection=True;MultipleActiveResultSets=true";
                 return RedirectToAction("Index", "Home");
             }
+            Parameter.connectionString = "Server=.\\SQLEXPRESS;Database=tradingsystem;Trusted_Connection=True;MultipleActiveResultSets=true";
             return RedirectToAction("Index", "Home");
 
         }

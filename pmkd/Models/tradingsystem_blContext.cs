@@ -12,7 +12,7 @@ namespace pmkd.Models
     public partial class tradingsystem_blContext : DbContext
     {
 
-        private readonly string _connectionString;
+        public string _connectionString;
 
         public tradingsystem_blContext(string connectionString)
         {
