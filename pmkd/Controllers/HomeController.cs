@@ -26,6 +26,13 @@ namespace pmkd.Controllers
         public HomeController(tradingsystem_blContext context)
         {
         }
+        public void listUser()
+        {
+            using (SignalRChatContext _context = new SignalRChatContext())
+            {
+                ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online, Id = a.Id }).OrderByDescending(a => a.Online).ToList();
+            }
+        }
         public IActionResult Index()
         {
 
@@ -35,7 +42,7 @@ namespace pmkd.Controllers
                 if (id != null)
                 {
                     ViewBag.CountUserOnline = (from a in _context.AspNetUsers where a.Online == true select a.NormalizedUserName).Count();
-                    ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
+                    listUser();
                     ViewBag.countuser = (from a in _context.UserRights select a.UserId).Count();
                     return View();
                 }
@@ -55,6 +62,11 @@ namespace pmkd.Controllers
         public IActionResult DevExtremeLayout()
         {
             return View("_DevExtremeLayout");
+        }
+        public IActionResult chat(string id)
+        {
+            listUser();
+            return View("chat");
         }
     }
 }

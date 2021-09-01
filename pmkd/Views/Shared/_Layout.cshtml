@@ -620,11 +620,11 @@
                                             {
                                                 if (item.Online == true)
                                                 {
-                                                    <li><a href=""><i class="fas fa-user"></i>@item.NormalizedUserName</a></li>
+                                                    <li><a asp-action="chat" asp-controller="home" asp-route-id="@item.Id"><i class="fas fa-user"></i>@item.NormalizedUserName</a></li>
                                                 }
                                                 else
                                                 {
-                                                    <li><a href=""><i class="far fa-user"></i>@item.NormalizedUserName</a></li>
+                                                    <li><a asp-action="chat" asp-controller="home" asp-route-id="@item.Id"><i class="far fa-user"></i>@item.NormalizedUserName</a></li>
                                                 }
 
 
@@ -635,7 +635,7 @@
                                 </li>
                             </ul>
                         </div>
-                        
+
                     </div>
                     <!-- /sidebar menu -->
                     <!-- /menu footer buttons -->
@@ -737,7 +737,6 @@
         </div>
     </div>
     <!-- datepicker -->
-    <script src="~/js/js_create/@(ViewName).js"></script>
     <script src="~/js/js_create/lookup.js"></script>
     <!-- dialog -->
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
@@ -778,7 +777,8 @@
     <!-- bootstrap-daterangepicker -->
     <script src="~/public/vendors/moment/min/moment.min.js"></script>
     <script src="~/public/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="~/public/build/js/custom.min.js"></script>
     <script type="text/javascript">

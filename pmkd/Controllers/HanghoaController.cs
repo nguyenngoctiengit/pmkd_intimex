@@ -17,7 +17,6 @@ namespace pmkd.Controllers.Danhmuc
     public class HanghoaController : Controller
     {
         public tradingsystem_blContext _context = new tradingsystem_blContext(Parameter.connectionString);
-        public int a = 1;
         public HanghoaController()
         {
         }

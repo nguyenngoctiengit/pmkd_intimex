@@ -10,7 +10,7 @@ using pmkd.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication.Cookies;
-
+using pmkd.Hubs;
 
 namespace pmkd
 {
@@ -55,6 +55,7 @@ namespace pmkd
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddMvc();
             services.AddDbContext<tradingsystem_blContext>(option => option.UseLazyLoadingProxies().UseSqlServer(connectionString));
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -87,6 +88,7 @@ namespace pmkd
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<ChatHub>("chatHub");
                 
             });
         }

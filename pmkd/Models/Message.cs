@@ -7,9 +7,13 @@ namespace pmkd.Models
 {
     public partial class Message
     {
-        public string Systemref { get; set; }
+        public int Id { get; set; }
+        public string FromUser { get; set; }
+        public string ToUser { get; set; }
         public string Message1 { get; set; }
-        public DateTime? Msdate { get; set; }
-        public string IdEd { get; set; }
+        public DateTime? Date { get; set; }
+
+        public virtual AspNetUser FromUserNavigation { get; set; }
+        public virtual AspNetUser ToUserNavigation { get; set; }
     }
 }

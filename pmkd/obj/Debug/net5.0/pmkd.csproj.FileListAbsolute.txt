@@ -1242,3 +1242,5 @@ C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.dll
 C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\ref\pmkd.dll
 C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.pdb
 C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\pmkd.genruntimeconfig.cache
+C:\Users\Windows 10\Desktop\pmkd_project\pmkd\bin\Debug\net5.0\libman.json
+C:\Users\Windows 10\Desktop\pmkd_project\pmkd\obj\Debug\net5.0\Razor\Views\Home\chat.cshtml.g.cs

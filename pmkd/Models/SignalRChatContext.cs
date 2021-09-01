@@ -25,15 +25,16 @@ namespace pmkd.Models
         public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
         public virtual DbSet<Branch> Branches { get; set; }
-        public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<UserBranch> UserBranches { get; set; }
+        public virtual DbSet<UserConnection> UserConnections { get; set; }
         public virtual DbSet<UserRight> UserRights { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=SignalRChat;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=SignalRChat;Trusted_Connection=True;");
             }
         }
 
@@ -68,7 +69,6 @@ namespace pmkd.Models
                 entity.HasIndex(e => e.NormalizedEmail, "EmailIndex");
 
                 entity.HasIndex(e => e.NormalizedUserName, "UserNameIndex")
-                    .IsUnique()
                     .HasFilter("([NormalizedUserName] IS NOT NULL)");
 
                 entity.Property(e => e.Email).HasMaxLength(256);
@@ -77,7 +77,7 @@ namespace pmkd.Models
 
                 entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
 
-                entity.Property(e => e.status).HasColumnName("status");
+                entity.Property(e => e.Status).HasColumnName("status");
 
                 entity.Property(e => e.UserName).HasMaxLength(256);
             });
@@ -197,27 +197,34 @@ namespace pmkd.Models
                 entity.Property(e => e.WebSite).HasMaxLength(255);
             });
 
-            modelBuilder.Entity<Unit>(entity =>
+            modelBuilder.Entity<Message>(entity =>
             {
-                entity.ToTable("Unit");
+                entity.ToTable("Message");
 
-                entity.Property(e => e.TiLe)
-                    .HasColumnType("decimal(18, 8)")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Unit1)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("Unit");
+                entity.Property(e => e.Date).HasColumnType("datetime");
 
-                entity.Property(e => e.UnitSub)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.FromUser).HasMaxLength(450);
+
+                entity.Property(e => e.Message1).HasColumnName("Message");
+
+                entity.Property(e => e.ToUser).HasMaxLength(450);
+
+                entity.HasOne(d => d.FromUserNavigation)
+                    .WithMany(p => p.MessageFromUserNavigations)
+                    .HasForeignKey(d => d.FromUser)
+                    .HasConstraintName("FK_Message2_AspNetUsers1");
+
+                entity.HasOne(d => d.ToUserNavigation)
+                    .WithMany(p => p.MessageToUserNavigations)
+                    .HasForeignKey(d => d.ToUser)
+                    .HasConstraintName("FK_Message2_AspNetUsers");
             });
 
             modelBuilder.Entity<UserBranch>(entity =>
             {
-                entity.HasKey(e => e.UserBranchId);
+                entity.HasNoKey();
 
                 entity.ToTable("UserBranch");
 
@@ -228,6 +235,18 @@ namespace pmkd.Models
                 entity.Property(e => e.UserName)
                     .IsRequired()
                     .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<UserConnection>(entity =>
+            {
+                entity.ToTable("UserConnection");
+
+                entity.Property(e => e.UserId).HasMaxLength(450);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserConnections)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_UserConnection_AspNetUsers");
             });
 
             modelBuilder.Entity<UserRight>(entity =>

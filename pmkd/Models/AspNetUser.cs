@@ -13,6 +13,9 @@ namespace pmkd.Models
             AspNetUserLogins = new HashSet<AspNetUserLogin>();
             AspNetUserRoles = new HashSet<AspNetUserRole>();
             AspNetUserTokens = new HashSet<AspNetUserToken>();
+            MessageFromUserNavigations = new HashSet<Message>();
+            MessageToUserNavigations = new HashSet<Message>();
+            UserConnections = new HashSet<UserConnection>();
         }
 
         public string Id { get; set; }
@@ -30,12 +33,16 @@ namespace pmkd.Models
         public DateTimeOffset? LockoutEnd { get; set; }
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
-        public bool status { get; set; }
-        public bool Online { get; set; }
+        public bool? Status { get; set; }
+        public bool? Online { get; set; }
         public string UnitName { get; set; }
+
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual ICollection<AspNetUserRole> AspNetUserRoles { get; set; }
         public virtual ICollection<AspNetUserToken> AspNetUserTokens { get; set; }
+        public virtual ICollection<Message> MessageFromUserNavigations { get; set; }
+        public virtual ICollection<Message> MessageToUserNavigations { get; set; }
+        public virtual ICollection<UserConnection> UserConnections { get; set; }
     }
 }

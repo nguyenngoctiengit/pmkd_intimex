@@ -11,6 +11,9 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Configuration;
 using pmkd.AccountMail;
+using Microsoft.AspNetCore.Authorization;
+using pmkd.ModelService;
+using pmkd.AppService;
 
 namespace pmkd.Controllers
 {
@@ -23,16 +26,37 @@ namespace pmkd.Controllers
             configuration = _configuration;
         }
         [Route("admin")]
+        [HttpGet]
+        [AllowAnonymous]
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
         [HttpPost]
-        public IActionResult Login(AspNetUser aspNetUser)
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(LoginData loginData)
         {
             if (ModelState.IsValid)
             {
-                if (processLogin(aspNetUser.UserName,aspNetUser.PasswordHash) == null)
+                string userId;
+                if (new AppService.AppService().login(loginData,out userId))
+                {
+                    var user = _context.AspNetUsers.FirstOrDefault(a => a.UserName == loginData.Username);
+                    HttpContext.Session.SetString("userId", user.Id);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ViewBag.Message = "Sai tài khoản hoặc mật khẩu";
+
+                }
+                return View("Index");
+                /*if (processLogin(aspNetUser.UserName,aspNetUser.PasswordHash) == null)
                 {
                     ViewBag.Message = "Sai tài khoản hoặc mật khẩu";
                     return View("Index");
@@ -51,8 +75,7 @@ namespace pmkd.Controllers
                         var userdetails = _context.AspNetUsers.SingleOrDefault(m => m.UserName == aspNetUser.UserName && m.status == true);
                         return RedirectToAction("Index", "Home");
                     }
-                }
-
+                }*/
             }
             else
             {
@@ -63,7 +86,7 @@ namespace pmkd.Controllers
 
         private AspNetUser processLogin(string username,string password)
         {
-            var account = _context.AspNetUsers.SingleOrDefault(a => a.UserName == username && a.status == true);
+            var account = _context.AspNetUsers.SingleOrDefault(a => a.UserName == username && a.Status == true);
             if (account != null)
             {
                 if (BCrypt.Net.BCrypt.Verify(password, account.PasswordHash))
@@ -81,14 +104,13 @@ namespace pmkd.Controllers
 
         public IActionResult loginwithUserBranch(AspNetUser aspNetUser)
         {
-            var userdetails = _context.AspNetUsers.SingleOrDefault(m => m.UserName == aspNetUser.UserName && m.status == true);
-            var userBranch = aspNetUser.UserName;
+            var userdetails = _context.AspNetUsers.SingleOrDefault(m => m.UserName == aspNetUser.UserName && m.Status == true);
+            var userBranch = aspNetUser.UnitName;
+            userdetails.Online = true;
+            _context.AspNetUsers.Update(userdetails).Property(a => a.Id).IsModified = false;
+            _context.SaveChanges();
             if (userBranch == "INXBL")
-            {
-                var item = _context.AspNetUsers.Where(a => a.UserName == userBranch).FirstOrDefault();
-                item.Online = true;
-                _context.AspNetUsers.Update(item).Property(a => a.Id).IsModified = false;
-                _context.SaveChanges();
+            {                
                 HttpContext.Session.SetString("UnitName", "INXBL");
                 Parameter.connectionString = "Server=.\\SQLEXPRESS;Database=tradingsystem_bl;Trusted_Connection=True;MultipleActiveResultSets=true";
                 return RedirectToAction("Index", "Home");
@@ -127,7 +149,7 @@ namespace pmkd.Controllers
             {
                 aspNetUser.Id = RandomHelper.RandomString(10);
                 aspNetUser.PasswordHash = BCrypt.Net.BCrypt.HashString(aspNetUser.PasswordHash.Trim());
-                aspNetUser.status = false;
+                aspNetUser.Status = false;
                 aspNetUser.SecurityStamp = RandomHelper.RandomString(6);
                 _context.AspNetUsers.Add(aspNetUser);
                 _context.SaveChanges();
@@ -147,13 +169,12 @@ namespace pmkd.Controllers
         public IActionResult Active(string Activecode,AspNetUser aspNetUser)
         {
              
-            var userName = HttpContext.Session.GetString("username");
-            
+            var userName = HttpContext.Session.GetString("username");            
             var account = _context.AspNetUsers.SingleOrDefault(a => a.UserName == userName);
             if (account.SecurityStamp == Activecode)
             {
                 UserBranch userBranch = new UserBranch();
-                account.status = true;
+                account.Status = true;
                 account.Online = true;
                 account.UnitName = aspNetUser.UnitName;
                 userBranch.UserName = userName;
