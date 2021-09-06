@@ -80,6 +80,10 @@ namespace pmkd.Models
                 entity.Property(e => e.Status).HasColumnName("status");
 
                 entity.Property(e => e.UserName).HasMaxLength(256);
+
+                entity.HasMany(e => e.MessageFromUserNavigations);
+
+                entity.HasMany(e => e.MessageToUserNavigations);
             });
 
             modelBuilder.Entity<AspNetUserClaim>(entity =>

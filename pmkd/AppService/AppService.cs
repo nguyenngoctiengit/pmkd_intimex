@@ -2,20 +2,43 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using pmkd.ModelChat;
+using Microsoft.AspNetCore.Mvc;
 using pmkd.Models;
-using System.Web;
-using pmkd.ModelService;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using System.Diagnostics;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+using System.Configuration;
+using pmkd.AccountMail;
+using Microsoft.AspNetCore.Authorization;
+using pmkd.ModelService;
+using pmkd.AppService;
+using pmkd.Parameter;
 
 namespace pmkd.AppService
 {
-    public class AppService
+    public class AppService 
     {
         SignalRChatContext _context = new SignalRChatContext();
         public AppService()
         {
         }
+
+        public void AddUserConnection(string ConnectionId)
+        {
+            using (SignalRChatContext _context = new SignalRChatContext())
+            {
+                var userId = UserIdParameter.userId;
+                _context.UserConnections.Add(new UserConnection
+                {
+                    ConnectionId = ConnectionId,
+                    UserId = userId,
+                });
+                _context.SaveChanges();
+            }
+        }
+
         public bool login(LoginData loginData,out string userId)
         {
             userId = "";
@@ -29,23 +52,6 @@ namespace pmkd.AppService
                 }
             }
             return false;
-        }
-        internal void RemoveAllUserConnections(string userId)
-        {
-            var current = _context.UserConnections.Where(x => x.UserId == userId);
-            _context.UserConnections.RemoveRange(current);
-            _context.SaveChanges();
-        }
-        internal int AddUserConnection(Guid ConnectionId)
-        {
-            var userId = HttpContext.s
-            _Context.UserConnections.Add(new UserConnection
-            {
-                ConnectionId = ConnectionId,
-                UserId = userId,
-            });
-            _Context.SaveChanges();
-            return userId;
         }
     }
 }

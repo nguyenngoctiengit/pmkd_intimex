@@ -490,7 +490,7 @@ namespace pmkd.Models
 
                 entity.Property(e => e.UserName).HasMaxLength(256);
 
-                entity.Property(e => e.status).HasColumnName("status");
+                entity.Property(e => e.Status).HasColumnName("status");
             });
 
             modelBuilder.Entity<AspNetUserClaim>(entity =>
@@ -8095,29 +8095,6 @@ namespace pmkd.Models
                 entity.Property(e => e.Type)
                     .HasMaxLength(255)
                     .HasColumnName("type");
-            });
-
-            modelBuilder.Entity<Message>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("Message");
-
-                entity.Property(e => e.IdEd)
-                    .HasMaxLength(10)
-                    .HasColumnName("idEd")
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.Message1)
-                    .HasColumnType("ntext")
-                    .HasColumnName("Message");
-
-                entity.Property(e => e.Msdate).HasColumnType("datetime");
-
-                entity.Property(e => e.Systemref)
-                    .HasMaxLength(20)
-                    .HasColumnName("systemref")
-                    .IsFixedLength(true);
             });
 
             modelBuilder.Entity<MessageOffline>(entity =>

@@ -9,7 +9,7 @@ namespace pmkd.Models
     {
         public int Id { get; set; }
         public string UserId { get; set; }
-        public Guid? ConnectionId { get; set; }
+        public string ConnectionId { get; set; }
 
         public virtual AspNetUser User { get; set; }
     }

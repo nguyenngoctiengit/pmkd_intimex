@@ -15,13 +15,14 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
 using DevExpress.AspNetCore.Spreadsheet;
 using System.Configuration;
+using pmkd.Parameter;
 
 namespace pmkd.Controllers
 {
 
     public class HomeController : Controller
     {
-        private readonly tradingsystem_blContext _context = new tradingsystem_blContext(Parameter.connectionString);
+        private readonly tradingsystem_blContext _context = new tradingsystem_blContext(ConnectionParameter.connectionString);
 
         public HomeController(tradingsystem_blContext context)
         {
@@ -65,8 +66,15 @@ namespace pmkd.Controllers
         }
         public IActionResult chat(string id)
         {
-            listUser();
-            return View("chat");
+            using (SignalRChatContext _context = new SignalRChatContext())
+            {
+                ViewBag.NormalizedUserName = _context.AspNetUsers.Where(a => a.Id == id).Select(a => a.NormalizedUserName).FirstOrDefault();
+                UserIdParameter.userId = HttpContext.Session.GetString("userId");
+                ViewBag.userId = id;
+                ViewBag.sender = HttpContext.Session.GetString("userId");
+                listUser();
+                return View("chat");
+            }    
         }
     }
 }

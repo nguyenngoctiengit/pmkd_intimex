@@ -13,7 +13,7 @@ namespace pmkd.Controllers
 {
     public class LookupController : Controller
     {
-        private readonly tradingsystem_blContext _context = new tradingsystem_blContext(Parameter.connectionString);
+        private readonly tradingsystem_blContext _context = new tradingsystem_blContext(ConnectionParameter.connectionString);
         public LookupController()
         {
         }

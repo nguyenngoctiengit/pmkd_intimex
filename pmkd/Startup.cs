@@ -23,6 +23,8 @@ namespace pmkd
     using Microsoft.Extensions.FileProviders;
     using System.IO;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.SignalR;
+    using pmkd.AppService;
 
     public class Startup
     {
@@ -45,7 +47,6 @@ namespace pmkd
             services.AddRazorPages().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);  
             services.AddDbContextPool<tradingsystem_blContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("tradingsystem_blConnection")));
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<tradingsystem_blContext, tradingsystem_blContext>();
             services.AddDbContext<tradingsystem_blContext>(ServiceLifetime.Transient);
             services.AddMvc().AddRazorPagesOptions(o =>
@@ -53,9 +54,9 @@ namespace pmkd
                 o.Conventions.ConfigureFilter(new IgnoreAntiforgeryTokenAttribute());
             });
             services.AddSingleton<IConfiguration>(Configuration);
-            services.AddMvc();
-            services.AddDbContext<tradingsystem_blContext>(option => option.UseLazyLoadingProxies().UseSqlServer(connectionString));
+            services.AddMvc();            
             services.AddSignalR();
+            services.AddSingleton<IUserIdProvider, NameUserIdProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,12 +86,15 @@ namespace pmkd
             });
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<ChatHub>("/chatHub");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapHub<ChatHub>("chatHub");
+                endpoints.MapRazorPages();
                 
             });
+
+
         }
     }
 }

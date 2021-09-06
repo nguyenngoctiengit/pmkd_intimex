@@ -2,42 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
+using pmkd.AppService;
+using pmkd.Parameter;
+using pmkd.Models;
+
 namespace pmkd.Hubs
 {
     public class ChatHub : Hub
     {
-        public static IHubContext context = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
-
-        public override Task OnConnected()
+        SignalRChatContext _context = new SignalRChatContext();
+        public Task SendMessage(string sender, string user,string message)
         {
-            int userId = new AppService().AddUserConnection(Guid.Parse(Context.ConnectionId));
-            Clients.All.BroadcastOnlineUser(userId);
-            return base.OnConnected();
+            return Clients.All.SendAsync("ReceiveMessage", user, message);
         }
-
-        public override Task OnDisconnected(bool stopCalled)
+        public override Task OnConnectedAsync()
         {
-            int userId = new AppService().RemoveUserConnection(Guid.Parse(Context.ConnectionId));
-            Clients.All.BroadcastOfflineUser(userId);
-            return base.OnDisconnected(stopCalled);
+            new AppService.AppService().AddUserConnection(Context.ConnectionId);
+            Groups.AddToGroupAsync(Context.ConnectionId, UserIdParameter.userId);
+            return base.OnConnectedAsync();
         }
-
-        public void GetUsersToChat()
+        public Task SendMessageToGroup(string sender, string receiver, string message)
         {
-            int UserId = int.Parse(HttpContext.Current.User.Identity.Name);
-            List<UserDTO> users = new AppService().GetUsersToChat();
-            Clients.Clients(new AppService().GetUSerConnections(UserId)).BroadcastUsersToChat(users);
+            var nguoiGui = _context.AspNetUsers.Where(a => a.Id == sender).Select(a => a.NormalizedUserName).FirstOrDefault();
+            return Clients.Group(receiver).SendAsync("ReceiveMessage", nguoiGui, message);
         }
-
-        public static void OfflineUser(int UserId)
-        {
-            context.Clients.All.BroadcastOfflineUser(UserId);
-        }
-
-        public static void RecieveMessage(int fromUserId, int toUserId, string message)
-        {
-            context.Clients.Clients(new AppService().GetUSerConnections(toUserId)).BroadcastRecieveMessage(fromUserId, message);
-        }
+        public string GetConnectionId() => Context.ConnectionId;
     }
 }

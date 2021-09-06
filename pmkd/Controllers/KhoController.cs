@@ -24,7 +24,7 @@ namespace pmkd.Controllers
 {
     public class KhoController : Controller
     {
-        private readonly tradingsystem_blContext _context = new tradingsystem_blContext(Parameter.connectionString);
+        private readonly tradingsystem_blContext _context = new tradingsystem_blContext(ConnectionParameter.connectionString);
         private const string DocumentId2 = "MyDocument2";
         public KhoController(tradingsystem_blContext context)
         {

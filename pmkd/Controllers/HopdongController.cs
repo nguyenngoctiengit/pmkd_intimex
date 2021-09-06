@@ -18,7 +18,7 @@ namespace pmkd.Controllers
     public class HopdongController : Controller
     {
         public DateTime NgayKy;
-        private readonly tradingsystem_blContext _context = new tradingsystem_blContext(Parameter.connectionString);
+        private readonly tradingsystem_blContext _context = new tradingsystem_blContext(ConnectionParameter.connectionString);
         public HopdongController()
         {
         }

@@ -14,6 +14,7 @@ using pmkd.AccountMail;
 using Microsoft.AspNetCore.Authorization;
 using pmkd.ModelService;
 using pmkd.AppService;
+using pmkd.Parameter;
 
 namespace pmkd.Controllers
 {
@@ -27,7 +28,6 @@ namespace pmkd.Controllers
         }
         [Route("admin")]
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
@@ -37,45 +37,32 @@ namespace pmkd.Controllers
             return View();
         }
         [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public IActionResult Login(LoginData loginData)
         {
             if (ModelState.IsValid)
             {
                 string userId;
-                if (new AppService.AppService().login(loginData,out userId))
+                if (new AppService.AppService().login(loginData,out userId) == true)
                 {
                     var user = _context.AspNetUsers.FirstOrDefault(a => a.UserName == loginData.Username);
-                    HttpContext.Session.SetString("userId", user.Id);
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ViewBag.Message = "Sai tài khoản hoặc mật khẩu";
-
-                }
-                return View("Index");
-                /*if (processLogin(aspNetUser.UserName,aspNetUser.PasswordHash) == null)
-                {
-                    ViewBag.Message = "Sai tài khoản hoặc mật khẩu";
-                    return View("Index");
-                }
-                else
-                {
-                    var userBranch = _context.UserBranches.Where(a => a.UserName == aspNetUser.UserName).Count();
+                    var userBranch = _context.UserBranches.Where(a => a.UserName == user.UserName).Count();
                     if (userBranch > 1)
                     {
-                        ViewBag.userName = aspNetUser.UserName;
-                        ViewBag.userBranch = _context.UserBranches.Where(a => a.UserName == aspNetUser.UserName).Select(a => new { BranchId = a.BranchId }).ToList();
+                        ViewBag.userId = user.Id;
+                        ViewBag.userBranch = _context.UserBranches.Where(a => a.UserName == user.UserName).Select(a => new { BranchId = a.BranchId }).ToList();
                         return View("chooseBranch");
                     }
                     else
                     {
-                        var userdetails = _context.AspNetUsers.SingleOrDefault(m => m.UserName == aspNetUser.UserName && m.status == true);
+                        var userdetails = _context.AspNetUsers.SingleOrDefault(m => m.UserName == user.UserName && m.Status == true);
+                        HttpContext.Session.SetString("userId", user.Id);
+                        HttpContext.Session.SetString("UserName", user.UserName);
+                        HttpContext.Session.SetString("fullName", user.NormalizedUserName);
+                        HttpContext.Session.SetString("UnitName", user.UnitName);
                         return RedirectToAction("Index", "Home");
                     }
-                }*/
+                }
+                return View("Index");
             }
             else
             {
@@ -83,45 +70,29 @@ namespace pmkd.Controllers
                 return View("index");
             }
         }
-
-        private AspNetUser processLogin(string username,string password)
-        {
-            var account = _context.AspNetUsers.SingleOrDefault(a => a.UserName == username && a.Status == true);
-            if (account != null)
-            {
-                if (BCrypt.Net.BCrypt.Verify(password, account.PasswordHash))
-                {
-                    account.Online = true;
-                    _context.AspNetUsers.Update(account);
-                    _context.SaveChanges();
-                    HttpContext.Session.SetString("userId", account.UserName);
-                    HttpContext.Session.SetString("FullName1", account.NormalizedUserName);
-                    return account;
-                }
-            }
-            return null;
-        }
-
         public IActionResult loginwithUserBranch(AspNetUser aspNetUser)
         {
-            var userdetails = _context.AspNetUsers.SingleOrDefault(m => m.UserName == aspNetUser.UserName && m.Status == true);
+            var user = _context.AspNetUsers.SingleOrDefault(m => m.Id == aspNetUser.Id && m.Status == true);
             var userBranch = aspNetUser.UnitName;
-            userdetails.Online = true;
-            _context.AspNetUsers.Update(userdetails).Property(a => a.Id).IsModified = false;
+            user.Online = true;
+            _context.AspNetUsers.Update(user).Property(a => a.Id).IsModified = false;
             _context.SaveChanges();
+            HttpContext.Session.SetString("userId", user.Id);
+            HttpContext.Session.SetString("UserName", user.UserName);
+            HttpContext.Session.SetString("fullName", user.NormalizedUserName);
             if (userBranch == "INXBL")
             {                
                 HttpContext.Session.SetString("UnitName", "INXBL");
-                Parameter.connectionString = "Server=.\\SQLEXPRESS;Database=tradingsystem_bl;Trusted_Connection=True;MultipleActiveResultSets=true";
+                ConnectionParameter.connectionString = "Server=.\\SQLEXPRESS;Database=tradingsystem_bl;Trusted_Connection=True;MultipleActiveResultSets=true";
                 return RedirectToAction("Index", "Home");
             }
             else if (userBranch == "INX")
             {
                 HttpContext.Session.SetString("UnitName", "INX");
-                Parameter.connectionString = "Server=.\\SQLEXPRESS;Database=tradingsystem;Trusted_Connection=True;MultipleActiveResultSets=true";
+                ConnectionParameter.connectionString = "Server=.\\SQLEXPRESS;Database=tradingsystem;Trusted_Connection=True;MultipleActiveResultSets=true";
                 return RedirectToAction("Index", "Home");
             }
-            Parameter.connectionString = "Server=.\\SQLEXPRESS;Database=tradingsystem;Trusted_Connection=True;MultipleActiveResultSets=true";
+            ConnectionParameter.connectionString = "Server=.\\SQLEXPRESS;Database=tradingsystem;Trusted_Connection=True;MultipleActiveResultSets=true";
             return RedirectToAction("Index", "Home");
 
         }
