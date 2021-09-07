@@ -8,5 +8,6 @@ namespace pmkd.Parameter
     public class UserIdParameter
     {
         public static string userId;
+        public static string userIdChat;
     }
 }

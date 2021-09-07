@@ -70,6 +70,7 @@ namespace pmkd.Controllers
             {
                 ViewBag.NormalizedUserName = _context.AspNetUsers.Where(a => a.Id == id).Select(a => a.NormalizedUserName).FirstOrDefault();
                 UserIdParameter.userId = HttpContext.Session.GetString("userId");
+                UserIdParameter.userIdChat = id;
                 ViewBag.userId = id;
                 ViewBag.sender = HttpContext.Session.GetString("userId");
                 listUser();
