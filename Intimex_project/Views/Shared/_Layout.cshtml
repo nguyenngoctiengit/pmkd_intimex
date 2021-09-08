@@ -1,0 +1,829 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    var ViewName = ViewData["title"];
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="~/public/images/icon_main.ico" type="image/ico" />
+
+    <title>Công ty CP tập đoàn Intimex</title>
+    <!-- Bootstrap -->
+    <link href="~/public/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="~/public/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="~/public/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <!-- dialog-->
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+
+
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <!-- NProgress -->
+    <link href="~/public/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="~/public/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+    <!-- bootstrap-progressbar -->
+    <link href="~/public/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="~/public/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="~/public/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="~/public/build/css/custom.min.css" rel="stylesheet">
+    <!-- devexpress-->
+    <!-- jquery file -->
+    <!-- DevExtreme file -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.0.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.9/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.1.1/exceljs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.2/FileSaver.min.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+    <!-- DevExtreme themes -->
+
+    <link href="~/node_modules/devextreme/dist/css/dx.common.css" rel="stylesheet" />
+    <link href="~/node_modules/devextreme/dist/css/dx.light.css" rel="stylesheet" />
+
+
+    <!-- DevExtreme library -->
+    <script src="~/js/devextreme/jquery.js"></script>
+    @*    <script src="~/js/devextreme/bootstrap.js"></script>*@
+    <script src="~/node_modules/devextreme/dist/js/dx.all.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.mvc.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.data.js"></script>
+    <script src="~/node_modules/devexpress-aspnetcore-spreadsheet/dist/dx-aspnetcore-spreadsheet.js"></script>
+    <script src="https://kit.fontawesome.com/2d19aa43dc.js" crossorigin="anonymous"></script>
+    <link href="~/node_modules/devexpress-aspnetcore-spreadsheet/dist/dx-aspnetcore-spreadsheet.css" rel="stylesheet" />
+    <!-- delete -->
+    <!-- dialog-->
+
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+
+    <!-- datepicker -->
+    <!-- Custom Theme Style -->
+    <style>
+        thead input {
+            width: 100%;
+        }
+
+        tfoot {
+            display: table-header-group
+        }
+    </style>
+    @{
+        if (ViewBag.mess != null)
+        {
+            <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.mess");
+            };
+            </script>
+        }
+    }
+    <script type="text/javascript">
+        function SubmitValueBT() {
+            var spreadsheetStateId = spreadsheet.getSpreadsheetState().SpreadsheetWorkSessionId;
+            var spreadsheetStateID = spreadsheetStateId;
+            var id = document.getElementById("idkcs").value;
+            if (id == null || id == "") {
+                alert("Vui lòng chọn xe");
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: "/bangtinh/updatespreadsheet",
+                    data: { spreadsheetStateID, id },
+                    success: function (result) {
+                        $("#spreadsheetBT").html(result);
+                    }
+                })
+            }
+
+        }
+        function onCustomCommandExecuted(s, e) {
+            switch (e.commandName) {
+                case 'save':
+                    var spreadsheetState = spreadsheet.getSpreadsheetState();
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("SaveToBytes")',
+                        data: { spreadsheetState: spreadsheetState }
+                    });
+                    alert("Save thành công");
+                    break;
+                case 'download':
+                    var spreadsheetState = spreadsheet.getSpreadsheetState();
+                    $("#formExport").attr('action', '@Url.Action("Download")');
+                    $("input[name='SpreadsheetWorkSessionId']").val(spreadsheetState.SpreadsheetWorkSessionId);
+                    $("#formExport").submit();
+                    break;
+            }
+        }
+        /// some script
+        $(document).ready(function () {
+            setInterval(function () {
+                var dt = new Date();
+                var month = dt.getMonth() + 1;
+                $('#datetime_reload').html(dt.getDate() + "/" + month + "/" + dt.getFullYear() + " " + "  " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds())
+            }, 1000);
+        });
+        // jquery ready start
+        $(document).ready(function () {
+            // jQuery code
+
+            //////////////////////// Prevent closing from click inside dropdown
+            $(document).on('click', '.dropdown-menu', function (e) {
+                e.stopPropagation();
+            });
+
+            // make it as accordion for smaller screens
+            if ($(window).width() < 992) {
+                $('.dropdown-menu a').click(function (e) {
+                    e.preventDefault();
+                    if ($(this).next('.submenu').length) {
+                        $(this).next('.submenu').toggle();
+                    }
+                    $('.dropdown').on('hide.bs.dropdown', function () {
+                        $(this).find('.submenu').hide();
+                    })
+                });
+            }
+
+        }); // jquery end
+    </script>
+
+    <style type="text/css">
+        @@media (min-width: 992px) {
+            .dropdown-menu .dropdown-toggle:after {
+                border-top: .3em solid transparent;
+                border-right: 0;
+                border-bottom: .3em solid transparent;
+                border-left: .3em solid;
+            }
+
+            .dropdown-menu .dropdown-menu {
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            .dropdown-menu li {
+                position: relative;
+            }
+
+            .nav-item .submenu {
+                display: none;
+                position: absolute;
+                left: 100%;
+                top: -7px;
+            }
+
+            .nav-item .submenu-left {
+                right: 100%;
+                left: auto;
+            }
+
+            .dropdown-menu > li:hover {
+                background-color: #f1f1f1
+            }
+
+                .dropdown-menu > li:hover > .submenu {
+                    display: block;
+                }
+        }
+    </style>
+
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="/" class="site_title"><i class="fa fa-paw"></i> <span>Intimex</span></a>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        @{
+                            var userId = Context.Session.GetString("userId");
+                            var name = Context.Session.GetString("UnitName");
+                            if (userId != null)
+                            {
+
+                                <div class="profile_info">
+                                    <span>Welcome,</span>
+                                    <h2>@name</h2>
+                                </div>
+
+                            }
+                        }
+
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>General</h3>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a><i class="fa fa-edit"></i> Danh mục <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a asp-action="hanghoa" asp-controller="hanghoa">Hàng hóa</a>
+                                        </li>
+                                        <li>
+                                            <a asp-action="khachhang" asp-controller="khachhang">Khách hàng</a>
+                                        </li>
+                                        <li><a href="form_validation.html">Tiền tệ</a></li>
+                                        <li><a href="form_wizards.html">Huyện</a></li>
+                                        <li><a href="form_upload.html">Xã </a></li>
+                                        <li><a href="form_buttons.html">Đại lí</a></li>
+                                        <li><a href="form_buttons.html">Nhóm trưởng</a></li>
+                                        <li><a href="form_buttons.html">KH đăng ký theo từng đơn vị</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-sitemap"></i> Nhập - Xuất kho <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a>Số liệu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li>
+                                                    <a asp-action="kcs" asp-controller="kcs">Phiếu KCS</a>
+                                                </li>
+                                                <li>
+                                                    <a asp-action="cantrongluong" asp-controller="can">Cân trọng lượng</a>
+                                                </li>
+                                                <li><a href="form_validation.html">Cắt chuyển</a></li>
+                                                <li><a asp-action="dangkynhapkho" asp-controller="nhapkho">Đăng ký nhập kho</a></li>
+                                                <li><a href="form_upload.html">Thẻ kho</a></li>
+                                                <li><a asp-action="lenhgiaohang" asp-controller="lenhgiaohang">Lệnh giao hàng</a></li>
+                                                <li><a href="form_buttons.html">Tách phiếu Xuất</a></li>
+                                                <li><a asp-action="bangtinh" asp-controller="bangtinh">Tính giá trị hàng NK</a></li>
+                                                <li><a href="form_buttons.html">Phiếu Nhập kho</a></li>
+                                                <li><a href="form_buttons.html">Phiếu Xuất kho</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a>Báo biểu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">Bảng kê nhập xuất kho</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">Tổng hợp chất lượng đầu vào</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Báo cáo KCS</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-sitemap"></i>Hợp đồng<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a>Số liệu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a asp-action="pakd" asp-controller="hopdong">Phương án kinh doanh mới</a>
+                                                </li>
+                                                <li>
+                                                    <a asp-action="hdmb" asp-controller="hopdong">Hợp đồng mua bán</a>
+                                                </li>
+                                                <li>
+                                                    <a asp-action="test" asp-controller="hopdong">Ghép phương án kinh doanh</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Giao nhận hàng hóa</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Fix giá hợp đồng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Cập nhật dữ liệu điện tử</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Hoàn thành giao hàng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Tra cứu HĐMB</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Phiếu KSC</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Cân trọng lượng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Xử lí tồn kho</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Điều khoản chất lượng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Tra cứu HĐMB từ invoice</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a>Báo biểu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">BC PAKD</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">BC HĐ chưa giao - trễ hạn</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC cân đối hàng hóa</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC hợp đồng chưa fix giá</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC nhập xuất tồn</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC HĐMB</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC tổng hợp hàng hóa</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC HĐ Mượn - Cho mượn chưa trả hàng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Đối chiếu hàng tồn kho với KH</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC tình hình HĐKD</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC nhập xuất sản xuất</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Bảng kê nhập xuất hàng hóa</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC cân xe</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC KSC</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC kim ngạch theo thị trường</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC tổng hợp nhập xuất sản xuất</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC nhập xuất tồn theo KH</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC phụ kiện hợp đồng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC hợp đồng chưa giao - trễ hạn - Gạo</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-sitemap"></i>Chứng từ<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a>Số liệu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">Nhập chứng từ</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">Lập hóa đơn bán hàng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Tra cứu chứng từ</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Nhập giao nhận</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a>Báo biểu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">Bảng kê bộ chứng từ</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">BC Kim ngạch - Doanh thu</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC hóa đơn xuất nhập khẩu</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Bảng kê phân loại chứng từ</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Bảng kê bộ chứng từ - kế toán</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-sitemap"></i>Văn phòng điện tử<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a>Số liệu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">Văn bản đến</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">Văn bản đi</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Quản lí văn bản</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Theo dõi văn bản</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Quản lí Hồ sơ - Công việc</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Giá cà phê</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Tài liệu họp</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Màn hình chiếu</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Lịch công tác ban giám đốc</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Tài liệu mẫu</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Thông báo</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Bản đánh giá hiệu quả làm việc</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a>Báo biểu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">Báo cáo công việc</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">BC văn bản đi đến</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Lịch sử văn bản</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC tổng hợp đánh giá</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-sitemap"></i>Quản lí nhân sự<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a>Số liệu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a asp-action="thongtinnhansu" asp-controller="quanlinhansu">Thông tin nhân sự</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">Phòng ban</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Chức danh</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Thông tin ứng viên</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Phiếu yêu cầu tuyển dụng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Danh mục bậc lương</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Thông tin tiền lương</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Danh mục bậc lương 205</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a>Báo biểu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">BC tổ chức NS</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">DSNV đến hạn kí hợp đồng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Tình hình tăng giảm NS</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Thông kê nhân sự</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Thông tin đoàn đảng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC kết quả phỏng vấn</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Danh sách ứng viên theo đợt</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">BC yêu cầu tuyển dụng</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">DS CBNV</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">DS tham gia BHYT, BHTN, BHXH</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-sitemap"></i>Báo cáo giao ban<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a>Số liệu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">Kế hoạch năm</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">Số liệu báo cáo</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Tỷ giá giao ban</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a>Báo biểu<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">Tổng hợp báo cáo</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="menu_section">
+                            <h3>User Online</h3>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a><i class="fas fa-user-friends"></i> Danh sách người dùng <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+@*                                        @{
+                                            foreach (var item in (IEnumerable<Data.Models.SignalR.AspNetUser>)ViewBag.ListUser)
+                                            {
+                                                if (item.Online == true)
+                                                {
+                                                    <li><a asp-action="chat" asp-controller="home" asp-route-id="@item.Id"><i class="fas fa-user"></i>@item.NormalizedUserName</a></li>
+                                                }
+                                                else
+                                                {
+                                                    <li><a asp-action="chat" asp-controller="home" asp-route-id="@item.Id"><i class="far fa-user"></i>@item.NormalizedUserName</a></li>
+                                                }
+
+
+                                            }
+                                        }*@
+
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- /sidebar menu -->
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                        <a data-toggle="tooltip" data-placement="top" title="Settings">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Lock">
+                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" asp-action="logout" asp-controller="Account" title="Logout">
+                            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" asp-action="logout" asp-controller="Account" title="Exit">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+                    <nav class="nav navbar-nav">
+                        <ul class=" navbar-right">
+                            <li class="nav-item dropdown open" style="padding-left: 15px;">
+                                @{
+                                    var user = Context.Session.GetString("userId");
+                                    var ten = Context.Session.GetString("FullName1");
+                                    if (userId != null)
+                                    {
+
+                                        <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                                            @ten
+                                        </a>
+
+                                    }
+                                }
+
+                                <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="javascript:;"> Profile</a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <span class="badge bg-red pull-right">50%</span>
+                                        <span>Settings</span>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">Help</a>
+                                    <a class="dropdown-item" asp-action="logout" asp-controller="Account"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                </div>
+                            </li>
+
+                            <li role="presentation" class="nav-item dropdown open">
+                                <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-envelope-o"></i>
+                                    <span class="badge bg-green">6</span>
+                                </a>
+                                <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
+                                    <li class="nav-item">
+
+                                    </li>
+                                    <li class="nav-item">
+
+                                    </li>
+                                    <li class="nav-item">
+
+                                    </li>
+                                    <li class="nav-item">
+
+                                    </li>
+                                    <li class="nav-item">
+                                        <div class="text-center">
+                                            <a class="dropdown-item">
+                                                <strong>See All Alerts</strong>
+                                                <i class="fa fa-angle-right"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            <!-- page content -->
+            @RenderBody()
+            <!-- /page content -->
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    Code by <a href="https://www.facebook.com/profile.php?id=100004645355073">Tiến Nguyễn</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+    <!-- datepicker -->
+    <script src="~/js/js_create/lookup.js"></script>
+    <!-- dialog -->
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/public/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/public/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="~/public/vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="~/public/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="~/public/vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="~/public/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="~/public/vendors/iCheck/icheck.min.js"></script>
+    <!-- Switchery -->
+    <script src="~/public/vendors/switchery/dist/switchery.min.js"></script>
+    <!-- Skycons -->
+    <script src="~/public/vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="~/public/vendors/Flot/jquery.flot.js"></script>
+    <script src="~/public/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="~/public/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="~/public/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="~/public/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="~/public/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="~/public/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="~/public/vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="~/public/vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="~/public/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="~/public/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="~/public/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="~/public/vendors/moment/min/moment.min.js"></script>
+    <script src="~/public/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat1.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="~/public/build/js/custom.min.js"></script>
+    <script type="text/javascript">
+        function show() {
+            document.getElementById('divhdchomuon').style.display = 'block';
+            document.getElementById('ngaytra').style.display = 'none';
+            document.getElementById('divhdchomuon1').style.display = 'block';
+            document.getElementById('ngaytra1').style.display = 'none';
+        }
+        function show1() {
+            document.getElementById('divhdchomuon').style.display = 'none';
+            document.getElementById('ngaytra').style.display = 'none';
+            document.getElementById('divhdchomuon1').style.display = 'none';
+            document.getElementById('ngaytra1').style.display = 'none';
+        }
+        function show2() {
+            document.getElementById('divhdchomuon').style.display = 'none';
+            document.getElementById('ngaytra').style.display = 'block';
+            document.getElementById('divhdchomuon1').style.display = 'none';
+            document.getElementById('ngaytra1').style.display = 'block';
+        }
+        // DataTable
+        $(document).ready(function () {
+            // jQuery code
+
+            //////////////////////// Prevent closing from click inside dropdown
+            $(document).on('click', '.dropdown-menu', function (e) {
+                e.stopPropagation();
+            });
+
+            // make it as accordion for smaller screens
+            if ($(window).width() < 992) {
+                $('.dropdown-menu a').click(function (e) {
+                    e.preventDefault();
+                    if ($(this).next('.submenu').length) {
+                        $(this).next('.submenu').toggle();
+                    }
+                    $('.dropdown').on('hide.bs.dropdown', function () {
+                        $(this).find('.submenu').hide();
+                    })
+                });
+            }
+
+        }); // jquery end
+    </script>
+
+</body>
+</html>
