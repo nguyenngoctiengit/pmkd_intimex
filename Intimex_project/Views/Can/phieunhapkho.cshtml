@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewData["Title"] = "can";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model PNKViewModel
+<div class="right_col" role="main" style="height: 500px" id="pnk">
+    <div class="">
+        <div class="row" style="display: block;">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Phiếu nhập kho</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Settings 1</a>
+                                    <a class="dropdown-item" href="#">Settings 2</a>
+                                </div>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        @{
+                            if (TempData["alertMessage"] != null)
+                            {
+                                <div style="color:red;font-size:30px">
+                                    @TempData["alertMessage"].ToString()
+                                </div>
+                            }
+                        }
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box table-responsive">
+                                    <form asp-action="themPNK" asp-controller="can" asp-route-id="@ViewBag.idxeptai" method="post">
+                                        <div class="col-md-12 col-sm-12" style="height:auto">
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-1 col-sm-1">Số xe</label>
+                                                <div class="col-md-5 col-sm-5" style="padding:0px 0px 0px 0px">
+                                                    @(Html.DevExtreme().TextBox().Value(ViewBag.xevc))
+                                                </div>
+                                                <label class="col-form-label col-md-2 col-sm-2">Đ.vị giao hàng</label>
+                                                <div class="col-md-1 col-sm-1" style="padding:0px 0px 0px 0px">
+                                                    @(Html.DevExtreme().TextBox().Value(ViewBag.makhach))
+                                                </div>
+                                                <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 10px">
+                                                    @(Html.DevExtreme().TextBox().Value(ViewBag.tenkhach))
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">H.đồng</label>
+                                                <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
+                                                    @(Html.DevExtreme().TextBox().Value(ViewBag.hopdong))
+                                                </div>
+                                                <label class="col-form-label col-md-1 col-sm-1" style="font-size:11px">Ngày chứng từ</label>
+                                                <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
+                                                    @(Html.DevExtreme().DateBoxFor(a => a.nk.NgayChungTu).Value(DateTime.Now))
+                                                </div>
+                                                <label class="col-form-label col-md-1 col-sm-1">Mã lô</label>
+                                                <div class="col-md-5 col-sm-5" style="padding:0px 0px 0px 0px">
+                                                    @(Html.DevExtreme().SelectBoxFor(a => a.nkct.MaLo).DataSource(d => d.Mvc().Controller("lookup")
+                                                                                                        .LoadAction("getLo").LoadMode(DataSourceLoadMode.Raw)
+                                                                                                        .Key("MaLo"))
+                                                        .DisplayExpr("TenLo")
+                                                        .ValueExpr("MaLo")
+                                                        )
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">Ghi chú</label>
+                                                <div class="col-md-5 col-sm-5" style="padding:0px 0px 0px 0px">
+                                                    @(Html.DevExtreme().TextAreaFor(a => a.ca.GhiChu1).ID("Kcs"))
+                                                </div>
+                                                <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px">Kho nhập</label>
+                                                <div class="col-md-5 col-sm-5" style="padding:0px 0px 0px 0px">
+                                                    @(Html.DevExtreme().TextBox().Value(ViewBag.kho))
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Hàng hóa</label>
+                                                <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
+                                                    @(Html.DevExtreme().TextBox().Value(ViewBag.mahang))
+                                                </div>
+                                                <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 10px">
+                                                    @(Html.DevExtreme().TextBox().Value(ViewBag.tenhang))
+                                                </div>
+                                                <label class="col-form-label col-md-1 col-sm-1">Số bao</label>
+                                                <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
+                                                    @(Html.DevExtreme().TextBox().Value(ViewBag.sobao))
+                                                </div>
+                                                <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 10px">
+                                                    @(Html.DevExtreme().TextBox().Value(ViewBag.loaibao))
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Trọng lượng(GW)</label>
+                                                <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
+                                                    @(Html.DevExtreme().TextBox().Value(ViewBag.gw))
+                                                </div>
+                                                <div class="col-md-1 col-sm-1" style="padding:0px 0px 0px 10px">
+                                                    @(Html.DevExtreme().TextBox().Value("kgs"))
+                                                </div>
+                                                <label class="col-form-label col-md-2 col-sm-2">TL bao bì</label>
+                                                <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
+                                                    @(Html.DevExtreme().TextBox().Value(ViewBag.tlbao))
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Trọng lượng tịnh(NW)</label>
+                                                <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
+                                                    @(Html.DevExtreme().TextBox().Value(ViewBag.nw))
+                                                </div>
+                                                <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">RNW</label>
+                                                <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
+                                                    @(Html.DevExtreme().TextBox().Value(ViewBag.rnw))
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
+                                                    <button type="submit">Submit</button>
+                                                </div>
+                                                <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
+                                                    <button type="submit">Thêm lô</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

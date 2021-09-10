@@ -1,0 +1,264 @@
+﻿
+@{
+    ViewData["Title"] = "bangtinh";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model SpreadsheetViewModel
+<div class="right_col" role="main" style="height: 500px">
+    <div class="">
+        <div class="row" style="display: block;">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Bảng tính giá trị nhập</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Settings 1</a>
+                                    <a class="dropdown-item" href="#">Settings 2</a>
+                                </div>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        @{
+                            if (TempData["alertMessage"] != null)
+                            {
+                                <div style="color:red;font-size:30px">
+                                    @TempData["alertMessage"].ToString()
+                                </div>
+                            }
+                        }
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box table-responsive">
+                                    <div class="col-md-12 col-sm-12" style="height:auto">
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-1 col-sm-1">Số xe</label>
+                                            <div class="col-md-5 col-sm-5" style="padding:0px 0px 0px 0px">
+                                                @(Html.DevExtreme().DropDownBox()
+                                                        .ValueExpr("Id")
+                                                        .DisplayExpr("SoXe")
+                                                        .DataSource(d => d.Mvc()
+                                                            .Controller("lookup")
+                                                            .LoadAction("getxevc_bt")
+                                                            .LoadMode(DataSourceLoadMode.Raw)
+                                                            .Key("Id")
+                                                        )
+                                                        .Placeholder("Select a value...")
+                                                        .ShowClearButton(true)
+                                                        .OnValueChanged("valuechange_xevc_bt")
+                                                        .ContentTemplate(new TemplateName("template_xevc_bt"))
+                                                        )
+                                                @using (Html.DevExtreme().NamedTemplate("template_xevc_bt"))
+                                                {
+                                                    @(Html.DevExtreme().DataGrid()
+                                                    .ID("xevc_bt")
+                                                    .DataSource(new JS(@"component.getDataSource()"))
+                                                    .Columns(columns => {
+                                                        columns.Add().DataField("SoXe").Caption("Số xe");
+                                                        columns.Add().DataField("HopDong").Caption("Hợp đồng");
+                                                        columns.Add().DataField("Ngaycan").Caption("Ngày cân");
+                                                    })
+                                                    .AllowColumnReordering(true)
+                                                    .AllowColumnResizing(true)
+                                                    .ColumnAutoWidth(true)
+                                                    .ColumnFixing(c => c.Enabled(true))
+                                                    .ShowBorders(true)
+                                                    .HoverStateEnabled(true)
+                                                    .Paging(p => p.PageSize(10))
+                                                    .FilterRow(f => f.Visible(true))
+                                                    .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+                                                    .Height(345)
+                                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                                    .SelectedRowKeys(new JS(@"component.option(""value"") ? [component.option(""value"")] : []"))
+                                                    .OnSelectionChanged(@<text>function(selectedItems) {
+                                                        var keys = selectedItems.selectedRowKeys;
+                                                        var array = @Html.Raw(Json.Serialize(ViewBag.xeptai));
+                                                        var chuoi = [];
+                                                        var array1 = @Html.Raw(Json.Serialize(ViewBag.can));
+                                                        var chuoi1 = [];
+                                                        for (var i = 0;i @Html.Raw("<") array.length; i++)
+                                                        {
+                                                            chuoi[i] = array[i];
+                                                            if (chuoi[i].Id == keys){
+                                                                $("#HopDong").dxTextBox("instance").option("value", chuoi[i].HopDong);
+                                                                $("#NgayHd").dxDateBox("instance").option("value", chuoi[i].NgayHd);
+                                                                $("#MaKhach").dxTextBox("instance").option("value", chuoi[i].MaKhach);
+                                                                $("#KhachHang").dxTextBox("instance").option("value", chuoi[i].KhachHang);
+                                                                $("#Kcs").dxTextBox("instance").option("value", chuoi[i].Kcs);
+                                                                $("#PhieuNhapKho").dxTextBox("instance").option("value", chuoi[i].PhieuNhapKho);
+                                                                $("#KhoName").dxTextBox("instance").option("value", chuoi[i].KhoName);
+                                                                $("#Mahang").dxTextBox("instance").option("value", chuoi[i].Mahang);
+                                                                $("#Tenhang").dxTextBox("instance").option("value", chuoi[i].Tenhang);
+                                                                $("#SoBao").dxTextBox("instance").option("value", chuoi[i].SoBao);
+                                                                $("#Dvt").dxTextBox("instance").option("value", chuoi[i].Dvt);
+                                                                document.getElementById("idkcs").value = chuoi[i].Kcs;
+                                                                for (var j = 0;j @Html.Raw("<") array1.length;j++){
+                                                                    chuoi1[j] = array1[j];
+                                                                    if (chuoi1[j].SystemId == chuoi[i].CanId){
+                                                                        $("#Laixe").dxTextBox("instance").option("value", chuoi1[j].LaiXe);
+                                                                        $("#GW").dxTextBox("instance").option("value", chuoi1[j].GW);
+                                                                        $("#TlBao").dxTextBox("instance").option("value", chuoi1[j].TlBao);
+                                                                        $("#TlNet").dxTextBox("instance").option("value", chuoi1[j].TlNet);
+                                                                    }
+                                                                }
+
+                                                            }
+                                                        }
+                                                        component.option("value", keys);
+                                                        component.close();
+                                                    }</text>)
+                                                )
+                                                }
+                                            </div>
+                                            <input type="text" id="idkcs" hidden>
+                                            <label class="col-form-label col-md-2 col-sm-2">Đ.vị giao hàng</label>
+                                            <div class="col-md-1 col-sm-1" style="padding:0px 0px 0px 0px">
+                                                @(Html.DevExtreme().TextBox().ID("MaKhach"))
+                                            </div>
+                                            <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 10px">
+                                                @(Html.DevExtreme().TextBox().ID("KhachHang"))
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">H.đồng</label>
+                                            <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
+                                                @(Html.DevExtreme().TextBox().ID("HopDong"))
+                                            </div>
+                                            <label class="col-form-label col-md-1 col-sm-1" style="font-size:11px">Ngày HĐ</label>
+                                            <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
+                                                @(Html.DevExtreme().DateBox().ID("NgayHd"))
+                                            </div>
+                                            <label class="col-form-label col-md-2 col-sm-2">Người nhập hàng</label>
+                                            <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
+                                                @(Html.DevExtreme().TextBox().ID("Laixe"))
+                                            </div>
+                                            <div class="col-md-1 col-sm-1" style="padding:0px 0px 0px 10px">
+                                                @(Html.DevExtreme().CheckBox())
+                                                <label>G/L</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">Số KCS</label>
+                                            <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
+                                                @(Html.DevExtreme().TextBox().ID("Kcs"))
+                                            </div>
+                                            <label class="col-form-label col-md-1 col-sm-1">P.nhập</label>
+                                            <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
+                                                @(Html.DevExtreme().TextBox().ID("PhieuNhapKho"))
+                                            </div>
+                                            <label class="col-form-label col-md-1 col-sm-1" style="font-size:11px">Kho nhập</label>
+                                            <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
+                                                @(Html.DevExtreme().TextBox().ID("KhoName"))
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Hàng hóa</label>
+                                            <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
+                                                @(Html.DevExtreme().TextBox().ID("Mahang"))
+                                            </div>
+                                            <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 10px">
+                                                @(Html.DevExtreme().TextBox().ID("Tenhang"))
+                                            </div>
+                                            <label class="col-form-label col-md-1 col-sm-1">Số bao</label>
+                                            <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
+                                                @(Html.DevExtreme().TextBox().ID("SoBao"))
+                                            </div>
+                                            <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 10px">
+                                                @(Html.DevExtreme().TextBox().ID("Dvt"))
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Trọng lượng(GW)</label>
+                                            <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
+                                                @(Html.DevExtreme().TextBox().ID("GW"))
+                                            </div>
+                                            <div class="col-md-1 col-sm-1" style="padding:0px 0px 0px 10px">
+                                                @(Html.DevExtreme().TextBox().ID("Dvt"))
+                                            </div>
+                                            <label class="col-form-label col-md-2 col-sm-2">TL bao bì</label>
+                                            <div class="col-md-4 col-sm-4" style="padding:0px 0px 0px 0px">
+                                                @(Html.DevExtreme().TextBox().ID("TlBao"))
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Trọng lượng tịnh(NW)</label>
+                                            <div class="col-md-10 col-sm-10" style="padding:0px 0px 0px 0px">
+                                                @(Html.DevExtreme().TextBox().ID("TlNet"))
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-10 col-sm-10" style="font-size:18px;padding:5px 0px 0px 5px;color:red"><b>I/ SỐ LƯỢNG VÀ CHẤT LƯỢNG THỰC TẾ</b></label>
+                                            <div class="col-md-2 col-sm-2" style="padding:0px 0px 0px 0px">
+                                                <input type="button" onclick="SubmitValueBT()" value="Submit value">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <form id="formExport" method="post">
+                                                <input name="SpreadsheetWorkSessionId" type="hidden" value="" />
+                                            </form>
+                                            <div id="spreadsheetBT" class="col-md-12 col-sm-12">
+                                                @Html.Partial("SpreadsheetBT", @Model)
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-12 col-sm-12" style="font-size:18px;padding:5px 0px 0px 5px;color:red"><b>II/ GIÁ TRỊ THANH TOÁN </b></label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <table class="table table-bordered" id="chitietnhapkho">
+                                                <tr>
+                                                    <th>Hợp đồng</th>
+                                                    <th>Số lượng</th>
+                                                    <th>Đơn giá</th>
+                                                    <th>Tiền hàng</th>
+                                                    <th>VAT</th>
+                                                    <th>Tổng</th>
+                                                </tr>
+                                                @{
+                                                    for (var i = 0; i < 3; i++)
+                                                    {
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    }
+                                                }
+
+                                            </table>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-3 col-sm-3" style="padding:0px 0px 0px 0px">
+                                                <a asp-action="themBT" asp-controller="kho">
+                                                    @(Html.DevExtreme().Button()
+                                                            .Text("SAVE")
+                                                            .Type(ButtonType.Default)
+                                                            .StylingMode(ButtonStylingMode.Contained)
+                                                            .Width(120)
+                                                        )
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

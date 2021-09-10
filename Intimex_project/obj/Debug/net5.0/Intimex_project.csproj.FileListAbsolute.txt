@@ -92,3 +92,5 @@ C:\Users\Windows 10\Desktop\Intimex_project\Intimex_project\bin\Debug\net5.0\Dat
 C:\Users\Windows 10\Desktop\Intimex_project\Intimex_project\bin\Debug\net5.0\Application.pdb
 C:\Users\Windows 10\Desktop\Intimex_project\Intimex_project\bin\Debug\net5.0\Data.pdb
 C:\Users\Windows 10\Desktop\Intimex_project\Intimex_project\obj\Debug\net5.0\Razor\Views\Account\chooseBranch.cshtml.g.cs
+C:\Users\Windows 10\Desktop\Intimex_project\Intimex_project\obj\Debug\net5.0\Razor\Views\Account\ActiveAccount.cshtml.g.cs
+C:\Users\Windows 10\Desktop\Intimex_project\Intimex_project\obj\Debug\net5.0\Razor\Views\Home\chat.cshtml.g.cs

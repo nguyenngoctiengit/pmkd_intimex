@@ -8,13 +8,23 @@ namespace Data.Models.Trading_system
 {
     public partial class tradingsystemContext : DbContext
     {
-        public tradingsystemContext()
+        public string _connectionString;
+        public tradingsystemContext(string connectionString)
         {
+            _connectionString = connectionString;
         }
 
         public tradingsystemContext(DbContextOptions<tradingsystemContext> options)
             : base(options)
         {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(_connectionString);
+            }
         }
 
         public virtual DbSet<Annex> Annices { get; set; }
@@ -301,14 +311,9 @@ namespace Data.Models.Trading_system
         public virtual DbSet<XepTai> XepTais { get; set; }
         public virtual DbSet<XuatKho> XuatKhos { get; set; }
         public virtual DbSet<XuatKhoChiTiet> XuatKhoChiTiets { get; set; }
+        public virtual DbSet<Nhom_hang_hoa> Nhom_hang_hoas { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-MO33L1P\\SQLEXPRESS;Database=tradingsystem;Trusted_Connection=True;");
-            }
-        }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -391,6 +396,19 @@ namespace Data.Models.Trading_system
                     .HasForeignKey(d => d.ArchivesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ArchivesAssignTask_Archives");
+            });
+
+            modelBuilder.Entity<Nhom_hang_hoa>(entity =>
+            {
+                entity.ToTable("Nhom_hang_hoa");
+
+                entity.Property(e => e.Manhom)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.TenNhom)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<ArchivesFbfileAttach>(entity =>

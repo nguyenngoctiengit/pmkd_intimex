@@ -1,0 +1,431 @@
+﻿
+@{
+    ViewData["Title"] = "can";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model Can
+<div class="right_col" role="main" style="height: 500px">
+    <div class="x_content">
+        <div class="row">
+            <div class="col-sm-12">
+                <form class="form-label-left input_mask" method="post" role="form" action="kho/updatetlin/BL1160000001" id="formCan">
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-2 col-sm-2">TL hiện tại trên cân</label>
+                        <label class="col-form-label col-md-2 col-sm-2">TL xe và Hàng NK</label>
+                        <label class="col-form-label col-md-2 col-sm-2"></label>
+                        <label class="col-form-label col-md-2 col-sm-2"></label>
+                        <label class="col-form-label col-md-2 col-sm-2">TL xe</label>
+                        <label class="col-form-label col-md-2 col-sm-2">Trọng lượng hàng</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-2 col-sm-2" >
+                            <input type="text" class="form-control" style="height:50px;background-color:aqua;border: 2px solid black" id="serialResults" asp-for="TlIn">
+                        </div>
+                        <div class="col-md-2 col-sm-2" >
+                            <input type="text" class="form-control" style="height:50px;background-color:aqua;border: 2px solid black" id="tlin">
+                        </div>
+                        <div class="col-md-2 col-sm-2" >
+                            <input type="text" class="form-control" style="height:50px;background-color:aqua;border: 2px solid black">
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <input type="text" class="form-control" style="height:50px;background-color:aqua;border: 2px solid black">
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <input type="text" class="form-control" style="height:50px;background-color:aqua;border: 2px solid black" id="tlout">
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <input type="text" class="form-control" style="height:50px;background-color:aqua;border: 2px solid black" id="tlhang">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-2 col-sm-2">
+                            <input type="text" class="form-control" id="systemId" style="height:30px">
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <input type="text" class="form-control" style="height:30px" id="time_in">
+                        </div>
+                        <div class="col-md-2 col-sm-2" style="display: flex; flex-direction: row; justify-content: center; align-items: center">
+                            <input type="text" class="form-control" style="height:30px">
+                            <button style="height:30px;margin-top:5px">S1</button>
+                        </div>
+                        <div class="col-md-2 col-sm-2" style="display: flex; flex-direction: row; justify-content: center; align-items: center">
+                            <input type="text" class="form-control" style="height:30px">
+                            <button style="height:30px;margin-top:5px">S2</button>
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <input type="text" class="form-control" style="height:30px" id="timeout">
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <input type="text" class="form-control" style="height:30px" id="trongluong">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6" style="border:1px solid black;height:473px">
+                        @{
+                            var filterValue = new object[]
+                            {
+                                                    new object[]{ "HinhThucCan",FilterBuilderFieldFilterOperations.Equal, 0 },
+                                                    new object[]{ "DateIn", DateTime.Now },
+                                                    new object[]{ "PhieuNx", "" },
+                                                   
+                            };
+                        }
+                        @(Html.DevExtreme().DataGrid<pmkd.Models.Can>()
+                                                    .DataSource(d => d.Mvc().Controller("kho")
+                                                    .LoadAction("GetCan")
+                                                    .Key("SystemId"))
+                                                    .ID("dataGridCan")
+                                                    .Columns(columns => {
+
+                                                        columns.AddFor(m => m.SystemId).Visible(false);
+
+                                                        columns.AddFor(m => m.HinhThucCan).Caption("Loại cân").Lookup(lookup => lookup.DataSource(new JS("hinhthuccan")).DisplayExpr("name").ValueExpr("id")).Visible(false);
+
+                                                        columns.AddFor(m => m.Xeptai1).Caption("Xếp tài");
+
+                                                        columns.AddFor(m => m.DateIn).Caption("Ngày vào").Visible(false);
+
+                                                        columns.AddFor(m => m.PhieuNx).Caption("Phiếu NX").Visible(false);
+
+                                                        columns.AddFor(m => m.TruckNo).Caption("Số xe");
+
+                                                        columns.AddFor(m => m.CustName).Caption("Khách hàng");
+
+                                                        columns.AddFor(m => m.ProdCode).Caption("Mã hàng");
+
+                                                        columns.AddFor(m => m.SoBao).Caption("Số bao");
+
+                                                        columns.AddFor(m => m.BagName).Caption("Loại bao");
+
+                                                        columns.AddFor(m => m.TlBao).Caption("Trọng lượng");
+
+                                                        columns.AddFor(m => m.TlNet).Caption("NW");
+
+                                                    }
+
+                                                    )
+                                                    .OnSelectionChanged("SelectionChanged_can")
+                                                    .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
+                                                    .FilterPanel(f => f.Visible(true))
+                                                    .HoverStateEnabled(true)
+                                                    .Export(e => e.Enabled(true))
+                                                    .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                    .HeaderFilter(hearder => hearder.Visible(true))
+                                                    .FilterValue(filterValue)
+                                                    .FilterBuilder(f =>
+                                                    f.CustomOperations(co =>
+                                                    {
+                                                        var o = co.Add();
+                                                        o.Name("");
+                                                        o.Caption("Chưa hoàn thành");
+                                                        o.DataTypes(new[] { FilterBuilderFieldDataType.String });
+                                                        o.Icon("check");
+                                                        o.HasValue(false);
+                                                        o.CalculateFilterExpression("calculateFilterExpression");
+                                                    })
+                                                    
+                                                    .AllowHierarchicalFields(true))
+                                                    .FilterBuilderPopup(p =>
+                                                    p.Position(pos =>
+                                                        pos.At(HorizontalAlignment.Center, VerticalAlignment.Top)
+                                                            .My(HorizontalAlignment.Center, VerticalAlignment.Top)
+                                                            .Offset(0, 10)
+                                                        )
+                                                    )
+                                                    .AllowColumnResizing(true)
+                                                    .AllowColumnReordering(true)
+                                                    .ColumnAutoWidth(true)
+                                                    .ColumnChooser(c => c.Enabled(true))
+                                                    .ColumnFixing(c => c.Enabled(true))
+                                                    .ShowBorders(true)
+                                                    .Grouping(group => group.AutoExpandAll(true))
+                                                    .SearchPanel(searchPanel => searchPanel.Visible(true))
+                                                    .GroupPanel(groupPanel => groupPanel.Visible(true))
+                                                    .Paging(paging => paging.PageSize(5))
+                                                 )
+                        <div class="form-group row">
+                            <div class="col-md-12 col-sm-12" style="margin-top:10px">
+                                <h3 id="datetime_reload" style="display:flex;justify-content:center;align-items:center;margin-top:30px;color:red"></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6" style="border:1px solid black;height:473px;color:black">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Hình thức cân</label>
+                            <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                <select id="loaican" class="form-control" asp-for="HinhThucCan">
+                                    <option value="0">Cân nhập hàng</option>
+                                    <option value="1">Cân xuất hàng</option>
+                                    <option value="2">Cân dịch vụ</option>
+                                </select>
+                            </div>
+                            <label class="col-form-label col-md-2 col-sm-2">Cách cân</label>
+                            <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                <select id="cachcan" class="form-control" asp-for="CachCan">
+                                    <option value="0">Cân cắt đầu</option>
+                                    <option value="1">Cân nguyên xe</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Xe VC1</label>
+                            <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                <input type="text" class="form-control" id="soxe1" style="height:30px">
+                            </div>
+                            <label class="col-form-label col-md-2 col-sm-2">Xe VC2</label>
+                            <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                <input type="text" class="form-control" style="height:30px">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2" style="font-size:15px">Lệnh XK</label>
+                            <div class="col-md-5 col-sm-5" style="padding:5px 0px 0px 5px">
+                                <input type="text" class="form-control" style="height:30px">
+                            </div>
+                            <div class="col-md-5 col-sm-5" style="padding:5px 0px 0px 5px">
+                                <input type="text" class="form-control" style="height:30px">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12 col-sm-12">
+                                <h6 id="trangthai" style="color:red;margin-left:100px"></h6>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Hợp đồng</label>
+                            <div class="col-md-5 col-sm-5" style="padding:5px 0px 0px 5px">
+                                <input type="text" class="form-control" style="height:30px" id="hopdong">
+                            </div>
+                            <div class="col-md-5 col-sm-5" style="padding:5px 0px 0px 5px">
+                                <input type="text" class="form-control" style="height:30px">
+                            </div>
+                        </div>
+                        <div class="form-group row" style="padding:5px 0px 0px 5px">
+                            <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Hàng hóa</label>
+                            <div class="col-md-5 col-sm-5" style="padding:5px 0px 0px 5px">
+                                <input type="text" class="form-control" style="height:30px" id="mahang">
+                            </div>
+                            <div class="col-md-5 col-sm-5" style="padding:5px 0px 0px 5px">
+                                <input type="text" class="form-control" style="height:30px" id="tenhang">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Loại bao</label>
+                            <div class="col-md-1 col-sm-1" style="padding:5px 0px 0px 5px">
+                                <input type="text" class="form-control" style="height:30px" id="loaibao">
+                            </div>
+                            <div class="col-md-3 col-sm-3" style="padding:5px 0px 0px 5px">
+                                <input type="text" class="form-control" style="height:30px" id="tenbao">
+                            </div>
+                            <div class="col-md-1 col-sm-1" style="padding:5px 0px 0px 5px">
+                                <input type="text" class="form-control" style="height:30px" id="chatluongbao">
+                            </div>
+                            <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">Đóng</label>
+                            <div class="col-md-1 col-sm-1" style="padding:5px 0px 0px 5px">
+                                <input type="text" class="form-control" style="height:30px">
+                            </div>
+                            <label class="col-form-label col-md-3 col-sm-3" style="font-size:12px">Bao-Bao thổi-Bigbag/Cont-xe VC</label>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Tổng số bao</label>
+                            <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                <input type="text" class="form-control" style="height:30px" id="sobao">
+                            </div>
+                            <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Tổng TL bao bì</label>
+                            <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                <input type="text" class="form-control" style="height:30px" id="tlbaobi">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Mã khách</label>
+                            <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                <input type="text" class="form-control" style="height:30px" id="makhach">
+                            </div>
+                            <div class="col-md-6 col-sm-6" style="padding:5px 0px 0px 5px">
+                                <input type="text" class="form-control" style="height:30px" id="tenkhach">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Ghi chú</label>
+                            <div class="col-md-5 col-sm-5" style="padding:5px 0px 0px 5px;display: flex; flex-direction: row; justify-content: center; align-items: center">
+                                <input type="text" class="form-control" style="height:30px">
+                                <button type="button" class="btn btn-outline-dark" style="height:30px;margin-top:5px">save</button>
+                            </div>
+                            <div class="col-md-3 col-sm-3" style="margin-left:30px;padding:5px 0px 0px 5px">
+                                <input class="form-check-input" type="checkbox">
+                                <label class="form-check-label">
+                                    Nhận số cân
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12" style="border:1px solid black;float:left;color:black">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group row">
+                                <div class="col-md-1 col-sm-1" style="padding:5px 0px 0px 5px">
+                                    <input class="form-check-input" type="checkbox" style="margin-left:5px">
+                                    <label class="form-check-label" style="margin-left:22px">
+                                        All
+                                    </label>
+                                </div>
+                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                    <input type="text" class="form-control" style="height:30px">
+                                </div>
+                                <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">Bags</label>
+                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                    <input type="text" class="form-control" style="height:30px">
+                                </div>
+                                <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">NW</label>
+                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                    <input type="text" class="form-control" style="height:30px">
+                                </div>
+                                <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">kg</label>
+                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                    <button type="button">WH receipt</button>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">Cộng</label>
+                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                    <input type="text" class="form-control" style="height:30px">
+                                </div>
+                                <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">Xe</label>
+                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                    <input type="text" class="form-control" style="height:30px">
+                                </div>
+                                <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">Bao</label>
+                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                    <input type="text" class="form-control" style="height:30px">
+                                </div>
+                                <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px;padding:5px 0px 0px 5px">kg</label>
+                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                    <button type="button" onclick="phieunhapkho()">Print WH receipt</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6" style="border-left:1px solid black">
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Ng giao/Lái xe</label>
+                                <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                    <input type="text" class="form-control" style="height:30px" id="LaiXe" asp-for="LaiXe">
+                                    @*<datalist id="ports">
+                                        @{
+                                            foreach (var a in ViewBag.ports)
+                                            {
+                                                <option value="@a"></option>
+                                            }
+                                        }
+                                    </datalist>*@
+                                </div>
+                                <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Người lập phiếu</label>
+                                <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                    <input list="nguoilap" class="form-control" style="height:30px" id="NguoiLap" asp-for="NguoiLap">
+                                    <datalist id="nguoilap">
+                                        @{
+                                            foreach (var a in ViewBag.nguoilap)
+                                            {
+                                                <option value="@a"></option>
+                                            }
+                                        }
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Nhân viên cân</label>
+                                <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                    <input list="nhanvien" class="form-control" style="height:30px" id="NhanVien" asp-for="NhanVien">
+                                    <datalist id="nhanvien">
+                                        @{
+                                            foreach (var a in ViewBag.nhanvien)
+                                            {
+                                                <option value="@a"></option>
+                                            }
+                                        }
+                                    </datalist>
+                                </div>
+                                <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Thủ kho</label>
+                                <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                    <input list="thukho" class="form-control" style="height:30px" id="ThuKho" asp-for="ThuKho">
+                                    <datalist id="thukho">
+                                        @{
+                                            foreach (var a in ViewBag.thukho)
+                                            {
+                                                <option value="@a"></option>
+                                            }
+                                        }
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">Bảo vệ</label>
+                                <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                    <input list="baove" class="form-control" style="height:30px" id="BaoVe" asp-for="BaoVe">
+                                    <datalist id="baove">
+                                        @{
+                                            foreach (var a in ViewBag.baove)
+                                            {
+                                                <option value="@a"></option>
+                                            }
+                                        }
+                                    </datalist>
+                                </div>
+                                <label class="col-form-label col-md-2 col-sm-2" style="font-size:12px;padding:5px 0px 0px 5px">LĐạo B.Phận</label>
+                                <div class="col-md-4 col-sm-4" style="padding:5px 0px 0px 5px">
+                                    <input list="lanhdao" class="form-control" style="height:30px" id="LanhDao" asp-for="LanhDao">
+                                    <datalist id="lanhdao">
+                                        @{
+                                            foreach (var a in ViewBag.lanhdao)
+                                            {
+                                                <option value="@a"></option>
+                                            }
+                                        }
+                                    </datalist>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12" style="border:1px solid black;float:left;color:black">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2 col-sm-2" style="font-size:15px;padding:15px 0px 0px 15px">Kho</label>
+                                <div class="col-md-10 col-sm-10" style="padding:5px 0px 0px 5px">
+                                    @(Html.DevExtreme().SelectBox()
+                                        .DataSource(d => d.Mvc().Controller("lookup").LoadAction("getkhohang")).DisplayExpr("StockName").ValueExpr("StockCode"))
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group row">
+                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                    <button type="button" class="btn btn-outline-dark">New</button>
+                                </div>
+                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                    <button type="submit" class="btn btn-outline-dark">Save</button>
+                                </div>
+                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                    <button type="button" class="btn btn-outline-dark" style="font-size:15px">Weight Notes</button>
+                                </div>
+                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                    <button type="button" class="btn btn-outline-dark">Re_weight</button>
+                                </div>
+                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                    <button type="button" class="btn btn-outline-dark">Excel</button>
+                                </div>
+                                <div class="col-md-2 col-sm-2" style="padding:5px 0px 0px 5px">
+                                    <button type="button" class="btn btn-outline-dark" onclick="connectSerial()">Connect Port</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" id="lineToSend">
+                    <button type="button" onclick="sendSerialLine()">send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->
+<!-- /page content -->
+<!-- footer content -->

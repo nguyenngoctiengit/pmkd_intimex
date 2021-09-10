@@ -34,7 +34,7 @@ namespace Data.Models.SignalR
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-MO33L1P\\SQLEXPRESS;Database=SignalRChat;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=SignalRChat;Trusted_Connection=True;");
             }
         }
 
@@ -224,7 +224,7 @@ namespace Data.Models.SignalR
 
             modelBuilder.Entity<UserBranch>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(a => a.BranchId);
 
                 entity.ToTable("UserBranch");
 

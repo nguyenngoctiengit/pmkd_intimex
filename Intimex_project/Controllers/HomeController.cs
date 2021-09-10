@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Data.Models.SignalR;
 using Microsoft.AspNetCore.Http;
+using Application.Parameter;
 
 namespace Intimex_project.Controllers
 {
@@ -39,15 +40,18 @@ namespace Intimex_project.Controllers
             }
         }
 
-        public IActionResult Privacy()
+        public IActionResult chat(string id)
         {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            using (SignalRChatContext _context = new SignalRChatContext())
+            {
+                ViewBag.NormalizedUserName = _context.AspNetUsers.Where(a => a.Id == id).Select(a => a.NormalizedUserName).FirstOrDefault();
+                UserIdParameter.userId = HttpContext.Session.GetString("userId");
+                UserIdParameter.userIdChat = id;
+                ViewBag.userId = id;
+                ViewBag.sender = HttpContext.Session.GetString("userId");
+                listUser();
+                return View("chat");
+            }
         }
     }
 }

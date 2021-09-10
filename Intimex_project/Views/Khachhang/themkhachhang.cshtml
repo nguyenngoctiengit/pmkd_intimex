@@ -1,0 +1,242 @@
+﻿
+@{
+    ViewData["Title"] = "khachhang1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model KhachHang
+<div class="right_col" role="main" style="height:800px">
+    <div class="">
+        <div class="col-md-12 col-sm-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Thêm<small>khách hàng</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    @{
+                        if (TempData["alertMessage"] != null)
+                        {
+                            <div style="color:red;font-size:30px">
+                                @TempData["alertMessage"].ToString()
+                            </div>
+                        }
+                    }
+                    @{
+                        if (TempData["alertMessage1"] != null)
+                        {
+                            <div style="color:red;font-size:30px">
+                                @TempData["alertMessage1"].ToString()
+                            </div>
+                        }
+                    }
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br />
+
+                    <form class="form-label-left input_mask" method="post" role="form">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Mã khách</label>
+                            <div class="col-md-10 col-sm-10">
+                                @Html.DevExtreme().TextBoxFor(m => m.MaKhach)
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Tên tắt</label>
+                            <div class="col-md-4 col-sm-4">
+                                @Html.DevExtreme().TextBoxFor(m => m.TenKhach)
+                            </div>
+                            <label class="col-form-label col-md-2 col-sm-2">MST/CMND</label>
+                            <div class="col-md-4 col-sm-4">
+                                @Html.DevExtreme().TextBoxFor(m => m.MaSoThue)
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Tên khách</label>
+                            <div class="col-md-4 col-sm-4">
+                                @Html.DevExtreme().TextBoxFor(m => m.TenFull)
+                            </div>
+                            <label class="col-form-label col-md-2 col-sm-2">Điện thoại</label>
+                            <div class="col-md-4 col-sm-4">
+                                @Html.DevExtreme().TextBoxFor(m => m.DienThoai)
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Địa chỉ</label>
+                            <div class="col-md-4 col-sm-4">
+                                @Html.DevExtreme().TextBoxFor(m => m.DiaChi)
+                            </div>
+                            <label class="col-form-label col-md-2 col-sm-2">FAX</label>
+                            <div class="col-md-4 col-sm-4">
+                                @Html.DevExtreme().TextBoxFor(m => m.Fax)
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Loại khách</label>
+                            <div class="col-md-4 col-sm-4">
+                                @Html.DevExtreme().SelectBoxFor(m => m.LoaiKhach).DataSource(new JS("loaikhach")).DisplayExpr("name").ValueExpr("id")
+                            </div>
+                            <label class="col-form-label col-md-2 col-sm-2">Email</label>
+                            <div class="col-md-4 col-sm-4">
+                                @Html.DevExtreme().TextBoxFor(m => m.Email)
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Tài khoản</label>
+                            <div class="col-md-4 col-sm-4">
+                                @Html.DevExtreme().TextBoxFor(m => m.TaiKhoan)
+                            </div>
+                            <label class="col-form-label col-md-2 col-sm-2">Ngân hàng</label>
+                            <div class="col-md-4 col-sm-4">
+                                @Html.DevExtreme().TextBoxFor(m => m.NganHang)
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Giấy phép</label>
+                            <div class="col-md-2 col-sm-2">
+                                @Html.DevExtreme().TextBoxFor(m => m.GiayPhep)
+                            </div>
+                            <label class="col-form-label col-md-1 col-sm-1">Ngày cấp</label>
+                            <div class="col-md-3 col-sm-3">
+                                @Html.DevExtreme().DateBoxFor(m => m.NgayCap)
+                            </div>
+                            <label class="col-form-label col-md-1 col-sm-1">Tỉnh/TP</label>
+                            <div class="col-md-3 col-sm-3">
+                                @Html.DevExtreme().SelectBoxFor(m => m.MaKhuvuc).DataSource(p => p
+                                                                                        .Mvc()
+                                                                                        .Controller("lookup")
+                                                                                        .LoadAction("getkhuvuc")
+                                                                                        .LoadMode(DataSourceLoadMode.Raw)
+                                                                                        .Key("MaKhuvuc")
+                                                                                        ).DisplayExpr("TenKhuvuc").ValueExpr("MaKhuvuc").SearchEnabled(true)
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Ghi chú</label>
+                            <div class="col-md-10 col-sm-10">
+                                @Html.DevExtreme().TextAreaFor(m => m.GhiChu)
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Quốc gia</label>
+                            <div class="col-md-2 col-sm-2">
+                                @(Html.DevExtreme().SelectBoxFor(m => m.TenQg)
+                                        .ID("quocgia")
+                                        .DataSource(d => d
+                                            .Mvc()
+                                            .Controller("lookup")
+                                            .LoadAction("getquocgia")
+                                            .LoadMode(DataSourceLoadMode.Raw)
+                                            .Key("Name")
+                                        )
+                                        .DisplayExpr("Name")
+                                        .ValueExpr("Name")
+                                        .SearchEnabled(true)
+
+                                    )
+                            </div>
+                            <label class="col-form-label col-md-1 col-sm-1">Tòa kinh tế</label>
+                            <div class="col-md-3 col-sm-3">
+                                @Html.DevExtreme().TextBoxFor(m => m.ToaKinhTe)
+                            </div>
+                            <label class="col-form-label col-md-1 col-sm-1">Bốc xếp</label>
+                            <div class="col-md-3 col-sm-3">
+                                @Html.DevExtreme().TextBoxFor(m => m.Bocxep)
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Vận chuyển</label>
+                            <div class="col-md-2 col-sm-2">
+                                @Html.DevExtreme().TextBoxFor(m => m.Vanchuyen)
+                            </div>
+                            <label class="col-form-label col-md-1 col-sm-1">Diện tích(m²)</label>
+                            <div class="col-md-3 col-sm-3">
+                                @Html.DevExtreme().TextBoxFor(m => m.Dientich)
+                            </div>
+                            <label class="col-form-label col-md-1 col-sm-1">Sản lượng(kg)</label>
+                            <div class="col-md-3 col-sm-3">
+                                @Html.DevExtreme().TextBoxFor(m => m.Sanluong)
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-4 col-sm-4">
+                                <input class="form-check-input js-switch" name="@Html.NameFor(a => a.CheckItem)" type="checkbox" checked>
+                                <input type="hidden" value="false" name="@Html.NameFor(a => a.CheckItem)">
+                                <label class="form-check-label" for="inlineCheckbox1">Kiểm tra định mức HH chưa giao</label>
+                            </div>
+                            <label class="col-form-label col-md-1 col-sm-1">Giao dịch</label>
+                            <div class="col-md-3 col-sm-3">
+                                @Html.DevExtreme().SelectBoxFor(m => m.GiaoDich).DataSource(new JS("giaodich")).DisplayExpr("name").ValueExpr("id")
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <input class="form-check-input js-switch" type="checkbox" name="@Html.NameFor(a => a.GiaoDichMua)" checked>
+                                <input type="hidden" value="false" name="@Html.NameFor(a => a.GiaoDichMua)">
+                                <label class="form-check-label" for="inlineCheckbox1">Thanh toán mua</label>
+                                <input class="form-check-input js-switch" name="@Html.NameFor(a => a.GiaoDichBan)" type="checkbox" value="true">
+                                <input type="hidden" value="false" name="@Html.NameFor(a => a.GiaoDichBan)">
+                                <label class="form-check-label" for="inlineCheckbox1">Thanh toán bán</label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6 col-sm-6">
+                                <input type="hidden" class="form-control" id="inputSuccess2">
+                            </div>
+                            <label class="col-form-label col-md-2 col-sm-2"></label>
+                            <div class="col-md-4 col-sm-4">
+                                <label class="radio-inline">
+                                    <input type="radio" value="true" checked name="@Html.NameFor(a => a.ThanhToanMua)"><span style="font-size:18px">Ứng tiền</span>
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="false" name="@Html.NameFor(a => a.ThanhToanBan)" style="margin-left:53px"><span style="font-size:18px">Ứng tiền</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6 col-sm-6">
+                                <input type="hidden" class="form-control" id="inputSuccess2">
+                            </div>
+                            <label class="col-form-label col-md-2 col-sm-2"></label>
+                            <div class="col-md-4 col-sm-4">
+                                <label class="radio-inline">
+                                    <input type="radio" value="true" name="@Html.NameFor(a => a.ThanhToanMua)"><span style="font-size:18px">Không ứng tiền</span>
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="false" name="@Html.NameFor(a => a.ThanhToanBan)"><span style="font-size:18px">Không ứng tiền</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="ln_solid"></div>
+                        <div class="form-group row">
+                            <div class="col-md-9 col-sm-9  offset-md-5">
+                                <button type="submit" asp-action="themkhachhang" asp-controller="khachhang" class="btn btn-primary" style="margin-top: 30px">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+

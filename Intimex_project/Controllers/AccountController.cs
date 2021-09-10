@@ -2,7 +2,6 @@
 using Application.AppServices;
 using Application.Parameter;
 using Data.Models.SignalR;
-using Data.ModelServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -150,8 +149,9 @@ namespace Intimex_project.Controllers
                 _context.UserBranches.Add(userBranch);
                 _context.AspNetUsers.Update(account);
                 _context.SaveChanges();
-                HttpContext.Session.SetString("userId", account.UserName);
-                HttpContext.Session.SetString("FullName1", account.NormalizedUserName);
+                HttpContext.Session.SetString("userId", account.Id);
+                HttpContext.Session.SetString("UserName", account.UserName);
+                HttpContext.Session.SetString("fullName", account.NormalizedUserName);
                 HttpContext.Session.SetString("UnitName", account.UnitName);
                 return RedirectToAction("Index", "Home");
             }

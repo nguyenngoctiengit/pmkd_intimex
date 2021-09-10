@@ -1,0 +1,89 @@
+﻿
+@{
+    Layout = null;
+}
+@model CtHdmb
+
+<form class="form-label-left input_mask" method="post" role="form" asp-action="addcthdoutright1" asp-controller="hopdong">
+    <div class="form-group row">
+        <label class="col-form-label col-md-1 col-sm-1">System ID</label>
+        <div class="col-md-3 col-sm-3">
+            <input type="text" class="form-control" readonly value="@ViewBag.systemId" asp-for="Systemref">
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <input type="text" class="form-control" readonly value="@ViewBag.refid" asp-for="Ref">
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <input type="text" class="form-control" readonly value="@ViewBag.sohd" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-form-label col-md-2 col-sm-2">Mã hàng</label>
+        <div class="col-md-2 col-sm-2">
+            <input list="dropdownHH1" id="dropdownHH" class="form-control" asp-for="Mahang" required>
+            <datalist id="dropdownHH1" onchange="funcMahang()">
+                @{
+                    foreach (var a in ViewBag.hh)
+                    {
+                        <option value="@a.Mahang">@a.Mahang || @a.Tenhang || @a.MaNhom</option>
+                    }
+                }
+            </datalist>
+        </div>
+        <label class="col-form-label col-md-2 col-sm-2">Đơn vị tính theo HĐ</label>
+        <div class="col-md-2 col-sm-2">
+            <select class="form-control" asp-for="DvtTheoHd" required>
+                <option value="KGS" selected>KGS</option>
+                <option value="MTS">MTS</option>
+                <option value="LBS">LBS</option>
+            </select>
+        </div>
+        <label class="col-form-label col-md-2 col-sm-2">Thuế VAT</label>
+        <div class="col-md-2 col-sm-2">
+            <select class="form-control" asp-for="Vat" required>
+                <option value="0">0</option>
+                <option value="5" selected>5</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-form-label col-md-2 col-sm-2">Số lượng</label>
+        <div class="col-md-4 col-sm-4">
+            <input type="text" class="form-control" id="inputSuccess2" asp-for="Soluong">
+        </div>
+        <label class="col-form-label col-md-2 col-sm-2">Trọng lượng</label>
+        <div class="col-md-4 col-sm-4">
+            <input type="text" class="form-control" id="inputSuccess2" asp-for="Trongluong" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-form-label col-md-2 col-sm-2">Giá Outright theo HĐ</label>
+        <div class="col-md-4 col-sm-4">
+            <input type="text" class="form-control" id="inputSuccess2" asp-for="GiaTheoHd" required>
+        </div>
+        <label class="col-form-label col-md-2 col-sm-2">Giá Outright</label>
+        <div class="col-md-4 col-sm-4">
+            <input type="text" class="form-control" id="inputSuccess2" asp-for="Giact" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-form-label col-md-2 col-sm-2">Giá thị trường</label>
+        <div class="col-md-4 col-sm-4">
+            <input type="text" class="form-control" id="inputSuccess2" asp-for="Giathitruong">
+        </div>
+        <label class="col-form-label col-md-2 col-sm-2">Mức thưởng</label>
+        <div class="col-md-4 col-sm-4">
+            <input type="text" class="form-control" id="inputSuccess2" asp-for="Mucthuong">
+        </div>
+    </div>
+    <div class="ln_solid"></div>
+    <div class="form-group row">
+        <div class="col-md-9 col-sm-9  offset-md-5">
+            <input type="submit" value="submit" class="btn btn-primary">
+        </div>
+    </div>
+</form>
+
+
+
