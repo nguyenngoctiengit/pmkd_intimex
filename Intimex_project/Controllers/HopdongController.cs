@@ -1,4 +1,5 @@
 ﻿using Application.Parameter;
+using Data.Models.SignalR;
 using Data.Models.Trading_system;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
@@ -14,7 +15,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace pmkd.Controllers
+namespace Intimex_project.Controllers
 {
     public class HopdongController : Controller
     {
@@ -23,16 +24,24 @@ namespace pmkd.Controllers
         public HopdongController()
         {
         }
+        public void listUser()
+        {
+            using (SignalRChatContext _context = new SignalRChatContext())
+            {
+                ViewBag.ListUser = (from a in _context.AspNetUsers select new Data.Models.SignalR.AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online, Id = a.Id }).OrderByDescending(a => a.Online).ToList();
+            }
+
+        }
         //Index
         public IActionResult Index()
         {
-            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
+            listUser();
             return View();
         }
         //View HDMB
         public IActionResult hdmb()
         {
-            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
+            listUser();
             ViewBag.signer = _context.Signers.ToList();
             ViewBag.hdmb = _context.Hdmbs.Select(i => i.IntKy);
             return View("hdmb");
@@ -50,7 +59,7 @@ namespace pmkd.Controllers
             ViewBag.diadiemgiaohang = _context.HdmbGiaohangs.ToList();
             ViewBag.hdchomuon = _context.Hdmbs.Where(a => a.MuaBan == "CMUON").ToList();
             ViewBag.client = _context.Signers.ToList();
-            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
+            listUser();
             return View("themhopdong");
         }
         // function thêm hợp đồng 

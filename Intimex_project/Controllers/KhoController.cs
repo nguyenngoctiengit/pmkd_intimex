@@ -20,7 +20,7 @@ using Data.Models.Trading_system;
 using Application.Parameter;
 using ViewModel;
 
-namespace pmkd.Controllers
+namespace Intimex_project.Controllers
 {
     public class KhoController : Controller
     {
@@ -444,7 +444,7 @@ namespace pmkd.Controllers
         public IActionResult bangtinh()
         {
             ViewBag.nhapkho = (from a in _context.NhapKhoKs join b in _context.NhapKhoChiTietKs 
-                               on a.Id equals b.NhapKhoId select new {b.Rnw, b.DonGia,a.BangTinhId,b.RhopDong,b.Id,b.Stt}).ToList().OrderBy(a => a.Id);
+                               on a.Id equals b.NhapKhoId select new {b.Rnw, b.DonGia,a.BangTinhId,b.RhopDong,b.Id,b.stt}).ToList().OrderBy(a => a.Id);
             ViewBag.bangtinh = (from a in _context.PobangTinhs select a).ToList();
             return View("bangtinh/bangtinh");
         }
@@ -495,7 +495,7 @@ namespace pmkd.Controllers
                                   Dvt = "kgs",
                               }).ToList();
             string DocumentId1 = "MyDocumentId1";
-            var ByteArray = (from a in _context.PobangTinhs where ((a.Idbt == "BT1600000001") && (a.Iddong == 1)) select a.Docs).FirstOrDefault();
+            var ByteArray = (from a in _context.PobangTinhs where ((a.Idbt == "BT1600000001") && (a.Iddong == 1)) select a.docs).FirstOrDefault();
             byte[] byteArrayAccessor() => ByteArray;
             var model = new SpreadsheetViewModel(DocumentId1, byteArrayAccessor);
             return View("bangtinh/themBT",model);

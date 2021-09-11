@@ -7,6 +7,7 @@ namespace Data.Models.Trading_system
 {
     public partial class NhapKhoChiTietK
     {
+        public int stt { get; set; }
         public long Id { get; set; }
         public string NhapKhoId { get; set; }
         public string RsoPhieu { get; set; }
@@ -39,7 +40,6 @@ namespace Data.Models.Trading_system
         public decimal? Stoploss { get; set; }
         public bool? Approve { get; set; }
         public DateTime? Approvedate { get; set; }
-        public int? Stt { get; set; }
 
         public virtual NhapKhoK NhapKho { get; set; }
     }

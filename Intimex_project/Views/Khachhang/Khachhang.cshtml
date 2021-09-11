@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@model IEnumerable<KhachHang>
+@model IEnumerable<Data.Models.Trading_system.KhachHang>
 <div class="right_col" role="main" style="height: 500px">
     <div class="">
         <div class="page-title">
@@ -64,9 +64,9 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive">
-                                    @(Html.DevExtreme().DataGrid<pmkd.Models.KhachHang>()
+                                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.KhachHang>()
                                     .DataSource(ds => ds.Mvc()
-                                        .Controller("Danhmuc")
+                                        .Controller("Khachhang")
                                         .LoadAction("GetKH")
                                         .UpdateAction("PutKH")
                                         .DeleteAction("DeleteKH")
@@ -193,7 +193,7 @@
                                     }
                                     @using (Html.DevExtreme().NamedTemplate("gridContainer-details-tab1Template"))
                                     {
-                                        @(Html.DevExtreme().DataGrid<pmkd.Models.CustomerNorm>()
+                                        @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.CustomerNorm>()
                                             .DataSource(ds => ds.Mvc()
                                                 .Controller("khachhang")
                                                 .LoadAction("GetCN")
@@ -290,7 +290,7 @@
                                     }
                                     @using (Html.DevExtreme().NamedTemplate("gridContainer-details-tab2Template"))
                                     {
-                                        @(Html.DevExtreme().DataGrid<pmkd.Models.Signer>()
+                                        @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Signer>()
                                             .DataSource(ds => ds.Mvc()
                                                 .Controller("khachhang")
                                                 .LoadAction("GetSN")
@@ -352,6 +352,7 @@
         </div>
     </div>
 </div>
+<script src="~/js/js_create/khachhang1.js"></script>
 <!-- /page content -->
 <!-- /page content -->
 <!-- footer content -->

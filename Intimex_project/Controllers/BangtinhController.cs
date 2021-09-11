@@ -1,18 +1,19 @@
-﻿using DevExpress.AspNetCore.Spreadsheet;
+﻿using Application.Parameter;
+using DevExpress.AspNetCore.Spreadsheet;
 using DevExpress.Spreadsheet;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Mvc;
-using Data.Models.Trading_system;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Application.Parameter;
+using Data.Models.Trading_system;
 using ViewModel;
+using Data.Models.SignalR;
 
-namespace pmkd.Controllers
+namespace Intimex_project.Controllers
 {
     public class BangtinhController : Controller
     {
@@ -21,12 +22,20 @@ namespace pmkd.Controllers
         public BangtinhController()
         {
         }
+        public void listUser()
+        {
+            using (SignalRChatContext _context = new SignalRChatContext())
+            {
+                ViewBag.ListUser = (from a in _context.AspNetUsers select new Data.Models.SignalR.AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online, Id = a.Id }).OrderByDescending(a => a.Online).ToList();
+            }
+                
+        }
         public IActionResult bangtinh()
         {
-            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
+            listUser();
             ViewBag.nhapkho = (from a in _context.NhapKhoKs
                                join b in _context.NhapKhoChiTietKs on a.Id equals b.NhapKhoId
-                               select new { b.Rnw, b.DonGia, a.BangTinhId, b.RhopDong, b.Id, b.Stt }).ToList().OrderBy(a => a.Id);
+                               select new { b.Rnw, b.DonGia, a.BangTinhId, b.RhopDong, b.Id, b.stt }).ToList().OrderBy(a => a.Id);
             ViewBag.bangtinh = (from a in _context.PobangTinhs select a).ToList();
             return View("bangtinh");
         }
@@ -49,7 +58,7 @@ namespace pmkd.Controllers
         }
         public IActionResult themBT()
         {
-            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
+            listUser();
             ViewBag.can = (from c in _context.Cans
                            select new
                            {
@@ -78,7 +87,7 @@ namespace pmkd.Controllers
                                   Dvt = "kgs",
                               }).ToList();
             string DocumentId1 = "MyDocumentId1";
-            var ByteArray = (from a in _context.PobangTinhs where ((a.Idbt == "BT1600000001") && (a.Iddong == 1)) select a.Docs).FirstOrDefault();
+            var ByteArray = (from a in _context.PobangTinhs where ((a.Idbt == "BT1600000001") && (a.Iddong == 1)) select a.docs).FirstOrDefault();
             byte[] byteArrayAccessor() => ByteArray;
             var model = new SpreadsheetViewModel(DocumentId1, byteArrayAccessor);
             return View("ThemBT", model);
@@ -86,7 +95,7 @@ namespace pmkd.Controllers
         [HttpPost]
         public IActionResult updatespreadsheet(string spreadsheetStateID, string id)
         {
-            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
+            listUser();
             var item_return = (from a in _context.Kcs where a.SoPhieu == id select a).FirstOrDefault();
             string str = spreadsheetStateID;
             SpreadsheetClientState st = new SpreadsheetClientState();

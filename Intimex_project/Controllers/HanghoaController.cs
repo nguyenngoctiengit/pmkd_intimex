@@ -12,8 +12,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Data.Models.SignalR;
 
-namespace pmkd.Controllers.Danhmuc
+namespace Intimex_project.Controllers
 {
     public class HanghoaController : Controller
     {
@@ -21,16 +22,24 @@ namespace pmkd.Controllers.Danhmuc
         public HanghoaController()
         {
         }
+        public void listUser()
+        {
+            using (SignalRChatContext _context = new SignalRChatContext())
+            {
+               ViewBag.ListUser = (from a in _context.AspNetUsers select new Data.Models.SignalR.AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online, Id = a.Id }).OrderByDescending(a => a.Online).ToList();
+            }       
+        }
         public IActionResult hanghoa()
         {
-            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
+            listUser();
             return View();
 
         }
         //view thêm nhóm hàng hóa
+        [Route("hanghoa/danhmuc/themnhomhang")]
         public IActionResult themnhomhang()
         {
-            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
+            listUser();
             return View("themnhomhang");
         }
         //hàm thêm nhóm hàng hóa

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -8,7 +10,9 @@ namespace Data.Models.Trading_system
     public partial class Hanghoa
     {
         public string Idhanghoa { get; set; }
+        [Required(ErrorMessage = "Vui lòng nhập mã hàng hóa")]
         public string Mahang { get; set; }
+        [Required(ErrorMessage = "Vui lòng nhập tên hàng hóa")]
         public string Tenhang { get; set; }
         public string Tenhangvat { get; set; }
         public string MaNhom { get; set; }
@@ -26,4 +30,5 @@ namespace Data.Models.Trading_system
         public decimal? TapChat { get; set; }
         public decimal? HatVo { get; set; }
     }
+
 }

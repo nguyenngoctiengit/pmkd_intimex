@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -73,7 +74,7 @@ namespace Data.Models.Trading_system
         public string ThuKho { get; set; }
         public string LanhDao { get; set; }
         public decimal? Tlphieu { get; set; }
-
+        [JsonIgnore]
         public virtual XepTai IdXepTaiNavigation { get; set; }
     }
 }

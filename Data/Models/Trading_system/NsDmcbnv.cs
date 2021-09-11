@@ -55,6 +55,9 @@ namespace Data.Models.Trading_system
         public string SoQdNv { get; set; }
         public string UserCreate { get; set; }
         public string UserEdit { get; set; }
-        public string UserName { get; set; }
+
+        public virtual NsDmtd TdHvNavigation { get; set; }
+        public virtual NsDmtd TdNnNavigation { get; set; }
+        public virtual NsDmtd TdThNavigation { get; set; }
     }
 }

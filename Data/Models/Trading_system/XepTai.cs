@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -44,7 +45,7 @@ namespace Data.Models.Trading_system
         public DateTime? ApproveDate { get; set; }
         public string ApproveTime { get; set; }
         public byte[] Timestamp { get; set; }
-
+        [JsonIgnore]
         public virtual ICollection<Can> Cans { get; set; }
     }
 }

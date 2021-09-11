@@ -33,13 +33,6 @@ namespace Data.Models.Trading_system
         public virtual DbSet<ArchivesFbfileAttach> ArchivesFbfileAttaches { get; set; }
         public virtual DbSet<ArchivesFeedBack> ArchivesFeedBacks { get; set; }
         public virtual DbSet<ArchivesFileAttach> ArchivesFileAttaches { get; set; }
-        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
-        public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; }
-        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
-        public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
-        public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
         public virtual DbSet<Assembly> Assemblies { get; set; }
         public virtual DbSet<AutomaticValue> AutomaticValues { get; set; }
         public virtual DbSet<AutomaticValuesBranch> AutomaticValuesBranches { get; set; }
@@ -161,7 +154,6 @@ namespace Data.Models.Trading_system
         public virtual DbSet<Menu1> Menus1 { get; set; }
         public virtual DbSet<MenuNav> MenuNavs { get; set; }
         public virtual DbSet<MenuTam> MenuTams { get; set; }
-        public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<MessageOffline> MessageOfflines { get; set; }
         public virtual DbSet<MessageToUser> MessageToUsers { get; set; }
         public virtual DbSet<Money> Money { get; set; }
@@ -170,8 +162,6 @@ namespace Data.Models.Trading_system
         public virtual DbSet<NhapKhoChiTietK> NhapKhoChiTietKs { get; set; }
         public virtual DbSet<NhapKhoK> NhapKhoKs { get; set; }
         public virtual DbSet<NhapKhoKhacLydo> NhapKhoKhacLydos { get; set; }
-        public virtual DbSet<NhomHangHoa> NhomHangHoas { get; set; }
-        public virtual DbSet<NhomHangHoa1> NhomHangHoas1 { get; set; }
         public virtual DbSet<NhomTruong> NhomTruongs { get; set; }
         public virtual DbSet<Nhomhang> Nhomhangs { get; set; }
         public virtual DbSet<NkDmhangHoa> NkDmhangHoas { get; set; }
@@ -314,11 +304,8 @@ namespace Data.Models.Trading_system
         public virtual DbSet<Nhom_hang_hoa> Nhom_hang_hoas { get; set; }
 
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
-
             modelBuilder.Entity<Annex>(entity =>
             {
                 entity.ToTable("Annex");
@@ -331,6 +318,19 @@ namespace Data.Models.Trading_system
                     .IsRequired()
                     .HasMaxLength(255);
             });
+            modelBuilder.Entity<Nhom_hang_hoa>(entity =>
+            {
+                entity.ToTable("Nhom_hang_hoa");
+
+                entity.Property(e => e.Manhom)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.TenNhom)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
 
             modelBuilder.Entity<Archive>(entity =>
             {
@@ -398,19 +398,6 @@ namespace Data.Models.Trading_system
                     .HasConstraintName("FK_ArchivesAssignTask_Archives");
             });
 
-            modelBuilder.Entity<Nhom_hang_hoa>(entity =>
-            {
-                entity.ToTable("Nhom_hang_hoa");
-
-                entity.Property(e => e.Manhom)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.TenNhom)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
             modelBuilder.Entity<ArchivesFbfileAttach>(entity =>
             {
                 entity.ToTable("ArchivesFBFileAttach");
@@ -450,91 +437,6 @@ namespace Data.Models.Trading_system
                 entity.Property(e => e.FileSource)
                     .IsRequired()
                     .HasMaxLength(255);
-            });
-
-            modelBuilder.Entity<AspNetRole>(entity =>
-            {
-                entity.Property(e => e.Name).HasMaxLength(256);
-
-                entity.Property(e => e.NormalizedName).HasMaxLength(256);
-            });
-
-            modelBuilder.Entity<AspNetRoleClaim>(entity =>
-            {
-                entity.Property(e => e.RoleId)
-                    .IsRequired()
-                    .HasMaxLength(450);
-
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.AspNetRoleClaims)
-                    .HasForeignKey(d => d.RoleId);
-            });
-
-            modelBuilder.Entity<AspNetUser>(entity =>
-            {
-                entity.Property(e => e.Email).HasMaxLength(256);
-
-                entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
-
-                entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
-
-                entity.Property(e => e.Status).HasColumnName("status");
-
-                entity.Property(e => e.UserName).HasMaxLength(256);
-            });
-
-            modelBuilder.Entity<AspNetUserClaim>(entity =>
-            {
-                entity.Property(e => e.UserId)
-                    .IsRequired()
-                    .HasMaxLength(450);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserClaims)
-                    .HasForeignKey(d => d.UserId);
-            });
-
-            modelBuilder.Entity<AspNetUserLogin>(entity =>
-            {
-                entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
-
-                entity.Property(e => e.LoginProvider).HasMaxLength(128);
-
-                entity.Property(e => e.ProviderKey).HasMaxLength(128);
-
-                entity.Property(e => e.UserId)
-                    .IsRequired()
-                    .HasMaxLength(450);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserLogins)
-                    .HasForeignKey(d => d.UserId);
-            });
-
-            modelBuilder.Entity<AspNetUserRole>(entity =>
-            {
-                entity.HasKey(e => new { e.UserId, e.RoleId });
-
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.AspNetUserRoles)
-                    .HasForeignKey(d => d.RoleId);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserRoles)
-                    .HasForeignKey(d => d.UserId);
-            });
-
-            modelBuilder.Entity<AspNetUserToken>(entity =>
-            {
-                entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
-
-                entity.Property(e => e.LoginProvider).HasMaxLength(128);
-
-                entity.Property(e => e.Name).HasMaxLength(128);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserTokens)
-                    .HasForeignKey(d => d.UserId);
             });
 
             modelBuilder.Entity<Assembly>(entity =>
@@ -644,6 +546,7 @@ namespace Data.Models.Trading_system
                     .IsUnicode(false);
 
                 entity.Property(e => e.Price).HasColumnType("decimal(18, 3)");
+
 
                 entity.Property(e => e.Printer).HasMaxLength(255);
 
@@ -2865,7 +2768,21 @@ namespace Data.Models.Trading_system
 
             modelBuilder.Entity<CustomerNorm>(entity =>
             {
+                entity.HasKey(e => new { e.Makhach, e.Nhomhang, e.Macn });
+
                 entity.ToTable("CustomerNorm");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.Property(e => e.Makhach)
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.Nhomhang)
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.Macn)
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("('')");
 
                 entity.Property(e => e.ChucvuNguoigd)
                     .HasMaxLength(100)
@@ -2888,24 +2805,9 @@ namespace Data.Models.Trading_system
                     .HasMaxLength(255)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.Macn)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.Makhach)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasDefaultValueSql("('')");
-
                 entity.Property(e => e.NguoiGd)
                     .HasMaxLength(100)
                     .HasColumnName("Nguoi_GD");
-
-                entity.Property(e => e.Nhomhang)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasDefaultValueSql("('')");
 
                 entity.Property(e => e.UserCreate).HasMaxLength(50);
 
@@ -3177,10 +3079,6 @@ namespace Data.Models.Trading_system
                 entity.Property(e => e.DepartmentName)
                     .IsRequired()
                     .HasMaxLength(255);
-
-                entity.Property(e => e.LdDepartment)
-                    .HasMaxLength(50)
-                    .HasColumnName("LD_Department");
 
                 entity.Property(e => e.SttNs).HasColumnName("STT_NS");
             });
@@ -4372,21 +4270,25 @@ namespace Data.Models.Trading_system
 
             modelBuilder.Entity<Employee>(entity =>
             {
+                entity.HasNoKey();
+
                 entity.ToTable("Employee");
 
-                entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
+                entity.Property(e => e.Birthday).HasColumnType("date");
 
-                entity.Property(e => e.Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Branch)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
-                entity.Property(e => e.Office)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.DateWorking).HasColumnType("date");
 
-                entity.Property(e => e.Position)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.EmployeeCode)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.EmployeeName)
+                    .IsRequired()
+                    .HasMaxLength(255);
             });
 
             modelBuilder.Entity<FeedBackFileAttach>(entity =>
@@ -4641,7 +4543,9 @@ namespace Data.Models.Trading_system
                     .IsRequired()
                     .HasMaxLength(50);
             });
-
+            modelBuilder.Entity<Hanghoa>()
+                .HasIndex(u => u.Mahang)
+                .IsUnique();
             modelBuilder.Entity<Hanghoa>(entity =>
             {
                 entity.HasKey(e => e.Mahang)
@@ -4651,7 +4555,8 @@ namespace Data.Models.Trading_system
 
                 entity.Property(e => e.Mahang)
                     .HasMaxLength(50)
-                    .HasColumnName("mahang");
+                    .HasColumnName("mahang")
+                    ;
 
                 entity.Property(e => e.Baobi)
                     .HasColumnType("ntext")
@@ -4759,8 +4664,10 @@ namespace Data.Models.Trading_system
                     .HasComment("Gia trừ lùi = true; Giá outright = false");
 
                 entity.Property(e => e.Macn)
-                    .HasMaxLength(50)
-                    .HasColumnName("macn");
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("macn")
+                    .IsFixedLength(true);
 
                 entity.Property(e => e.Makhach)
                     .HasMaxLength(50)
@@ -8082,29 +7989,6 @@ namespace Data.Models.Trading_system
                     .HasColumnName("type");
             });
 
-            modelBuilder.Entity<Message>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("Message");
-
-                entity.Property(e => e.IdEd)
-                    .HasMaxLength(10)
-                    .HasColumnName("idEd")
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.Message1)
-                    .HasColumnType("ntext")
-                    .HasColumnName("Message");
-
-                entity.Property(e => e.Msdate).HasColumnType("datetime");
-
-                entity.Property(e => e.Systemref)
-                    .HasMaxLength(20)
-                    .HasColumnName("systemref")
-                    .IsFixedLength(true);
-            });
-
             modelBuilder.Entity<MessageOffline>(entity =>
             {
                 entity.ToTable("MessageOffline");
@@ -8325,6 +8209,8 @@ namespace Data.Models.Trading_system
             {
                 entity.ToTable("NhapKhoChiTietK");
 
+                entity.Property(e => e.stt).HasColumnName("stt");
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Approve).HasColumnName("approve");
@@ -8417,8 +8303,6 @@ namespace Data.Models.Trading_system
                 entity.Property(e => e.Stoploss)
                     .HasColumnType("decimal(18, 5)")
                     .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Stt).HasColumnName("stt");
 
                 entity.Property(e => e.TenHang)
                     .IsRequired()
@@ -8516,28 +8400,6 @@ namespace Data.Models.Trading_system
                 entity.Property(e => e.LoaiphieuNk)
                     .HasMaxLength(250)
                     .HasColumnName("LoaiphieuNK");
-            });
-
-            modelBuilder.Entity<NhomHangHoa>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("Nhom_hang_hoa");
-
-                entity.Property(e => e.MaNhom).HasMaxLength(50);
-
-                entity.Property(e => e.TenNhom).HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<NhomHangHoa1>(entity =>
-            {
-                entity.HasKey(e => e.MaNhom);
-
-                entity.ToTable("NhomHangHoa");
-
-                entity.Property(e => e.MaNhom).HasMaxLength(50);
-
-                entity.Property(e => e.TenNhom).HasMaxLength(50);
             });
 
             modelBuilder.Entity<NhomTruong>(entity =>
@@ -9976,13 +9838,9 @@ namespace Data.Models.Trading_system
 
             modelBuilder.Entity<NsDmcbnv>(entity =>
             {
-                entity.HasKey(e => e.MaCbNv);
+                entity.HasNoKey();
 
                 entity.ToTable("NS_DMCBNV");
-
-                entity.Property(e => e.MaCbNv)
-                    .HasMaxLength(50)
-                    .HasColumnName("Ma_CbNv");
 
                 entity.Property(e => e.BiDanh)
                     .HasMaxLength(50)
@@ -10021,6 +9879,7 @@ namespace Data.Models.Trading_system
                 entity.Property(e => e.Hinh).HasMaxLength(50);
 
                 entity.Property(e => e.IdNs)
+                    .IsRequired()
                     .HasMaxLength(10)
                     .HasColumnName("ID_NS")
                     .IsFixedLength(true);
@@ -10032,6 +9891,11 @@ namespace Data.Models.Trading_system
                 entity.Property(e => e.MaBp)
                     .HasMaxLength(50)
                     .HasColumnName("Ma_Bp");
+
+                entity.Property(e => e.MaCbNv)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("Ma_CbNv");
 
                 entity.Property(e => e.MaSoThue)
                     .HasMaxLength(50)
@@ -10164,9 +10028,22 @@ namespace Data.Models.Trading_system
                     .IsUnicode(false)
                     .HasColumnName("User_Edit");
 
-                entity.Property(e => e.UserName).HasMaxLength(50);
-
                 entity.Property(e => e.Website).HasMaxLength(100);
+
+                entity.HasOne(d => d.TdHvNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.TdHv)
+                    .HasConstraintName("FK_NS_DMCBNV_NS_DMTD");
+
+                entity.HasOne(d => d.TdNnNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.TdNn)
+                    .HasConstraintName("FK_NS_DMCBNV_NS_DMTD1");
+
+                entity.HasOne(d => d.TdThNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.TdTh)
+                    .HasConstraintName("FK_NS_DMCBNV_NS_DMTD2");
             });
 
             modelBuilder.Entity<NsDmchucvu>(entity =>
@@ -12956,13 +12833,13 @@ namespace Data.Models.Trading_system
                     .HasMaxLength(50)
                     .HasColumnName("IDBT");
 
+                entity.Property(e => e.docs).HasMaxLength(255).HasColumnName("docs");
+
                 entity.Property(e => e.Iddong).HasColumnName("IDDong");
 
                 entity.Property(e => e.ChatLuongHd)
                     .HasColumnType("decimal(18, 5)")
                     .HasColumnName("ChatLuongHD");
-
-                entity.Property(e => e.Docs).HasColumnName("docs");
 
                 entity.Property(e => e.DonGia).HasColumnType("decimal(18, 5)");
 
@@ -13895,9 +13772,8 @@ namespace Data.Models.Trading_system
             modelBuilder.Entity<Signer>(entity =>
             {
                 entity.HasKey(e => new { e.Stt, e.MaKhach });
-
+                entity.Property(e => e.Stt).ValueGeneratedNever();
                 entity.ToTable("signer");
-
                 entity.Property(e => e.MaKhach)
                     .HasMaxLength(50)
                     .HasColumnName("ma_khach");
@@ -14882,6 +14758,8 @@ namespace Data.Models.Trading_system
                 entity.HasKey(e => e.UserName1);
 
                 entity.ToTable("UserRight");
+
+                entity.Property(a => a.Online).HasColumnName("Online");
 
                 entity.Property(e => e.UserName1).HasMaxLength(50);
 

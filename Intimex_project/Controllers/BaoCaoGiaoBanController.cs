@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace pmkd.Controllers
+namespace Intimex_project.Controllers
 {
     public class BaoCaoGiaoBanController : Controller
     {

@@ -1,4 +1,5 @@
 ﻿using Application.Parameter;
+using Data.Models.SignalR;
 using Data.Models.Trading_system;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
@@ -14,7 +15,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace pmkd.Controllers
+namespace Intimex_project.Controllers
 {
     public class KhachhangController : Controller
     {
@@ -22,8 +23,16 @@ namespace pmkd.Controllers
         public KhachhangController()
         {
         }
+        public void listUser()
+        {
+            using (SignalRChatContext _context = new SignalRChatContext())
+            {
+                ViewBag.ListUser = (from a in _context.AspNetUsers select new Data.Models.SignalR.AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online, Id = a.Id }).OrderByDescending(a => a.Online).ToList();
+            }
+        }
         public IActionResult khachhang(string id)
         {
+            listUser();
             ViewBag.khuvuc = _context.Khuvucs.ToList();
             ViewBag.tenqg = _context.Quocgia.ToList();
             var model = _context.KhachHangs.Where(a => a.Visible == true).ToList();
@@ -32,6 +41,7 @@ namespace pmkd.Controllers
         //View thêm khách hàng
         public IActionResult themkhachhang()
         {
+            listUser();
             ViewBag.khuvuc = _context.Khuvucs.ToList();
             ViewBag.list_qg = _context.Quocgia.ToList();
             return View("themkhachhang");

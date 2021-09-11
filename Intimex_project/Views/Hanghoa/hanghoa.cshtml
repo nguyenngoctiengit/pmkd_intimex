@@ -2,7 +2,7 @@
     ViewData["Title"] = "hanghoa";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model IEnumerable<Hanghoa>
+@model IEnumerable<Data.Models.Trading_system.Hanghoa>
 <div class="right_col" role="main" style="height: 500px">
     <div class="">
         <div class="page-title">
@@ -63,7 +63,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive">
-                                    @(Html.DevExtreme().DataGrid<pmkd.Models.Hanghoa>().ID("gridContainer")
+                                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Hanghoa>().ID("gridContainer")
                                     .DataSource(ds => ds.Mvc()
                                         .Controller("hanghoa")
                                         .LoadAction("Get")
@@ -168,6 +168,7 @@
         </div>
     </div>
 </div>
+<script src="~/js/hanghoa.js"></script>
 <!-- /page content -->
 <!-- /page content -->
 <!-- footer content -->

@@ -1,16 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
 namespace Data.Models.Trading_system
 {
+    
     public partial class UserRight
     {
+        
         public long UserId { get; set; }
-        public string UserName1 { get; set; }
+        [Required(ErrorMessage = "mời nhập tài khoản")]
+        [Key]public string UserName1 { get; set; }
         public string FullName1 { get; set; }
-        public string PassWord1 { get; set; }
+        [Required(ErrorMessage = "mời nhập mật khẩu")]
+        public string PassWord1 { get; set; }   
         public string UnitName { get; set; }
         public long Department { get; set; }
         public string GroupId { get; set; }
@@ -40,5 +50,6 @@ namespace Data.Models.Trading_system
         public bool FullViewConTract { get; set; }
         public bool ExportOnReport { get; set; }
         public bool ViewAllStock { get; set; }
+        public byte Online { get; set; }
     }
 }

@@ -51,6 +51,6 @@ namespace Data.Models.Trading_system
         public decimal? LuongTru { get; set; }
         public decimal? LuongTruDc { get; set; }
         public string Iddk { get; set; }
-        public byte[] Docs { get; set; }
+        public Byte[] docs { get; set; }
     }
 }

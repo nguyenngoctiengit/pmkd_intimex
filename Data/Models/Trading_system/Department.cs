@@ -12,6 +12,5 @@ namespace Data.Models.Trading_system
         public string DepartmentCode { get; set; }
         public string DepartmentName { get; set; }
         public int? SttNs { get; set; }
-        public string LdDepartment { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application.Parameter;
+using Data.Models.SignalR;
 using Data.Models.Trading_system;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
@@ -10,7 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ViewModel;
 
-namespace pmkd.Controllers
+namespace Intimex_project.Controllers
 {
     public class CanController : Controller
     {
@@ -18,9 +19,17 @@ namespace pmkd.Controllers
         public CanController()
         {
         }
+        public void listUser()
+        {
+            using (SignalRChatContext _context = new SignalRChatContext())
+            {
+                ViewBag.ListUser = (from a in _context.AspNetUsers select new Data.Models.SignalR.AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online, Id = a.Id }).OrderByDescending(a => a.Online).ToList();
+            }
+
+        }
         public IActionResult cantrongluong()
         {
-            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
+            listUser();
             ViewBag.nhanvien = (from k in _context.Cans
                                 select k.NhanVien).Distinct().ToList();
             ViewBag.baove = (from k in _context.Cans
@@ -94,7 +103,6 @@ namespace pmkd.Controllers
         }
         public IActionResult phieunhapkho(int id)
         {
-            ViewBag.ListUser = (from a in _context.AspNetUsers select new AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online }).OrderByDescending(a => a.Online).ToList();
             var can = (from a in _context.Cans where a.IdXepTai == id select a).FirstOrDefault();
             var xt = (from a in _context.XepTais where a.Id == id select a).FirstOrDefault();
             ViewBag.idxeptai = id;
