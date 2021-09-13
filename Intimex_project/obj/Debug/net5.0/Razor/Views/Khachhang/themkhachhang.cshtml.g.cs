@@ -33,8 +33,15 @@ using DevExtreme.AspNet.Mvc;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "C:\Users\Windows 10\Desktop\Intimex_project\Intimex_project\Views\_ViewImports.cshtml"
+using DevExpress.AspNetCore;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"682afb02c7529281817009883493b1b8849b0a6c", @"/Views/Khachhang/themkhachhang.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"ba7d37dc702c8769d396d72569fcbd29e4e505f2", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d573e96834c164d2bbf2071589b32bff03f054d6", @"/Views/_ViewImports.cshtml")]
     public class Views_Khachhang_themkhachhang : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<Data.Models.Trading_system.KhachHang>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("type", new global::Microsoft.AspNetCore.Html.HtmlString("submit"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -156,7 +163,7 @@ using DevExtreme.AspNet.Mvc;
 #line hidden
 #nullable disable
             WriteLiteral("                    <div class=\"clearfix\"></div>\r\n                </div>\r\n                <div class=\"x_content\">\r\n                    <br />\r\n\r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "682afb02c7529281817009883493b1b8849b0a6c10200", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "682afb02c7529281817009883493b1b8849b0a6c10396", async() => {
                 WriteLiteral("\r\n                        <div class=\"form-group row\">\r\n                            <label class=\"col-form-label col-md-2 col-sm-2\">Mã khách</label>\r\n                            <div class=\"col-md-10 col-sm-10\">\r\n                                ");
 #nullable restore
 #line 53 "C:\Users\Windows 10\Desktop\Intimex_project\Intimex_project\Views\Khachhang\themkhachhang.cshtml"
@@ -546,7 +553,7 @@ WriteAttributeValue("", 13822, Html.NameFor(a => a.ThanhToanBan), 13822, 34, fal
                         <div class=""form-group row"">
                             <div class=""col-md-9 col-sm-9  offset-md-5"">
                                 ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("button", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "682afb02c7529281817009883493b1b8849b0a6c32084", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("button", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "682afb02c7529281817009883493b1b8849b0a6c32280", async() => {
                     WriteLiteral("Submit");
                 }
                 );

@@ -1,4 +1,5 @@
 ﻿using Application.Parameter;
+using Data.Models.SignalR;
 using Data.Models.Trading_system;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
@@ -19,8 +20,16 @@ namespace Intimex_project.Controllers
         public KcsController()
         {
         }
+        public void listUser()
+        {
+            using (SignalRChatContext _context = new SignalRChatContext())
+            {
+                ViewBag.ListUser = (from a in _context.AspNetUsers select new Data.Models.SignalR.AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online, Id = a.Id }).OrderByDescending(a => a.Online).ToList();
+            }
+        }
         public IActionResult kcs()
         {
+            listUser();
             var yesterday = DateTime.Today.AddDays(-1);
             var today = DateTime.Now;
             var aa = (from a in _context.Cans where a.DateIn > yesterday select a).ToList();
@@ -34,6 +43,7 @@ namespace Intimex_project.Controllers
         [Route("kcs/kcs/themkcs")]
         public IActionResult themkcs()
         {
+            listUser();
             ViewBag.name = HttpContext.Session.GetString("FullName1");
             ViewBag.xeptai = _context.XepTais.ToList();
             ViewBag.can = _context.Cans.ToList();

@@ -46,7 +46,7 @@ namespace Intimex_project.Controllers
                 i.Idbt,
                 i.SoXe,
                 i.NgayP,
-            }).Distinct().ToList();
+            }).Where(a => a.Idbt == "BT1600000001").Distinct().ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
 

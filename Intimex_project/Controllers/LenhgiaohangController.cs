@@ -1,4 +1,5 @@
 ﻿using Application.Parameter;
+using Data.Models.SignalR;
 using Data.Models.Trading_system;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
@@ -23,7 +24,16 @@ namespace Intimex_project.Controllers
         }
         public IActionResult lenhgiaohang()
         {
+            listUser();
             return View("Lenhgiaohang");
+        }
+        public void listUser()
+        {
+            using (SignalRChatContext _context = new SignalRChatContext())
+            {
+                ViewBag.ListUser = (from a in _context.AspNetUsers select new Data.Models.SignalR.AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online, Id = a.Id }).OrderByDescending(a => a.Online).ToList();
+            }
+
         }
         [HttpGet]
         public object GetLenhGiaoHang(DataSourceLoadOptions loadOptions)

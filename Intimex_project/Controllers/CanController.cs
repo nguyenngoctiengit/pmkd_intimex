@@ -103,6 +103,7 @@ namespace Intimex_project.Controllers
         }
         public IActionResult phieunhapkho(int id)
         {
+            listUser();
             var can = (from a in _context.Cans where a.IdXepTai == id select a).FirstOrDefault();
             var xt = (from a in _context.XepTais where a.Id == id select a).FirstOrDefault();
             ViewBag.idxeptai = id;
@@ -120,6 +121,7 @@ namespace Intimex_project.Controllers
         [HttpPost]
         public IActionResult themPNK(PNKViewModel pnk, int id)
         {
+
             Can ca = _context.Cans.Where(a => a.IdXepTai == id).FirstOrDefault();
             XepTai xt = _context.XepTais.Where(a => a.Id == id).FirstOrDefault();
             if (ca.CachCan == 1)
