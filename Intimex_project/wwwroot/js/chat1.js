@@ -13,12 +13,24 @@ connection.on("ReceiveMessage", function (user, message) {
     document.getElementById("messagesList").appendChild(li);
 });
 
+let onlineCount = document.querySelector('span.online-count');
+
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
+    connection.invoke("OnConnectedAsync").catch(function (err) {
+        return console.error(err.toString());
+    });
 }).catch(function (err) {
     return console.error(err.toString());
 });
 
+let updateCountCallback = function (message) {
+    if (!message) return;
+    console.log('updateCount = ' + message);
+    if (onlineCount) onlineCount.innerText = message;
+};
+
+connection.on('updateCount', updateCountCallback);
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
     var sender = document.getElementById("senderInput").value;
@@ -39,4 +51,4 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 
 
     event.preventDefault();
-});
+}); 
