@@ -7,12 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.Public_class;
 
 namespace Application.Hubs
 {
     public class ChatHub : Hub
     {
-        static HashSet<string> CurrentConnections = new HashSet<string>();
         SignalRChatContext _context = new SignalRChatContext();
         public Task SendMessage(string sender, string user, string message)
         {
@@ -20,20 +20,20 @@ namespace Application.Hubs
         }
         public override Task OnConnectedAsync()
         {
-            CurrentConnections.Add(UserIdParameter.userId);
+
             new AppServices.AppService().AddUserConnection(Context.ConnectionId);
-            Groups.AddToGroupAsync(Context.ConnectionId, UserIdParameter.userId);
-            Groups.AddToGroupAsync(Context.ConnectionId, UserIdParameter.userIdChat);
+/*            Groups.AddToGroupAsync(Context.ConnectionId, UserIdParameter.userId);
+            Groups.AddToGroupAsync(Context.ConnectionId, UserIdParameter.userIdChat);*/
             return base.OnConnectedAsync();
         }
         public override Task OnDisconnectedAsync(Exception exception)
         {
-            CurrentConnections.Add(UserIdParameter.userId);
+            ListUser.CurrentConnection.Remove(UserIdParameter.userId);
             return base.OnDisconnectedAsync(exception);
         }
         public List<string> GetAllActiveConnections()
         {
-            return CurrentConnections.ToList();
+            return ListUser.CurrentConnection.ToList();
         }
         public Task SendMessageToGroup(string sender, string receiver, string message)
         {

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Data.Public_class;
 
 namespace Intimex_project.Controllers
 {
@@ -48,6 +49,7 @@ namespace Intimex_project.Controllers
                     }
                     else
                     {
+                        ListUser.CurrentConnection.Add(user.Id);
                         var userdetails = _context.AspNetUsers.SingleOrDefault(m => m.UserName == user.UserName && m.Status == true);
                         HttpContext.Session.SetString("userId", user.Id);
                         HttpContext.Session.SetString("UserName", user.UserName);
@@ -71,6 +73,7 @@ namespace Intimex_project.Controllers
             user.Online = true;
             _context.AspNetUsers.Update(user).Property(a => a.Id).IsModified = false;
             _context.SaveChanges();
+            ListUser.CurrentConnection.Add(user.Id);
             HttpContext.Session.SetString("userId", user.Id);
             HttpContext.Session.SetString("UserName", user.UserName);
             HttpContext.Session.SetString("fullName", user.NormalizedUserName);
@@ -153,7 +156,8 @@ namespace Intimex_project.Controllers
                 HttpContext.Session.SetString("UserName", account.UserName);
                 HttpContext.Session.SetString("fullName", account.NormalizedUserName);
                 HttpContext.Session.SetString("UnitName", account.UnitName);
-                return RedirectToAction("Index", "Home");
+                ViewBag.Message = "Đăng ký thành công, mời đăng nhập";
+                return View("Index");
             }
             else
             {

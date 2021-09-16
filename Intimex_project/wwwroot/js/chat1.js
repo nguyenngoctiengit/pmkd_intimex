@@ -15,11 +15,26 @@ connection.on("ReceiveMessage", function (user, message) {
 
 let onlineCount = document.querySelector('span.online-count');
 
+
+
+
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
-    connection.invoke("OnConnectedAsync").catch(function (err) {
-        return console.error(err.toString());
-    });
+    function GetAllActiveConnections() {
+        connection.invoke("GetAllActiveConnections").then(function (item) {
+            for (var user in item) {
+                document.getElementById("listUser").innerHTML += '<li><a asp-action="chat" asp-controller="home" asp-route-id="' + item[user] + '"><i class="fas fa-user"></i>' + item[user] + '</a></li>';
+                console.log(item);
+            }
+            
+        })
+    }
+    GetAllActiveConnections();
+    /*setInterval(function () {
+        connection.invoke("GetAllActiveConnections").then(function (item) {
+            document.getElementById("listUser").innerHTML += '<li>' + item + '</li>';
+        });
+    }, 3000)  */
 }).catch(function (err) {
     return console.error(err.toString());
 });
