@@ -68,6 +68,7 @@
 
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <!-- chat css  -->
 
     <!-- datepicker -->
     <!-- Custom Theme Style -->
@@ -607,35 +608,11 @@
                                         </li>
                                     </ul>
                                 </li>
-                            </ul>
-                        </div>
-                        <div class="menu_section">
-                            <h3>User Online</h3>
-                            <ul class="nav side-menu">
                                 <li>
-                                    <a><i class="fas fa-user-friends"></i> Danh sách người dùng <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu" id="listUser">
-@*                                        @{
-                                            foreach (var item in (IEnumerable<Data.Models.SignalR.AspNetUser>)ViewBag.ListUser)
-                                            {
-                                                if (item.Online == true)
-                                                {
-                                                    <li><a asp-action="chat" asp-controller="home" asp-route-id="@item.Id"><i class="fas fa-user"></i>@item.NormalizedUserName</a></li>
-                                                }
-                                                else
-                                                {
-                                                    <li><a asp-action="chat" asp-controller="home" asp-route-id="@item.Id"><i class="far fa-user"></i>@item.NormalizedUserName</a></li>
-                                                }
-
-
-                                            }
-                                        }*@
-
-                                    </ul>
+                                    <a asp-action="chat" asp-controller="home"><i class="fa fa-sitemap"></i>Chat</a>                                   
                                 </li>
                             </ul>
-                        </div>
-
+                        </div>                       
                     </div>
                     <!-- /sidebar menu -->
                     <!-- /menu footer buttons -->

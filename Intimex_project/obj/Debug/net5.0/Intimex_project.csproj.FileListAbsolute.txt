@@ -159,3 +159,4 @@ C:\Users\Windows 10\Desktop\Intimex_project\Intimex_project\obj\Debug\net5.0\Raz
 C:\Users\Windows 10\Desktop\Intimex_project\Intimex_project\obj\Debug\net5.0\Razor\Views\Nhapkho\Dangkynhapkho.cshtml.g.cs
 C:\Users\Windows 10\Desktop\Intimex_project\Intimex_project\obj\Debug\net5.0\Razor\Views\QuanLiNhanSu\Index.cshtml.g.cs
 C:\Users\Windows 10\Desktop\Intimex_project\Intimex_project\obj\Debug\net5.0\Razor\Views\QuanLiNhanSu\thongtinnhansu.cshtml.g.cs
+C:\Users\Windows 10\Desktop\Intimex_project\Intimex_project\obj\Debug\net5.0\Razor\Views\Home\PartialViewChat.cshtml.g.cs

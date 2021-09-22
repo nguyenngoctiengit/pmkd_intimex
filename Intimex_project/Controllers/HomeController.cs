@@ -20,17 +20,12 @@ namespace Intimex_project.Controllers
         public HomeController()
         {
         }
-        public void listUser()
-        {
-            ViewBag.ListUser = (from a in _context.AspNetUsers select new Data.Models.SignalR.AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online, Id = a.Id }).OrderByDescending(a => a.Online).ToList();
-        }
         public IActionResult Index()
         {
             var id = HttpContext.Session.GetString("userId");
             if (id != null)
             {
                 ViewBag.CountUserOnline = (from a in _context.AspNetUsers where a.Online == true select a.NormalizedUserName).Count();
-                listUser();
                 ViewBag.countuser = (from a in _context.UserRights select a.UserId).Count();
                 return View();
             }
@@ -40,18 +35,19 @@ namespace Intimex_project.Controllers
             }
         }
 
-        public IActionResult chat(string id)
+        public IActionResult chat()
         {
-            using (SignalRChatContext _context = new SignalRChatContext())
-            {
-                ViewBag.NormalizedUserName = _context.AspNetUsers.Where(a => a.Id == id).Select(a => a.NormalizedUserName).FirstOrDefault();
-                UserIdParameter.userId = HttpContext.Session.GetString("userId");
-                UserIdParameter.userIdChat = id;
-                ViewBag.userId = id;
-                ViewBag.sender = HttpContext.Session.GetString("userId");
-                listUser();
-                return View("chat");
-            }
+            ViewBag.user = _context.AspNetUsers.ToList();
+            return View("chat");
+        }
+        public IActionResult PartialViewChat(string id)
+        {
+            ViewBag.sender = HttpContext.Session.GetString("userId");
+            ViewBag.receiver = id;
+            UserIdParameter.userId = HttpContext.Session.GetString("userId");
+            UserIdParameter.userIdChat = id;
+            ViewBag.user = _context.AspNetUsers.ToList();
+            return View("PartialViewChat");
         }
     }
 }
