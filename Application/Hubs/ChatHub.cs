@@ -45,7 +45,7 @@ namespace Application.Hubs
             _context.Messages.Add(_message);
             _context.SaveChanges();
             var nguoiGui = _context.AspNetUsers.Where(a => a.Id == sender).Select(a => a.NormalizedUserName).FirstOrDefault();
-            return Clients.Group(receiver).SendAsync("ReceiveMessage", nguoiGui, message);
+            return Clients.Group(receiver).SendAsync("ReceiveMessage", sender,receiver, message);
         }
         public string GetConnectionId() => Context.ConnectionId;
     }

@@ -15,20 +15,6 @@ namespace Application.AppServices
         {
         }
 
-        public void AddUserConnection(string ConnectionId)
-        {
-            using (SignalRChatContext _context = new SignalRChatContext())
-            {
-                var userId = UserIdParameter.userId;
-                _context.UserConnections.Add(new UserConnection
-                {
-                    ConnectionId = ConnectionId,
-                    UserId = userId,
-                });
-                _context.SaveChanges();
-            }
-        }
-
         public bool login(AspNetUser aspNetUser, out string userId)
         {
             userId = "";

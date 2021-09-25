@@ -1,6 +1,6 @@
 ﻿<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="~/css/chat.css" rel="stylesheet" />
+<link href="~/css/chat1.css" rel="stylesheet" />
 <!------ Include the above in your HEAD tag ---------->
 
 
@@ -53,8 +53,8 @@
                         }
                     </div>
                 </div>
-                <input type="text" id="senderInput" value="@ViewBag.sender" />
-                <input type="text" id="receiverInput" value="@ViewBag.receiver"/>
+                <input type="text" id="senderInput" value="@ViewBag.sender" hidden/>
+                <input type="text" id="receiverInput" value="@ViewBag.receiver"hidden/>
                 <form>
                     <div class="mesgs">
                         <div class="msg_history">
@@ -97,7 +97,7 @@
                                 <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
                                 <div class="received_msg">
                                     <div class="received_withd_msg">
-                                        <p >
+                                        <p>
                                             We work directly with our designers and suppliers,
                                             and sell direct to you, which means quality, exclusive
                                             products, at a price anyone can afford.
@@ -106,7 +106,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="outgoing_msg"></div>
+                            <div id="outgoing_msg">
+                                <div id="sent_msg">
+                                </div>
+                            </div>
+                            <div id="incoming_msg">
+                                <div id="received_msg">
+                                    <div id="received_withd_msg">
+                                        
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="type_msg">
                             <div class="input_msg_write">

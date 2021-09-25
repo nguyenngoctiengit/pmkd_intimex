@@ -15,7 +15,6 @@ namespace Data.Models.SignalR
             AspNetUserTokens = new HashSet<AspNetUserToken>();
             MessageFromUserNavigations = new HashSet<Message>();
             MessageToUserNavigations = new HashSet<Message>();
-            UserConnections = new HashSet<UserConnection>();
         }
 
         public string Id { get; set; }
@@ -43,6 +42,5 @@ namespace Data.Models.SignalR
         public virtual ICollection<AspNetUserToken> AspNetUserTokens { get; set; }
         public virtual ICollection<Message> MessageFromUserNavigations { get; set; }
         public virtual ICollection<Message> MessageToUserNavigations { get; set; }
-        public virtual ICollection<UserConnection> UserConnections { get; set; }
     }
 }

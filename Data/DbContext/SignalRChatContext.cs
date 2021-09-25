@@ -27,7 +27,6 @@ namespace Data.Models.SignalR
         public virtual DbSet<Branch> Branches { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<UserBranch> UserBranches { get; set; }
-        public virtual DbSet<UserConnection> UserConnections { get; set; }
         public virtual DbSet<UserRight> UserRights { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -239,18 +238,6 @@ namespace Data.Models.SignalR
                 entity.Property(e => e.UserName)
                     .IsRequired()
                     .HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<UserConnection>(entity =>
-            {
-                entity.ToTable("UserConnection");
-
-                entity.Property(e => e.UserId).HasMaxLength(450);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserConnections)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK_UserConnection_AspNetUsers");
             });
 
             modelBuilder.Entity<UserRight>(entity =>

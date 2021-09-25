@@ -5,13 +5,42 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
 
-connection.on("ReceiveMessage", function (user, message) {
-    var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    var encodedMsg = user + " says: " + msg;
+function createDivSent_msg(mess , datetime) {
     var div = document.createElement("div");
-    div.innerHTML = encodedMsg;
+    var div1 = document.createElement("div");
     div.className = 'outgoing_msg';
     document.getElementById("outgoing_msg").appendChild(div);
+    div1.className = 'sent_msg';
+    div1.innerHTML = '<p>' + mess + '</p>' + '<span class="time_date">' + datetime + '</span>';
+    document.getElementById('sent_msg').appendChild(div1);
+}
+
+function createDivRecieve_msg(mess, datetime) {
+    var div = document.createElement("div");
+    div.className = 'incoming_msg';
+    document.getElementById('incoming_msg').appendChild(div);
+    var div1 = document.createElement("div");
+    div1.className = 'received_msg';
+    document.getElementById("received_msg").appendChild(div1);
+    var div2 = document.createElement("div");
+    div2.className = 'received_withd_msg';
+    div2.innerHTML = '<p>' + mess + '</p>' + '<span class="time_date">' + datetime + '</span>';
+    document.getElementById("received_withd_msg").appendChild(div2);
+}
+
+connection.on("ReceiveMessage", function (sender, reciever, message) {
+    var datetime = new Date().toLocaleString().replace(",", "").replace(/:.. /, " ");
+    var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    var encodedMsg = msg;
+    var senderInput = document.getElementById("senderInput").value;
+    if (senderInput == sender) {
+        createDivSent_msg(encodedMsg, datetime);
+    }
+    else {
+        createDivRecieve_msg(encodedMsg, datetime);
+    }
+
+    console.log(sender);
 });
 
 connection.start().then(function () {
