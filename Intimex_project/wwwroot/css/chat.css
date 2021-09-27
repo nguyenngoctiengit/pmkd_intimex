@@ -211,8 +211,11 @@ img {
 
 .msg_history {
     height: 516px;
-    overflow-y: auto;
+    overflow: auto;
+    display: block;
+    flex-direction: column-reverse;
 }
+
 .container {
     max-width: max-content;
     height: max-content;

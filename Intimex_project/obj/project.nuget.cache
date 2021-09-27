@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NbthJSXsm3LIK4U3HVfr1mtnc9gbKBVR9bT2LSxVydSZoUbrP9ag2/7Jtdm8hoKwe3QQd5P+KEwQAZebJPBFbQ==",
+  "dgSpecHash": "oKpGDIzosmYSf5DAZeOLyTdagxEFIISRzTx+LaqIeuK3owYGRSNttCwsWcsuuCnRy3/2mXJw766Oky+3ehBbNw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Windows 10\\Desktop\\pmkd_intimex\\Intimex_project\\Intimex_project.csproj",
+  "projectFilePath": "C:\\Users\\Windows 10\\Desktop\\Intimex_project\\Intimex_project\\Intimex_project.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Windows 10\\.nuget\\packages\\bcrypt.net-core\\1.6.0\\bcrypt.net-core.1.6.0.nupkg.sha512",
     "C:\\Program Files (x86)\\DevExpress 21.1\\Components\\Offline Packages\\devexpress.aspnetcore.common\\21.1.5\\devexpress.aspnetcore.common.21.1.5.nupkg.sha512",

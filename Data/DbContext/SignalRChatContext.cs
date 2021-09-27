@@ -204,7 +204,7 @@ namespace Data.Models.SignalR
             {
                 entity.ToTable("Message");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id);
 
                 entity.Property(e => e.Date).HasColumnType("datetime");
 

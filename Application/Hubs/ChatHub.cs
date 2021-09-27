@@ -40,8 +40,8 @@ namespace Application.Hubs
             _message.ToUser = receiver;
             _message.Message1 = message;
             _message.Date = DateTime.Now;
-            int maxId = _context.Messages.Max(a => a.Id);
-            _message.Id = maxId + 1;
+            /*int maxId = _context.Messages.Max(a => a.Id);
+            _message.Id = maxId + 1;*/
             _context.Messages.Add(_message);
             _context.SaveChanges();
             var nguoiGui = _context.AspNetUsers.Where(a => a.Id == sender).Select(a => a.NormalizedUserName).FirstOrDefault();

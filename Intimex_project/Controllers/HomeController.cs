@@ -42,6 +42,9 @@ namespace Intimex_project.Controllers
         }
         public IActionResult PartialViewChat(string id)
         {
+            var sender = HttpContext.Session.GetString("userId");
+            var receiver = id;
+            ViewBag.outMsg = (from a in _context.Messages where (a.FromUser == sender && a.ToUser == receiver) || (a.FromUser == receiver && a.ToUser == sender) select a).ToList();
             ViewBag.sender = HttpContext.Session.GetString("userId");
             ViewBag.receiver = id;
             UserIdParameter.userId = HttpContext.Session.GetString("userId");

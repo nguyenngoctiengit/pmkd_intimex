@@ -5,7 +5,7 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
 
-function createDivSent_msg(mess , datetime) {
+function createDivSent_msg(mess, datetime) {
     var div = document.createElement("div");
     var div1 = document.createElement("div");
     div.className = 'outgoing_msg';
@@ -14,6 +14,7 @@ function createDivSent_msg(mess , datetime) {
     div1.innerHTML = '<p>' + mess + '</p>' + '<span class="time_date">' + datetime + '</span>';
     document.getElementById('sent_msg').appendChild(div1);
 }
+
 
 function createDivRecieve_msg(mess, datetime) {
     var div = document.createElement("div");
@@ -28,6 +29,7 @@ function createDivRecieve_msg(mess, datetime) {
     document.getElementById("received_withd_msg").appendChild(div2);
 }
 
+
 connection.on("ReceiveMessage", function (sender, reciever, message) {
     var datetime = new Date().toLocaleString().replace(",", "").replace(/:.. /, " ");
     var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -35,12 +37,16 @@ connection.on("ReceiveMessage", function (sender, reciever, message) {
     var senderInput = document.getElementById("senderInput").value;
     if (senderInput == sender) {
         createDivSent_msg(encodedMsg, datetime);
+        window.scrollTo(0, document.querySelector(".msg_history").scrollHeight);
+        window.location.reload();
+        
     }
-    else {
-        createDivRecieve_msg(encodedMsg, datetime);
+    else {        
+        createDivRecieve_msg(encodedMsg, datetime); 
+        window.scrollTo(0, document.querySelector(".msg_history").scrollHeight);
+        window.location.reload();
+        
     }
-
-    console.log(sender);
 });
 
 connection.start().then(function () {
