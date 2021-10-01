@@ -20,6 +20,7 @@ namespace Application.Hubs
         }
         public override Task OnConnectedAsync()
         {
+            ListUser.CurrentConnection.Add(UserIdParameter.userId);
             Groups.AddToGroupAsync(Context.ConnectionId, UserIdParameter.userId);
             return base.OnConnectedAsync();
         }

@@ -29,6 +29,9 @@ function createDivRecieve_msg(mess, datetime) {
     document.getElementById("received_withd_msg").appendChild(div2);
 }
 
+connection.on("GetAllActiveConnections", function (item) {
+    console.log(item);
+})
 
 connection.on("ReceiveMessage", function (sender, reciever, message) {
     var datetime = new Date().toLocaleString().replace(",", "").replace(/:.. /, " ");

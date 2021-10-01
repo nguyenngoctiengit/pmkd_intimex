@@ -35,6 +35,7 @@ namespace Data.Models.SignalR
         public bool? Status { get; set; }
         public bool? Online { get; set; }
         public string UnitName { get; set; }
+        public string Image { get; set; }
 
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }

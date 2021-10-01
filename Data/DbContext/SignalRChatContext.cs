@@ -83,6 +83,8 @@ namespace Data.Models.SignalR
                 entity.HasMany(e => e.MessageFromUserNavigations);
 
                 entity.HasMany(e => e.MessageToUserNavigations);
+
+                entity.Property(e => e.Image);
             });
 
             modelBuilder.Entity<AspNetUserClaim>(entity =>

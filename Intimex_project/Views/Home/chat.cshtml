@@ -1,63 +1,83 @@
 ﻿<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="~/css/chat.css" rel="stylesheet" />
+<link href="~/css/chat1.css" rel="stylesheet" />
 <!------ Include the above in your HEAD tag ---------->
 
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet"/>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/2d19aa43dc.js" crossorigin="anonymous"></script>
     <style>
-        .mesgs {
-            display: block;
+        .buttonChat {
+            text-align: left;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+        .btn {
+            background-color: #494e52; /* Blue background */
+            border: none; /* Remove borders */
+            color: white; /* White text */
+            padding: 12px 16px; /* Some padding */
+            font-size: 16px; /* Set a font size */
+            cursor: pointer; /* Mouse pointer on hover */
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <h3 class=" text-center">Messaging</h3>
-        <div class="messaging">
-            <div class="inbox_msg">
-                <div class="inbox_people">
-                    <div class="headind_srch">
-                        <div class="recent_heading">
-                            <h4>USER</h4>
-                        </div>
-                        <div class="srch_bar">
-                            <div class="stylish-input-group">
-                                <input type="text" class="search-bar" placeholder="Search">
-                                <span class="input-group-addon">
-                                    <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                                </span>
-                            </div>
+    <h3 class="text-center">Messing</h3>
+    <div class="messaging">
+        <div class="inbox_msg">
+            <div class="inbox_people">
+                <div class="headind_srch">
+                    <div class="recent_heading">
+                        <h4><button onclick="location.href='/home/index'" class="btn"><i class="fas fa-home"></i></button></h4>
+                    </div>
+                    <div class="srch_bar">
+                        <div class="stylish-input-group">
+                            <input type="text" class="search-bar" placeholder="Search">
                         </div>
                     </div>
-                    <div class="inbox_chat">
-                        @{ foreach (var item in ViewBag.user)
-                            {
-                                <button class="tablinks" onclick="location.href='PartialViewChat/@item.Id'" style="padding:0;border:none;background:none" type="submit">
-                                    <div class="chat_list active_chat">
-                                        <div class="chat_people">
-                                            <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                                            <div class="chat_ib">
-                                                <h5>@item.NormalizedUserName <span class="chat_date">Dec 25</span></h5>
-                                                <p>
-                                                    Test, which is a new approach to have all solutions
-                                                    astrology under one roof.
-                                                </p>
-                                            </div>
+                </div>
+                <div class="inbox_chat scroll">
+                    @{ foreach (var item in ViewBag.user)
+                        {
+                            <button class="buttonChat" onclick="location.href='PartialViewChat/@item.Id'" style="padding:0;border:none;background:none" type="submit">
+                                <div class="chat_list">
+                                    <div class="chat_people">
+                                        <div class="chat_img"> <img src="~/Images/@item.Image" /> </div>
+                                        <div class="chat_ib">
+                                            <h5>
+                                                @item.NormalizedUserName
+                                                <span class="chat_date">Offline</span>
+
+                                                </h5>
                                         </div>
                                     </div>
-                                </button>                                      
-                            }
+                                </div>
+                            </button>
                         }
-                    </div>
+                    }
+
                 </div>
             </div>
         </div>
     </div>
-    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/chat1.js"></script>
+
 </body>
 </html>
+
+
+
+
+
