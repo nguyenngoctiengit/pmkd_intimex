@@ -1,7 +1,7 @@
 /*!
  * DevExpress Gantt (dx-gantt)
- * Version: 3.0.4
- * Build date: Mon Jul 26 2021
+ * Version: 3.0.14
+ * Build date: Mon Sep 13 2021
  * 
  * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
  * Read about DevExpress licensing here: https://www.devexpress.com/Support/EULAs
@@ -99,7 +99,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 87);
+/******/ 	return __webpack_require__(__webpack_require__.s = 88);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -296,10 +296,14 @@ function __spreadArrays() {
     return r;
 }
 
-function __spreadArray(to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+function __spreadArray(to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 }
 
 function __await(v) {
@@ -355,19 +359,17 @@ function __importDefault(mod) {
     return (mod && mod.__esModule) ? mod : { default: mod };
 }
 
-function __classPrivateFieldGet(receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
+function __classPrivateFieldGet(receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 }
 
-function __classPrivateFieldSet(receiver, privateMap, value) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to set private field on non-instance");
-    }
-    privateMap.set(receiver, value);
-    return value;
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 }
 
 
@@ -425,6 +427,54 @@ exports.numberToStringHex = numberToStringHex;
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.MouseEventSource = exports.TaskTitlePosition = exports.Position = exports.ViewType = void 0;
+var ViewType;
+(function (ViewType) {
+    ViewType[ViewType["TenMinutes"] = 0] = "TenMinutes";
+    ViewType[ViewType["Hours"] = 1] = "Hours";
+    ViewType[ViewType["SixHours"] = 2] = "SixHours";
+    ViewType[ViewType["Days"] = 3] = "Days";
+    ViewType[ViewType["Weeks"] = 4] = "Weeks";
+    ViewType[ViewType["Months"] = 5] = "Months";
+    ViewType[ViewType["Quarter"] = 6] = "Quarter";
+    ViewType[ViewType["Years"] = 7] = "Years";
+    ViewType[ViewType["FiveYears"] = 8] = "FiveYears";
+})(ViewType = exports.ViewType || (exports.ViewType = {}));
+var Position;
+(function (Position) {
+    Position[Position["Left"] = 0] = "Left";
+    Position[Position["Top"] = 1] = "Top";
+    Position[Position["Right"] = 2] = "Right";
+    Position[Position["Bottom"] = 3] = "Bottom";
+})(Position = exports.Position || (exports.Position = {}));
+var TaskTitlePosition;
+(function (TaskTitlePosition) {
+    TaskTitlePosition[TaskTitlePosition["Inside"] = 0] = "Inside";
+    TaskTitlePosition[TaskTitlePosition["Outside"] = 1] = "Outside";
+    TaskTitlePosition[TaskTitlePosition["None"] = 2] = "None";
+})(TaskTitlePosition = exports.TaskTitlePosition || (exports.TaskTitlePosition = {}));
+var MouseEventSource;
+(function (MouseEventSource) {
+    MouseEventSource[MouseEventSource["TaskArea"] = 0] = "TaskArea";
+    MouseEventSource[MouseEventSource["TaskEdit_Frame"] = 1] = "TaskEdit_Frame";
+    MouseEventSource[MouseEventSource["TaskEdit_Progress"] = 2] = "TaskEdit_Progress";
+    MouseEventSource[MouseEventSource["TaskEdit_Start"] = 3] = "TaskEdit_Start";
+    MouseEventSource[MouseEventSource["TaskEdit_End"] = 4] = "TaskEdit_End";
+    MouseEventSource[MouseEventSource["TaskEdit_DependencyStart"] = 5] = "TaskEdit_DependencyStart";
+    MouseEventSource[MouseEventSource["TaskEdit_DependencyFinish"] = 6] = "TaskEdit_DependencyFinish";
+    MouseEventSource[MouseEventSource["Successor_Wrapper"] = 7] = "Successor_Wrapper";
+    MouseEventSource[MouseEventSource["Successor_DependencyStart"] = 8] = "Successor_DependencyStart";
+    MouseEventSource[MouseEventSource["Successor_DependencyFinish"] = 9] = "Successor_DependencyFinish";
+})(MouseEventSource = exports.MouseEventSource || (exports.MouseEventSource = {}));
+
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -916,54 +966,6 @@ function getAbsoluteScrollOffset_OperaFF(curEl, isX) {
 
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.MouseEventSource = exports.TaskTitlePosition = exports.Position = exports.ViewType = void 0;
-var ViewType;
-(function (ViewType) {
-    ViewType[ViewType["TenMinutes"] = 0] = "TenMinutes";
-    ViewType[ViewType["Hours"] = 1] = "Hours";
-    ViewType[ViewType["SixHours"] = 2] = "SixHours";
-    ViewType[ViewType["Days"] = 3] = "Days";
-    ViewType[ViewType["Weeks"] = 4] = "Weeks";
-    ViewType[ViewType["Months"] = 5] = "Months";
-    ViewType[ViewType["Quarter"] = 6] = "Quarter";
-    ViewType[ViewType["Years"] = 7] = "Years";
-    ViewType[ViewType["FiveYears"] = 8] = "FiveYears";
-})(ViewType = exports.ViewType || (exports.ViewType = {}));
-var Position;
-(function (Position) {
-    Position[Position["Left"] = 0] = "Left";
-    Position[Position["Top"] = 1] = "Top";
-    Position[Position["Right"] = 2] = "Right";
-    Position[Position["Bottom"] = 3] = "Bottom";
-})(Position = exports.Position || (exports.Position = {}));
-var TaskTitlePosition;
-(function (TaskTitlePosition) {
-    TaskTitlePosition[TaskTitlePosition["Inside"] = 0] = "Inside";
-    TaskTitlePosition[TaskTitlePosition["Outside"] = 1] = "Outside";
-    TaskTitlePosition[TaskTitlePosition["None"] = 2] = "None";
-})(TaskTitlePosition = exports.TaskTitlePosition || (exports.TaskTitlePosition = {}));
-var MouseEventSource;
-(function (MouseEventSource) {
-    MouseEventSource[MouseEventSource["TaskArea"] = 0] = "TaskArea";
-    MouseEventSource[MouseEventSource["TaskEdit_Frame"] = 1] = "TaskEdit_Frame";
-    MouseEventSource[MouseEventSource["TaskEdit_Progress"] = 2] = "TaskEdit_Progress";
-    MouseEventSource[MouseEventSource["TaskEdit_Start"] = 3] = "TaskEdit_Start";
-    MouseEventSource[MouseEventSource["TaskEdit_End"] = 4] = "TaskEdit_End";
-    MouseEventSource[MouseEventSource["TaskEdit_DependencyStart"] = 5] = "TaskEdit_DependencyStart";
-    MouseEventSource[MouseEventSource["TaskEdit_DependencyFinish"] = 6] = "TaskEdit_DependencyFinish";
-    MouseEventSource[MouseEventSource["Successor_Wrapper"] = 7] = "Successor_Wrapper";
-    MouseEventSource[MouseEventSource["Successor_DependencyStart"] = 8] = "Successor_DependencyStart";
-    MouseEventSource[MouseEventSource["Successor_DependencyFinish"] = 9] = "Successor_DependencyFinish";
-})(MouseEventSource = exports.MouseEventSource || (exports.MouseEventSource = {}));
-
-
-/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1135,7 +1137,7 @@ exports.DateTimeUtils = void 0;
 var Time_1 = __webpack_require__(67);
 var TimeRange_1 = __webpack_require__(68);
 var common_1 = __webpack_require__(1);
-var DateRange_1 = __webpack_require__(15);
+var DateRange_1 = __webpack_require__(14);
 var DayOfWeekMonthlyOccurrence_1 = __webpack_require__(69);
 var DateTimeUtils = (function () {
     function DateTimeUtils() {
@@ -1281,7 +1283,7 @@ var DateTimeUtils = (function () {
             return null;
         if (src instanceof TimeRange_1.TimeRange)
             return src;
-        if (common_1.isDefined(src.start) && common_1.isDefined(src.end))
+        if ((0, common_1.isDefined)(src.start) && (0, common_1.isDefined)(src.end))
             return new TimeRange_1.TimeRange(this.convertToTime(src.start), this.convertToTime(src.end));
         return this.parseTimeRange(src);
     };
@@ -1307,7 +1309,7 @@ var DateTimeUtils = (function () {
         var parts = src.split("-");
         var start = parts[0];
         var end = parts[1];
-        if (common_1.isDefined(start) && common_1.isDefined(end))
+        if ((0, common_1.isDefined)(start) && (0, common_1.isDefined)(end))
             return new TimeRange_1.TimeRange(this.parseTime(start), this.parseTime(end));
         return null;
     };
@@ -1609,7 +1611,7 @@ exports.BaseArguments = BaseArguments;
 Object.defineProperty(exports, "__esModule", { value: true });
 var browser_1 = __webpack_require__(8);
 var common_1 = __webpack_require__(1);
-var dom_1 = __webpack_require__(2);
+var dom_1 = __webpack_require__(3);
 var touch_1 = __webpack_require__(27);
 var EvtUtils = (function () {
     function EvtUtils() {
@@ -1855,11 +1857,35 @@ exports.RenderElementUtils = RenderElementUtils;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.DateRange = void 0;
+var DateRange = (function () {
+    function DateRange(start, end) {
+        this.start = start;
+        this.end = end;
+    }
+    DateRange.prototype.equal = function (date) {
+        var result = true;
+        result = result && this.start.getTime() === date.start.getTime();
+        result = result && this.end.getTime() === date.end.getTime();
+        return result;
+    };
+    return DateRange;
+}());
+exports.DateRange = DateRange;
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskPropertiesHistoryItemBase = void 0;
 var tslib_1 = __webpack_require__(0);
 var HistoryItem_1 = __webpack_require__(12);
 var TaskPropertiesHistoryItemBase = (function (_super) {
-    tslib_1.__extends(TaskPropertiesHistoryItemBase, _super);
+    (0, tslib_1.__extends)(TaskPropertiesHistoryItemBase, _super);
     function TaskPropertiesHistoryItemBase(modelManipulator, taskId, newValue) {
         var _this = _super.call(this, modelManipulator) || this;
         _this.taskId = taskId;
@@ -1878,30 +1904,6 @@ var TaskPropertiesHistoryItemBase = (function (_super) {
     return TaskPropertiesHistoryItemBase;
 }(HistoryItem_1.HistoryItem));
 exports.TaskPropertiesHistoryItemBase = TaskPropertiesHistoryItemBase;
-
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.DateRange = void 0;
-var DateRange = (function () {
-    function DateRange(start, end) {
-        this.start = start;
-        this.end = end;
-    }
-    DateRange.prototype.equal = function (date) {
-        var result = true;
-        result = result && this.start.getTime() === date.start.getTime();
-        result = result && this.end.getTime() === date.end.getTime();
-        return result;
-    };
-    return DateRange;
-}());
-exports.DateRange = DateRange;
 
 
 /***/ }),
@@ -1928,12 +1930,12 @@ var Color = (function () {
         configurable: true
     });
     Color.prototype.hasValue = function () {
-        return common_1.isDefined(this._num) || !!this._rgb || this._opacity === 0;
+        return (0, common_1.isDefined)(this._num) || !!this._rgb || this._opacity === 0;
     };
     Color.prototype.getValue = function () {
         if (this._opacity === 0 && !this._rgb)
             return false;
-        if (common_1.isDefined(this._num))
+        if ((0, common_1.isDefined)(this._num))
             return this._num;
         if (this._rgb)
             return this.getRBGColor();
@@ -1990,7 +1992,7 @@ var Color = (function () {
     Color.prototype.assignFromRgbArray = function (rgb) {
         if (rgb && rgb.length > 2) {
             this._rgb = [rgb[0], rgb[1], rgb[2]];
-            if (common_1.isDefined(rgb[3]))
+            if ((0, common_1.isDefined)(rgb[3]))
                 this._opacity = rgb[3];
         }
     };
@@ -2059,10 +2061,10 @@ exports.BaseManipulator = BaseManipulator;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskPropertyManipulator = void 0;
 var tslib_1 = __webpack_require__(0);
-var HistoryItemState_1 = __webpack_require__(80);
+var HistoryItemState_1 = __webpack_require__(81);
 var BaseManipulator_1 = __webpack_require__(17);
 var TaskPropertyManipulator = (function (_super) {
-    tslib_1.__extends(TaskPropertyManipulator, _super);
+    (0, tslib_1.__extends)(TaskPropertyManipulator, _super);
     function TaskPropertyManipulator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -2104,9 +2106,9 @@ var DataObject = (function () {
         this.internalId = math_1.MathUtils.generateGuid();
     }
     DataObject.prototype.assignFromObject = function (sourceObj) {
-        if (!common_1.isDefined(sourceObj))
+        if (!(0, common_1.isDefined)(sourceObj))
             return;
-        if (common_1.isDefined(sourceObj.id)) {
+        if ((0, common_1.isDefined)(sourceObj.id)) {
             this.id = sourceObj.id;
             this.internalId = String(sourceObj.id);
         }
@@ -2125,8 +2127,8 @@ exports.DataObject = DataObject;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GridLayoutCalculator = void 0;
 var size_1 = __webpack_require__(11);
-var DateRange_1 = __webpack_require__(15);
-var Enums_1 = __webpack_require__(3);
+var DateRange_1 = __webpack_require__(14);
+var Enums_1 = __webpack_require__(2);
 var GridElementInfo_1 = __webpack_require__(49);
 var point_1 = __webpack_require__(4);
 var DateUtils_1 = __webpack_require__(26);
@@ -2537,39 +2539,55 @@ var GridLayoutCalculator = (function () {
         return this.getRangeTickCount(start, end) * this.tickSize.width;
     };
     GridLayoutCalculator.prototype.getRangeTickCount = function (start, end) {
-        if (this.viewType == Enums_1.ViewType.Months)
+        if (this.viewType === Enums_1.ViewType.Months)
             return this.getRangeTickCountInMonthsViewType(start, end);
-        if (this.viewType == Enums_1.ViewType.Quarter)
+        if (this.viewType === Enums_1.ViewType.Quarter)
             return this.getRangeTickCountInQuarterViewType(start, end);
-        return (end.getTime() - start.getTime()) / this.tickTimeSpan;
+        return (end.getTime() + DateUtils_1.DateUtils.getDSTDelta(start, end) - start.getTime()) / this.tickTimeSpan;
     };
     GridLayoutCalculator.prototype.getRangeTickCountInMonthsViewType = function (start, end) {
         var startMonthStartDate = new Date(start.getFullYear(), start.getMonth(), 1);
         var endMonthStartDate = new Date(end.getFullYear(), end.getMonth(), 1);
         var monthOffset = DateUtils_1.DateUtils.getOffsetInMonths(startMonthStartDate, endMonthStartDate);
         var endFromMonthStartDateOffset = end.getTime() - endMonthStartDate.getTime();
+        var msInEndMonth = DateUtils_1.DateUtils.getDaysInMonth(end.getMonth(), end.getFullYear()) * DateUtils_1.DateUtils.msPerDay;
         var startFromMonthStartDateOffset = start.getTime() - startMonthStartDate.getTime();
-        return monthOffset + (endFromMonthStartDateOffset - startFromMonthStartDateOffset) / DateUtils_1.DateUtils.msPerMonth;
+        var msInStartMonth = DateUtils_1.DateUtils.getDaysInMonth(start.getMonth(), start.getFullYear()) * DateUtils_1.DateUtils.msPerDay;
+        return monthOffset + endFromMonthStartDateOffset / msInEndMonth - startFromMonthStartDateOffset / msInStartMonth;
     };
     GridLayoutCalculator.prototype.getRangeTickCountInQuarterViewType = function (start, end) {
         var startQuarterStartDate = new Date(start.getFullYear(), Math.floor(start.getMonth() / 3) * 3, 1);
         var endQuarterStartDate = new Date(end.getFullYear(), Math.floor(end.getMonth() / 3) * 3, 1);
         var quarterOffset = DateUtils_1.DateUtils.getOffsetInQuarters(startQuarterStartDate, endQuarterStartDate);
         var endFromQuarterStartDateOffset = end.getTime() - endQuarterStartDate.getTime();
+        var msInEndQuarter = DateUtils_1.DateUtils.getDaysInQuarter(endQuarterStartDate) * DateUtils_1.DateUtils.msPerDay;
         var startFromQuarterStartDateOffset = start.getTime() - startQuarterStartDate.getTime();
-        return quarterOffset + (endFromQuarterStartDateOffset - startFromQuarterStartDateOffset) / (DateUtils_1.DateUtils.msPerMonth * 3);
+        var msInStartQuarter = DateUtils_1.DateUtils.getDaysInQuarter(startQuarterStartDate) * DateUtils_1.DateUtils.msPerDay;
+        return quarterOffset + endFromQuarterStartDateOffset / msInEndQuarter - startFromQuarterStartDateOffset / msInStartQuarter;
     };
     GridLayoutCalculator.prototype.getDateByPos = function (position) {
+        if (this.viewType === Enums_1.ViewType.Months || this.viewType === Enums_1.ViewType.Quarter)
+            return this.getDateByPosInMonthBasedViewTypes(position);
         var preResult = position / this.tickSize.width;
         var start = new Date(this.range.start);
-        if (this.viewType == Enums_1.ViewType.Months || this.viewType == Enums_1.ViewType.Quarter) {
-            var monthFromStart = Math.floor(preResult);
-            start = new Date(start.setMonth(start.getMonth() + (this.viewType == Enums_1.ViewType.Months ? monthFromStart : monthFromStart * 3)));
-            preResult = (position - this.getPosByDate(start)) / this.tickSize.width;
-        }
         var time = preResult * this.tickTimeSpan + start.getTime();
-        var result = new Date();
-        result.setTime(time);
+        var delta = DateUtils_1.DateUtils.getDSTDelta(this.range.start, new Date(time));
+        return new Date(time - delta);
+    };
+    GridLayoutCalculator.prototype.getDateByPosInMonthBasedViewTypes = function (position) {
+        var result = new Date(this.range.start);
+        var isMonthView = this.viewType === Enums_1.ViewType.Months;
+        var intervalCount = position / this.tickSize.width;
+        var intervalsFromStart = Math.floor(intervalCount);
+        var monthFromStart = isMonthView ? intervalsFromStart : intervalsFromStart * 3;
+        var newMonth = result.getMonth() + monthFromStart;
+        result.setMonth(newMonth);
+        var lastIntervalPart = intervalCount - intervalsFromStart;
+        if (lastIntervalPart > 0) {
+            var daysInInterval = isMonthView ? DateUtils_1.DateUtils.getDaysInMonth(result.getMonth(), result.getFullYear()) : DateUtils_1.DateUtils.getDaysInQuarter(result);
+            var ms = lastIntervalPart * daysInInterval * DateUtils_1.DateUtils.msPerDay;
+            result.setTime(result.getTime() + ms);
+        }
         return result;
     };
     GridLayoutCalculator.prototype.getTotalTickCount = function () {
@@ -2839,12 +2857,14 @@ var GridLayoutCalculator = (function () {
         var infoPointValue = isVerticalTile ? info.position.y : info.position.x;
         var infoSizeValue = isVerticalTile ? info.size.height : info.size.width;
         var tileSizeValue = (isVerticalTile ? this.visibleTaskAreaSize.height : this.visibleTaskAreaSize.width) * 2;
-        var firstTileIndex = Math.floor(infoPointValue / tileSizeValue);
-        var lastTileIndex = Math.floor((infoPointValue + infoSizeValue) / tileSizeValue);
-        for (var i = firstTileIndex; i <= lastTileIndex; i++) {
-            if (!map[i])
-                map[i] = new Array();
-            map[i].push(info);
+        if (tileSizeValue > 0) {
+            var firstTileIndex = Math.floor(infoPointValue / tileSizeValue);
+            var lastTileIndex = Math.floor((infoPointValue + infoSizeValue) / tileSizeValue);
+            for (var i = firstTileIndex; i <= lastTileIndex; i++) {
+                if (!map[i])
+                    map[i] = new Array();
+                map[i].push(info);
+            }
         }
     };
     GridLayoutCalculator.prototype.getRenderedConnectorLines = function (scrollPos) {
@@ -2928,7 +2948,7 @@ var tslib_1 = __webpack_require__(0);
 var CollectionBase_1 = __webpack_require__(22);
 var Resource_1 = __webpack_require__(57);
 var ResourceCollection = (function (_super) {
-    tslib_1.__extends(ResourceCollection, _super);
+    (0, tslib_1.__extends)(ResourceCollection, _super);
     function ResourceCollection() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -2947,14 +2967,14 @@ exports.ResourceCollection = ResourceCollection;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CollectionBase = void 0;
 var common_1 = __webpack_require__(1);
-var GanttJsonUtils_1 = __webpack_require__(94);
+var GanttJsonUtils_1 = __webpack_require__(95);
 var CollectionBase = (function () {
     function CollectionBase() {
         this._items = new Array();
         this._isGanttCollection = true;
     }
     CollectionBase.prototype.add = function (element) {
-        if (!common_1.isDefined(element))
+        if (!(0, common_1.isDefined)(element))
             return;
         if (this.getItemById(element.internalId))
             throw "The collection item with id ='" + element.internalId + "' already exists.";
@@ -3027,12 +3047,12 @@ var CollectionBase = (function () {
         return this._items.filter(function (val) { return val.id === id || val.id.toString() === id; })[0];
     };
     CollectionBase.prototype.assign = function (sourceCollection) {
-        if (!common_1.isDefined(sourceCollection))
+        if (!(0, common_1.isDefined)(sourceCollection))
             return;
         this.items = sourceCollection.items;
     };
     CollectionBase.prototype.importFromObject = function (source) {
-        if (!common_1.isDefined(source))
+        if (!(0, common_1.isDefined)(source))
             return;
         this.clear();
         if (source._isGanttCollection)
@@ -3043,7 +3063,7 @@ var CollectionBase = (function () {
             this.createItemFromObjectAndAdd(source);
     };
     CollectionBase.prototype.createItemFromObjectAndAdd = function (source) {
-        if (common_1.isDefined(source)) {
+        if ((0, common_1.isDefined)(source)) {
             var item = this.createItem();
             item.assignFromObject(source);
             this.add(item);
@@ -3096,7 +3116,7 @@ var tslib_1 = __webpack_require__(0);
 var CommandBase_1 = __webpack_require__(5);
 var SimpleCommandState_1 = __webpack_require__(6);
 var TaskCommandBase = (function (_super) {
-    tslib_1.__extends(TaskCommandBase, _super);
+    (0, tslib_1.__extends)(TaskCommandBase, _super);
     function TaskCommandBase() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.isApiCall = false;
@@ -3109,13 +3129,8 @@ var TaskCommandBase = (function (_super) {
     };
     TaskCommandBase.prototype.updateParent = function (parent) {
         var isAutoUpdateParentTask = this.validationController._parentAutoCalc;
-        if (isAutoUpdateParentTask && parent && parent.children.length > 0) {
+        if (isAutoUpdateParentTask && parent && parent.children.length > 0)
             this.control.validationController.updateParentsIfRequired(parent.children[0].task.internalId);
-            while (!!parent && !!parent.task) {
-                this.modelManipulator.dispatcher.notifyParentTaskUpdated(parent.task, this.control.viewModel.getDataUpdateErrorCallback());
-                parent = parent.parent;
-            }
-        }
     };
     return TaskCommandBase;
 }(CommandBase_1.CommandBase));
@@ -3134,7 +3149,7 @@ var tslib_1 = __webpack_require__(0);
 var CommandBase_1 = __webpack_require__(5);
 var SimpleCommandState_1 = __webpack_require__(6);
 var TaskPropertyCommandBase = (function (_super) {
-    tslib_1.__extends(TaskPropertyCommandBase, _super);
+    (0, tslib_1.__extends)(TaskPropertyCommandBase, _super);
     function TaskPropertyCommandBase() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -3160,13 +3175,18 @@ exports.TaskPropertyCommandBase = TaskPropertyCommandBase;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DateUtils = void 0;
-var Enums_1 = __webpack_require__(3);
+var Enums_1 = __webpack_require__(2);
 var DateUtils = (function () {
     function DateUtils() {
     }
     DateUtils.getDaysInMonth = function (month, year) {
         var d = new Date(year, month + 1, 0);
         return d.getDate();
+    };
+    DateUtils.getDaysInQuarter = function (start) {
+        var month = Math.floor(start.getMonth() / 3) * 3;
+        var quarterMonths = [month, month + 1, month + 2];
+        return quarterMonths.reduce(function (acc, m) { return acc += DateUtils.getDaysInMonth(m, start.getFullYear()); }, 0);
     };
     DateUtils.getOffsetInMonths = function (start, end) {
         return (end.getFullYear() - start.getFullYear()) * 12 + end.getMonth() - start.getMonth();
@@ -3300,6 +3320,11 @@ var DateUtils = (function () {
         var timezoneOffset = date.getTimezoneOffset();
         return timezoneOffset ? new Date(date.valueOf() + timezoneOffset * 60000) : date;
     };
+    DateUtils.getDSTDelta = function (start, end) {
+        var timeZoneDiff = -DateUtils.getTimezoneOffsetDiff(start, end) * DateUtils.msPerMinute;
+        return timeZoneDiff;
+    };
+    DateUtils.msPerMinute = 60 * 1000;
     DateUtils.msPerHour = 3600000;
     DateUtils.msPerDay = 24 * DateUtils.msPerHour;
     DateUtils.msPerWeek = 7 * DateUtils.msPerDay;
@@ -3376,7 +3401,7 @@ exports.TouchUtils = TouchUtils;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StyleDef = void 0;
 var common_1 = __webpack_require__(1);
-var dom_1 = __webpack_require__(2);
+var dom_1 = __webpack_require__(3);
 var Color_1 = __webpack_require__(16);
 var PredefinedStyles_1 = __webpack_require__(52);
 var Margin_1 = __webpack_require__(40);
@@ -3474,33 +3499,33 @@ var StyleDef = (function () {
         if (!source)
             return;
         if (source instanceof StyleDef) {
-            if (common_1.isDefined(source["font"]))
+            if ((0, common_1.isDefined)(source["font"]))
                 this.font = source["font"];
-            if (common_1.isDefined(source["fontStyle"]))
+            if ((0, common_1.isDefined)(source["fontStyle"]))
                 this.fontStyle = source["fontStyle"];
-            if (common_1.isDefined(source["overflow"]))
+            if ((0, common_1.isDefined)(source["overflow"]))
                 this.overflow = source["overflow"];
-            if (common_1.isDefined(source["halign"]))
+            if ((0, common_1.isDefined)(source["halign"]))
                 this.halign = source["halign"];
-            if (common_1.isDefined(source["valign"]))
+            if ((0, common_1.isDefined)(source["valign"]))
                 this.valign = source["valign"];
-            if (common_1.isDefined(source["fontSize"]))
+            if ((0, common_1.isDefined)(source["fontSize"]))
                 this.fontSize = source["fontSize"];
-            if (common_1.isDefined(source["lineWidth"]))
+            if ((0, common_1.isDefined)(source["lineWidth"]))
                 this.lineWidth = source["lineWidth"];
-            if (common_1.isDefined(source["minCellWidth"]))
+            if ((0, common_1.isDefined)(source["minCellWidth"]))
                 this.minCellWidth = source["minCellWidth"];
-            if (common_1.isDefined(source["minCellHeight"]))
+            if ((0, common_1.isDefined)(source["minCellHeight"]))
                 this.minCellHeight = source["minCellHeight"];
-            if (common_1.isDefined(source["fillColor"]))
+            if ((0, common_1.isDefined)(source["fillColor"]))
                 this.fillColor.assign(source["fillColor"]);
-            if (common_1.isDefined(source["textColor"]))
+            if ((0, common_1.isDefined)(source["textColor"]))
                 this.textColor.assign(source["textColor"]);
-            if (common_1.isDefined(source["lineColor"]))
+            if ((0, common_1.isDefined)(source["lineColor"]))
                 this.lineColor.assign(source["lineColor"]);
-            if (common_1.isDefined(source["cellWidth"]))
+            if ((0, common_1.isDefined)(source["cellWidth"]))
                 this.cellWidth.assign(source["cellWidth"]);
-            if (common_1.isDefined(source["cellPadding"]))
+            if ((0, common_1.isDefined)(source["cellPadding"]))
                 this.cellPadding.assign(source["cellPadding"]);
         }
         else
@@ -3510,19 +3535,19 @@ var StyleDef = (function () {
         if (source.fontFamily)
             this.font = this.getPdfFontFamily(source);
         this.fontStyle = this.getPdfFontStyle(source);
-        if (common_1.isDefined(source.fontSize))
+        if ((0, common_1.isDefined)(source.fontSize))
             this.fontSize = this.getPfrFontSize(source.fontSize);
         if (source.textAlign)
             this.halign = source.textAlign;
         if (source.verticalAlign)
             this.valign = source.verticalAlign;
-        if (common_1.isDefined(source.borderWidth))
+        if ((0, common_1.isDefined)(source.borderWidth))
             this.lineWidth = source.borderWidth;
-        if (common_1.isDefined(source.cellWidth))
+        if ((0, common_1.isDefined)(source.cellWidth))
             this.cellWidth.assign(source.cellWidth);
-        if (common_1.isDefined(source.width))
+        if ((0, common_1.isDefined)(source.width))
             this.minCellWidth = typeof source.width === "number" ? source.width : dom_1.DomUtils.pxToInt(source.width);
-        if (common_1.isDefined(source.height))
+        if ((0, common_1.isDefined)(source.height))
             this.minCellHeight = typeof source.height === "number" ? source.height : dom_1.DomUtils.pxToInt(source.height);
         if (source.backgroundColor)
             this.fillColor.assign(source.backgroundColor);
@@ -3530,10 +3555,10 @@ var StyleDef = (function () {
             this.textColor.assign(source.color);
         if (source.borderColor)
             this.lineColor.assign(source.borderColor);
-        if (common_1.isDefined(source.width))
+        if ((0, common_1.isDefined)(source.width))
             this.cellWidth.assign(source.width);
         this.assignPaddingFromCss(source);
-        if (common_1.isDefined(source.extraLeftPadding)) {
+        if ((0, common_1.isDefined)(source.extraLeftPadding)) {
             var currentLeftPadding = this._cellPadding.left;
             this._cellPadding.left = currentLeftPadding ? currentLeftPadding + source.extraLeftPadding : source.extraLeftPadding;
         }
@@ -3584,23 +3609,23 @@ var StyleDef = (function () {
     StyleDef.prototype.getValue = function () {
         var _this = this;
         var style = {};
-        if (common_1.isDefined(this.font))
+        if ((0, common_1.isDefined)(this.font))
             style["font"] = this.font;
-        if (common_1.isDefined(this.fontStyle))
+        if ((0, common_1.isDefined)(this.fontStyle))
             style["fontStyle"] = this.fontStyle;
-        if (common_1.isDefined(this.fontSize))
+        if ((0, common_1.isDefined)(this.fontSize))
             style["fontSize"] = this.fontSize;
-        if (common_1.isDefined(this.overflow))
+        if ((0, common_1.isDefined)(this.overflow))
             style["overflow"] = this.overflow;
-        if (common_1.isDefined(this.halign))
+        if ((0, common_1.isDefined)(this.halign))
             style["halign"] = this.halign;
-        if (common_1.isDefined(this.valign))
+        if ((0, common_1.isDefined)(this.valign))
             style["valign"] = this.valign;
-        if (common_1.isDefined(this.lineWidth))
+        if ((0, common_1.isDefined)(this.lineWidth))
             style["lineWidth"] = this.lineWidth;
-        if (common_1.isDefined(this.minCellWidth))
+        if ((0, common_1.isDefined)(this.minCellWidth))
             style["minCellWidth"] = this.minCellWidth;
-        if (common_1.isDefined(this.minCellHeight))
+        if ((0, common_1.isDefined)(this.minCellHeight))
             style["minCellHeight"] = this.minCellHeight;
         this.getJsPdfProviderProps().forEach(function (key) {
             var prop = _this[key];
@@ -3656,7 +3681,7 @@ var tslib_1 = __webpack_require__(0);
 var CommandBase_1 = __webpack_require__(5);
 var SimpleCommandState_1 = __webpack_require__(6);
 var DialogBase = (function (_super) {
-    tslib_1.__extends(DialogBase, _super);
+    (0, tslib_1.__extends)(DialogBase, _super);
     function DialogBase() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -3700,7 +3725,7 @@ exports.RemoveDependencyHistoryItem = void 0;
 var tslib_1 = __webpack_require__(0);
 var HistoryItem_1 = __webpack_require__(12);
 var RemoveDependencyHistoryItem = (function (_super) {
-    tslib_1.__extends(RemoveDependencyHistoryItem, _super);
+    (0, tslib_1.__extends)(RemoveDependencyHistoryItem, _super);
     function RemoveDependencyHistoryItem(modelManipulator, dependencyId) {
         var _this = _super.call(this, modelManipulator) || this;
         _this.dependencyId = dependencyId;
@@ -3766,7 +3791,7 @@ exports.DeassignResourceHistoryItem = void 0;
 var tslib_1 = __webpack_require__(0);
 var HistoryItem_1 = __webpack_require__(12);
 var DeassignResourceHistoryItem = (function (_super) {
-    tslib_1.__extends(DeassignResourceHistoryItem, _super);
+    (0, tslib_1.__extends)(DeassignResourceHistoryItem, _super);
     function DeassignResourceHistoryItem(modelManipulator, assignmentId) {
         var _this = _super.call(this, modelManipulator) || this;
         _this.assignmentId = assignmentId;
@@ -3792,9 +3817,9 @@ exports.DeassignResourceHistoryItem = DeassignResourceHistoryItem;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskEndHistoryItem = void 0;
 var tslib_1 = __webpack_require__(0);
-var TaskPropertiesHistoryItemBase_1 = __webpack_require__(14);
+var TaskPropertiesHistoryItemBase_1 = __webpack_require__(15);
 var TaskEndHistoryItem = (function (_super) {
-    tslib_1.__extends(TaskEndHistoryItem, _super);
+    (0, tslib_1.__extends)(TaskEndHistoryItem, _super);
     function TaskEndHistoryItem() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -3815,9 +3840,9 @@ exports.TaskEndHistoryItem = TaskEndHistoryItem;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskProgressHistoryItem = void 0;
 var tslib_1 = __webpack_require__(0);
-var TaskPropertiesHistoryItemBase_1 = __webpack_require__(14);
+var TaskPropertiesHistoryItemBase_1 = __webpack_require__(15);
 var TaskProgressHistoryItem = (function (_super) {
-    tslib_1.__extends(TaskProgressHistoryItem, _super);
+    (0, tslib_1.__extends)(TaskProgressHistoryItem, _super);
     function TaskProgressHistoryItem() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -3838,9 +3863,9 @@ exports.TaskProgressHistoryItem = TaskProgressHistoryItem;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskStartHistoryItem = void 0;
 var tslib_1 = __webpack_require__(0);
-var TaskPropertiesHistoryItemBase_1 = __webpack_require__(14);
+var TaskPropertiesHistoryItemBase_1 = __webpack_require__(15);
 var TaskStartHistoryItem = (function (_super) {
-    tslib_1.__extends(TaskStartHistoryItem, _super);
+    (0, tslib_1.__extends)(TaskStartHistoryItem, _super);
     function TaskStartHistoryItem() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -3864,7 +3889,7 @@ var tslib_1 = __webpack_require__(0);
 var CommandBase_1 = __webpack_require__(5);
 var SimpleCommandState_1 = __webpack_require__(6);
 var ResourceCommandBase = (function (_super) {
-    tslib_1.__extends(ResourceCommandBase, _super);
+    (0, tslib_1.__extends)(ResourceCommandBase, _super);
     function ResourceCommandBase() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -3885,7 +3910,7 @@ exports.ResourceCommandBase = ResourceCommandBase;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HandlerStateBase = void 0;
 var point_1 = __webpack_require__(4);
-var dom_1 = __webpack_require__(2);
+var dom_1 = __webpack_require__(3);
 var HandlerStateBase = (function () {
     function HandlerStateBase(handler) {
         this.handler = handler;
@@ -3954,13 +3979,13 @@ exports.HandlerStateBase = HandlerStateBase;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Margin = void 0;
 var common_1 = __webpack_require__(1);
-var dom_1 = __webpack_require__(2);
+var dom_1 = __webpack_require__(3);
 var Margin = (function () {
     function Margin(values) {
         this.assign(values);
     }
     Margin.prototype.assign = function (values) {
-        if (!common_1.isDefined(values))
+        if (!(0, common_1.isDefined)(values))
             return;
         if (typeof values === "string")
             this.assignFromString(values);
@@ -3976,13 +4001,13 @@ var Margin = (function () {
         this.assignWithValues(values);
     };
     Margin.prototype.assignWithMargin = function (source) {
-        if (common_1.isDefined(source.top))
+        if ((0, common_1.isDefined)(source.top))
             this.top = source.top;
-        if (common_1.isDefined(source.right))
+        if ((0, common_1.isDefined)(source.right))
             this.right = source.right;
-        if (common_1.isDefined(source.bottom))
+        if ((0, common_1.isDefined)(source.bottom))
             this.bottom = source.bottom;
-        if (common_1.isDefined(source.left))
+        if ((0, common_1.isDefined)(source.left))
             this.left = source.left;
     };
     Margin.prototype.assignWithValues = function (values) {
@@ -4018,7 +4043,7 @@ var Margin = (function () {
         return result;
     };
     Margin.prototype.hasValue = function () {
-        return common_1.isDefined(this.top) || common_1.isDefined(this.left) || common_1.isDefined(this.right) || common_1.isDefined(this.bottom);
+        return (0, common_1.isDefined)(this.top) || (0, common_1.isDefined)(this.left) || (0, common_1.isDefined)(this.right) || (0, common_1.isDefined)(this.bottom);
     };
     Margin.prototype.getValue = function () {
         if (!this.hasValue())
@@ -4026,13 +4051,13 @@ var Margin = (function () {
         if (this.top === this.bottom && this.left === this.right && this.top === this.left)
             return this.top;
         var result = {};
-        if (common_1.isDefined(this.top))
+        if ((0, common_1.isDefined)(this.top))
             result["top"] = this.top;
-        if (common_1.isDefined(this.left))
+        if ((0, common_1.isDefined)(this.left))
             result["left"] = this.left;
-        if (common_1.isDefined(this.right))
+        if ((0, common_1.isDefined)(this.right))
             result["right"] = this.right;
-        if (common_1.isDefined(this.bottom))
+        if ((0, common_1.isDefined)(this.bottom))
             result["bottom"] = this.bottom;
         return result;
     };
@@ -4055,10 +4080,10 @@ var DayOfWeekMonthlyOccurrence_1 = __webpack_require__(69);
 var Month_1 = __webpack_require__(231);
 var common_1 = __webpack_require__(1);
 var DateTimeUtils_1 = __webpack_require__(7);
-var RecurrenceFactory_1 = __webpack_require__(85);
+var RecurrenceFactory_1 = __webpack_require__(86);
 var DataObject_1 = __webpack_require__(19);
 var RecurrenceBase = (function (_super) {
-    tslib_1.__extends(RecurrenceBase, _super);
+    (0, tslib_1.__extends)(RecurrenceBase, _super);
     function RecurrenceBase(start, end, interval, occurrenceCount) {
         if (start === void 0) { start = null; }
         if (end === void 0) { end = null; }
@@ -4081,23 +4106,23 @@ var RecurrenceBase = (function (_super) {
         return _this;
     }
     RecurrenceBase.prototype.assignFromObject = function (sourceObj) {
-        if (common_1.isDefined(sourceObj)) {
+        if ((0, common_1.isDefined)(sourceObj)) {
             _super.prototype.assignFromObject.call(this, sourceObj);
             this.start = DateTimeUtils_1.DateTimeUtils.convertToDate(sourceObj.start);
             this.end = DateTimeUtils_1.DateTimeUtils.convertToDate(sourceObj.end);
-            if (common_1.isDefined(sourceObj.interval))
+            if ((0, common_1.isDefined)(sourceObj.interval))
                 this.interval = sourceObj.interval;
-            if (common_1.isDefined(sourceObj.occurrenceCount))
+            if ((0, common_1.isDefined)(sourceObj.occurrenceCount))
                 this.occurrenceCount = sourceObj.occurrenceCount;
-            if (common_1.isDefined(sourceObj.dayOfWeek))
+            if ((0, common_1.isDefined)(sourceObj.dayOfWeek))
                 this.dayOfWeekInternal = RecurrenceFactory_1.RecurrenceFactory.getEnumValue(DayOfWeek_1.DayOfWeek, sourceObj.dayOfWeek);
-            if (common_1.isDefined(sourceObj.day))
+            if ((0, common_1.isDefined)(sourceObj.day))
                 this.dayInternal = sourceObj.day;
-            if (common_1.isDefined(sourceObj.dayOfWeekOccurrence))
+            if ((0, common_1.isDefined)(sourceObj.dayOfWeekOccurrence))
                 this.dayOfWeekOccurrenceInternal = RecurrenceFactory_1.RecurrenceFactory.getEnumValue(DayOfWeekMonthlyOccurrence_1.DayOfWeekMonthlyOccurrence, sourceObj.dayOfWeekOccurrence);
-            if (common_1.isDefined(sourceObj.month))
+            if ((0, common_1.isDefined)(sourceObj.month))
                 this.monthInternal = RecurrenceFactory_1.RecurrenceFactory.getEnumValue(Month_1.Month, sourceObj.month);
-            if (common_1.isDefined(sourceObj.calculateByDayOfWeek))
+            if ((0, common_1.isDefined)(sourceObj.calculateByDayOfWeek))
                 this._calculateByDayOfWeek = !!sourceObj.calculateByDayOfWeek;
         }
     };
@@ -4386,7 +4411,7 @@ exports.ConfirmationDialogParameters = void 0;
 var tslib_1 = __webpack_require__(0);
 var DialogParametersBase_1 = __webpack_require__(33);
 var ConfirmationDialogParameters = (function (_super) {
-    tslib_1.__extends(ConfirmationDialogParameters, _super);
+    (0, tslib_1.__extends)(ConfirmationDialogParameters, _super);
     function ConfirmationDialogParameters(type, callback) {
         var _this = _super.call(this) || this;
         _this.type = type;
@@ -4412,9 +4437,9 @@ exports.ConfirmationDialogParameters = ConfirmationDialogParameters;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskTitleHistoryItem = void 0;
 var tslib_1 = __webpack_require__(0);
-var TaskPropertiesHistoryItemBase_1 = __webpack_require__(14);
+var TaskPropertiesHistoryItemBase_1 = __webpack_require__(15);
 var TaskTitleHistoryItem = (function (_super) {
-    tslib_1.__extends(TaskTitleHistoryItem, _super);
+    (0, tslib_1.__extends)(TaskTitleHistoryItem, _super);
     function TaskTitleHistoryItem() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -4437,7 +4462,7 @@ exports.CompositionHistoryItem = void 0;
 var tslib_1 = __webpack_require__(0);
 var HistoryItem_1 = __webpack_require__(12);
 var CompositionHistoryItem = (function (_super) {
-    tslib_1.__extends(CompositionHistoryItem, _super);
+    (0, tslib_1.__extends)(CompositionHistoryItem, _super);
     function CompositionHistoryItem() {
         var _this = _super.call(this, null) || this;
         _this.historyItems = [];
@@ -4482,7 +4507,7 @@ exports.CreateTaskHistoryItem = void 0;
 var tslib_1 = __webpack_require__(0);
 var HistoryItem_1 = __webpack_require__(12);
 var CreateTaskHistoryItem = (function (_super) {
-    tslib_1.__extends(CreateTaskHistoryItem, _super);
+    (0, tslib_1.__extends)(CreateTaskHistoryItem, _super);
     function CreateTaskHistoryItem(modelManipulator, data) {
         var _this = _super.call(this, modelManipulator) || this;
         _this.data = data;
@@ -4508,10 +4533,10 @@ exports.CreateTaskHistoryItem = CreateTaskHistoryItem;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskPropertyCommandValidation = void 0;
 var tslib_1 = __webpack_require__(0);
-var ConstraintViolationDialogParameters_1 = __webpack_require__(134);
+var ConstraintViolationDialogParameters_1 = __webpack_require__(135);
 var TaskPropertyCommandBase_1 = __webpack_require__(25);
 var TaskPropertyCommandValidation = (function (_super) {
-    tslib_1.__extends(TaskPropertyCommandValidation, _super);
+    (0, tslib_1.__extends)(TaskPropertyCommandValidation, _super);
     function TaskPropertyCommandValidation() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -4559,7 +4584,7 @@ exports.MouseHandlerStateBase = void 0;
 var tslib_1 = __webpack_require__(0);
 var HandlerStateBase_1 = __webpack_require__(39);
 var MouseHandlerStateBase = (function (_super) {
-    tslib_1.__extends(MouseHandlerStateBase, _super);
+    (0, tslib_1.__extends)(MouseHandlerStateBase, _super);
     function MouseHandlerStateBase() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -4583,7 +4608,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GridElementInfo = void 0;
 var point_1 = __webpack_require__(4);
 var size_1 = __webpack_require__(11);
-var margins_1 = __webpack_require__(146);
+var margins_1 = __webpack_require__(147);
 var GridElementInfo = (function () {
     function GridElementInfo(className, position, size) {
         this.id = GridElementInfo.id++;
@@ -4658,7 +4683,7 @@ var point_1 = __webpack_require__(4);
 var evt_1 = __webpack_require__(10);
 var MouseHandlerStateBase_1 = __webpack_require__(48);
 var MouseHandlerDragBaseState = (function (_super) {
-    tslib_1.__extends(MouseHandlerDragBaseState, _super);
+    (0, tslib_1.__extends)(MouseHandlerDragBaseState, _super);
     function MouseHandlerDragBaseState() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -4697,7 +4722,7 @@ var TouchHandlerStateBase_1 = __webpack_require__(75);
 var point_1 = __webpack_require__(4);
 var touch_1 = __webpack_require__(27);
 var TouchHandlerDragBaseState = (function (_super) {
-    tslib_1.__extends(TouchHandlerDragBaseState, _super);
+    (0, tslib_1.__extends)(TouchHandlerDragBaseState, _super);
     function TouchHandlerDragBaseState() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -4872,9 +4897,9 @@ var CellDef = (function () {
         configurable: true
     });
     CellDef.prototype.assign = function (source) {
-        if (common_1.isDefined(source["content"]))
+        if ((0, common_1.isDefined)(source["content"]))
             this.content = source["content"];
-        if (common_1.isDefined(source["colSpan"]))
+        if ((0, common_1.isDefined)(source["colSpan"]))
             this.colSpan = source["colSpan"];
         if (source["styles"])
             this.appendStyles(source["styles"]);
@@ -4927,13 +4952,13 @@ var PdfDataRange = (function () {
             this.assign(source);
     }
     PdfDataRange.prototype.assign = function (source) {
-        if (common_1.isDefined(source.startDate))
+        if ((0, common_1.isDefined)(source.startDate))
             this.startDate = source.startDate instanceof Date ? source.startDate : new Date(source.startDate);
-        if (common_1.isDefined(source.endDate))
+        if ((0, common_1.isDefined)(source.endDate))
             this.endDate = source.endDate instanceof Date ? source.endDate : new Date(source.endDate);
-        if (common_1.isDefined(source.startIndex))
+        if ((0, common_1.isDefined)(source.startIndex))
             this.startIndex = parseInt(source.startIndex);
-        if (common_1.isDefined(source.endIndex))
+        if ((0, common_1.isDefined)(source.endIndex))
             this.endIndex = parseInt(source.endIndex);
     };
     return PdfDataRange;
@@ -4951,17 +4976,17 @@ var GanttPdfExportProps = (function () {
     GanttPdfExportProps.prototype.assign = function (source) {
         if (!source)
             return;
-        if (common_1.isDefined(source["pdfDocument"]))
+        if ((0, common_1.isDefined)(source["pdfDocument"]))
             this.pdfDoc = source["pdfDocument"];
-        if (common_1.isDefined(source.pdfDoc))
+        if ((0, common_1.isDefined)(source.pdfDoc))
             this.pdfDoc = source.pdfDoc;
         this.docCreateMethod = source.docCreateMethod;
-        if (common_1.isDefined(source.fileName))
+        if ((0, common_1.isDefined)(source.fileName))
             this.fileName = source.fileName;
         this.landscape = !!source.landscape;
-        if (common_1.isDefined(source.margins))
+        if ((0, common_1.isDefined)(source.margins))
             this.margins = new Margin_1.Margin(source.margins);
-        if (common_1.isDefined(source.format)) {
+        if ((0, common_1.isDefined)(source.format)) {
             var formatSrc = source.format;
             if (typeof formatSrc === "string")
                 this.format = formatSrc;
@@ -4971,9 +4996,9 @@ var GanttPdfExportProps = (function () {
                 this.pageSize = new size_1.Size(width, height);
             }
         }
-        if (common_1.isDefined(source.exportMode))
+        if ((0, common_1.isDefined)(source.exportMode))
             this.exportMode = this.getEnumValue(ExportMode, source.exportMode);
-        if (common_1.isDefined(source.dateRange)) {
+        if ((0, common_1.isDefined)(source.dateRange)) {
             var rangeSrc = source.dateRange;
             var isEnum = typeof rangeSrc === "number" || typeof rangeSrc === "string";
             if (isEnum)
@@ -4983,7 +5008,7 @@ var GanttPdfExportProps = (function () {
         }
     };
     GanttPdfExportProps.prototype.getEnumValue = function (type, value) {
-        if (!common_1.isDefined(type[value]))
+        if (!(0, common_1.isDefined)(type[value]))
             return null;
         var num = parseInt(value);
         if (!isNaN(num))
@@ -5004,33 +5029,33 @@ exports.GanttPdfExportProps = GanttPdfExportProps;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GanttView = void 0;
-var BarManager_1 = __webpack_require__(89);
+var BarManager_1 = __webpack_require__(90);
 var browser_1 = __webpack_require__(8);
-var CommandManager_1 = __webpack_require__(90);
+var CommandManager_1 = __webpack_require__(91);
 var CreateResourceHistoryItem_1 = __webpack_require__(63);
 var CreateTaskHistoryItem_1 = __webpack_require__(46);
-var DateRange_1 = __webpack_require__(15);
+var DateRange_1 = __webpack_require__(14);
 var DateTimeUtils_1 = __webpack_require__(7);
 var DateUtils_1 = __webpack_require__(26);
-var EventManager_1 = __webpack_require__(142);
-var FullScreenHelperSettings_1 = __webpack_require__(161);
-var FullScreenModeHelper_1 = __webpack_require__(162);
-var Calculator_1 = __webpack_require__(164);
-var HandlerSettings_1 = __webpack_require__(169);
-var History_1 = __webpack_require__(170);
+var EventManager_1 = __webpack_require__(143);
+var FullScreenHelperSettings_1 = __webpack_require__(162);
+var FullScreenModeHelper_1 = __webpack_require__(163);
+var Calculator_1 = __webpack_require__(165);
+var HandlerSettings_1 = __webpack_require__(170);
+var History_1 = __webpack_require__(171);
 var common_1 = __webpack_require__(1);
-var ModelChangesDispatcher_1 = __webpack_require__(172);
-var ModelManipulator_1 = __webpack_require__(178);
-var Exporter_1 = __webpack_require__(193);
-var RenderHelper_1 = __webpack_require__(198);
+var ModelChangesDispatcher_1 = __webpack_require__(173);
+var ModelManipulator_1 = __webpack_require__(179);
+var Exporter_1 = __webpack_require__(194);
+var RenderHelper_1 = __webpack_require__(199);
 var Settings_1 = __webpack_require__(213);
 var size_1 = __webpack_require__(11);
-var StripLineSettings_1 = __webpack_require__(82);
+var StripLineSettings_1 = __webpack_require__(83);
 var TaskEditController_1 = __webpack_require__(71);
 var TaskEditSettings_1 = __webpack_require__(216);
 var ValidationController_1 = __webpack_require__(217);
 var ValidationControllerSettings_1 = __webpack_require__(219);
-var Enums_1 = __webpack_require__(3);
+var Enums_1 = __webpack_require__(2);
 var VisualModel_1 = __webpack_require__(220);
 var GanttView = (function () {
     function GanttView(element, ganttOwner, settings) {
@@ -5211,13 +5236,13 @@ var GanttView = (function () {
     GanttView.prototype.getGanttViewStartDate = function (tasks) {
         if (!tasks)
             return new Date();
-        var dates = tasks.map(function (t) { return typeof t.start === "string" ? new Date(t.start) : t.start; }).filter(function (d) { return common_1.isDefined(d); });
+        var dates = tasks.map(function (t) { return typeof t.start === "string" ? new Date(t.start) : t.start; }).filter(function (d) { return (0, common_1.isDefined)(d); });
         return dates.length > 0 ? dates.reduce(function (min, d) { return d < min ? d : min; }, dates[0]) : new Date();
     };
     GanttView.prototype.getGanttViewEndDate = function (tasks) {
         if (!tasks)
             return new Date();
-        var dates = tasks.map(function (t) { return typeof t.end === "string" ? new Date(t.end) : t.end; }).filter(function (d) { return common_1.isDefined(d); });
+        var dates = tasks.map(function (t) { return typeof t.end === "string" ? new Date(t.end) : t.end; }).filter(function (d) { return (0, common_1.isDefined)(d); });
         return dates.length > 0 ? dates.reduce(function (max, d) { return d > max ? d : max; }, dates[0]) : new Date();
     };
     GanttView.prototype.getTask = function (index) {
@@ -5538,7 +5563,7 @@ var GanttView = (function () {
     };
     GanttView.prototype.deleteDependency = function (key) {
         var internalKey = this.viewModel.convertPublicToInternalKey("dependency", key);
-        if (common_1.isDefined(internalKey))
+        if ((0, common_1.isDefined)(internalKey))
             this.commandManager.removeDependencyCommand.execute(internalKey);
     };
     GanttView.prototype.getDependencyData = function (key) {
@@ -5548,7 +5573,7 @@ var GanttView = (function () {
         var _this = this;
         if (data) {
             var callback = function (id) {
-                if (common_1.isDefined(taskKeys))
+                if ((0, common_1.isDefined)(taskKeys))
                     for (var i = 0; i < taskKeys.length; i++)
                         _this.assignResourceToTask(id, taskKeys[i]);
             };
@@ -5557,13 +5582,13 @@ var GanttView = (function () {
     };
     GanttView.prototype.deleteResource = function (key) {
         var internalKey = this.viewModel.convertPublicToInternalKey("resource", key);
-        if (common_1.isDefined(internalKey))
+        if ((0, common_1.isDefined)(internalKey))
             this.commandManager.removeResourceCommand.execute(internalKey);
     };
     GanttView.prototype.assignResourceToTask = function (resourceKey, taskKey) {
         var resourceInternalKey = this.viewModel.convertPublicToInternalKey("resource", resourceKey);
         var taskInternalKey = this.viewModel.convertPublicToInternalKey("task", taskKey);
-        if (common_1.isDefined(resourceInternalKey) && common_1.isDefined(taskInternalKey))
+        if ((0, common_1.isDefined)(resourceInternalKey) && (0, common_1.isDefined)(taskInternalKey))
             this.commandManager.assignResourceCommand.execute(resourceInternalKey, taskInternalKey);
     };
     GanttView.prototype.unassignResourceFromTask = function (resourceKey, taskKey) {
@@ -5748,7 +5773,7 @@ var tslib_1 = __webpack_require__(0);
 var common_1 = __webpack_require__(1);
 var DataObject_1 = __webpack_require__(19);
 var Resource = (function (_super) {
-    tslib_1.__extends(Resource, _super);
+    (0, tslib_1.__extends)(Resource, _super);
     function Resource() {
         var _this = _super.call(this) || this;
         _this.text = "";
@@ -5756,10 +5781,10 @@ var Resource = (function (_super) {
         return _this;
     }
     Resource.prototype.assignFromObject = function (sourceObj) {
-        if (common_1.isDefined(sourceObj)) {
+        if ((0, common_1.isDefined)(sourceObj)) {
             _super.prototype.assignFromObject.call(this, sourceObj);
             this.text = sourceObj.text;
-            if (common_1.isDefined(sourceObj.color))
+            if ((0, common_1.isDefined)(sourceObj.color))
                 this.color = sourceObj.color;
         }
     };
@@ -5775,7 +5800,7 @@ exports.Resource = Resource;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var list_1 = __webpack_require__(96);
+var list_1 = __webpack_require__(97);
 var MathUtils = (function () {
     function MathUtils() {
     }
@@ -6097,7 +6122,7 @@ exports.ResourceAssigningArguments = void 0;
 var tslib_1 = __webpack_require__(0);
 var BaseArguments_1 = __webpack_require__(9);
 var ResourceAssigningArguments = (function (_super) {
-    tslib_1.__extends(ResourceAssigningArguments, _super);
+    (0, tslib_1.__extends)(ResourceAssigningArguments, _super);
     function ResourceAssigningArguments(resourceId, taskId) {
         var _this = _super.call(this, null) || this;
         _this.values = {
@@ -6132,7 +6157,7 @@ exports.AssignResourceHistoryItem = void 0;
 var tslib_1 = __webpack_require__(0);
 var HistoryItem_1 = __webpack_require__(12);
 var AssignResourceHistoryItem = (function (_super) {
-    tslib_1.__extends(AssignResourceHistoryItem, _super);
+    (0, tslib_1.__extends)(AssignResourceHistoryItem, _super);
     function AssignResourceHistoryItem(modelManipulator, resourceId, taskId) {
         var _this = _super.call(this, modelManipulator) || this;
         _this.resourceId = resourceId;
@@ -6162,7 +6187,7 @@ var tslib_1 = __webpack_require__(0);
 var CommandBase_1 = __webpack_require__(5);
 var SimpleCommandState_1 = __webpack_require__(6);
 var DependencyCommandBase = (function (_super) {
-    tslib_1.__extends(DependencyCommandBase, _super);
+    (0, tslib_1.__extends)(DependencyCommandBase, _super);
     function DependencyCommandBase() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -6185,7 +6210,7 @@ exports.CreateResourceHistoryItem = void 0;
 var tslib_1 = __webpack_require__(0);
 var HistoryItem_1 = __webpack_require__(12);
 var CreateResourceHistoryItem = (function (_super) {
-    tslib_1.__extends(CreateResourceHistoryItem, _super);
+    (0, tslib_1.__extends)(CreateResourceHistoryItem, _super);
     function CreateResourceHistoryItem(modelManipulator, text, color, callback) {
         if (color === void 0) { color = ""; }
         var _this = _super.call(this, modelManipulator) || this;
@@ -6216,7 +6241,7 @@ exports.TaskInsertingArguments = void 0;
 var tslib_1 = __webpack_require__(0);
 var BaseArguments_1 = __webpack_require__(9);
 var TaskInsertingArguments = (function (_super) {
-    tslib_1.__extends(TaskInsertingArguments, _super);
+    (0, tslib_1.__extends)(TaskInsertingArguments, _super);
     function TaskInsertingArguments(key, data) {
         var _this = _super.call(this, key) || this;
         _this.values = data !== null && data !== void 0 ? data : {};
@@ -6266,9 +6291,9 @@ exports.TaskInsertingArguments = TaskInsertingArguments;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskColorHistoryItem = void 0;
 var tslib_1 = __webpack_require__(0);
-var TaskPropertiesHistoryItemBase_1 = __webpack_require__(14);
+var TaskPropertiesHistoryItemBase_1 = __webpack_require__(15);
 var TaskColorHistoryItem = (function (_super) {
-    tslib_1.__extends(TaskColorHistoryItem, _super);
+    (0, tslib_1.__extends)(TaskColorHistoryItem, _super);
     function TaskColorHistoryItem() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -6289,9 +6314,9 @@ exports.TaskColorHistoryItem = TaskColorHistoryItem;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskMoveHistoryItem = void 0;
 var tslib_1 = __webpack_require__(0);
-var TaskPropertiesHistoryItemBase_1 = __webpack_require__(14);
+var TaskPropertiesHistoryItemBase_1 = __webpack_require__(15);
 var TaskMoveHistoryItem = (function (_super) {
-    tslib_1.__extends(TaskMoveHistoryItem, _super);
+    (0, tslib_1.__extends)(TaskMoveHistoryItem, _super);
     function TaskMoveHistoryItem() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -6469,7 +6494,7 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HandlerBase = void 0;
 var TaskEditController_1 = __webpack_require__(71);
-var Enums_1 = __webpack_require__(3);
+var Enums_1 = __webpack_require__(2);
 var HandlerBase = (function () {
     function HandlerBase(settings) {
         this.settings = settings;
@@ -6512,11 +6537,11 @@ exports.HandlerBase = HandlerBase;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskEditController = void 0;
-var Enums_1 = __webpack_require__(3);
-var DateRange_1 = __webpack_require__(15);
-var dom_1 = __webpack_require__(2);
+var Enums_1 = __webpack_require__(2);
+var DateRange_1 = __webpack_require__(14);
+var dom_1 = __webpack_require__(3);
 var browser_1 = __webpack_require__(8);
-var TaskEditTooltip_1 = __webpack_require__(144);
+var TaskEditTooltip_1 = __webpack_require__(145);
 var TooltipSettings_1 = __webpack_require__(72);
 var TaskEditController = (function () {
     function TaskEditController(settings) {
@@ -6650,7 +6675,7 @@ var TaskEditController = (function () {
         }
     };
     TaskEditController.prototype.displayProgressEdit = function () {
-        var isEditingAllowed = this.ganttSettings.editing.enabled || this.ganttSettings.editing.allowTaskUpdate;
+        var isEditingAllowed = this.ganttSettings.editing.enabled && this.ganttSettings.editing.allowTaskUpdate;
         if (!this.viewItem.isCustom && this.canUpdateTask() && isEditingAllowed) {
             this.progressEdit.style.display = "block";
             this.progressEdit.style.left = ((this.task.progress / 100) * this.wrapInfo.size.width - (this.progressEdit.offsetWidth / 2)) + "px";
@@ -6986,17 +7011,17 @@ var TooltipSettings = (function () {
     TooltipSettings.parse = function (settings) {
         var result = new TooltipSettings();
         if (settings) {
-            if (common_1.isDefined(settings.getHeaderHeight))
+            if ((0, common_1.isDefined)(settings.getHeaderHeight))
                 result.getHeaderHeight = settings.getHeaderHeight;
-            if (common_1.isDefined(settings.getTaskTooltipContentTemplate))
+            if ((0, common_1.isDefined)(settings.getTaskTooltipContentTemplate))
                 result.getTaskTooltipContentTemplate = settings.getTaskTooltipContentTemplate;
-            if (common_1.isDefined(settings.getTaskProgressTooltipContentTemplate))
+            if ((0, common_1.isDefined)(settings.getTaskProgressTooltipContentTemplate))
                 result.getTaskProgressTooltipContentTemplate = settings.getTaskProgressTooltipContentTemplate;
-            if (common_1.isDefined(settings.getTaskTimeTooltipContentTemplate))
+            if ((0, common_1.isDefined)(settings.getTaskTimeTooltipContentTemplate))
                 result.getTaskTimeTooltipContentTemplate = settings.getTaskTimeTooltipContentTemplate;
-            if (common_1.isDefined(settings.destroyTemplate))
+            if ((0, common_1.isDefined)(settings.destroyTemplate))
                 result.destroyTemplate = settings.destroyTemplate;
-            if (common_1.isDefined(settings.formatDate))
+            if ((0, common_1.isDefined)(settings.formatDate))
                 result.formatDate = settings.formatDate;
         }
         return result;
@@ -7027,13 +7052,13 @@ var StripLine = (function () {
     StripLine.parse = function (settings) {
         var result = new StripLine();
         if (settings) {
-            if (common_1.isDefined(settings.start))
+            if ((0, common_1.isDefined)(settings.start))
                 result.start = settings.start;
-            if (common_1.isDefined(settings.end))
+            if ((0, common_1.isDefined)(settings.end))
                 result.end = settings.end;
-            if (common_1.isDefined(settings.title))
+            if ((0, common_1.isDefined)(settings.title))
                 result.title = settings.title;
-            if (common_1.isDefined(settings.cssClass))
+            if ((0, common_1.isDefined)(settings.cssClass))
                 result.cssClass = settings.cssClass;
         }
         return result;
@@ -7064,10 +7089,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerDependencyState = exports.dependencyMap = void 0;
 var tslib_1 = __webpack_require__(0);
 var point_1 = __webpack_require__(4);
-var dom_1 = __webpack_require__(2);
+var dom_1 = __webpack_require__(3);
 var evt_1 = __webpack_require__(10);
 var MouseHandlerStateBase_1 = __webpack_require__(48);
-var Enums_1 = __webpack_require__(3);
+var Enums_1 = __webpack_require__(2);
 var Enums_2 = __webpack_require__(23);
 exports.dependencyMap = [];
 exports.dependencyMap[Enums_1.MouseEventSource.TaskEdit_DependencyStart] = [];
@@ -7077,7 +7102,7 @@ exports.dependencyMap[Enums_1.MouseEventSource.TaskEdit_DependencyStart][Enums_1
 exports.dependencyMap[Enums_1.MouseEventSource.TaskEdit_DependencyFinish][Enums_1.MouseEventSource.Successor_DependencyStart] = Enums_2.DependencyType.FS;
 exports.dependencyMap[Enums_1.MouseEventSource.TaskEdit_DependencyFinish][Enums_1.MouseEventSource.Successor_DependencyFinish] = Enums_2.DependencyType.FF;
 var MouseHandlerDependencyState = (function (_super) {
-    tslib_1.__extends(MouseHandlerDependencyState, _super);
+    (0, tslib_1.__extends)(MouseHandlerDependencyState, _super);
     function MouseHandlerDependencyState() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -7135,7 +7160,7 @@ exports.TouchHandlerStateBase = void 0;
 var tslib_1 = __webpack_require__(0);
 var HandlerStateBase_1 = __webpack_require__(39);
 var TouchHandlerStateBase = (function (_super) {
-    tslib_1.__extends(TouchHandlerStateBase, _super);
+    (0, tslib_1.__extends)(TouchHandlerStateBase, _super);
     function TouchHandlerStateBase() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -7194,9 +7219,9 @@ var PdfTaskResourcesInfo = (function () {
             this.text = text;
         if (style)
             this.style = new StyleDef_1.StyleDef(style);
-        if (common_1.isDefined(x))
+        if ((0, common_1.isDefined)(x))
             this.x = x;
-        if (common_1.isDefined(y))
+        if ((0, common_1.isDefined)(y))
             this.y = y;
     }
     PdfTaskResourcesInfo.prototype.assign = function (source) {
@@ -7219,7 +7244,7 @@ exports.PdfTaskResourcesInfo = PdfTaskResourcesInfo;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Width = void 0;
 var PredefinedStyles_1 = __webpack_require__(52);
-var dom_1 = __webpack_require__(2);
+var dom_1 = __webpack_require__(3);
 var Width = (function () {
     function Width(width) {
         this.assign(width);
@@ -7262,6 +7287,265 @@ exports.Width = Width;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ElementTextHelper = void 0;
+var dom_1 = __webpack_require__(3);
+var Enums_1 = __webpack_require__(2);
+var DateUtils_1 = __webpack_require__(26);
+var ElementTextHelper = (function () {
+    function ElementTextHelper(cultureInfo) {
+        this.longestAbbrMonthName = null;
+        this.longestMonthName = null;
+        this.longestAbbrDayName = null;
+        var canvas = document.createElement("canvas");
+        this.textMeasureContext = canvas.getContext("2d");
+        this.cultureInfo = cultureInfo;
+    }
+    ElementTextHelper.prototype.setFont = function (fontHolder) {
+        var computedStyle = dom_1.DomUtils.getCurrentStyle(fontHolder);
+        var font = computedStyle.font ? computedStyle.font :
+            computedStyle.fontStyle + " " + computedStyle.fontVariant + " " + computedStyle.fontWeight + " "
+                + computedStyle.fontSize + " / " + computedStyle.lineHeight + " " + computedStyle.fontFamily;
+        this.textMeasureContext.font = font;
+    };
+    ElementTextHelper.prototype.setSettings = function (startTime, viewType, modelItems) {
+        this.startTime = startTime;
+        this.viewType = viewType;
+        this.modelItems = modelItems;
+    };
+    ElementTextHelper.prototype.getScaleItemStartDate = function (index, scaleType) {
+        var result = new Date(this.startTime);
+        switch (scaleType) {
+            case Enums_1.ViewType.TenMinutes:
+                result.setTime(this.startTime + index * DateUtils_1.DateUtils.msPerHour / 6);
+                break;
+            case Enums_1.ViewType.Hours:
+                result.setTime(this.startTime + index * DateUtils_1.DateUtils.msPerHour);
+                break;
+            case Enums_1.ViewType.SixHours:
+                result.setTime(this.startTime + index * DateUtils_1.DateUtils.msPerHour * 6);
+                break;
+            case Enums_1.ViewType.Days:
+                result.setTime(this.startTime + index * DateUtils_1.DateUtils.msPerDay);
+                break;
+            case Enums_1.ViewType.Weeks:
+                result.setTime(this.startTime + index * DateUtils_1.DateUtils.msPerWeek);
+                break;
+            case Enums_1.ViewType.Months:
+                result.setMonth(result.getMonth() + index);
+                break;
+            case Enums_1.ViewType.Quarter:
+                result.setMonth(result.getMonth() + index * 3);
+                break;
+            case Enums_1.ViewType.Years:
+                result.setFullYear(result.getFullYear() + index);
+                break;
+            case Enums_1.ViewType.FiveYears:
+                result.setFullYear(result.getFullYear() + index * 5);
+                break;
+        }
+        result = this.getScaleStartDateCorrectedWithDST(result);
+        return result;
+    };
+    ElementTextHelper.prototype.getScaleStartDateCorrectedWithDST = function (date) {
+        var timeZoneDiff = DateUtils_1.DateUtils.getTimezoneOffsetDiff(new Date(this.startTime), date);
+        return timeZoneDiff > 0 ? new Date(date.getTime() + timeZoneDiff * 60000) : date;
+    };
+    ElementTextHelper.prototype.getScaleItemText = function (index, scaleType) {
+        var scaleItemStartDate = this.getScaleItemStartDate(index, scaleType);
+        return this.getScaleItemTextByStartDate(scaleItemStartDate, scaleType);
+    };
+    ElementTextHelper.prototype.getScaleItemTextByStartDate = function (startDate, scaleType) {
+        var isViewTypeScale = this.viewType.valueOf() === scaleType.valueOf();
+        switch (scaleType) {
+            case Enums_1.ViewType.TenMinutes:
+                return this.getTenMinutesScaleItemText(startDate);
+            case Enums_1.ViewType.Hours:
+            case Enums_1.ViewType.SixHours:
+                return this.getHoursScaleItemText(startDate);
+            case Enums_1.ViewType.Days:
+                return this.getDaysScaleItemText(startDate, isViewTypeScale);
+            case Enums_1.ViewType.Weeks:
+                return this.getWeeksScaleItemText(startDate, isViewTypeScale);
+            case Enums_1.ViewType.Months:
+                return this.getMonthsScaleItemText(startDate, isViewTypeScale);
+            case Enums_1.ViewType.Quarter:
+                return this.getQuarterScaleItemText(startDate, isViewTypeScale);
+            case Enums_1.ViewType.Years:
+                return this.getYearsScaleItemText(startDate);
+            case Enums_1.ViewType.FiveYears:
+                return this.getFiveYearsScaleItemText(startDate);
+        }
+    };
+    ElementTextHelper.prototype.getTenMinutesScaleItemText = function (scaleItemDate) {
+        var minutes = scaleItemDate.getMinutes() + 1;
+        return (Math.ceil(minutes / 10) * 10).toString();
+    };
+    ElementTextHelper.prototype.getThirtyMinutesScaleItemText = function (scaleItemDate) {
+        var minutes = scaleItemDate.getMinutes();
+        return minutes < 30 ? "30" : "60";
+    };
+    ElementTextHelper.prototype.getHoursScaleItemText = function (scaleItemDate) {
+        var hours = scaleItemDate.getHours();
+        var hourDisplayText = this.getHourDisplayText(hours);
+        var amPmText = hours < 12 ? this.getAmText() : this.getPmText();
+        return this.getHoursScaleItemTextCore(hourDisplayText, amPmText);
+    };
+    ElementTextHelper.prototype.getDaysScaleItemText = function (scaleItemDate, isViewTypeScale) {
+        return this.getDayTotalText(scaleItemDate, true, isViewTypeScale, isViewTypeScale, !isViewTypeScale);
+    };
+    ElementTextHelper.prototype.getWeeksScaleItemText = function (scaleItemDate, isViewTypeScale) {
+        var weekLastDayDate = new Date(scaleItemDate.getTime() + DateUtils_1.DateUtils.msPerWeek - DateUtils_1.DateUtils.msPerDay);
+        return this.getWeeksScaleItemTextCore(this.getDayTotalText(scaleItemDate, isViewTypeScale, true, isViewTypeScale, !isViewTypeScale), this.getDayTotalText(weekLastDayDate, isViewTypeScale, true, isViewTypeScale, !isViewTypeScale));
+    };
+    ElementTextHelper.prototype.getMonthsScaleItemText = function (scaleItemDate, isViewTypeScale) {
+        var monthNames = this.getMonthNames();
+        var yearDisplayText = !isViewTypeScale ? scaleItemDate.getFullYear().toString() : "";
+        return this.getMonthsScaleItemTextCore(monthNames[scaleItemDate.getMonth()], yearDisplayText);
+    };
+    ElementTextHelper.prototype.getQuarterScaleItemText = function (scaleItemDate, isViewTypeScale) {
+        var quarterNames = this.getQuarterNames();
+        var yearDisplayText = !isViewTypeScale ? scaleItemDate.getFullYear().toString() : "";
+        return this.getMonthsScaleItemTextCore(quarterNames[Math.floor(scaleItemDate.getMonth() / 3)], yearDisplayText);
+    };
+    ElementTextHelper.prototype.getYearsScaleItemText = function (scaleItemDate) {
+        return scaleItemDate.getFullYear().toString();
+    };
+    ElementTextHelper.prototype.getFiveYearsScaleItemText = function (scaleItemDate) {
+        return scaleItemDate.getFullYear().toString() + " - " + (scaleItemDate.getFullYear() + 4).toString();
+    };
+    ElementTextHelper.prototype.getHourDisplayText = function (hours) {
+        if (this.hasAmPm())
+            return (hours == 0 ? 12 : (hours <= 12 ? hours : hours - 12)).toString();
+        return hours < 10 ? "0" + hours : hours.toString();
+    };
+    ElementTextHelper.prototype.getDayTotalText = function (scaleItemDate, displayDayName, useAbbrDayNames, useAbbrMonthNames, displayYear) {
+        var monthNames = useAbbrMonthNames ? this.getAbbrMonthNames() : this.getMonthNames();
+        var dayNames = useAbbrDayNames ? this.getAbbrDayNames() : this.getDayNames();
+        var dayNameDisplayText = displayDayName ? dayNames[scaleItemDate.getDay()] : "";
+        var day = scaleItemDate.getDate();
+        var monthName = monthNames[scaleItemDate.getMonth()];
+        var yearDisplayText = displayYear ? scaleItemDate.getFullYear().toString() : "";
+        return this.getDayTotalTextCore(dayNameDisplayText, day.toString(), monthName, yearDisplayText);
+    };
+    ElementTextHelper.prototype.getTaskText = function (index) {
+        var item = this.modelItems[index];
+        return item ? item.task.title : "";
+    };
+    ElementTextHelper.prototype.getTaskVisibility = function (index) {
+        var item = this.modelItems[index];
+        return !!item && item.getVisible();
+    };
+    ElementTextHelper.prototype.hasAmPm = function () {
+        return this.getAmText().length > 0 || this.getPmText().length > 0;
+    };
+    ElementTextHelper.prototype.getScaleItemTextTemplate = function (viewType) {
+        switch (viewType) {
+            case Enums_1.ViewType.TenMinutes:
+                return "00";
+            case Enums_1.ViewType.Hours:
+            case Enums_1.ViewType.SixHours:
+                return this.getHoursScaleItemTextCore("00", this.getAmText());
+            case Enums_1.ViewType.Days:
+                return this.getDayTextTemplate();
+            case Enums_1.ViewType.Weeks:
+                return this.getWeekTextTemplate();
+            case Enums_1.ViewType.Months:
+                return this.getMonthsScaleItemTextCore(this.getLongestMonthName(), "");
+            case Enums_1.ViewType.Quarter:
+                return "Q4";
+            case Enums_1.ViewType.Years:
+                return "0000";
+        }
+    };
+    ElementTextHelper.prototype.getDayTextTemplate = function () {
+        return this.getDayTotalTextCore(this.getLongestAbbrDayName(), "00", this.getLongestAbbrMonthName(), "");
+    };
+    ElementTextHelper.prototype.getWeekTextTemplate = function () {
+        var dayTextTemplate = this.getDayTextTemplate();
+        return this.getWeeksScaleItemTextCore(dayTextTemplate, dayTextTemplate);
+    };
+    ElementTextHelper.prototype.getHoursScaleItemTextCore = function (hourDisplayText, amPmText) {
+        return hourDisplayText + ":00" + (this.hasAmPm() ? " " + amPmText : "");
+    };
+    ElementTextHelper.prototype.getDayTotalTextCore = function (dayName, dayValueString, monthName, yearValueString) {
+        var result = dayName.length > 0 ? dayName + ", " : "";
+        result += dayValueString + " " + monthName;
+        result += yearValueString.length > 0 ? " " + yearValueString : "";
+        return result;
+    };
+    ElementTextHelper.prototype.getWeeksScaleItemTextCore = function (firstDayOfWeekString, lastDayOfWeekString) {
+        return firstDayOfWeekString + " - " + lastDayOfWeekString;
+    };
+    ElementTextHelper.prototype.getMonthsScaleItemTextCore = function (monthName, yearValueString) {
+        var result = monthName;
+        if (yearValueString.length > 0)
+            result += " " + yearValueString;
+        return result;
+    };
+    ElementTextHelper.prototype.getLongestAbbrMonthName = function () {
+        if (this.longestAbbrMonthName == null)
+            this.longestAbbrMonthName = this.getLongestText(this.getAbbrMonthNames());
+        return this.longestAbbrMonthName;
+    };
+    ElementTextHelper.prototype.getLongestMonthName = function () {
+        if (this.longestMonthName == null)
+            this.longestMonthName = this.getLongestText(this.getMonthNames());
+        return this.longestMonthName;
+    };
+    ElementTextHelper.prototype.getLongestAbbrDayName = function () {
+        if (this.longestAbbrDayName == null)
+            this.longestAbbrDayName = this.getLongestText(this.getAbbrDayNames());
+        return this.longestAbbrDayName;
+    };
+    ElementTextHelper.prototype.getLongestText = function (texts) {
+        var _this = this;
+        var result = "";
+        var longestTextWidth = 0;
+        texts.forEach(function (text) {
+            var textWidth = _this.getTextWidth(text);
+            if (textWidth > longestTextWidth) {
+                longestTextWidth = textWidth;
+                result = text;
+            }
+        });
+        return result;
+    };
+    ElementTextHelper.prototype.getTextWidth = function (text) {
+        return Math.round(this.textMeasureContext.measureText(text).width);
+    };
+    ElementTextHelper.prototype.getAmText = function () {
+        return this.cultureInfo.amText;
+    };
+    ElementTextHelper.prototype.getPmText = function () {
+        return this.cultureInfo.pmText;
+    };
+    ElementTextHelper.prototype.getQuarterNames = function () {
+        return this.cultureInfo.quarterNames;
+    };
+    ElementTextHelper.prototype.getMonthNames = function () {
+        return this.cultureInfo.monthNames;
+    };
+    ElementTextHelper.prototype.getDayNames = function () {
+        return this.cultureInfo.dayNames;
+    };
+    ElementTextHelper.prototype.getAbbrMonthNames = function () {
+        return this.cultureInfo.abbrMonthNames;
+    };
+    ElementTextHelper.prototype.getAbbrDayNames = function () {
+        return this.cultureInfo.abbrDayNames;
+    };
+    return ElementTextHelper;
+}());
+exports.ElementTextHelper = ElementTextHelper;
+
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.PdfTimeMarkerInfo = void 0;
 var point_1 = __webpack_require__(4);
 var size_1 = __webpack_require__(11);
@@ -7279,7 +7563,7 @@ var PdfTimeMarkerInfo = (function () {
             this.color.assign(color);
         if (lineColor)
             this.lineColor.assign(lineColor);
-        if (common_1.isDefined(isStripLine))
+        if ((0, common_1.isDefined)(isStripLine))
             this.isStripLine = isStripLine;
     }
     PdfTimeMarkerInfo.prototype.assign = function (source) {
@@ -7298,7 +7582,7 @@ exports.PdfTimeMarkerInfo = PdfTimeMarkerInfo;
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7316,7 +7600,7 @@ exports.HistoryItemState = HistoryItemState;
 
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7349,7 +7633,7 @@ exports.EllipsisHelper = EllipsisHelper;
 
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7367,15 +7651,15 @@ var StripLineSettings = (function () {
     StripLineSettings.parse = function (settings) {
         var result = new StripLineSettings();
         if (settings) {
-            if (common_1.isDefined(settings.showCurrentTime))
+            if ((0, common_1.isDefined)(settings.showCurrentTime))
                 result.showCurrentTime = settings.showCurrentTime;
-            if (common_1.isDefined(settings.currentTimeUpdateInterval))
+            if ((0, common_1.isDefined)(settings.currentTimeUpdateInterval))
                 result.currentTimeUpdateInterval = settings.currentTimeUpdateInterval;
-            if (common_1.isDefined(settings.currentTimeTitle))
+            if ((0, common_1.isDefined)(settings.currentTimeTitle))
                 result.currentTimeTitle = settings.currentTimeTitle;
-            if (common_1.isDefined(settings.currentTimeCssClass))
+            if ((0, common_1.isDefined)(settings.currentTimeCssClass))
                 result.currentTimeCssClass = settings.currentTimeCssClass;
-            if (common_1.isDefined(settings.stripLines))
+            if ((0, common_1.isDefined)(settings.stripLines))
                 for (var i = 0; i < settings.stripLines.length; i++)
                     result.stripLines.push(StripLine_1.StripLine.parse(settings.stripLines[i]));
         }
@@ -7399,7 +7683,7 @@ exports.StripLineSettings = StripLineSettings;
 
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7411,7 +7695,7 @@ var common_1 = __webpack_require__(1);
 var DataObject_1 = __webpack_require__(19);
 var Enums_1 = __webpack_require__(23);
 var Dependency = (function (_super) {
-    tslib_1.__extends(Dependency, _super);
+    (0, tslib_1.__extends)(Dependency, _super);
     function Dependency() {
         var _this = _super.call(this) || this;
         _this.predecessorId = "";
@@ -7427,7 +7711,7 @@ var Dependency = (function (_super) {
         configurable: true
     });
     Dependency.prototype.assignFromObject = function (sourceObj) {
-        if (common_1.isDefined(sourceObj)) {
+        if ((0, common_1.isDefined)(sourceObj)) {
             _super.prototype.assignFromObject.call(this, sourceObj);
             this.internalId = String(sourceObj.id);
             this.predecessorId = String(sourceObj.predecessorId);
@@ -7436,7 +7720,7 @@ var Dependency = (function (_super) {
         }
     };
     Dependency.prototype.parseType = function (type) {
-        if (common_1.isDefined(type)) {
+        if ((0, common_1.isDefined)(type)) {
             var text = type.toString().toUpperCase();
             switch (text) {
                 case "SS":
@@ -7460,7 +7744,7 @@ exports.Dependency = Dependency;
 
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7471,7 +7755,7 @@ var tslib_1 = __webpack_require__(0);
 var common_1 = __webpack_require__(1);
 var DataObject_1 = __webpack_require__(19);
 var ResourceAssignment = (function (_super) {
-    tslib_1.__extends(ResourceAssignment, _super);
+    (0, tslib_1.__extends)(ResourceAssignment, _super);
     function ResourceAssignment() {
         var _this = _super.call(this) || this;
         _this.taskId = "";
@@ -7479,7 +7763,7 @@ var ResourceAssignment = (function (_super) {
         return _this;
     }
     ResourceAssignment.prototype.assignFromObject = function (sourceObj) {
-        if (common_1.isDefined(sourceObj)) {
+        if ((0, common_1.isDefined)(sourceObj)) {
             _super.prototype.assignFromObject.call(this, sourceObj);
             this.taskId = String(sourceObj.taskId);
             this.resourceId = String(sourceObj.resourceId);
@@ -7491,7 +7775,7 @@ exports.ResourceAssignment = ResourceAssignment;
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7499,7 +7783,7 @@ exports.ResourceAssignment = ResourceAssignment;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RecurrenceFactory = void 0;
 var common_1 = __webpack_require__(1);
-var Daily_1 = __webpack_require__(86);
+var Daily_1 = __webpack_require__(87);
 var Weekly_1 = __webpack_require__(232);
 var Monthly_1 = __webpack_require__(233);
 var Yearly_1 = __webpack_require__(235);
@@ -7531,7 +7815,7 @@ var RecurrenceFactory = (function () {
         return recurrence;
     };
     RecurrenceFactory.getEnumValue = function (type, value) {
-        if (!common_1.isDefined(type[value]))
+        if (!(0, common_1.isDefined)(type[value]))
             return null;
         var num = parseInt(value);
         if (!isNaN(num))
@@ -7544,7 +7828,7 @@ exports.RecurrenceFactory = RecurrenceFactory;
 
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7555,7 +7839,7 @@ var tslib_1 = __webpack_require__(0);
 var RecurrenceBase_1 = __webpack_require__(41);
 var DateTimeUtils_1 = __webpack_require__(7);
 var Daily = (function (_super) {
-    tslib_1.__extends(Daily, _super);
+    (0, tslib_1.__extends)(Daily, _super);
     function Daily() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -7578,27 +7862,27 @@ exports.Daily = Daily;
 
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GanttView = exports.default = void 0;
-__webpack_require__(88);
+__webpack_require__(89);
 var GanttView_1 = __webpack_require__(56);
 Object.defineProperty(exports, "default", { enumerable: true, get: function () { return GanttView_1.GanttView; } });
 Object.defineProperty(exports, "GanttView", { enumerable: true, get: function () { return GanttView_1.GanttView; } });
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7657,44 +7941,44 @@ exports.BarManager = BarManager;
 
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommandManager = void 0;
-var ConfirmationDialog_1 = __webpack_require__(91);
-var ConstraintViolationDialog_1 = __webpack_require__(92);
-var ResourcesDialog_1 = __webpack_require__(93);
-var TaskEditDialog_1 = __webpack_require__(100);
-var ClientCommand_1 = __webpack_require__(102);
-var CollapseAllCommand_1 = __webpack_require__(103);
-var ExpandAllCommand_1 = __webpack_require__(104);
-var CreateDependencyCommand_1 = __webpack_require__(105);
-var RemoveDependencyCommand_1 = __webpack_require__(108);
-var FullScreenCommand_1 = __webpack_require__(110);
-var RedoCommand_1 = __webpack_require__(111);
-var UndoCommand_1 = __webpack_require__(112);
-var AssignResourceCommand_1 = __webpack_require__(113);
-var CreateResourceCommand_1 = __webpack_require__(114);
-var DeassignResourceCommand_1 = __webpack_require__(116);
-var ResourceColorCommand_1 = __webpack_require__(117);
-var RemoveResourceCommand_1 = __webpack_require__(121);
-var CreateSubTaskCommand_1 = __webpack_require__(124);
-var CreateTaskCommand_1 = __webpack_require__(125);
-var RemoveTaskCommand_1 = __webpack_require__(126);
-var TaskAddContextItemCommand_1 = __webpack_require__(129);
-var TaskColorCommand_1 = __webpack_require__(130);
-var TaskDescriptionCommand_1 = __webpack_require__(131);
-var TaskEndCommand_1 = __webpack_require__(133);
-var TaskMoveCommand_1 = __webpack_require__(135);
-var TaskProgressCommand_1 = __webpack_require__(136);
-var TaskStartCommand_1 = __webpack_require__(137);
-var TaskTitleCommand_1 = __webpack_require__(138);
-var UpdateTaskCommand_1 = __webpack_require__(139);
-var ZoomInCommand_1 = __webpack_require__(140);
-var ZoomOutCommand_1 = __webpack_require__(141);
+var ConfirmationDialog_1 = __webpack_require__(92);
+var ConstraintViolationDialog_1 = __webpack_require__(93);
+var ResourcesDialog_1 = __webpack_require__(94);
+var TaskEditDialog_1 = __webpack_require__(101);
+var ClientCommand_1 = __webpack_require__(103);
+var CollapseAllCommand_1 = __webpack_require__(104);
+var ExpandAllCommand_1 = __webpack_require__(105);
+var CreateDependencyCommand_1 = __webpack_require__(106);
+var RemoveDependencyCommand_1 = __webpack_require__(109);
+var FullScreenCommand_1 = __webpack_require__(111);
+var RedoCommand_1 = __webpack_require__(112);
+var UndoCommand_1 = __webpack_require__(113);
+var AssignResourceCommand_1 = __webpack_require__(114);
+var CreateResourceCommand_1 = __webpack_require__(115);
+var DeassignResourceCommand_1 = __webpack_require__(117);
+var ResourceColorCommand_1 = __webpack_require__(118);
+var RemoveResourceCommand_1 = __webpack_require__(122);
+var CreateSubTaskCommand_1 = __webpack_require__(125);
+var CreateTaskCommand_1 = __webpack_require__(126);
+var RemoveTaskCommand_1 = __webpack_require__(127);
+var TaskAddContextItemCommand_1 = __webpack_require__(130);
+var TaskColorCommand_1 = __webpack_require__(131);
+var TaskDescriptionCommand_1 = __webpack_require__(132);
+var TaskEndCommand_1 = __webpack_require__(134);
+var TaskMoveCommand_1 = __webpack_require__(136);
+var TaskProgressCommand_1 = __webpack_require__(137);
+var TaskStartCommand_1 = __webpack_require__(138);
+var TaskTitleCommand_1 = __webpack_require__(139);
+var UpdateTaskCommand_1 = __webpack_require__(140);
+var ZoomInCommand_1 = __webpack_require__(141);
+var ZoomOutCommand_1 = __webpack_require__(142);
 var CommandManager = (function () {
     function CommandManager(control) {
         this.control = control;
@@ -7836,7 +8120,7 @@ exports.CommandManager = CommandManager;
 
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7846,7 +8130,7 @@ exports.ConfirmationDialog = void 0;
 var tslib_1 = __webpack_require__(0);
 var DialogBase_1 = __webpack_require__(30);
 var ConfirmationDialog = (function (_super) {
-    tslib_1.__extends(ConfirmationDialog, _super);
+    (0, tslib_1.__extends)(ConfirmationDialog, _super);
     function ConfirmationDialog() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -7869,7 +8153,7 @@ exports.ConfirmationDialog = ConfirmationDialog;
 
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7881,7 +8165,7 @@ var RemoveDependencyHistoryItem_1 = __webpack_require__(31);
 var DialogBase_1 = __webpack_require__(30);
 var DialogEnums_1 = __webpack_require__(32);
 var ConstraintViolationDialogCommand = (function (_super) {
-    tslib_1.__extends(ConstraintViolationDialogCommand, _super);
+    (0, tslib_1.__extends)(ConstraintViolationDialogCommand, _super);
     function ConstraintViolationDialogCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -7918,7 +8202,7 @@ exports.ConstraintViolationDialogCommand = ConstraintViolationDialogCommand;
 
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7930,9 +8214,9 @@ var ResourceCollection_1 = __webpack_require__(21);
 var DialogBase_1 = __webpack_require__(30);
 var DialogEnums_1 = __webpack_require__(32);
 var ConfirmationDialogParameters_1 = __webpack_require__(43);
-var ResourcesDialogParameters_1 = __webpack_require__(99);
+var ResourcesDialogParameters_1 = __webpack_require__(100);
 var ResourcesDialogCommand = (function (_super) {
-    tslib_1.__extends(ResourcesDialogCommand, _super);
+    (0, tslib_1.__extends)(ResourcesDialogCommand, _super);
     function ResourcesDialogCommand() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.resourcesForDelete = [];
@@ -7975,7 +8259,7 @@ var ResourcesDialogCommand = (function (_super) {
                     _this.control.commandManager.removeResourceCommand.execute(_this.resourcesForDelete[i].internalId);
                 _this.history.endTransaction();
             });
-            confirmationDialogParameters.message = this.resourcesForDelete.reduce(function (a, b) { return tslib_1.__spreadArray(tslib_1.__spreadArray([], a), [b.text]); }, []).join(", ");
+            confirmationDialogParameters.message = this.resourcesForDelete.reduce(function (a, b) { return (0, tslib_1.__spreadArray)((0, tslib_1.__spreadArray)([], a, true), [b.text], false); }, []).join(", ");
             if (this.callBack)
                 confirmationDialog.afterClosing = function () { return _this.callBack(); };
             confirmationDialog.execute(confirmationDialogParameters);
@@ -7992,14 +8276,14 @@ exports.ResourcesDialogCommand = ResourcesDialogCommand;
 
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GanttJsonUtils = void 0;
-var json_1 = __webpack_require__(95);
+var json_1 = __webpack_require__(96);
 var GanttJsonUtils = (function () {
     function GanttJsonUtils() {
     }
@@ -8012,7 +8296,7 @@ exports.GanttJsonUtils = GanttJsonUtils;
 
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8030,14 +8314,14 @@ exports.JsonUtils = JsonUtils;
 
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var min_max_1 = __webpack_require__(97);
-var comparers_1 = __webpack_require__(98);
+var min_max_1 = __webpack_require__(98);
+var comparers_1 = __webpack_require__(99);
 var ListUtils = (function () {
     function ListUtils() {
     }
@@ -8484,7 +8768,7 @@ exports.ListUtils = ListUtils;
 
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8544,7 +8828,7 @@ exports.ExtendedMinMax = ExtendedMinMax;
 
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8582,7 +8866,7 @@ exports.Equals = Equals;
 
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8593,7 +8877,7 @@ var tslib_1 = __webpack_require__(0);
 var ResourceCollection_1 = __webpack_require__(21);
 var DialogParametersBase_1 = __webpack_require__(33);
 var ResourcesDialogParameters = (function (_super) {
-    tslib_1.__extends(ResourcesDialogParameters, _super);
+    (0, tslib_1.__extends)(ResourcesDialogParameters, _super);
     function ResourcesDialogParameters() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -8609,7 +8893,7 @@ exports.ResourcesDialogParameters = ResourcesDialogParameters;
 
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8626,9 +8910,9 @@ var TaskProgressHistoryItem_1 = __webpack_require__(36);
 var TaskStartHistoryItem_1 = __webpack_require__(37);
 var TaskTitleHistoryItem_1 = __webpack_require__(44);
 var DialogBase_1 = __webpack_require__(30);
-var TaskEditParameters_1 = __webpack_require__(101);
+var TaskEditParameters_1 = __webpack_require__(102);
 var TaskEditDialogCommand = (function (_super) {
-    tslib_1.__extends(TaskEditDialogCommand, _super);
+    (0, tslib_1.__extends)(TaskEditDialogCommand, _super);
     function TaskEditDialogCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -8693,13 +8977,14 @@ var TaskEditDialogCommand = (function (_super) {
         for (var i = 0; i < oldParameters.assigned.length; i++) {
             _loop_1(i);
         }
-        var updateParents = newParameters.start !== oldParameters.start || newParameters.end !== oldParameters.end || newParameters.progress !== oldParameters.progress || newParameters.title !== oldParameters.title;
+        var updateParents = newParameters.start !== oldParameters.start || newParameters.end !== oldParameters.end || newParameters.progress !== oldParameters.progress;
         if (success && updateParents)
             this.validationController.updateParentsIfRequired(oldParameters.id);
         this.history.endTransaction();
         return false;
     };
     TaskEditDialogCommand.prototype.createParameters = function (options) {
+        var _this = this;
         options = options || this.control.viewModel.tasks.getItemById(this.control.currentSelectedTaskID);
         var param = new TaskEditParameters_1.TaskEditParameters();
         param.id = options.internalId;
@@ -8714,6 +8999,8 @@ var TaskEditDialogCommand = (function (_super) {
         param.showTaskEditDialogCommand = this.control.commandManager.showTaskEditDialog;
         param.enableEdit = this.isTaskEditEnabled();
         param.enableRangeEdit = this.isTaskRangeEditEnabled(options);
+        param.isValidationRequired = this.control.settings.validation.validateDependencies;
+        param.getCorrectDateRange = function (taskId, startDate, endDate) { return _this.control.validationController.getCorrectDateRange(taskId, startDate, endDate); };
         return param;
     };
     TaskEditDialogCommand.prototype.isTaskEditEnabled = function () {
@@ -8742,7 +9029,7 @@ exports.TaskEditDialogCommand = TaskEditDialogCommand;
 
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8753,11 +9040,12 @@ var tslib_1 = __webpack_require__(0);
 var ResourceCollection_1 = __webpack_require__(21);
 var DialogParametersBase_1 = __webpack_require__(33);
 var TaskEditParameters = (function (_super) {
-    tslib_1.__extends(TaskEditParameters, _super);
+    (0, tslib_1.__extends)(TaskEditParameters, _super);
     function TaskEditParameters() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.enableEdit = true;
         _this.enableRangeEdit = true;
+        _this.isValidationRequired = false;
         _this.hiddenFields = [];
         _this.readOnlyFields = [];
         return _this;
@@ -8779,6 +9067,8 @@ var TaskEditParameters = (function (_super) {
         clone.enableRangeEdit = this.enableRangeEdit;
         clone.hiddenFields = this.hiddenFields.slice();
         clone.readOnlyFields = this.readOnlyFields.slice();
+        clone.isValidationRequired = this.isValidationRequired;
+        clone.getCorrectDateRange = this.getCorrectDateRange;
         return clone;
     };
     return TaskEditParameters;
@@ -8787,7 +9077,7 @@ exports.TaskEditParameters = TaskEditParameters;
 
 
 /***/ }),
-/* 102 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8814,7 +9104,7 @@ var GanttClientCommand;
 
 
 /***/ }),
-/* 103 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8825,7 +9115,7 @@ var tslib_1 = __webpack_require__(0);
 var CommandBase_1 = __webpack_require__(5);
 var SimpleCommandState_1 = __webpack_require__(6);
 var CollapseAllCommand = (function (_super) {
-    tslib_1.__extends(CollapseAllCommand, _super);
+    (0, tslib_1.__extends)(CollapseAllCommand, _super);
     function CollapseAllCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -8848,7 +9138,7 @@ exports.CollapseAllCommand = CollapseAllCommand;
 
 
 /***/ }),
-/* 104 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8859,7 +9149,7 @@ var tslib_1 = __webpack_require__(0);
 var CommandBase_1 = __webpack_require__(5);
 var SimpleCommandState_1 = __webpack_require__(6);
 var ExpandAllCommand = (function (_super) {
-    tslib_1.__extends(ExpandAllCommand, _super);
+    (0, tslib_1.__extends)(ExpandAllCommand, _super);
     function ExpandAllCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -8882,7 +9172,7 @@ exports.ExpandAllCommand = ExpandAllCommand;
 
 
 /***/ }),
-/* 105 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8891,11 +9181,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateDependencyCommand = void 0;
 var tslib_1 = __webpack_require__(0);
 var Enums_1 = __webpack_require__(23);
-var DependencyInsertingArguments_1 = __webpack_require__(106);
-var InsertDependencyHistoryItem_1 = __webpack_require__(107);
+var DependencyInsertingArguments_1 = __webpack_require__(107);
+var InsertDependencyHistoryItem_1 = __webpack_require__(108);
 var DependencyCommandBase_1 = __webpack_require__(62);
 var CreateDependencyCommand = (function (_super) {
-    tslib_1.__extends(CreateDependencyCommand, _super);
+    (0, tslib_1.__extends)(CreateDependencyCommand, _super);
     function CreateDependencyCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -8934,7 +9224,7 @@ exports.CreateDependencyCommand = CreateDependencyCommand;
 
 
 /***/ }),
-/* 106 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8944,7 +9234,7 @@ exports.DependencyInsertingArguments = void 0;
 var tslib_1 = __webpack_require__(0);
 var BaseArguments_1 = __webpack_require__(9);
 var DependencyInsertingArguments = (function (_super) {
-    tslib_1.__extends(DependencyInsertingArguments, _super);
+    (0, tslib_1.__extends)(DependencyInsertingArguments, _super);
     function DependencyInsertingArguments(predecessorId, successorId, type) {
         var _this = _super.call(this, null) || this;
         _this.values = {
@@ -8975,7 +9265,7 @@ exports.DependencyInsertingArguments = DependencyInsertingArguments;
 
 
 /***/ }),
-/* 107 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8985,7 +9275,7 @@ exports.InsertDependencyHistoryItem = void 0;
 var tslib_1 = __webpack_require__(0);
 var HistoryItem_1 = __webpack_require__(12);
 var InsertDependencyHistoryItem = (function (_super) {
-    tslib_1.__extends(InsertDependencyHistoryItem, _super);
+    (0, tslib_1.__extends)(InsertDependencyHistoryItem, _super);
     function InsertDependencyHistoryItem(modelManipulator, predecessorId, successorId, type) {
         var _this = _super.call(this, modelManipulator) || this;
         _this.predecessorId = predecessorId;
@@ -9005,7 +9295,7 @@ exports.InsertDependencyHistoryItem = InsertDependencyHistoryItem;
 
 
 /***/ }),
-/* 108 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9015,11 +9305,11 @@ exports.RemoveDependencyCommand = void 0;
 var tslib_1 = __webpack_require__(0);
 var DialogEnums_1 = __webpack_require__(32);
 var ConfirmationDialogParameters_1 = __webpack_require__(43);
-var DependencyRemovingArguments_1 = __webpack_require__(109);
+var DependencyRemovingArguments_1 = __webpack_require__(110);
 var RemoveDependencyHistoryItem_1 = __webpack_require__(31);
 var DependencyCommandBase_1 = __webpack_require__(62);
 var RemoveDependencyCommand = (function (_super) {
-    tslib_1.__extends(RemoveDependencyCommand, _super);
+    (0, tslib_1.__extends)(RemoveDependencyCommand, _super);
     function RemoveDependencyCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -9064,7 +9354,7 @@ exports.RemoveDependencyCommand = RemoveDependencyCommand;
 
 
 /***/ }),
-/* 109 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9074,7 +9364,7 @@ exports.DependencyRemovingArguments = void 0;
 var tslib_1 = __webpack_require__(0);
 var BaseArguments_1 = __webpack_require__(9);
 var DependencyRemovingArguments = (function (_super) {
-    tslib_1.__extends(DependencyRemovingArguments, _super);
+    (0, tslib_1.__extends)(DependencyRemovingArguments, _super);
     function DependencyRemovingArguments(dependency) {
         var _this = _super.call(this, dependency.id) || this;
         _this.values = dependency;
@@ -9086,7 +9376,7 @@ exports.DependencyRemovingArguments = DependencyRemovingArguments;
 
 
 /***/ }),
-/* 110 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9097,7 +9387,7 @@ var tslib_1 = __webpack_require__(0);
 var CommandBase_1 = __webpack_require__(5);
 var SimpleCommandState_1 = __webpack_require__(6);
 var ToggleFullScreenCommand = (function (_super) {
-    tslib_1.__extends(ToggleFullScreenCommand, _super);
+    (0, tslib_1.__extends)(ToggleFullScreenCommand, _super);
     function ToggleFullScreenCommand() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.isInFullScreenMode = false;
@@ -9122,7 +9412,7 @@ exports.ToggleFullScreenCommand = ToggleFullScreenCommand;
 
 
 /***/ }),
-/* 111 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9133,7 +9423,7 @@ var tslib_1 = __webpack_require__(0);
 var CommandBase_1 = __webpack_require__(5);
 var SimpleCommandState_1 = __webpack_require__(6);
 var RedoCommand = (function (_super) {
-    tslib_1.__extends(RedoCommand, _super);
+    (0, tslib_1.__extends)(RedoCommand, _super);
     function RedoCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -9158,7 +9448,7 @@ exports.RedoCommand = RedoCommand;
 
 
 /***/ }),
-/* 112 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9169,7 +9459,7 @@ var tslib_1 = __webpack_require__(0);
 var CommandBase_1 = __webpack_require__(5);
 var SimpleCommandState_1 = __webpack_require__(6);
 var UndoCommand = (function (_super) {
-    tslib_1.__extends(UndoCommand, _super);
+    (0, tslib_1.__extends)(UndoCommand, _super);
     function UndoCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -9194,7 +9484,7 @@ exports.UndoCommand = UndoCommand;
 
 
 /***/ }),
-/* 113 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9206,7 +9496,7 @@ var ResourceAssigningArguments_1 = __webpack_require__(60);
 var AssignResourceHistoryItem_1 = __webpack_require__(61);
 var ResourceCommandBase_1 = __webpack_require__(38);
 var AssignResourceCommand = (function (_super) {
-    tslib_1.__extends(AssignResourceCommand, _super);
+    (0, tslib_1.__extends)(AssignResourceCommand, _super);
     function AssignResourceCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -9235,7 +9525,7 @@ exports.AssignResourceCommand = AssignResourceCommand;
 
 
 /***/ }),
-/* 114 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9243,11 +9533,11 @@ exports.AssignResourceCommand = AssignResourceCommand;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateResourceCommand = void 0;
 var tslib_1 = __webpack_require__(0);
-var ResourceInsertingArguments_1 = __webpack_require__(115);
+var ResourceInsertingArguments_1 = __webpack_require__(116);
 var CreateResourceHistoryItem_1 = __webpack_require__(63);
 var ResourceCommandBase_1 = __webpack_require__(38);
 var CreateResourceCommand = (function (_super) {
-    tslib_1.__extends(CreateResourceCommand, _super);
+    (0, tslib_1.__extends)(CreateResourceCommand, _super);
     function CreateResourceCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -9272,7 +9562,7 @@ exports.CreateResourceCommand = CreateResourceCommand;
 
 
 /***/ }),
-/* 115 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9282,7 +9572,7 @@ exports.ResourceInsertingArguments = void 0;
 var tslib_1 = __webpack_require__(0);
 var BaseArguments_1 = __webpack_require__(9);
 var ResourceInsertingArguments = (function (_super) {
-    tslib_1.__extends(ResourceInsertingArguments, _super);
+    (0, tslib_1.__extends)(ResourceInsertingArguments, _super);
     function ResourceInsertingArguments(text, color) {
         if (color === void 0) { color = ""; }
         var _this = _super.call(this, null) || this;
@@ -9308,7 +9598,7 @@ exports.ResourceInsertingArguments = ResourceInsertingArguments;
 
 
 /***/ }),
-/* 116 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9319,7 +9609,7 @@ var tslib_1 = __webpack_require__(0);
 var DeassignResourceHistoryItem_1 = __webpack_require__(34);
 var ResourceCommandBase_1 = __webpack_require__(38);
 var DeassignResourceCommand = (function (_super) {
-    tslib_1.__extends(DeassignResourceCommand, _super);
+    (0, tslib_1.__extends)(DeassignResourceCommand, _super);
     function DeassignResourceCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -9343,7 +9633,7 @@ exports.DeassignResourceCommand = DeassignResourceCommand;
 
 
 /***/ }),
-/* 117 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9351,10 +9641,10 @@ exports.DeassignResourceCommand = DeassignResourceCommand;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ResourceColorCommand = void 0;
 var tslib_1 = __webpack_require__(0);
-var ResourceColorHistoryItem_1 = __webpack_require__(118);
-var ResourcePropertyCommandBase_1 = __webpack_require__(120);
+var ResourceColorHistoryItem_1 = __webpack_require__(119);
+var ResourcePropertyCommandBase_1 = __webpack_require__(121);
 var ResourceColorCommand = (function (_super) {
-    tslib_1.__extends(ResourceColorCommand, _super);
+    (0, tslib_1.__extends)(ResourceColorCommand, _super);
     function ResourceColorCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -9374,7 +9664,7 @@ exports.ResourceColorCommand = ResourceColorCommand;
 
 
 /***/ }),
-/* 118 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9382,9 +9672,9 @@ exports.ResourceColorCommand = ResourceColorCommand;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ResourceColorHistoryItem = void 0;
 var tslib_1 = __webpack_require__(0);
-var ResourcePropertiesHistoryItemBase_1 = __webpack_require__(119);
+var ResourcePropertiesHistoryItemBase_1 = __webpack_require__(120);
 var ResourceColorHistoryItem = (function (_super) {
-    tslib_1.__extends(ResourceColorHistoryItem, _super);
+    (0, tslib_1.__extends)(ResourceColorHistoryItem, _super);
     function ResourceColorHistoryItem() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -9397,7 +9687,7 @@ exports.ResourceColorHistoryItem = ResourceColorHistoryItem;
 
 
 /***/ }),
-/* 119 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9407,7 +9697,7 @@ exports.ResourcePropertiesHistoryItemBase = void 0;
 var tslib_1 = __webpack_require__(0);
 var HistoryItem_1 = __webpack_require__(12);
 var ResourcePropertiesHistoryItemBase = (function (_super) {
-    tslib_1.__extends(ResourcePropertiesHistoryItemBase, _super);
+    (0, tslib_1.__extends)(ResourcePropertiesHistoryItemBase, _super);
     function ResourcePropertiesHistoryItemBase(modelManipulator, resourceId, newValue) {
         var _this = _super.call(this, modelManipulator) || this;
         _this.resourceId = resourceId;
@@ -9429,7 +9719,7 @@ exports.ResourcePropertiesHistoryItemBase = ResourcePropertiesHistoryItemBase;
 
 
 /***/ }),
-/* 120 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9440,7 +9730,7 @@ var tslib_1 = __webpack_require__(0);
 var CommandBase_1 = __webpack_require__(5);
 var SimpleCommandState_1 = __webpack_require__(6);
 var ResourcePropertyCommandBase = (function (_super) {
-    tslib_1.__extends(ResourcePropertyCommandBase, _super);
+    (0, tslib_1.__extends)(ResourcePropertyCommandBase, _super);
     function ResourcePropertyCommandBase() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -9456,7 +9746,7 @@ exports.ResourcePropertyCommandBase = ResourcePropertyCommandBase;
 
 
 /***/ }),
-/* 121 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9464,12 +9754,12 @@ exports.ResourcePropertyCommandBase = ResourcePropertyCommandBase;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RemoveResourceCommand = void 0;
 var tslib_1 = __webpack_require__(0);
-var ResourceRemovingArguments_1 = __webpack_require__(122);
-var RemoveResourceHistoryItem_1 = __webpack_require__(123);
+var ResourceRemovingArguments_1 = __webpack_require__(123);
+var RemoveResourceHistoryItem_1 = __webpack_require__(124);
 var DeassignResourceHistoryItem_1 = __webpack_require__(34);
 var ResourceCommandBase_1 = __webpack_require__(38);
 var RemoveResourceCommand = (function (_super) {
-    tslib_1.__extends(RemoveResourceCommand, _super);
+    (0, tslib_1.__extends)(RemoveResourceCommand, _super);
     function RemoveResourceCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -9504,7 +9794,7 @@ exports.RemoveResourceCommand = RemoveResourceCommand;
 
 
 /***/ }),
-/* 122 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9514,7 +9804,7 @@ exports.ResourceRemovingArguments = void 0;
 var tslib_1 = __webpack_require__(0);
 var BaseArguments_1 = __webpack_require__(9);
 var ResourceRemovingArguments = (function (_super) {
-    tslib_1.__extends(ResourceRemovingArguments, _super);
+    (0, tslib_1.__extends)(ResourceRemovingArguments, _super);
     function ResourceRemovingArguments(resource) {
         var _this = _super.call(this, resource.id) || this;
         _this.values = resource;
@@ -9526,7 +9816,7 @@ exports.ResourceRemovingArguments = ResourceRemovingArguments;
 
 
 /***/ }),
-/* 123 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9536,7 +9826,7 @@ exports.RemoveResourceHistoryItem = void 0;
 var tslib_1 = __webpack_require__(0);
 var CompositionHistoryItem_1 = __webpack_require__(45);
 var RemoveResourceHistoryItem = (function (_super) {
-    tslib_1.__extends(RemoveResourceHistoryItem, _super);
+    (0, tslib_1.__extends)(RemoveResourceHistoryItem, _super);
     function RemoveResourceHistoryItem(modelManipulator, resourceId) {
         var _this = _super.call(this) || this;
         _this.modelManipulator = modelManipulator;
@@ -9567,7 +9857,7 @@ exports.RemoveResourceHistoryItem = RemoveResourceHistoryItem;
 
 
 /***/ }),
-/* 124 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9579,7 +9869,7 @@ var TaskInsertingArguments_1 = __webpack_require__(64);
 var CreateTaskHistoryItem_1 = __webpack_require__(46);
 var TaskCommandBase_1 = __webpack_require__(24);
 var CreateSubTaskCommand = (function (_super) {
-    tslib_1.__extends(CreateSubTaskCommand, _super);
+    (0, tslib_1.__extends)(CreateSubTaskCommand, _super);
     function CreateSubTaskCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -9625,7 +9915,7 @@ exports.CreateSubTaskCommand = CreateSubTaskCommand;
 
 
 /***/ }),
-/* 125 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9637,7 +9927,7 @@ var TaskInsertingArguments_1 = __webpack_require__(64);
 var CreateTaskHistoryItem_1 = __webpack_require__(46);
 var TaskCommandBase_1 = __webpack_require__(24);
 var CreateTaskCommand = (function (_super) {
-    tslib_1.__extends(CreateTaskCommand, _super);
+    (0, tslib_1.__extends)(CreateTaskCommand, _super);
     function CreateTaskCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -9681,7 +9971,7 @@ exports.CreateTaskCommand = CreateTaskCommand;
 
 
 /***/ }),
-/* 126 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9691,13 +9981,13 @@ exports.RemoveTaskCommand = void 0;
 var tslib_1 = __webpack_require__(0);
 var DialogEnums_1 = __webpack_require__(32);
 var ConfirmationDialogParameters_1 = __webpack_require__(43);
-var TaskRemovingArguments_1 = __webpack_require__(127);
+var TaskRemovingArguments_1 = __webpack_require__(128);
 var RemoveDependencyHistoryItem_1 = __webpack_require__(31);
 var DeassignResourceHistoryItem_1 = __webpack_require__(34);
-var RemoveTaskHistoryItem_1 = __webpack_require__(128);
+var RemoveTaskHistoryItem_1 = __webpack_require__(129);
 var TaskCommandBase_1 = __webpack_require__(24);
 var RemoveTaskCommand = (function (_super) {
-    tslib_1.__extends(RemoveTaskCommand, _super);
+    (0, tslib_1.__extends)(RemoveTaskCommand, _super);
     function RemoveTaskCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -9767,7 +10057,7 @@ exports.RemoveTaskCommand = RemoveTaskCommand;
 
 
 /***/ }),
-/* 127 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9777,7 +10067,7 @@ exports.TaskRemovingArguments = void 0;
 var tslib_1 = __webpack_require__(0);
 var BaseArguments_1 = __webpack_require__(9);
 var TaskRemovingArguments = (function (_super) {
-    tslib_1.__extends(TaskRemovingArguments, _super);
+    (0, tslib_1.__extends)(TaskRemovingArguments, _super);
     function TaskRemovingArguments(task) {
         var _this = _super.call(this, task.id) || this;
         _this.values = task;
@@ -9789,7 +10079,7 @@ exports.TaskRemovingArguments = TaskRemovingArguments;
 
 
 /***/ }),
-/* 128 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9800,7 +10090,7 @@ var tslib_1 = __webpack_require__(0);
 var CompositionHistoryItem_1 = __webpack_require__(45);
 var RemoveDependencyHistoryItem_1 = __webpack_require__(31);
 var RemoveTaskHistoryItem = (function (_super) {
-    tslib_1.__extends(RemoveTaskHistoryItem, _super);
+    (0, tslib_1.__extends)(RemoveTaskHistoryItem, _super);
     function RemoveTaskHistoryItem(modelManipulator) {
         var _this = _super.call(this) || this;
         _this.taskIds = [];
@@ -9863,7 +10153,7 @@ exports.RemoveTaskHistoryItem = RemoveTaskHistoryItem;
 
 
 /***/ }),
-/* 129 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9873,7 +10163,7 @@ exports.TaskAddContextItemCommand = void 0;
 var tslib_1 = __webpack_require__(0);
 var TaskCommandBase_1 = __webpack_require__(24);
 var TaskAddContextItemCommand = (function (_super) {
-    tslib_1.__extends(TaskAddContextItemCommand, _super);
+    (0, tslib_1.__extends)(TaskAddContextItemCommand, _super);
     function TaskAddContextItemCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -9891,7 +10181,7 @@ exports.TaskAddContextItemCommand = TaskAddContextItemCommand;
 
 
 /***/ }),
-/* 130 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9902,7 +10192,7 @@ var tslib_1 = __webpack_require__(0);
 var TaskColorHistoryItem_1 = __webpack_require__(65);
 var TaskPropertyCommandBase_1 = __webpack_require__(25);
 var TaskColorCommand = (function (_super) {
-    tslib_1.__extends(TaskColorCommand, _super);
+    (0, tslib_1.__extends)(TaskColorCommand, _super);
     function TaskColorCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -9919,7 +10209,7 @@ exports.TaskColorCommand = TaskColorCommand;
 
 
 /***/ }),
-/* 131 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9927,10 +10217,10 @@ exports.TaskColorCommand = TaskColorCommand;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskDescriptionCommand = void 0;
 var tslib_1 = __webpack_require__(0);
-var TaskDescriptionHistoryItem_1 = __webpack_require__(132);
+var TaskDescriptionHistoryItem_1 = __webpack_require__(133);
 var TaskPropertyCommandBase_1 = __webpack_require__(25);
 var TaskDescriptionCommand = (function (_super) {
-    tslib_1.__extends(TaskDescriptionCommand, _super);
+    (0, tslib_1.__extends)(TaskDescriptionCommand, _super);
     function TaskDescriptionCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -9947,7 +10237,7 @@ exports.TaskDescriptionCommand = TaskDescriptionCommand;
 
 
 /***/ }),
-/* 132 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9955,9 +10245,9 @@ exports.TaskDescriptionCommand = TaskDescriptionCommand;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskDescriptionHistoryItem = void 0;
 var tslib_1 = __webpack_require__(0);
-var TaskPropertiesHistoryItemBase_1 = __webpack_require__(14);
+var TaskPropertiesHistoryItemBase_1 = __webpack_require__(15);
 var TaskDescriptionHistoryItem = (function (_super) {
-    tslib_1.__extends(TaskDescriptionHistoryItem, _super);
+    (0, tslib_1.__extends)(TaskDescriptionHistoryItem, _super);
     function TaskDescriptionHistoryItem() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -9970,7 +10260,7 @@ exports.TaskDescriptionHistoryItem = TaskDescriptionHistoryItem;
 
 
 /***/ }),
-/* 133 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9981,7 +10271,7 @@ var tslib_1 = __webpack_require__(0);
 var TaskEndHistoryItem_1 = __webpack_require__(35);
 var TaskPropertyCommandValidation_1 = __webpack_require__(47);
 var TaskEndCommand = (function (_super) {
-    tslib_1.__extends(TaskEndCommand, _super);
+    (0, tslib_1.__extends)(TaskEndCommand, _super);
     function TaskEndCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -10022,7 +10312,7 @@ exports.TaskEndCommand = TaskEndCommand;
 
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10032,7 +10322,7 @@ exports.ConstraintViolationDialogParameters = void 0;
 var tslib_1 = __webpack_require__(0);
 var DialogParametersBase_1 = __webpack_require__(33);
 var ConstraintViolationDialogParameters = (function (_super) {
-    tslib_1.__extends(ConstraintViolationDialogParameters, _super);
+    (0, tslib_1.__extends)(ConstraintViolationDialogParameters, _super);
     function ConstraintViolationDialogParameters(validationError, callback) {
         var _this = _super.call(this) || this;
         _this.validationError = validationError;
@@ -10050,7 +10340,7 @@ exports.ConstraintViolationDialogParameters = ConstraintViolationDialogParameter
 
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10059,10 +10349,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskMoveCommand = void 0;
 var tslib_1 = __webpack_require__(0);
 var TaskMoveHistoryItem_1 = __webpack_require__(66);
-var DateRange_1 = __webpack_require__(15);
+var DateRange_1 = __webpack_require__(14);
 var TaskPropertyCommandValidation_1 = __webpack_require__(47);
 var TaskMoveCommand = (function (_super) {
-    tslib_1.__extends(TaskMoveCommand, _super);
+    (0, tslib_1.__extends)(TaskMoveCommand, _super);
     function TaskMoveCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -10082,6 +10372,7 @@ var TaskMoveCommand = (function (_super) {
         this.control.history.beginTransaction();
         this.history.addAndRedo(new TaskMoveHistoryItem_1.TaskMoveHistoryItem(this.modelManipulator, id, new DateRange_1.DateRange(start, end)));
         this.validationController.correctParentsOnChildMoving(id, start.getTime() - oldDateRange.start.getTime());
+        this.validationController.updateParentsIfRequired(id);
         if (this.control.settings.validation.validateDependencies) {
             this.control.validationController.moveStartDependTasks(id, oldDateRange.start);
             this.control.validationController.moveEndDependTasks(id, oldDateRange.end);
@@ -10112,7 +10403,7 @@ var TaskMoveCommand = (function (_super) {
     TaskMoveCommand.prototype.validate = function (id, start, end) {
         var startErrors = this.control.validationController.checkStartDependencies(id, start);
         var endErrors = this.control.validationController.checkEndDependencies(id, end);
-        return tslib_1.__spreadArray(tslib_1.__spreadArray([], startErrors), endErrors);
+        return (0, tslib_1.__spreadArray)((0, tslib_1.__spreadArray)([], startErrors, true), endErrors, true);
     };
     return TaskMoveCommand;
 }(TaskPropertyCommandValidation_1.TaskPropertyCommandValidation));
@@ -10120,7 +10411,7 @@ exports.TaskMoveCommand = TaskMoveCommand;
 
 
 /***/ }),
-/* 136 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10131,7 +10422,7 @@ var tslib_1 = __webpack_require__(0);
 var TaskProgressHistoryItem_1 = __webpack_require__(36);
 var TaskPropertyCommandBase_1 = __webpack_require__(25);
 var TaskProgressCommand = (function (_super) {
-    tslib_1.__extends(TaskProgressCommand, _super);
+    (0, tslib_1.__extends)(TaskProgressCommand, _super);
     function TaskProgressCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -10153,7 +10444,7 @@ exports.TaskProgressCommand = TaskProgressCommand;
 
 
 /***/ }),
-/* 137 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10164,7 +10455,7 @@ var tslib_1 = __webpack_require__(0);
 var TaskStartHistoryItem_1 = __webpack_require__(37);
 var TaskPropertyCommandValidation_1 = __webpack_require__(47);
 var TaskStartCommand = (function (_super) {
-    tslib_1.__extends(TaskStartCommand, _super);
+    (0, tslib_1.__extends)(TaskStartCommand, _super);
     function TaskStartCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -10207,7 +10498,7 @@ exports.TaskStartCommand = TaskStartCommand;
 
 
 /***/ }),
-/* 138 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10218,7 +10509,7 @@ var tslib_1 = __webpack_require__(0);
 var TaskTitleHistoryItem_1 = __webpack_require__(44);
 var TaskPropertyCommandBase_1 = __webpack_require__(25);
 var TaskTitleCommand = (function (_super) {
-    tslib_1.__extends(TaskTitleCommand, _super);
+    (0, tslib_1.__extends)(TaskTitleCommand, _super);
     function TaskTitleCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -10235,7 +10526,7 @@ exports.TaskTitleCommand = TaskTitleCommand;
 
 
 /***/ }),
-/* 139 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10251,7 +10542,7 @@ var TaskStartHistoryItem_1 = __webpack_require__(37);
 var TaskTitleHistoryItem_1 = __webpack_require__(44);
 var TaskCommandBase_1 = __webpack_require__(24);
 var UpdateTaskCommand = (function (_super) {
-    tslib_1.__extends(UpdateTaskCommand, _super);
+    (0, tslib_1.__extends)(UpdateTaskCommand, _super);
     function UpdateTaskCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -10272,27 +10563,27 @@ var UpdateTaskCommand = (function (_super) {
         if (success) {
             this.history.beginTransaction();
             var needRecalculateParents = false;
-            if (common_1.isDefined(newValues.title) && newValues.title !== task.title)
+            if ((0, common_1.isDefined)(newValues.title) && newValues.title !== task.title)
                 this.history.addAndRedo(new TaskTitleHistoryItem_1.TaskTitleHistoryItem(this.modelManipulator, id, newValues.title));
-            if (common_1.isDefined(newValues.progress) && newValues.progress !== task.progress) {
+            if ((0, common_1.isDefined)(newValues.progress) && newValues.progress !== task.progress) {
                 this.history.addAndRedo(new TaskProgressHistoryItem_1.TaskProgressHistoryItem(this.modelManipulator, id, newValues.progress));
                 needRecalculateParents = true;
             }
-            if (common_1.isDefined(newValues.start) && common_1.isDefined(newValues.end) && newValues.end.getTime() < newValues.start.getTime())
+            if ((0, common_1.isDefined)(newValues.start) && (0, common_1.isDefined)(newValues.end) && newValues.end.getTime() < newValues.start.getTime())
                 newValues.end = newValues.start;
-            if (common_1.isDefined(newValues.start) && newValues.start !== task.start) {
+            if ((0, common_1.isDefined)(newValues.start) && newValues.start !== task.start) {
                 this.history.addAndRedo(new TaskStartHistoryItem_1.TaskStartHistoryItem(this.modelManipulator, id, newValues.start));
                 needRecalculateParents = true;
                 if (this.control.settings.validation.validateDependencies)
                     this.control.validationController.moveStartDependTasks(id, task.start);
             }
-            if (common_1.isDefined(newValues.end) && newValues.end !== task.end) {
+            if ((0, common_1.isDefined)(newValues.end) && newValues.end !== task.end) {
                 this.history.addAndRedo(new TaskEndHistoryItem_1.TaskEndHistoryItem(this.modelManipulator, id, newValues.end));
                 needRecalculateParents = true;
                 if (this.control.settings.validation.validateDependencies)
                     this.control.validationController.moveEndDependTasks(id, task.end);
             }
-            if (common_1.isDefined(newValues.color) && newValues.color !== task.color)
+            if ((0, common_1.isDefined)(newValues.color) && newValues.color !== task.color)
                 this.history.addAndRedo(new TaskColorHistoryItem_1.TaskColorHistoryItem(this.modelManipulator, id, newValues.color));
             if (needRecalculateParents)
                 this.validationController.updateParentsIfRequired(id);
@@ -10311,7 +10602,7 @@ exports.UpdateTaskCommand = UpdateTaskCommand;
 
 
 /***/ }),
-/* 140 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10322,7 +10613,7 @@ var tslib_1 = __webpack_require__(0);
 var CommandBase_1 = __webpack_require__(5);
 var SimpleCommandState_1 = __webpack_require__(6);
 var ZoomInCommand = (function (_super) {
-    tslib_1.__extends(ZoomInCommand, _super);
+    (0, tslib_1.__extends)(ZoomInCommand, _super);
     function ZoomInCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -10342,7 +10633,7 @@ exports.ZoomInCommand = ZoomInCommand;
 
 
 /***/ }),
-/* 141 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10353,7 +10644,7 @@ var tslib_1 = __webpack_require__(0);
 var CommandBase_1 = __webpack_require__(5);
 var SimpleCommandState_1 = __webpack_require__(6);
 var ZoomOutCommand = (function (_super) {
-    tslib_1.__extends(ZoomOutCommand, _super);
+    (0, tslib_1.__extends)(ZoomOutCommand, _super);
     function ZoomOutCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -10373,17 +10664,17 @@ exports.ZoomOutCommand = ZoomOutCommand;
 
 
 /***/ }),
-/* 142 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventManager = void 0;
-var MouseHandler_1 = __webpack_require__(143);
-var key_1 = __webpack_require__(152);
+var MouseHandler_1 = __webpack_require__(144);
+var key_1 = __webpack_require__(153);
 var browser_1 = __webpack_require__(8);
-var TouchHandler_1 = __webpack_require__(154);
+var TouchHandler_1 = __webpack_require__(155);
 var EventManager = (function () {
     function EventManager(settings) {
         this.settings = settings;
@@ -10464,7 +10755,7 @@ exports.EventManager = EventManager;
 
 
 /***/ }),
-/* 143 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10473,15 +10764,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandler = void 0;
 var tslib_1 = __webpack_require__(0);
 var HandlerBase_1 = __webpack_require__(70);
-var MouseHandlerDefaultState_1 = __webpack_require__(145);
+var MouseHandlerDefaultState_1 = __webpack_require__(146);
 var evt_1 = __webpack_require__(10);
-var MouseHandlerMoveTaskState_1 = __webpack_require__(149);
-var MouseHandlerProgressTaskState_1 = __webpack_require__(150);
-var MouseHandlerTimestampTaskState_1 = __webpack_require__(151);
+var MouseHandlerMoveTaskState_1 = __webpack_require__(150);
+var MouseHandlerProgressTaskState_1 = __webpack_require__(151);
+var MouseHandlerTimestampTaskState_1 = __webpack_require__(152);
 var MouseHandlerDependencyState_1 = __webpack_require__(74);
-var Enums_1 = __webpack_require__(3);
+var Enums_1 = __webpack_require__(2);
 var MouseHandler = (function (_super) {
-    tslib_1.__extends(MouseHandler, _super);
+    (0, tslib_1.__extends)(MouseHandler, _super);
     function MouseHandler() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -10526,14 +10817,14 @@ exports.MouseHandler = MouseHandler;
 
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskEditTooltip = void 0;
-var dom_1 = __webpack_require__(2);
+var dom_1 = __webpack_require__(3);
 var TaskEditTooltip = (function () {
     function TaskEditTooltip(parentElement, tooltipSettings, cultureInfo) {
         this.parentElement = parentElement;
@@ -10705,6 +10996,7 @@ var TaskEditTooltip = (function () {
     };
     TaskEditTooltip.prototype.hide = function () {
         this.baseElement.style.display = "none";
+        this.destroyTemplate(this.baseElement);
         clearTimeout(this.timerId);
     };
     TaskEditTooltip.prototype.getTimeContent = function (start, end) {
@@ -10744,7 +11036,7 @@ exports.TaskEditTooltip = TaskEditTooltip;
 
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10752,14 +11044,14 @@ exports.TaskEditTooltip = TaskEditTooltip;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerDefaultState = void 0;
 var tslib_1 = __webpack_require__(0);
-var dom_1 = __webpack_require__(2);
+var dom_1 = __webpack_require__(3);
 var evt_1 = __webpack_require__(10);
 var MouseHandlerStateBase_1 = __webpack_require__(48);
 var GridLayoutCalculator_1 = __webpack_require__(20);
 var point_1 = __webpack_require__(4);
-var GanttMovingHelper_1 = __webpack_require__(148);
+var GanttMovingHelper_1 = __webpack_require__(149);
 var MouseHandlerDefaultState = (function (_super) {
-    tslib_1.__extends(MouseHandlerDefaultState, _super);
+    (0, tslib_1.__extends)(MouseHandlerDefaultState, _super);
     function MouseHandlerDefaultState(handler) {
         var _this = _super.call(this, handler) || this;
         _this.isInScrolling = false;
@@ -10833,14 +11125,14 @@ exports.MouseHandlerDefaultState = MouseHandlerDefaultState;
 
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(59);
-var offsets_1 = __webpack_require__(147);
+var offsets_1 = __webpack_require__(148);
 var Margins = (function (_super) {
     tslib_1.__extends(Margins, _super);
     function Margins() {
@@ -10858,7 +11150,7 @@ exports.Margins = Margins;
 
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10971,7 +11263,7 @@ exports.Offsets = Offsets;
 
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11046,7 +11338,7 @@ exports.GanttMovingHelper = GanttMovingHelper;
 
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11056,7 +11348,7 @@ exports.MouseHandlerMoveTaskState = void 0;
 var tslib_1 = __webpack_require__(0);
 var MouseHandlerDragTaskBaseState_1 = __webpack_require__(50);
 var MouseHandlerMoveTaskState = (function (_super) {
-    tslib_1.__extends(MouseHandlerMoveTaskState, _super);
+    (0, tslib_1.__extends)(MouseHandlerMoveTaskState, _super);
     function MouseHandlerMoveTaskState() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -11073,7 +11365,7 @@ exports.MouseHandlerMoveTaskState = MouseHandlerMoveTaskState;
 
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11083,7 +11375,7 @@ exports.MouseHandlerProgressTaskState = void 0;
 var tslib_1 = __webpack_require__(0);
 var MouseHandlerDragTaskBaseState_1 = __webpack_require__(50);
 var MouseHandlerProgressTaskState = (function (_super) {
-    tslib_1.__extends(MouseHandlerProgressTaskState, _super);
+    (0, tslib_1.__extends)(MouseHandlerProgressTaskState, _super);
     function MouseHandlerProgressTaskState() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -11100,7 +11392,7 @@ exports.MouseHandlerProgressTaskState = MouseHandlerProgressTaskState;
 
 
 /***/ }),
-/* 151 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11109,10 +11401,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerTimestampTaskState = void 0;
 var tslib_1 = __webpack_require__(0);
 var evt_1 = __webpack_require__(10);
-var Enums_1 = __webpack_require__(3);
+var Enums_1 = __webpack_require__(2);
 var MouseHandlerDragTaskBaseState_1 = __webpack_require__(50);
 var MouseHandlerTimestampTaskState = (function (_super) {
-    tslib_1.__extends(MouseHandlerTimestampTaskState, _super);
+    (0, tslib_1.__extends)(MouseHandlerTimestampTaskState, _super);
     function MouseHandlerTimestampTaskState() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -11139,14 +11431,14 @@ exports.MouseHandlerTimestampTaskState = MouseHandlerTimestampTaskState;
 
 
 /***/ }),
-/* 152 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var browser_1 = __webpack_require__(8);
-var encode_1 = __webpack_require__(153);
+var encode_1 = __webpack_require__(154);
 var string_1 = __webpack_require__(42);
 var KeyUtils = (function () {
     function KeyUtils() {
@@ -11417,7 +11709,7 @@ var KeyCode;
 
 
 /***/ }),
-/* 153 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11465,7 +11757,7 @@ exports.EncodeUtils = EncodeUtils;
 
 
 /***/ }),
-/* 154 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11475,15 +11767,15 @@ exports.TouchHandler = void 0;
 var tslib_1 = __webpack_require__(0);
 var HandlerBase_1 = __webpack_require__(70);
 var evt_1 = __webpack_require__(10);
-var TouchHandlerMoveTaskState_1 = __webpack_require__(155);
-var TouchHandlerDefaultState_1 = __webpack_require__(156);
-var TouchHandlerProgressTaskState_1 = __webpack_require__(157);
-var TouchHandlerTimestampTaskState_1 = __webpack_require__(158);
-var TouchHandlerDependencyState_1 = __webpack_require__(159);
-var TouchHandlerZoomState_1 = __webpack_require__(160);
-var Enums_1 = __webpack_require__(3);
+var TouchHandlerMoveTaskState_1 = __webpack_require__(156);
+var TouchHandlerDefaultState_1 = __webpack_require__(157);
+var TouchHandlerProgressTaskState_1 = __webpack_require__(158);
+var TouchHandlerTimestampTaskState_1 = __webpack_require__(159);
+var TouchHandlerDependencyState_1 = __webpack_require__(160);
+var TouchHandlerZoomState_1 = __webpack_require__(161);
+var Enums_1 = __webpack_require__(2);
 var TouchHandler = (function (_super) {
-    tslib_1.__extends(TouchHandler, _super);
+    (0, tslib_1.__extends)(TouchHandler, _super);
     function TouchHandler() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -11530,7 +11822,7 @@ exports.TouchHandler = TouchHandler;
 
 
 /***/ }),
-/* 155 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11540,7 +11832,7 @@ exports.TouchHandlerMoveTaskState = void 0;
 var tslib_1 = __webpack_require__(0);
 var TouchHandlerDragBaseState_1 = __webpack_require__(51);
 var TouchHandlerMoveTaskState = (function (_super) {
-    tslib_1.__extends(TouchHandlerMoveTaskState, _super);
+    (0, tslib_1.__extends)(TouchHandlerMoveTaskState, _super);
     function TouchHandlerMoveTaskState() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -11557,7 +11849,7 @@ exports.TouchHandlerMoveTaskState = TouchHandlerMoveTaskState;
 
 
 /***/ }),
-/* 156 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11566,13 +11858,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TouchHandlerDefaultState = void 0;
 var tslib_1 = __webpack_require__(0);
 var point_1 = __webpack_require__(4);
-var dom_1 = __webpack_require__(2);
+var dom_1 = __webpack_require__(3);
 var evt_1 = __webpack_require__(10);
 var touch_1 = __webpack_require__(27);
 var GridLayoutCalculator_1 = __webpack_require__(20);
 var HandlerStateBase_1 = __webpack_require__(39);
 var TouchHandlerDefaultState = (function (_super) {
-    tslib_1.__extends(TouchHandlerDefaultState, _super);
+    (0, tslib_1.__extends)(TouchHandlerDefaultState, _super);
     function TouchHandlerDefaultState() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -11634,7 +11926,7 @@ exports.TouchHandlerDefaultState = TouchHandlerDefaultState;
 
 
 /***/ }),
-/* 157 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11644,7 +11936,7 @@ exports.TouchHandlerProgressTaskState = void 0;
 var tslib_1 = __webpack_require__(0);
 var TouchHandlerDragBaseState_1 = __webpack_require__(51);
 var TouchHandlerProgressTaskState = (function (_super) {
-    tslib_1.__extends(TouchHandlerProgressTaskState, _super);
+    (0, tslib_1.__extends)(TouchHandlerProgressTaskState, _super);
     function TouchHandlerProgressTaskState() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -11661,7 +11953,7 @@ exports.TouchHandlerProgressTaskState = TouchHandlerProgressTaskState;
 
 
 /***/ }),
-/* 158 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11671,9 +11963,9 @@ exports.TouchHandlerTimestampTaskState = void 0;
 var tslib_1 = __webpack_require__(0);
 var TouchHandlerDragBaseState_1 = __webpack_require__(51);
 var evt_1 = __webpack_require__(10);
-var Enums_1 = __webpack_require__(3);
+var Enums_1 = __webpack_require__(2);
 var TouchHandlerTimestampTaskState = (function (_super) {
-    tslib_1.__extends(TouchHandlerTimestampTaskState, _super);
+    (0, tslib_1.__extends)(TouchHandlerTimestampTaskState, _super);
     function TouchHandlerTimestampTaskState() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -11700,7 +11992,7 @@ exports.TouchHandlerTimestampTaskState = TouchHandlerTimestampTaskState;
 
 
 /***/ }),
-/* 159 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11709,14 +12001,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TouchHandlerDependencyState = void 0;
 var tslib_1 = __webpack_require__(0);
 var TouchHandlerStateBase_1 = __webpack_require__(75);
-var dom_1 = __webpack_require__(2);
+var dom_1 = __webpack_require__(3);
 var evt_1 = __webpack_require__(10);
 var point_1 = __webpack_require__(4);
 var MouseHandlerDependencyState_1 = __webpack_require__(74);
 var touch_1 = __webpack_require__(27);
-var Enums_1 = __webpack_require__(3);
+var Enums_1 = __webpack_require__(2);
 var TouchHandlerDependencyState = (function (_super) {
-    tslib_1.__extends(TouchHandlerDependencyState, _super);
+    (0, tslib_1.__extends)(TouchHandlerDependencyState, _super);
     function TouchHandlerDependencyState() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -11757,7 +12049,7 @@ exports.TouchHandlerDependencyState = TouchHandlerDependencyState;
 
 
 /***/ }),
-/* 160 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11767,10 +12059,10 @@ exports.TouchHandlerZoomState = void 0;
 var tslib_1 = __webpack_require__(0);
 var HandlerStateBase_1 = __webpack_require__(39);
 var point_1 = __webpack_require__(4);
-var dom_1 = __webpack_require__(2);
+var dom_1 = __webpack_require__(3);
 var PINCH_CHANGE_DISTANCE = 3;
 var TouchHandlerZoomState = (function (_super) {
-    tslib_1.__extends(TouchHandlerZoomState, _super);
+    (0, tslib_1.__extends)(TouchHandlerZoomState, _super);
     function TouchHandlerZoomState() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -11824,7 +12116,7 @@ exports.TouchHandlerZoomState = TouchHandlerZoomState;
 
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11838,9 +12130,9 @@ var FullScreenHelperSettings = (function () {
     FullScreenHelperSettings.parse = function (settings) {
         var result = new FullScreenHelperSettings();
         if (settings) {
-            if (common_1.isDefined(settings.getMainElement))
+            if ((0, common_1.isDefined)(settings.getMainElement))
                 result.getMainElement = settings.getMainElement;
-            if (common_1.isDefined(settings.adjustControl))
+            if ((0, common_1.isDefined)(settings.adjustControl))
                 result.adjustControl = settings.adjustControl;
         }
         return result;
@@ -11851,7 +12143,7 @@ exports.FullScreenHelperSettings = FullScreenHelperSettings;
 
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11859,8 +12151,8 @@ exports.FullScreenHelperSettings = FullScreenHelperSettings;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FullScreenModeHelper = void 0;
 var browser_1 = __webpack_require__(8);
-var attr_1 = __webpack_require__(163);
-var dom_1 = __webpack_require__(2);
+var attr_1 = __webpack_require__(164);
+var dom_1 = __webpack_require__(3);
 var FullScreenModeHelper = (function () {
     function FullScreenModeHelper(settings) {
         this._isInFullScreenMode = false;
@@ -11982,7 +12274,7 @@ exports.FullScreenModeHelper = FullScreenModeHelper;
 
 
 /***/ }),
-/* 163 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12068,7 +12360,7 @@ exports.AttrUtils = AttrUtils;
 
 
 /***/ }),
-/* 164 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12076,8 +12368,8 @@ exports.AttrUtils = AttrUtils;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GanttExportCalculator = void 0;
 var point_1 = __webpack_require__(4);
-var dom_1 = __webpack_require__(2);
-var Enums_1 = __webpack_require__(3);
+var dom_1 = __webpack_require__(3);
+var Enums_1 = __webpack_require__(2);
 var GridLayoutCalculator_1 = __webpack_require__(20);
 var DependencyLineInfo_1 = __webpack_require__(76);
 var TaskResourcesInfo_1 = __webpack_require__(77);
@@ -12086,13 +12378,13 @@ var Color_1 = __webpack_require__(16);
 var StyleDef_1 = __webpack_require__(28);
 var Margin_1 = __webpack_require__(40);
 var CellDef_1 = __webpack_require__(54);
-var TaskAreaHelper_1 = __webpack_require__(165);
+var TaskAreaHelper_1 = __webpack_require__(166);
 var Props_1 = __webpack_require__(55);
 var Interfaces_1 = __webpack_require__(29);
 var size_1 = __webpack_require__(11);
-var Paginator_1 = __webpack_require__(166);
-var ScalingHelper_1 = __webpack_require__(168);
-var TimeMarkerInfo_1 = __webpack_require__(79);
+var Paginator_1 = __webpack_require__(167);
+var ScalingHelper_1 = __webpack_require__(169);
+var TimeMarkerInfo_1 = __webpack_require__(80);
 var GanttExportCalculator = (function () {
     function GanttExportCalculator(owner, props) {
         var _a;
@@ -12159,7 +12451,7 @@ var GanttExportCalculator = (function () {
     });
     Object.defineProperty(GanttExportCalculator.prototype, "layoutCalculator", {
         get: function () {
-            return this._owner && this._owner.renderHelper.gridLayoutCalculator;
+            return this._taskAreaHelper.layoutCalculator;
         },
         enumerable: false,
         configurable: true
@@ -12385,7 +12677,7 @@ var GanttExportCalculator = (function () {
                 width += this.chartLeft + this.chartWidth;
             else
                 width += this.treeListLeft + this.treeListWidth;
-            return width;
+            return width + GanttExportCalculator._autoFormatWidthAddStock;
         },
         enumerable: false,
         configurable: true
@@ -12504,14 +12796,19 @@ var GanttExportCalculator = (function () {
         var start = ranges[index][0];
         var end = ranges[index][1];
         for (var j = start; j <= end; j++) {
-            var cell = new CellDef_1.CellDef(this._owner.getScaleItemText(j, helper.scales[index]));
+            var cell = new CellDef_1.CellDef(helper.getScaleItemText(j, helper.scales[index]));
             cell.styles.cellPadding.assign(0);
             cell.styles.minCellHeight = this.taskAreaHelper.headerRowHeight;
-            if (index === 0) {
-                var colSpan = helper.scaleTopColSpans[j];
-                var cellWidth = this.baseCellWidth * colSpan;
-                cell.styles.cellWidth.assign(cellWidth);
-            }
+            if (index === 0)
+                if (helper.scales[index] === Enums_1.ViewType.Months) {
+                    cell.styles.cellWidth.assign(helper.monthsTopScale[j].width);
+                    cell.content = helper.monthsTopScale[j].text;
+                }
+                else {
+                    var colSpan = helper.scaleTopColSpans[j];
+                    var cellWidth = this.baseCellWidth * colSpan;
+                    cell.styles.cellWidth.assign(cellWidth);
+                }
             row.push(cell);
         }
         return [row];
@@ -12567,6 +12864,13 @@ var GanttExportCalculator = (function () {
         var style = info && info.styles;
         var numWidth = style.cellWidth.getValue();
         return numWidth || style.minCellWidth || 0;
+    };
+    GanttExportCalculator.prototype.getObjectsLeftOffset = function (isTask) {
+        if (isTask === void 0) { isTask = false; }
+        var offset = this.dataObjectLeftDelta;
+        if (!isTask)
+            offset += this.taskAreaHelper.customRangeLeftOffset;
+        return offset;
     };
     Object.defineProperty(GanttExportCalculator.prototype, "dataObjectLeftDelta", {
         get: function () {
@@ -12694,7 +12998,7 @@ var GanttExportCalculator = (function () {
         var _this = this;
         var points = this.layoutCalculator.getTaskSidePoints(index);
         points.forEach(function (p) {
-            p.x += _this.dataObjectLeftDelta;
+            p.x += _this.getObjectsLeftOffset(true);
             p.y += _this.dataObjectTopDelta;
         });
         return points;
@@ -12735,7 +13039,7 @@ var GanttExportCalculator = (function () {
         return info;
     };
     GanttExportCalculator.prototype.getArrowTopCorner = function (info, position, width) {
-        var x = info.position.x + this.dataObjectLeftDelta;
+        var x = info.position.x + this.getObjectsLeftOffset();
         var y = info.position.y + this.dataObjectTopDelta;
         switch (position) {
             case Enums_1.Position.Left:
@@ -12747,7 +13051,7 @@ var GanttExportCalculator = (function () {
         return new point_1.Point(x, y);
     };
     GanttExportCalculator.prototype.getLinePoints = function (line) {
-        var x1 = line.position.x + this.dataObjectLeftDelta;
+        var x1 = line.position.x + this.getObjectsLeftOffset();
         var y1 = line.position.y + this.dataObjectTopDelta;
         var x2 = x1 + line.size.width;
         var y2 = y1 + line.size.height;
@@ -12762,7 +13066,7 @@ var GanttExportCalculator = (function () {
     GanttExportCalculator.prototype.calculateResourcesInLine = function (wrapper) {
         var result = new Array();
         if (wrapper) {
-            var left = dom_1.DomUtils.pxToInt(wrapper.style.left) + this.dataObjectLeftDelta;
+            var left = dom_1.DomUtils.pxToInt(wrapper.style.left) + this.getObjectsLeftOffset();
             var top_1 = dom_1.DomUtils.pxToInt(wrapper.style.top) + this.dataObjectTopDelta;
             var resources = wrapper.getElementsByClassName(GridLayoutCalculator_1.GridLayoutCalculator.taskResourceClassName);
             for (var i = 0; i < resources.length; i++) {
@@ -12786,7 +13090,7 @@ var GanttExportCalculator = (function () {
     };
     GanttExportCalculator.prototype.createTimeMarkerInfo = function (element, isStripLine) {
         var style = getComputedStyle(element);
-        var left = dom_1.DomUtils.pxToInt(style.left) + this.dataObjectLeftDelta;
+        var left = dom_1.DomUtils.pxToInt(style.left) + this.getObjectsLeftOffset();
         var top = dom_1.DomUtils.pxToInt(style.top) + this.dataObjectTopDelta;
         var width = dom_1.DomUtils.pxToInt(style.width);
         var height = dom_1.DomUtils.pxToInt(style.height);
@@ -12807,22 +13111,27 @@ var GanttExportCalculator = (function () {
         return margin;
     };
     GanttExportCalculator._defaultPageMargin = 10;
+    GanttExportCalculator._autoFormatWidthAddStock = 1;
     return GanttExportCalculator;
 }());
 exports.GanttExportCalculator = GanttExportCalculator;
 
 
 /***/ }),
-/* 165 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskAreaExportHelper = void 0;
-var dom_1 = __webpack_require__(2);
+var common_1 = __webpack_require__(1);
+var dom_1 = __webpack_require__(3);
+var DateRange_1 = __webpack_require__(14);
+var Enums_1 = __webpack_require__(2);
 var GridLayoutCalculator_1 = __webpack_require__(20);
 var DateUtils_1 = __webpack_require__(26);
+var ElementTextHelper_1 = __webpack_require__(79);
 var Props_1 = __webpack_require__(55);
 var Color_1 = __webpack_require__(16);
 var TaskAreaExportHelper = (function () {
@@ -12830,6 +13139,15 @@ var TaskAreaExportHelper = (function () {
         this._owner = owner;
         this._props = props;
     }
+    Object.defineProperty(TaskAreaExportHelper.prototype, "customRangeLeftOffset", {
+        get: function () {
+            var _a;
+            (_a = this._customRangeLeftOffset) !== null && _a !== void 0 ? _a : (this._customRangeLeftOffset = Math.max(this.layoutCalculator.getWidthByDateRange(this.layoutCalculator.range.start, this.ownerStartDate), 0));
+            return this._customRangeLeftOffset;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(TaskAreaExportHelper.prototype, "baseCellSize", {
         get: function () { return this._owner.tickSize; },
         enumerable: false,
@@ -13006,8 +13324,13 @@ var TaskAreaExportHelper = (function () {
     };
     Object.defineProperty(TaskAreaExportHelper.prototype, "visibleLeft", {
         get: function () {
-            var _a;
-            (_a = this._visibleLeft) !== null && _a !== void 0 ? _a : (this._visibleLeft = this.isVisibleMode ? this.container.scrollLeft : 0);
+            if (!(0, common_1.isDefined)(this._visibleLeft)) {
+                this._visibleLeft = 0;
+                if (this.isVisibleMode)
+                    this._visibleLeft = this.container.scrollLeft;
+                else if (this.hasCustomRangeOutOfRender)
+                    this._visibleLeft = this.layoutCalculator.getWidthByDateRange(this.layoutCalculator.range.start, this.startDate);
+            }
             return this._visibleLeft;
         },
         enumerable: false,
@@ -13065,9 +13388,17 @@ var TaskAreaExportHelper = (function () {
         configurable: true
     });
     TaskAreaExportHelper.prototype.getScaleTopStartIndex = function () {
+        if (this.scales[0] === Enums_1.ViewType.Months) {
+            var start = this.isVisibleMode ? this.layoutCalculator.getDateByPos(this.visibleLeft) : this.layoutCalculator.range.start;
+            return this.getMonthsTopScaleIndex(start);
+        }
         return Math.floor(this.scaleBottomStartIndex / this.scaleColSpan);
     };
     TaskAreaExportHelper.prototype.getScaleTopEndIndex = function () {
+        if (this.scales[0] === Enums_1.ViewType.Months) {
+            var end = this.isVisibleMode ? this.layoutCalculator.getDateByPos(this.visibleRight) : this.layoutCalculator.range.end;
+            return this.getMonthsTopScaleIndex(end);
+        }
         return Math.floor(this.scaleBottomEndIndex / this.scaleColSpan);
     };
     TaskAreaExportHelper.prototype.getScaleTopColSpans = function () {
@@ -13081,6 +13412,48 @@ var TaskAreaExportHelper = (function () {
             colSpans[i] = colSpan;
         }
         return colSpans;
+    };
+    TaskAreaExportHelper.prototype.getMonthsTopScaleIndex = function (date) {
+        var time = date.getTime();
+        for (var i = 0; i < this.monthsTopScale.length; i++) {
+            var info = this.monthsTopScale[i];
+            var startTime = info.start.getTime();
+            var endTime = info.end.getTime();
+            if (time >= startTime && time <= endTime)
+                return i;
+        }
+        return 0;
+    };
+    Object.defineProperty(TaskAreaExportHelper.prototype, "monthsTopScale", {
+        get: function () {
+            var _a;
+            (_a = this._monthsTopScale) !== null && _a !== void 0 ? _a : (this._monthsTopScale = this.createMonthsTopScale());
+            return this._monthsTopScale;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    TaskAreaExportHelper.prototype.createMonthsTopScale = function () {
+        var result = new Array();
+        var bottomLeft = this.scaleBottomStartIndex * this.baseCellSize.width;
+        var start = this.layoutCalculator.getDateByPos(bottomLeft);
+        var bottomRight = (this.scaleBottomEndIndex + 1) * this.baseCellSize.width;
+        var end = this.layoutCalculator.getDateByPos(bottomRight);
+        var currentDate = new Date(start.getTime());
+        while (currentDate.getTime() < end.getTime()) {
+            var dayInMonthCount = DateUtils_1.DateUtils.getDaysInMonth(currentDate.getMonth(), currentDate.getFullYear());
+            var dayCount = dayInMonthCount - currentDate.getDate() + 1;
+            var nextDate = new Date(currentDate.getTime() + Math.min(dayCount * DateUtils_1.DateUtils.msPerDay, end.getTime() - currentDate.getTime()));
+            var info = {
+                start: currentDate,
+                end: nextDate,
+                width: this.layoutCalculator.getWidthByDateRange(currentDate, nextDate) - 1,
+                text: this.textHelper.getScaleItemTextByStartDate(currentDate, Enums_1.ViewType.Months)
+            };
+            result.push(info);
+            currentDate = nextDate;
+        }
+        return result;
     };
     TaskAreaExportHelper.prototype.getOffsetTop = function () {
         return this.isVisibleMode ? this.getTaskCellOffsetTop(this.visibleTaskIndices[0]) : 0;
@@ -13261,19 +13634,65 @@ var TaskAreaExportHelper = (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(TaskAreaExportHelper.prototype, "ownerStartDate", {
+        get: function () {
+            return this._owner.range.start;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(TaskAreaExportHelper.prototype, "ownerEndDate", {
+        get: function () {
+            return this._owner.range.end;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(TaskAreaExportHelper.prototype, "startDate", {
-        get: function () { var _a; return ((_a = this.exportRange) === null || _a === void 0 ? void 0 : _a.startDate) || this._owner.range.start; },
+        get: function () {
+            var _a, _b, _c, _d;
+            if (((_a = this.exportRange) === null || _a === void 0 ? void 0 : _a.startDate) && ((_b = this.exportRange) === null || _b === void 0 ? void 0 : _b.endDate)) {
+                var min = Math.min((_c = this.exportRange) === null || _c === void 0 ? void 0 : _c.startDate.getTime(), (_d = this.exportRange) === null || _d === void 0 ? void 0 : _d.endDate.getTime());
+                return new Date(min);
+            }
+            return this.ownerStartDate;
+        },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(TaskAreaExportHelper.prototype, "endDate", {
-        get: function () { var _a; return ((_a = this.exportRange) === null || _a === void 0 ? void 0 : _a.endDate) || this._owner.range.end; },
+        get: function () {
+            var _a, _b, _c, _d;
+            if (((_a = this.exportRange) === null || _a === void 0 ? void 0 : _a.startDate) && ((_b = this.exportRange) === null || _b === void 0 ? void 0 : _b.endDate)) {
+                var max = Math.max((_c = this.exportRange) === null || _c === void 0 ? void 0 : _c.startDate.getTime(), (_d = this.exportRange) === null || _d === void 0 ? void 0 : _d.endDate.getTime());
+                return new Date(max);
+            }
+            return this.ownerEndDate;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(TaskAreaExportHelper.prototype, "hasCustomRangeOutOfRender", {
+        get: function () {
+            return this.startDate.getTime() < this.ownerStartDate.getTime() || this.endDate.getTime() > this.ownerEndDate.getTime();
+        },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(TaskAreaExportHelper.prototype, "layoutCalculator", {
         get: function () {
-            return this._owner.renderHelper.gridLayoutCalculator;
+            if (!this._layoutCalculator) {
+                var calc = this._owner.renderHelper.gridLayoutCalculator;
+                if (this.hasCustomRangeOutOfRender) {
+                    this._layoutCalculator = new GridLayoutCalculator_1.GridLayoutCalculator();
+                    var start = DateUtils_1.DateUtils.adjustStartDateByViewType(this.startDate, this.settings.viewType, this.settings.firstDayOfWeek);
+                    var end = DateUtils_1.DateUtils.adjustEndDateByViewType(this.endDate, this.settings.viewType, this.settings.firstDayOfWeek);
+                    this._layoutCalculator.setSettings(calc.visibleTaskAreaSize, calc.tickSize, calc.elementSizeValues, new DateRange_1.DateRange(start, end), calc.viewModel, calc.viewType, calc.scrollBarHeight);
+                }
+                else
+                    this._layoutCalculator = calc;
+            }
+            return this._layoutCalculator;
         },
         enumerable: false,
         configurable: true
@@ -13358,13 +13777,29 @@ var TaskAreaExportHelper = (function () {
         enumerable: false,
         configurable: true
     });
+    TaskAreaExportHelper.prototype.getScaleItemText = function (index, scaleType) {
+        if (!this.hasCustomRangeOutOfRender)
+            return this._owner.renderHelper.getScaleItemText(index, scaleType);
+        return this.textHelper.getScaleItemText(index, scaleType);
+    };
+    Object.defineProperty(TaskAreaExportHelper.prototype, "textHelper", {
+        get: function () {
+            if (!this._textHelper) {
+                this._textHelper = new ElementTextHelper_1.ElementTextHelper(this.settings.cultureInfo);
+                this._textHelper.setSettings(this.layoutCalculator.range.start.getTime(), this.layoutCalculator.viewType, null);
+            }
+            return this._textHelper;
+        },
+        enumerable: false,
+        configurable: true
+    });
     return TaskAreaExportHelper;
 }());
 exports.TaskAreaExportHelper = TaskAreaExportHelper;
 
 
 /***/ }),
-/* 166 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13376,10 +13811,10 @@ var size_1 = __webpack_require__(11);
 var DependencyLineInfo_1 = __webpack_require__(76);
 var TaskInfo_1 = __webpack_require__(53);
 var TaskResourcesInfo_1 = __webpack_require__(77);
-var TimeMarkerInfo_1 = __webpack_require__(79);
+var TimeMarkerInfo_1 = __webpack_require__(80);
 var Interfaces_1 = __webpack_require__(29);
 var CellDef_1 = __webpack_require__(54);
-var PageNavigation_1 = __webpack_require__(167);
+var PageNavigation_1 = __webpack_require__(168);
 var CellNavigationInfo = (function () {
     function CellNavigationInfo(pageHorIndex, pageVerIndex, cellRowIndexOnPage, cellColIndexOnPage, cell) {
         this.pageVerIndex = pageVerIndex;
@@ -13939,7 +14374,7 @@ exports.PdfGanttPaginator = PdfGanttPaginator;
 
 
 /***/ }),
-/* 167 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14061,7 +14496,7 @@ exports.PageNavigation = PageNavigation;
 
 
 /***/ }),
-/* 168 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14221,7 +14656,7 @@ exports.ScalingHelper = ScalingHelper;
 
 
 /***/ }),
-/* 169 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14235,27 +14670,27 @@ var HandlerSettings = (function () {
     HandlerSettings.parse = function (settings) {
         var result = new HandlerSettings();
         if (settings) {
-            if (common_1.isDefined(settings.getRenderHelper))
+            if ((0, common_1.isDefined)(settings.getRenderHelper))
                 result.getRenderHelper = settings.getRenderHelper;
-            if (common_1.isDefined(settings.getTaskEditController))
+            if ((0, common_1.isDefined)(settings.getTaskEditController))
                 result.getTaskEditController = settings.getTaskEditController;
-            if (common_1.isDefined(settings.getHistory))
+            if ((0, common_1.isDefined)(settings.getHistory))
                 result.getHistory = settings.getHistory;
-            if (common_1.isDefined(settings.getTickSize))
+            if ((0, common_1.isDefined)(settings.getTickSize))
                 result.getTickSize = settings.getTickSize;
-            if (common_1.isDefined(settings.isFocus))
+            if ((0, common_1.isDefined)(settings.isFocus))
                 result.isFocus = settings.isFocus;
-            if (common_1.isDefined(settings.getViewModel))
+            if ((0, common_1.isDefined)(settings.getViewModel))
                 result.getViewModel = settings.getViewModel;
-            if (common_1.isDefined(settings.zoomIn))
+            if ((0, common_1.isDefined)(settings.zoomIn))
                 result.zoomIn = settings.zoomIn;
-            if (common_1.isDefined(settings.zoomOut))
+            if ((0, common_1.isDefined)(settings.zoomOut))
                 result.zoomOut = settings.zoomOut;
-            if (common_1.isDefined(settings.selectDependency))
+            if ((0, common_1.isDefined)(settings.selectDependency))
                 result.selectDependency = settings.selectDependency;
-            if (common_1.isDefined(settings.showPopupMenu))
+            if ((0, common_1.isDefined)(settings.showPopupMenu))
                 result.showPopupMenu = settings.showPopupMenu;
-            if (common_1.isDefined(settings.changeGanttTaskSelection))
+            if ((0, common_1.isDefined)(settings.changeGanttTaskSelection))
                 result.changeGanttTaskSelection = settings.changeGanttTaskSelection;
         }
         return result;
@@ -14266,14 +14701,14 @@ exports.HandlerSettings = HandlerSettings;
 
 
 /***/ }),
-/* 170 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.History = void 0;
-var HistoryItemInfo_1 = __webpack_require__(171);
+var HistoryItemInfo_1 = __webpack_require__(172);
 var CompositionHistoryItem_1 = __webpack_require__(45);
 var History = (function () {
     function History() {
@@ -14387,7 +14822,7 @@ exports.History = History;
 
 
 /***/ }),
-/* 171 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14406,18 +14841,18 @@ exports.HistoryItemInfo = HistoryItemInfo;
 
 
 /***/ }),
-/* 172 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModelChangesDispatcher = void 0;
-var ResourceManagerDialogShowingArguments_1 = __webpack_require__(173);
-var TaskEditDialogShowingArguments_1 = __webpack_require__(174);
-var ResourceUnassigningArguments_1 = __webpack_require__(175);
-var TaskUpdatingArguments_1 = __webpack_require__(176);
-var EventDispatcher_1 = __webpack_require__(177);
+var ResourceManagerDialogShowingArguments_1 = __webpack_require__(174);
+var TaskEditDialogShowingArguments_1 = __webpack_require__(175);
+var ResourceUnassigningArguments_1 = __webpack_require__(176);
+var TaskUpdatingArguments_1 = __webpack_require__(177);
+var EventDispatcher_1 = __webpack_require__(178);
 var ModelChangesDispatcher = (function () {
     function ModelChangesDispatcher() {
         this.onModelChanged = new EventDispatcher_1.EventDispatcher();
@@ -14628,7 +15063,7 @@ exports.ModelChangesDispatcher = ModelChangesDispatcher;
 
 
 /***/ }),
-/* 173 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14638,7 +15073,7 @@ exports.ResourceManagerDialogShowingArguments = void 0;
 var tslib_1 = __webpack_require__(0);
 var BaseArguments_1 = __webpack_require__(9);
 var ResourceManagerDialogShowingArguments = (function (_super) {
-    tslib_1.__extends(ResourceManagerDialogShowingArguments, _super);
+    (0, tslib_1.__extends)(ResourceManagerDialogShowingArguments, _super);
     function ResourceManagerDialogShowingArguments(params) {
         var _this = _super.call(this, undefined) || this;
         _this.values.resources = params.resources;
@@ -14650,7 +15085,7 @@ exports.ResourceManagerDialogShowingArguments = ResourceManagerDialogShowingArgu
 
 
 /***/ }),
-/* 174 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14660,7 +15095,7 @@ exports.TaskEditDialogShowingArguments = void 0;
 var tslib_1 = __webpack_require__(0);
 var BaseArguments_1 = __webpack_require__(9);
 var TaskEditDialogShowingArguments = (function (_super) {
-    tslib_1.__extends(TaskEditDialogShowingArguments, _super);
+    (0, tslib_1.__extends)(TaskEditDialogShowingArguments, _super);
     function TaskEditDialogShowingArguments(params) {
         var _this = _super.call(this, params.id) || this;
         _this.values = {
@@ -14679,7 +15114,7 @@ exports.TaskEditDialogShowingArguments = TaskEditDialogShowingArguments;
 
 
 /***/ }),
-/* 175 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14689,7 +15124,7 @@ exports.ResourceUnassigningArguments = void 0;
 var tslib_1 = __webpack_require__(0);
 var BaseArguments_1 = __webpack_require__(9);
 var ResourceUnassigningArguments = (function (_super) {
-    tslib_1.__extends(ResourceUnassigningArguments, _super);
+    (0, tslib_1.__extends)(ResourceUnassigningArguments, _super);
     function ResourceUnassigningArguments(assignment) {
         var _this = _super.call(this, assignment.internalId) || this;
         _this.values = assignment;
@@ -14701,7 +15136,7 @@ exports.ResourceUnassigningArguments = ResourceUnassigningArguments;
 
 
 /***/ }),
-/* 176 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14711,7 +15146,7 @@ exports.TaskUpdatingArguments = void 0;
 var tslib_1 = __webpack_require__(0);
 var BaseArguments_1 = __webpack_require__(9);
 var TaskUpdatingArguments = (function (_super) {
-    tslib_1.__extends(TaskUpdatingArguments, _super);
+    (0, tslib_1.__extends)(TaskUpdatingArguments, _super);
     function TaskUpdatingArguments(task, fieldNames, newValues) {
         var _this = _super.call(this, task.id) || this;
         _this.values = task;
@@ -14739,7 +15174,7 @@ exports.TaskUpdatingArguments = TaskUpdatingArguments;
 
 
 /***/ }),
-/* 177 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14785,16 +15220,16 @@ exports.EventDispatcher = EventDispatcher;
 
 
 /***/ }),
-/* 178 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModelManipulator = void 0;
-var DependencyManipulator_1 = __webpack_require__(179);
-var ResourcesManipulator_1 = __webpack_require__(180);
-var TaskManipulator_1 = __webpack_require__(184);
+var DependencyManipulator_1 = __webpack_require__(180);
+var ResourcesManipulator_1 = __webpack_require__(181);
+var TaskManipulator_1 = __webpack_require__(185);
 var ModelManipulator = (function () {
     function ModelManipulator(viewModel, dispatcher) {
         this.task = new TaskManipulator_1.TaskManipulator(viewModel, dispatcher);
@@ -14808,7 +15243,7 @@ exports.ModelManipulator = ModelManipulator;
 
 
 /***/ }),
-/* 179 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14818,7 +15253,7 @@ exports.TaskDependencyManipulator = void 0;
 var tslib_1 = __webpack_require__(0);
 var BaseManipulator_1 = __webpack_require__(17);
 var TaskDependencyManipulator = (function (_super) {
-    tslib_1.__extends(TaskDependencyManipulator, _super);
+    (0, tslib_1.__extends)(TaskDependencyManipulator, _super);
     function TaskDependencyManipulator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -14861,7 +15296,7 @@ exports.TaskDependencyManipulator = TaskDependencyManipulator;
 
 
 /***/ }),
-/* 180 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14870,9 +15305,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ResourcesManipulator = void 0;
 var tslib_1 = __webpack_require__(0);
 var BaseManipulator_1 = __webpack_require__(17);
-var ResourcePropertiesManipulator_1 = __webpack_require__(181);
+var ResourcePropertiesManipulator_1 = __webpack_require__(182);
 var ResourcesManipulator = (function (_super) {
-    tslib_1.__extends(ResourcesManipulator, _super);
+    (0, tslib_1.__extends)(ResourcesManipulator, _super);
     function ResourcesManipulator(viewModel, dispatcher) {
         var _this = _super.call(this, viewModel, dispatcher) || this;
         _this.properties = new ResourcePropertiesManipulator_1.ResourcePropertiesManipulator(viewModel, dispatcher);
@@ -14945,7 +15380,7 @@ exports.ResourcesManipulator = ResourcesManipulator;
 
 
 /***/ }),
-/* 181 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14954,9 +15389,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ResourcePropertiesManipulator = void 0;
 var tslib_1 = __webpack_require__(0);
 var BaseManipulator_1 = __webpack_require__(17);
-var ResourceColorManipulator_1 = __webpack_require__(182);
+var ResourceColorManipulator_1 = __webpack_require__(183);
 var ResourcePropertiesManipulator = (function (_super) {
-    tslib_1.__extends(ResourcePropertiesManipulator, _super);
+    (0, tslib_1.__extends)(ResourcePropertiesManipulator, _super);
     function ResourcePropertiesManipulator(viewModel, dispatcher) {
         var _this = _super.call(this, viewModel, dispatcher) || this;
         _this.color = new ResourceColorManipulator_1.ResourceColorManipulator(viewModel, dispatcher);
@@ -14968,7 +15403,7 @@ exports.ResourcePropertiesManipulator = ResourcePropertiesManipulator;
 
 
 /***/ }),
-/* 182 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14976,9 +15411,9 @@ exports.ResourcePropertiesManipulator = ResourcePropertiesManipulator;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ResourceColorManipulator = void 0;
 var tslib_1 = __webpack_require__(0);
-var ResourcePropertyManipulator_1 = __webpack_require__(183);
+var ResourcePropertyManipulator_1 = __webpack_require__(184);
 var ResourceColorManipulator = (function (_super) {
-    tslib_1.__extends(ResourceColorManipulator, _super);
+    (0, tslib_1.__extends)(ResourceColorManipulator, _super);
     function ResourceColorManipulator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -14995,7 +15430,7 @@ exports.ResourceColorManipulator = ResourceColorManipulator;
 
 
 /***/ }),
-/* 183 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15003,10 +15438,10 @@ exports.ResourceColorManipulator = ResourceColorManipulator;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ResourcePropertyManipulator = void 0;
 var tslib_1 = __webpack_require__(0);
-var HistoryItemState_1 = __webpack_require__(80);
+var HistoryItemState_1 = __webpack_require__(81);
 var BaseManipulator_1 = __webpack_require__(17);
 var ResourcePropertyManipulator = (function (_super) {
-    tslib_1.__extends(ResourcePropertyManipulator, _super);
+    (0, tslib_1.__extends)(ResourcePropertyManipulator, _super);
     function ResourcePropertyManipulator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -15043,7 +15478,7 @@ exports.ResourcePropertyManipulator = ResourcePropertyManipulator;
 
 
 /***/ }),
-/* 184 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15052,9 +15487,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskManipulator = void 0;
 var tslib_1 = __webpack_require__(0);
 var BaseManipulator_1 = __webpack_require__(17);
-var TaskPropertiesManipulator_1 = __webpack_require__(185);
+var TaskPropertiesManipulator_1 = __webpack_require__(186);
 var TaskManipulator = (function (_super) {
-    tslib_1.__extends(TaskManipulator, _super);
+    (0, tslib_1.__extends)(TaskManipulator, _super);
     function TaskManipulator(viewModel, dispatcher) {
         var _this = _super.call(this, viewModel, dispatcher) || this;
         _this.properties = new TaskPropertiesManipulator_1.TaskPropertiesManipulator(viewModel, dispatcher);
@@ -15119,7 +15554,7 @@ exports.TaskManipulator = TaskManipulator;
 
 
 /***/ }),
-/* 185 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15128,15 +15563,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskPropertiesManipulator = void 0;
 var tslib_1 = __webpack_require__(0);
 var BaseManipulator_1 = __webpack_require__(17);
-var TaskColorManipulator_1 = __webpack_require__(186);
-var TaskDescriptionManipulator_1 = __webpack_require__(187);
-var TaskEndDateManipulator_1 = __webpack_require__(188);
-var TaskMoveManipulator_1 = __webpack_require__(189);
-var TaskProgressManipulator_1 = __webpack_require__(190);
-var TaskStartDateManipulator_1 = __webpack_require__(191);
-var TaskTitleManipulator_1 = __webpack_require__(192);
+var TaskColorManipulator_1 = __webpack_require__(187);
+var TaskDescriptionManipulator_1 = __webpack_require__(188);
+var TaskEndDateManipulator_1 = __webpack_require__(189);
+var TaskMoveManipulator_1 = __webpack_require__(190);
+var TaskProgressManipulator_1 = __webpack_require__(191);
+var TaskStartDateManipulator_1 = __webpack_require__(192);
+var TaskTitleManipulator_1 = __webpack_require__(193);
 var TaskPropertiesManipulator = (function (_super) {
-    tslib_1.__extends(TaskPropertiesManipulator, _super);
+    (0, tslib_1.__extends)(TaskPropertiesManipulator, _super);
     function TaskPropertiesManipulator(viewModel, dispatcher) {
         var _this = _super.call(this, viewModel, dispatcher) || this;
         _this.title = new TaskTitleManipulator_1.TaskTitleManipulator(viewModel, dispatcher);
@@ -15154,7 +15589,7 @@ exports.TaskPropertiesManipulator = TaskPropertiesManipulator;
 
 
 /***/ }),
-/* 186 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15164,7 +15599,7 @@ exports.TaskColorManipulator = void 0;
 var tslib_1 = __webpack_require__(0);
 var TaskPropertyManipulator_1 = __webpack_require__(18);
 var TaskColorManipulator = (function (_super) {
-    tslib_1.__extends(TaskColorManipulator, _super);
+    (0, tslib_1.__extends)(TaskColorManipulator, _super);
     function TaskColorManipulator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -15181,7 +15616,7 @@ exports.TaskColorManipulator = TaskColorManipulator;
 
 
 /***/ }),
-/* 187 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15191,7 +15626,7 @@ exports.TaskDescriptionManipulator = void 0;
 var tslib_1 = __webpack_require__(0);
 var TaskPropertyManipulator_1 = __webpack_require__(18);
 var TaskDescriptionManipulator = (function (_super) {
-    tslib_1.__extends(TaskDescriptionManipulator, _super);
+    (0, tslib_1.__extends)(TaskDescriptionManipulator, _super);
     function TaskDescriptionManipulator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -15208,7 +15643,7 @@ exports.TaskDescriptionManipulator = TaskDescriptionManipulator;
 
 
 /***/ }),
-/* 188 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15218,7 +15653,7 @@ exports.TaskEndDateManipulator = void 0;
 var tslib_1 = __webpack_require__(0);
 var TaskPropertyManipulator_1 = __webpack_require__(18);
 var TaskEndDateManipulator = (function (_super) {
-    tslib_1.__extends(TaskEndDateManipulator, _super);
+    (0, tslib_1.__extends)(TaskEndDateManipulator, _super);
     function TaskEndDateManipulator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -15235,7 +15670,7 @@ exports.TaskEndDateManipulator = TaskEndDateManipulator;
 
 
 /***/ }),
-/* 189 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15243,10 +15678,10 @@ exports.TaskEndDateManipulator = TaskEndDateManipulator;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskMoveManipulator = void 0;
 var tslib_1 = __webpack_require__(0);
-var DateRange_1 = __webpack_require__(15);
+var DateRange_1 = __webpack_require__(14);
 var TaskPropertyManipulator_1 = __webpack_require__(18);
 var TaskMoveManipulator = (function (_super) {
-    tslib_1.__extends(TaskMoveManipulator, _super);
+    (0, tslib_1.__extends)(TaskMoveManipulator, _super);
     function TaskMoveManipulator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -15265,7 +15700,7 @@ exports.TaskMoveManipulator = TaskMoveManipulator;
 
 
 /***/ }),
-/* 190 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15275,7 +15710,7 @@ exports.TaskProgressManipulator = void 0;
 var tslib_1 = __webpack_require__(0);
 var TaskPropertyManipulator_1 = __webpack_require__(18);
 var TaskProgressManipulator = (function (_super) {
-    tslib_1.__extends(TaskProgressManipulator, _super);
+    (0, tslib_1.__extends)(TaskProgressManipulator, _super);
     function TaskProgressManipulator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -15293,7 +15728,7 @@ exports.TaskProgressManipulator = TaskProgressManipulator;
 
 
 /***/ }),
-/* 191 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15303,7 +15738,7 @@ exports.TaskStartDateManipulator = void 0;
 var tslib_1 = __webpack_require__(0);
 var TaskPropertyManipulator_1 = __webpack_require__(18);
 var TaskStartDateManipulator = (function (_super) {
-    tslib_1.__extends(TaskStartDateManipulator, _super);
+    (0, tslib_1.__extends)(TaskStartDateManipulator, _super);
     function TaskStartDateManipulator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -15320,7 +15755,7 @@ exports.TaskStartDateManipulator = TaskStartDateManipulator;
 
 
 /***/ }),
-/* 192 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15330,7 +15765,7 @@ exports.TaskTitleManipulator = void 0;
 var tslib_1 = __webpack_require__(0);
 var TaskPropertyManipulator_1 = __webpack_require__(18);
 var TaskTitleManipulator = (function (_super) {
-    tslib_1.__extends(TaskTitleManipulator, _super);
+    (0, tslib_1.__extends)(TaskTitleManipulator, _super);
     function TaskTitleManipulator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -15347,14 +15782,14 @@ exports.TaskTitleManipulator = TaskTitleManipulator;
 
 
 /***/ }),
-/* 193 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PdfGanttExporter = void 0;
-var PageDrawer_1 = __webpack_require__(194);
+var PageDrawer_1 = __webpack_require__(195);
 var PdfGanttExporter = (function () {
     function PdfGanttExporter(info) {
         if (!info.settings.pdfDoc && !info.settings.docCreateMethod)
@@ -15422,7 +15857,7 @@ exports.PdfGanttExporter = PdfGanttExporter;
 
 
 /***/ }),
-/* 194 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15430,10 +15865,10 @@ exports.PdfGanttExporter = PdfGanttExporter;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PdfGanttPageDrawer = void 0;
 var point_1 = __webpack_require__(4);
-var Drawer_1 = __webpack_require__(195);
+var Drawer_1 = __webpack_require__(196);
 var Interfaces_1 = __webpack_require__(29);
 var Props_1 = __webpack_require__(55);
-var Drawer_2 = __webpack_require__(196);
+var Drawer_2 = __webpack_require__(197);
 var PdfGanttPageDrawer = (function () {
     function PdfGanttPageDrawer(pdfDoc, props) {
         this._pdfDoc = pdfDoc;
@@ -15490,15 +15925,15 @@ exports.PdfGanttPageDrawer = PdfGanttPageDrawer;
 
 
 /***/ }),
-/* 195 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PdfObjectDrawer = void 0;
-var Enums_1 = __webpack_require__(3);
-var Ellipsis_1 = __webpack_require__(81);
+var Enums_1 = __webpack_require__(2);
+var Ellipsis_1 = __webpack_require__(82);
 var TaskInfo_1 = __webpack_require__(53);
 var PdfObjectDrawer = (function () {
     function PdfObjectDrawer(pdfDoc, info) {
@@ -15687,7 +16122,7 @@ exports.PdfObjectDrawer = PdfObjectDrawer;
 
 
 /***/ }),
-/* 196 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15696,8 +16131,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PdfGanttTableDrawer = void 0;
 var common_1 = __webpack_require__(1);
 var Interfaces_1 = __webpack_require__(29);
-var Ellipsis_1 = __webpack_require__(81);
-var TableOptions_1 = __webpack_require__(197);
+var Ellipsis_1 = __webpack_require__(82);
+var TableOptions_1 = __webpack_require__(198);
 var PdfGanttTableDrawer = (function () {
     function PdfGanttTableDrawer(pdfDoc) {
         this._pdfDoc = pdfDoc;
@@ -15743,7 +16178,7 @@ var PdfGanttTableDrawer = (function () {
         styles.minCellHeight = info.baseCellSize.height;
         tableInfo.alternateRowStyles.minCellHeight = tableInfo.styles.minCellHeight;
         tableInfo.alternateRowStyles.fillColor.assign(tableInfo.styles.fillColor);
-        if (common_1.isDefined(info.baseCellSize.width))
+        if ((0, common_1.isDefined)(info.baseCellSize.width))
             styles.cellWidth.assign(info.baseCellSize.width);
     };
     PdfGanttTableDrawer.prototype.prepareBodyCells = function (info) {
@@ -15796,7 +16231,7 @@ exports.PdfGanttTableDrawer = PdfGanttTableDrawer;
 
 
 /***/ }),
-/* 197 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15928,23 +16363,23 @@ var TableOptions = (function () {
     TableOptions.prototype.assign = function (source) {
         if (!source)
             return;
-        if (common_1.isDefined(source["margin"]))
+        if ((0, common_1.isDefined)(source["margin"]))
             this.margin.assign(source["margin"]);
-        if (common_1.isDefined(source["pageBreak"]))
+        if ((0, common_1.isDefined)(source["pageBreak"]))
             this.pageBreak = source["pageBreak"];
-        if (common_1.isDefined(source["rowPageBreak"]))
+        if ((0, common_1.isDefined)(source["rowPageBreak"]))
             this.rowPageBreak = source["rowPageBreak"];
-        if (common_1.isDefined(source["showFoot"]))
+        if ((0, common_1.isDefined)(source["showFoot"]))
             this.showFoot = source["showFoot"];
-        if (common_1.isDefined(source["showHead"]))
+        if ((0, common_1.isDefined)(source["showHead"]))
             this.showHead = source["showHead"];
-        if (common_1.isDefined(source["startY"]))
+        if ((0, common_1.isDefined)(source["startY"]))
             this.startY = source["startY"];
-        if (common_1.isDefined(source["tableLineWidth"]))
+        if ((0, common_1.isDefined)(source["tableLineWidth"]))
             this.tableLineWidth = source["tableLineWidth"];
-        if (common_1.isDefined(source["tableLineColor"]))
+        if ((0, common_1.isDefined)(source["tableLineColor"]))
             this.tableLineColor.assign(source["tableLineColor"]);
-        if (common_1.isDefined(source["tableWidth"]))
+        if ((0, common_1.isDefined)(source["tableWidth"]))
             this.tableWidth.assign(source["tableWidth"]);
     };
     TableOptions.prototype.addBody = function (source) {
@@ -15989,29 +16424,29 @@ exports.TableOptions = TableOptions;
 
 
 /***/ }),
-/* 198 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RenderHelper = void 0;
-var ConnectorLinesRender_1 = __webpack_require__(199);
-var EtalonsHelper_1 = __webpack_require__(200);
-var EtalonSizeValues_1 = __webpack_require__(201);
+var ConnectorLinesRender_1 = __webpack_require__(200);
+var EtalonsHelper_1 = __webpack_require__(201);
+var EtalonSizeValues_1 = __webpack_require__(202);
 var GanttView_1 = __webpack_require__(56);
 var GridLayoutCalculator_1 = __webpack_require__(20);
-var NoWorkingIntervalRender_1 = __webpack_require__(202);
-var ResourceRender_1 = __webpack_require__(203);
-var ScaleRender_1 = __webpack_require__(204);
-var StripLinesRender_1 = __webpack_require__(205);
-var TaskAreaManager_1 = __webpack_require__(206);
-var TaskAreaRender_1 = __webpack_require__(207);
-var TaskRender_1 = __webpack_require__(208);
-var MainElementsRender_1 = __webpack_require__(210);
+var NoWorkingIntervalRender_1 = __webpack_require__(203);
+var ResourceRender_1 = __webpack_require__(204);
+var ScaleRender_1 = __webpack_require__(205);
+var StripLinesRender_1 = __webpack_require__(206);
+var TaskAreaManager_1 = __webpack_require__(207);
+var TaskAreaRender_1 = __webpack_require__(208);
+var TaskRender_1 = __webpack_require__(209);
+var MainElementsRender_1 = __webpack_require__(211);
 var size_1 = __webpack_require__(11);
-var TaskAreaContainer_1 = __webpack_require__(211);
-var ElementTextHelper_1 = __webpack_require__(212);
+var TaskAreaContainer_1 = __webpack_require__(212);
+var ElementTextHelper_1 = __webpack_require__(79);
 var RenderHelper = (function () {
     function RenderHelper(ganttView) {
         this.hlRowElements = [];
@@ -16456,7 +16891,7 @@ exports.RenderHelper = RenderHelper;
 
 
 /***/ }),
-/* 199 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16563,15 +16998,15 @@ exports.ConnectorLinesRender = ConnectorLinesRender;
 
 
 /***/ }),
-/* 200 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EtalonsHelper = void 0;
-var dom_1 = __webpack_require__(2);
-var Enums_1 = __webpack_require__(3);
+var dom_1 = __webpack_require__(3);
+var Enums_1 = __webpack_require__(2);
 var GridElementInfo_1 = __webpack_require__(49);
 var RenderElementUtils_1 = __webpack_require__(13);
 var EtalonsHelper = (function () {
@@ -16665,7 +17100,7 @@ exports.EtalonsHelper = EtalonsHelper;
 
 
 /***/ }),
-/* 201 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16682,7 +17117,7 @@ exports.EtalonSizeValues = EtalonSizeValues;
 
 
 /***/ }),
-/* 202 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16756,7 +17191,7 @@ exports.NoWorkingIntervalRender = NoWorkingIntervalRender;
 
 
 /***/ }),
-/* 203 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16820,7 +17255,7 @@ exports.ResourseRender = ResourseRender;
 
 
 /***/ }),
-/* 204 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16829,7 +17264,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ScaleRender = void 0;
 var point_1 = __webpack_require__(4);
 var size_1 = __webpack_require__(11);
-var Enums_1 = __webpack_require__(3);
+var Enums_1 = __webpack_require__(2);
 var GridElementInfo_1 = __webpack_require__(49);
 var DateUtils_1 = __webpack_require__(26);
 var RenderElementUtils_1 = __webpack_require__(13);
@@ -17022,7 +17457,7 @@ exports.ScaleRender = ScaleRender;
 
 
 /***/ }),
-/* 205 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17089,7 +17524,7 @@ exports.StripLinesRender = StripLinesRender;
 
 
 /***/ }),
-/* 206 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17098,7 +17533,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskAreaManager = void 0;
 var browser_1 = __webpack_require__(8);
 var point_1 = __webpack_require__(4);
-var dom_1 = __webpack_require__(2);
+var dom_1 = __webpack_require__(3);
 var evt_1 = __webpack_require__(10);
 var touch_1 = __webpack_require__(27);
 var GridLayoutCalculator_1 = __webpack_require__(20);
@@ -17349,14 +17784,14 @@ exports.TaskAreaManager = TaskAreaManager;
 
 
 /***/ }),
-/* 207 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskAreaRender = void 0;
-var dom_1 = __webpack_require__(2);
+var dom_1 = __webpack_require__(3);
 var RenderElementUtils_1 = __webpack_require__(13);
 var TaskAreaRender = (function () {
     function TaskAreaRender(renderHelepr) {
@@ -17574,16 +18009,16 @@ exports.TaskAreaRender = TaskAreaRender;
 
 
 /***/ }),
-/* 208 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskRender = void 0;
-var dom_1 = __webpack_require__(2);
-var Enums_1 = __webpack_require__(3);
-var CustomTaskRender_1 = __webpack_require__(209);
+var dom_1 = __webpack_require__(3);
+var Enums_1 = __webpack_require__(2);
+var CustomTaskRender_1 = __webpack_require__(210);
 var RenderElementUtils_1 = __webpack_require__(13);
 var TaskRender = (function () {
     function TaskRender(renderHelper) {
@@ -17871,14 +18306,14 @@ exports.TaskRender = TaskRender;
 
 
 /***/ }),
-/* 209 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CustomTaskRender = void 0;
-var Enums_1 = __webpack_require__(3);
+var Enums_1 = __webpack_require__(2);
 var RenderElementUtils_1 = __webpack_require__(13);
 var CustomTaskRender = (function () {
     function CustomTaskRender(renderHelepr, taskRender) {
@@ -18013,7 +18448,7 @@ exports.CustomTaskRender = CustomTaskRender;
 
 
 /***/ }),
-/* 210 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18040,7 +18475,7 @@ exports.MainElementsRender = MainElementsRender;
 
 
 /***/ }),
-/* 211 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18112,262 +18547,6 @@ exports.TaskAreaContainer = TaskAreaContainer;
 
 
 /***/ }),
-/* 212 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ElementTextHelper = void 0;
-var dom_1 = __webpack_require__(2);
-var Enums_1 = __webpack_require__(3);
-var DateUtils_1 = __webpack_require__(26);
-var ElementTextHelper = (function () {
-    function ElementTextHelper(cultureInfo) {
-        this.longestAbbrMonthName = null;
-        this.longestMonthName = null;
-        this.longestAbbrDayName = null;
-        var canvas = document.createElement("canvas");
-        this.textMeasureContext = canvas.getContext("2d");
-        this.cultureInfo = cultureInfo;
-    }
-    ElementTextHelper.prototype.setFont = function (fontHolder) {
-        var computedStyle = dom_1.DomUtils.getCurrentStyle(fontHolder);
-        var font = computedStyle.font ? computedStyle.font :
-            computedStyle.fontStyle + " " + computedStyle.fontVariant + " " + computedStyle.fontWeight + " "
-                + computedStyle.fontSize + " / " + computedStyle.lineHeight + " " + computedStyle.fontFamily;
-        this.textMeasureContext.font = font;
-    };
-    ElementTextHelper.prototype.setSettings = function (startTime, viewType, modelItems) {
-        this.startTime = startTime;
-        this.viewType = viewType;
-        this.modelItems = modelItems;
-    };
-    ElementTextHelper.prototype.getScaleItemStartDate = function (index, scaleType) {
-        var result = new Date(this.startTime);
-        switch (scaleType) {
-            case Enums_1.ViewType.TenMinutes:
-                result.setTime(this.startTime + index * DateUtils_1.DateUtils.msPerHour / 6);
-                break;
-            case Enums_1.ViewType.Hours:
-                result.setTime(this.startTime + index * DateUtils_1.DateUtils.msPerHour);
-                break;
-            case Enums_1.ViewType.SixHours:
-                result.setTime(this.startTime + index * DateUtils_1.DateUtils.msPerHour * 6);
-                break;
-            case Enums_1.ViewType.Days:
-                result.setTime(this.startTime + index * DateUtils_1.DateUtils.msPerDay);
-                break;
-            case Enums_1.ViewType.Weeks:
-                result.setTime(this.startTime + index * DateUtils_1.DateUtils.msPerWeek);
-                break;
-            case Enums_1.ViewType.Months:
-                result.setMonth(result.getMonth() + index);
-                break;
-            case Enums_1.ViewType.Quarter:
-                result.setMonth(result.getMonth() + index * 3);
-                break;
-            case Enums_1.ViewType.Years:
-                result.setFullYear(result.getFullYear() + index);
-                break;
-            case Enums_1.ViewType.FiveYears:
-                result.setFullYear(result.getFullYear() + index * 5);
-                break;
-        }
-        result = this.getScaleStartDateCorrectedWithDST(result);
-        return result;
-    };
-    ElementTextHelper.prototype.getScaleStartDateCorrectedWithDST = function (date) {
-        var timeZoneDiff = DateUtils_1.DateUtils.getTimezoneOffsetDiff(new Date(this.startTime), date);
-        return timeZoneDiff > 0 ? new Date(date.getTime() + timeZoneDiff * 60000) : date;
-    };
-    ElementTextHelper.prototype.getScaleItemText = function (index, scaleType) {
-        var scaleItemStartDate = this.getScaleItemStartDate(index, scaleType);
-        var isViewTypeScale = this.viewType.valueOf() == scaleType.valueOf();
-        switch (scaleType) {
-            case Enums_1.ViewType.TenMinutes:
-                return this.getTenMinutesScaleItemText(scaleItemStartDate);
-            case Enums_1.ViewType.Hours:
-            case Enums_1.ViewType.SixHours:
-                return this.getHoursScaleItemText(scaleItemStartDate);
-            case Enums_1.ViewType.Days:
-                return this.getDaysScaleItemText(scaleItemStartDate, isViewTypeScale);
-            case Enums_1.ViewType.Weeks:
-                return this.getWeeksScaleItemText(scaleItemStartDate, isViewTypeScale);
-            case Enums_1.ViewType.Months:
-                return this.getMonthsScaleItemText(scaleItemStartDate, isViewTypeScale);
-            case Enums_1.ViewType.Quarter:
-                return this.getQuarterScaleItemText(scaleItemStartDate, isViewTypeScale);
-            case Enums_1.ViewType.Years:
-                return this.getYearsScaleItemText(scaleItemStartDate);
-            case Enums_1.ViewType.FiveYears:
-                return this.getFiveYearsScaleItemText(scaleItemStartDate);
-        }
-    };
-    ElementTextHelper.prototype.getTenMinutesScaleItemText = function (scaleItemDate) {
-        var minutes = scaleItemDate.getMinutes() + 1;
-        return (Math.ceil(minutes / 10) * 10).toString();
-    };
-    ElementTextHelper.prototype.getThirtyMinutesScaleItemText = function (scaleItemDate) {
-        var minutes = scaleItemDate.getMinutes();
-        return minutes < 30 ? "30" : "60";
-    };
-    ElementTextHelper.prototype.getHoursScaleItemText = function (scaleItemDate) {
-        var hours = scaleItemDate.getHours();
-        var hourDisplayText = this.getHourDisplayText(hours);
-        var amPmText = hours < 12 ? this.getAmText() : this.getPmText();
-        return this.getHoursScaleItemTextCore(hourDisplayText, amPmText);
-    };
-    ElementTextHelper.prototype.getDaysScaleItemText = function (scaleItemDate, isViewTypeScale) {
-        return this.getDayTotalText(scaleItemDate, true, isViewTypeScale, isViewTypeScale, !isViewTypeScale);
-    };
-    ElementTextHelper.prototype.getWeeksScaleItemText = function (scaleItemDate, isViewTypeScale) {
-        var weekLastDayDate = new Date(scaleItemDate.getTime() + DateUtils_1.DateUtils.msPerWeek - DateUtils_1.DateUtils.msPerDay);
-        return this.getWeeksScaleItemTextCore(this.getDayTotalText(scaleItemDate, isViewTypeScale, true, isViewTypeScale, !isViewTypeScale), this.getDayTotalText(weekLastDayDate, isViewTypeScale, true, isViewTypeScale, !isViewTypeScale));
-    };
-    ElementTextHelper.prototype.getMonthsScaleItemText = function (scaleItemDate, isViewTypeScale) {
-        var monthNames = this.getMonthNames();
-        var yearDisplayText = !isViewTypeScale ? scaleItemDate.getFullYear().toString() : "";
-        return this.getMonthsScaleItemTextCore(monthNames[scaleItemDate.getMonth()], yearDisplayText);
-    };
-    ElementTextHelper.prototype.getQuarterScaleItemText = function (scaleItemDate, isViewTypeScale) {
-        var quarterNames = this.getQuarterNames();
-        var yearDisplayText = !isViewTypeScale ? scaleItemDate.getFullYear().toString() : "";
-        return this.getMonthsScaleItemTextCore(quarterNames[Math.floor(scaleItemDate.getMonth() / 3)], yearDisplayText);
-    };
-    ElementTextHelper.prototype.getYearsScaleItemText = function (scaleItemDate) {
-        return scaleItemDate.getFullYear().toString();
-    };
-    ElementTextHelper.prototype.getFiveYearsScaleItemText = function (scaleItemDate) {
-        return scaleItemDate.getFullYear().toString() + " - " + (scaleItemDate.getFullYear() + 4).toString();
-    };
-    ElementTextHelper.prototype.getHourDisplayText = function (hours) {
-        if (this.hasAmPm())
-            return (hours == 0 ? 12 : (hours <= 12 ? hours : hours - 12)).toString();
-        return hours < 10 ? "0" + hours : hours.toString();
-    };
-    ElementTextHelper.prototype.getDayTotalText = function (scaleItemDate, displayDayName, useAbbrDayNames, useAbbrMonthNames, displayYear) {
-        var monthNames = useAbbrMonthNames ? this.getAbbrMonthNames() : this.getMonthNames();
-        var dayNames = useAbbrDayNames ? this.getAbbrDayNames() : this.getDayNames();
-        var dayNameDisplayText = displayDayName ? dayNames[scaleItemDate.getDay()] : "";
-        var day = scaleItemDate.getDate();
-        var monthName = monthNames[scaleItemDate.getMonth()];
-        var yearDisplayText = displayYear ? scaleItemDate.getFullYear().toString() : "";
-        return this.getDayTotalTextCore(dayNameDisplayText, day.toString(), monthName, yearDisplayText);
-    };
-    ElementTextHelper.prototype.getTaskText = function (index) {
-        var item = this.modelItems[index];
-        return item ? item.task.title : "";
-    };
-    ElementTextHelper.prototype.getTaskVisibility = function (index) {
-        var item = this.modelItems[index];
-        return !!item && item.getVisible();
-    };
-    ElementTextHelper.prototype.hasAmPm = function () {
-        return this.getAmText().length > 0 || this.getPmText().length > 0;
-    };
-    ElementTextHelper.prototype.getScaleItemTextTemplate = function (viewType) {
-        switch (viewType) {
-            case Enums_1.ViewType.TenMinutes:
-                return "00";
-            case Enums_1.ViewType.Hours:
-            case Enums_1.ViewType.SixHours:
-                return this.getHoursScaleItemTextCore("00", this.getAmText());
-            case Enums_1.ViewType.Days:
-                return this.getDayTextTemplate();
-            case Enums_1.ViewType.Weeks:
-                return this.getWeekTextTemplate();
-            case Enums_1.ViewType.Months:
-                return this.getMonthsScaleItemTextCore(this.getLongestMonthName(), "");
-            case Enums_1.ViewType.Quarter:
-                return "Q4";
-            case Enums_1.ViewType.Years:
-                return "0000";
-        }
-    };
-    ElementTextHelper.prototype.getDayTextTemplate = function () {
-        return this.getDayTotalTextCore(this.getLongestAbbrDayName(), "00", this.getLongestAbbrMonthName(), "");
-    };
-    ElementTextHelper.prototype.getWeekTextTemplate = function () {
-        var dayTextTemplate = this.getDayTextTemplate();
-        return this.getWeeksScaleItemTextCore(dayTextTemplate, dayTextTemplate);
-    };
-    ElementTextHelper.prototype.getHoursScaleItemTextCore = function (hourDisplayText, amPmText) {
-        return hourDisplayText + ":00" + (this.hasAmPm() ? " " + amPmText : "");
-    };
-    ElementTextHelper.prototype.getDayTotalTextCore = function (dayName, dayValueString, monthName, yearValueString) {
-        var result = dayName.length > 0 ? dayName + ", " : "";
-        result += dayValueString + " " + monthName;
-        result += yearValueString.length > 0 ? " " + yearValueString : "";
-        return result;
-    };
-    ElementTextHelper.prototype.getWeeksScaleItemTextCore = function (firstDayOfWeekString, lastDayOfWeekString) {
-        return firstDayOfWeekString + " - " + lastDayOfWeekString;
-    };
-    ElementTextHelper.prototype.getMonthsScaleItemTextCore = function (monthName, yearValueString) {
-        var result = monthName;
-        if (yearValueString.length > 0)
-            result += " " + yearValueString;
-        return result;
-    };
-    ElementTextHelper.prototype.getLongestAbbrMonthName = function () {
-        if (this.longestAbbrMonthName == null)
-            this.longestAbbrMonthName = this.getLongestText(this.getAbbrMonthNames());
-        return this.longestAbbrMonthName;
-    };
-    ElementTextHelper.prototype.getLongestMonthName = function () {
-        if (this.longestMonthName == null)
-            this.longestMonthName = this.getLongestText(this.getMonthNames());
-        return this.longestMonthName;
-    };
-    ElementTextHelper.prototype.getLongestAbbrDayName = function () {
-        if (this.longestAbbrDayName == null)
-            this.longestAbbrDayName = this.getLongestText(this.getAbbrDayNames());
-        return this.longestAbbrDayName;
-    };
-    ElementTextHelper.prototype.getLongestText = function (texts) {
-        var _this = this;
-        var result = "";
-        var longestTextWidth = 0;
-        texts.forEach(function (text) {
-            var textWidth = _this.getTextWidth(text);
-            if (textWidth > longestTextWidth) {
-                longestTextWidth = textWidth;
-                result = text;
-            }
-        });
-        return result;
-    };
-    ElementTextHelper.prototype.getTextWidth = function (text) {
-        return Math.round(this.textMeasureContext.measureText(text).width);
-    };
-    ElementTextHelper.prototype.getAmText = function () {
-        return this.cultureInfo.amText;
-    };
-    ElementTextHelper.prototype.getPmText = function () {
-        return this.cultureInfo.pmText;
-    };
-    ElementTextHelper.prototype.getQuarterNames = function () {
-        return this.cultureInfo.quarterNames;
-    };
-    ElementTextHelper.prototype.getMonthNames = function () {
-        return this.cultureInfo.monthNames;
-    };
-    ElementTextHelper.prototype.getDayNames = function () {
-        return this.cultureInfo.dayNames;
-    };
-    ElementTextHelper.prototype.getAbbrMonthNames = function () {
-        return this.cultureInfo.abbrMonthNames;
-    };
-    ElementTextHelper.prototype.getAbbrDayNames = function () {
-        return this.cultureInfo.abbrDayNames;
-    };
-    return ElementTextHelper;
-}());
-exports.ElementTextHelper = ElementTextHelper;
-
-
-/***/ }),
 /* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18376,9 +18555,9 @@ exports.ElementTextHelper = ElementTextHelper;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Settings = void 0;
 var common_1 = __webpack_require__(1);
-var Enums_1 = __webpack_require__(3);
+var Enums_1 = __webpack_require__(2);
 var EditingSettings_1 = __webpack_require__(214);
-var StripLineSettings_1 = __webpack_require__(82);
+var StripLineSettings_1 = __webpack_require__(83);
 var ValidationSettings_1 = __webpack_require__(215);
 var Settings = (function () {
     function Settings() {
@@ -18397,37 +18576,37 @@ var Settings = (function () {
     Settings.parse = function (settings) {
         var result = new Settings();
         if (settings) {
-            if (common_1.isDefined(settings.viewType))
+            if ((0, common_1.isDefined)(settings.viewType))
                 result.viewType = settings.viewType;
-            if (common_1.isDefined(settings.taskTitlePosition))
+            if ((0, common_1.isDefined)(settings.taskTitlePosition))
                 result.taskTitlePosition = settings.taskTitlePosition;
-            if (common_1.isDefined(settings.showResources))
+            if ((0, common_1.isDefined)(settings.showResources))
                 result.showResources = settings.showResources;
-            if (common_1.isDefined(settings.areHorizontalBordersEnabled))
+            if ((0, common_1.isDefined)(settings.areHorizontalBordersEnabled))
                 result.areHorizontalBordersEnabled = settings.areHorizontalBordersEnabled;
-            if (common_1.isDefined(settings.areVerticalBordersEnabled))
+            if ((0, common_1.isDefined)(settings.areVerticalBordersEnabled))
                 result.areHorizontalBordersEnabled = settings.areHorizontalBordersEnabled;
-            if (common_1.isDefined(settings.areAlternateRowsEnabled))
+            if ((0, common_1.isDefined)(settings.areAlternateRowsEnabled))
                 result.areAlternateRowsEnabled = settings.areAlternateRowsEnabled;
-            if (common_1.isDefined(settings.allowSelectTask))
+            if ((0, common_1.isDefined)(settings.allowSelectTask))
                 result.allowSelectTask = settings.allowSelectTask;
-            if (common_1.isDefined(settings.firstDayOfWeek))
+            if ((0, common_1.isDefined)(settings.firstDayOfWeek))
                 result.firstDayOfWeek = settings.firstDayOfWeek;
-            if (common_1.isDefined(settings.editing))
+            if ((0, common_1.isDefined)(settings.editing))
                 result.editing = EditingSettings_1.EditingSettings.parse(settings.editing);
-            if (common_1.isDefined(settings.validation))
+            if ((0, common_1.isDefined)(settings.validation))
                 result.validation = ValidationSettings_1.ValidationSettings.parse(settings.validation);
-            if (common_1.isDefined(settings.stripLines))
+            if ((0, common_1.isDefined)(settings.stripLines))
                 result.stripLines = StripLineSettings_1.StripLineSettings.parse(settings.stripLines);
-            if (common_1.isDefined(settings.taskTooltipContentTemplate))
+            if ((0, common_1.isDefined)(settings.taskTooltipContentTemplate))
                 result.taskTooltipContentTemplate = settings.taskTooltipContentTemplate;
-            if (common_1.isDefined(settings.taskProgressTooltipContentTemplate))
+            if ((0, common_1.isDefined)(settings.taskProgressTooltipContentTemplate))
                 result.taskProgressTooltipContentTemplate = settings.taskProgressTooltipContentTemplate;
-            if (common_1.isDefined(settings.taskTimeTooltipContentTemplate))
+            if ((0, common_1.isDefined)(settings.taskTimeTooltipContentTemplate))
                 result.taskTimeTooltipContentTemplate = settings.taskTimeTooltipContentTemplate;
-            if (common_1.isDefined(settings.taskContentTemplate))
+            if ((0, common_1.isDefined)(settings.taskContentTemplate))
                 result.taskContentTemplate = settings.taskContentTemplate;
-            if (common_1.isDefined(settings.cultureInfo))
+            if ((0, common_1.isDefined)(settings.cultureInfo))
                 result.cultureInfo = settings.cultureInfo;
         }
         return result;
@@ -18475,25 +18654,25 @@ var EditingSettings = (function () {
     EditingSettings.parse = function (settings) {
         var result = new EditingSettings();
         if (settings) {
-            if (common_1.isDefined(settings.enabled))
+            if ((0, common_1.isDefined)(settings.enabled))
                 result.enabled = settings.enabled;
-            if (common_1.isDefined(settings.allowDependencyDelete))
+            if ((0, common_1.isDefined)(settings.allowDependencyDelete))
                 result.allowDependencyDelete = settings.allowDependencyDelete;
-            if (common_1.isDefined(settings.allowDependencyInsert))
+            if ((0, common_1.isDefined)(settings.allowDependencyInsert))
                 result.allowDependencyInsert = settings.allowDependencyInsert;
-            if (common_1.isDefined(settings.allowTaskDelete))
+            if ((0, common_1.isDefined)(settings.allowTaskDelete))
                 result.allowTaskDelete = settings.allowTaskDelete;
-            if (common_1.isDefined(settings.allowTaskInsert))
+            if ((0, common_1.isDefined)(settings.allowTaskInsert))
                 result.allowTaskInsert = settings.allowTaskInsert;
-            if (common_1.isDefined(settings.allowTaskUpdate))
+            if ((0, common_1.isDefined)(settings.allowTaskUpdate))
                 result.allowTaskUpdate = settings.allowTaskUpdate;
-            if (common_1.isDefined(settings.allowResourceDelete))
+            if ((0, common_1.isDefined)(settings.allowResourceDelete))
                 result.allowResourceDelete = settings.allowResourceDelete;
-            if (common_1.isDefined(settings.allowResourceInsert))
+            if ((0, common_1.isDefined)(settings.allowResourceInsert))
                 result.allowResourceInsert = settings.allowResourceInsert;
-            if (common_1.isDefined(settings.allowResourceUpdate))
+            if ((0, common_1.isDefined)(settings.allowResourceUpdate))
                 result.allowResourceUpdate = settings.allowResourceUpdate;
-            if (common_1.isDefined(settings.allowTaskResourceUpdate))
+            if ((0, common_1.isDefined)(settings.allowTaskResourceUpdate))
                 result.allowTaskResourceUpdate = settings.allowTaskResourceUpdate;
         }
         return result;
@@ -18535,11 +18714,11 @@ var ValidationSettings = (function () {
     ValidationSettings.parse = function (settings) {
         var result = new ValidationSettings();
         if (settings) {
-            if (common_1.isDefined(settings.validateDependencies))
+            if ((0, common_1.isDefined)(settings.validateDependencies))
                 result.validateDependencies = settings.validateDependencies;
-            if (common_1.isDefined(settings.autoUpdateParentTasks))
+            if ((0, common_1.isDefined)(settings.autoUpdateParentTasks))
                 result.autoUpdateParentTasks = settings.autoUpdateParentTasks;
-            if (common_1.isDefined(settings.enablePredecessorGap))
+            if ((0, common_1.isDefined)(settings.enablePredecessorGap))
                 result.enablePredecessorGap = settings.enablePredecessorGap;
         }
         return result;
@@ -18568,26 +18747,26 @@ var tslib_1 = __webpack_require__(0);
 var common_1 = __webpack_require__(1);
 var TooltipSettings_1 = __webpack_require__(72);
 var TaskEditSettings = (function (_super) {
-    tslib_1.__extends(TaskEditSettings, _super);
+    (0, tslib_1.__extends)(TaskEditSettings, _super);
     function TaskEditSettings() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     TaskEditSettings.parse = function (settings) {
         var result = new TaskEditSettings();
         if (settings) {
-            if (common_1.isDefined(settings.getCommandManager))
+            if ((0, common_1.isDefined)(settings.getCommandManager))
                 result.getCommandManager = settings.getCommandManager;
-            if (common_1.isDefined(settings.getViewModel))
+            if ((0, common_1.isDefined)(settings.getViewModel))
                 result.getViewModel = settings.getViewModel;
-            if (common_1.isDefined(settings.getGanttSettings))
+            if ((0, common_1.isDefined)(settings.getGanttSettings))
                 result.getGanttSettings = settings.getGanttSettings;
-            if (common_1.isDefined(settings.getRenderHelper))
+            if ((0, common_1.isDefined)(settings.getRenderHelper))
                 result.getRenderHelper = settings.getRenderHelper;
-            if (common_1.isDefined(settings.destroyTemplate))
+            if ((0, common_1.isDefined)(settings.destroyTemplate))
                 result.destroyTemplate = settings.destroyTemplate;
-            if (common_1.isDefined(settings.formatDate))
+            if ((0, common_1.isDefined)(settings.formatDate))
                 result.formatDate = settings.formatDate;
-            if (common_1.isDefined(settings.getModelManipulator))
+            if ((0, common_1.isDefined)(settings.getModelManipulator))
                 result.getModelManipulator = settings.getModelManipulator;
         }
         return result;
@@ -18612,7 +18791,7 @@ var TaskEndHistoryItem_1 = __webpack_require__(35);
 var TaskMoveHistoryItem_1 = __webpack_require__(66);
 var TaskProgressHistoryItem_1 = __webpack_require__(36);
 var TaskStartHistoryItem_1 = __webpack_require__(37);
-var DateRange_1 = __webpack_require__(15);
+var DateRange_1 = __webpack_require__(14);
 var DateTimeUtils_1 = __webpack_require__(7);
 var ValidationError_1 = __webpack_require__(218);
 var ValidationController = (function () {
@@ -18786,10 +18965,33 @@ var ValidationController = (function () {
         this.moveStartDependTasks(dependency.successorId, successorRangeBeforeMove.start);
         this.moveEndDependTasks(dependency.successorId, successorRangeBeforeMove.end);
     };
+    ValidationController.prototype.getCorrectDateRange = function (taskId, startDate, endDate) {
+        var _this = this;
+        var dateRange = new DateRange_1.DateRange(new Date(startDate), new Date(endDate));
+        var validationErrors = (0, tslib_1.__spreadArray)((0, tslib_1.__spreadArray)([], this.checkStartDependencies(taskId, dateRange.start), true), this.checkEndDependencies(taskId, dateRange.end), true);
+        var criticalErrors = validationErrors.filter(function (e) { return e.critical; });
+        criticalErrors.forEach(function (error) {
+            var dependency = _this.viewModel.dependencies.getItemById(error.dependencyId);
+            var predecessorTask = _this.viewModel.tasks.getItemById(dependency.predecessorId);
+            if (dependency.type === Enums_1.DependencyType.FS)
+                if (dateRange.start < predecessorTask.end)
+                    dateRange.start.setTime(predecessorTask.end.getTime());
+            if (dependency.type === Enums_1.DependencyType.SS)
+                if (dateRange.start < predecessorTask.start)
+                    dateRange.start.setTime(predecessorTask.start.getTime());
+            if (dependency.type === Enums_1.DependencyType.FF)
+                if (dateRange.end < predecessorTask.end)
+                    dateRange.end.setTime(predecessorTask.end.getTime());
+            if (dependency.type === Enums_1.DependencyType.SF)
+                if (dateRange.end < predecessorTask.start)
+                    dateRange.end.setTime(predecessorTask.start.getTime());
+        });
+        return dateRange;
+    };
     ValidationController.prototype.correctMoving = function (taskId, dateRange) {
         var _this = this;
         var deltaDate = dateRange.end.getTime() - dateRange.start.getTime();
-        var validationErrors = tslib_1.__spreadArray(tslib_1.__spreadArray([], this.checkStartDependencies(taskId, dateRange.start)), this.checkEndDependencies(taskId, dateRange.end));
+        var validationErrors = (0, tslib_1.__spreadArray)((0, tslib_1.__spreadArray)([], this.checkStartDependencies(taskId, dateRange.start), true), this.checkEndDependencies(taskId, dateRange.end), true);
         var criticalErrors = validationErrors.filter(function (e) { return e.critical; });
         criticalErrors.forEach(function (error) {
             var dependency = _this.viewModel.dependencies.getItemById(error.dependencyId);
@@ -18852,19 +19054,19 @@ var ValidationController = (function () {
     ValidationController.prototype.updateParentsRangeByChild = function (taskId) {
         var _this = this;
         this.recalculateParents(this.viewModel.findItem(taskId), function (data) {
-            if (!common_1.isDefined(data.id))
+            if (!(0, common_1.isDefined)(data.id))
                 return;
             var history = _this.history;
             var manipulator = _this.modelManipulator;
-            if (common_1.isDefined(data.start)) {
+            if ((0, common_1.isDefined)(data.start)) {
                 history.addAndRedo(new TaskStartHistoryItem_1.TaskStartHistoryItem(manipulator, data.id, data.start));
                 _this.moveStartDependTasks(data.id, data.oldStart);
             }
-            if (common_1.isDefined(data.end)) {
+            if ((0, common_1.isDefined)(data.end)) {
                 history.addAndRedo(new TaskEndHistoryItem_1.TaskEndHistoryItem(manipulator, data.id, data.end));
                 _this.moveEndDependTasks(data.id, data.oldEnd);
             }
-            if (common_1.isDefined(data.progress))
+            if ((0, common_1.isDefined)(data.progress))
                 history.addAndRedo(new TaskProgressHistoryItem_1.TaskProgressHistoryItem(manipulator, data.id, data.progress));
         });
     };
@@ -18891,6 +19093,12 @@ var ValidationController = (function () {
     };
     ValidationController.prototype.updateParentsIfRequired = function (childId) {
         if (this._parentAutoCalc) {
+            var task = this.viewModel.findItem(childId);
+            var parent_1 = task.parent;
+            while (!!parent_1 && !!parent_1.task) {
+                this.modelManipulator.dispatcher.notifyParentTaskUpdated(parent_1.task, this.viewModel.getDataUpdateErrorCallback());
+                parent_1 = parent_1.parent;
+            }
             this.updateParentsRangeByChild(childId);
             this.updateOwnerInAutoParentMode();
         }
@@ -18948,17 +19156,17 @@ var ValidationControllerSettings = (function () {
     ValidationControllerSettings.parse = function (settings) {
         var result = new ValidationControllerSettings();
         if (settings) {
-            if (common_1.isDefined(settings.getViewModel))
+            if ((0, common_1.isDefined)(settings.getViewModel))
                 result.getViewModel = settings.getViewModel;
-            if (common_1.isDefined(settings.getHistory))
+            if ((0, common_1.isDefined)(settings.getHistory))
                 result.getHistory = settings.getHistory;
-            if (common_1.isDefined(settings.getModelManipulator))
+            if ((0, common_1.isDefined)(settings.getModelManipulator))
                 result.getModelManipulator = settings.getModelManipulator;
-            if (common_1.isDefined(settings.getRange))
+            if ((0, common_1.isDefined)(settings.getRange))
                 result.getRange = settings.getRange;
-            if (common_1.isDefined(settings.getValidationSettings))
+            if ((0, common_1.isDefined)(settings.getValidationSettings))
                 result.getValidationSettings = settings.getValidationSettings;
-            if (common_1.isDefined(settings.updateOwnerInAutoParentMode))
+            if ((0, common_1.isDefined)(settings.updateOwnerInAutoParentMode))
                 result.updateOwnerInAutoParentMode = settings.updateOwnerInAutoParentMode;
         }
         return result;
@@ -18984,9 +19192,9 @@ var ViewVisualModelItem_1 = __webpack_require__(225);
 var ViewVisualModelDependencyInfo_1 = __webpack_require__(226);
 var WorkingTimeCalculator_1 = __webpack_require__(227);
 var common_1 = __webpack_require__(1);
-var Dependency_1 = __webpack_require__(83);
+var Dependency_1 = __webpack_require__(84);
 var Resource_1 = __webpack_require__(57);
-var ResourceAssignment_1 = __webpack_require__(84);
+var ResourceAssignment_1 = __webpack_require__(85);
 var ViewVisualModel = (function () {
     function ViewVisualModel(owner, tasks, dependencies, resources, assignments, dateRange, workTimeRules) {
         this._fLockCount = 0;
@@ -19032,7 +19240,7 @@ var ViewVisualModel = (function () {
         var inverted = list.reduce(function (previous, item) {
             var _a;
             var key = (_a = item.task) === null || _a === void 0 ? void 0 : _a.internalId;
-            if (common_1.isDefined(key))
+            if ((0, common_1.isDefined)(key))
                 previous[key] = item;
             return previous;
         }, {});
@@ -19045,14 +19253,14 @@ var ViewVisualModel = (function () {
             parentItem.addChild(item);
             if (recalculateParentRequired)
                 this.owner.validationController.recalculateParents(item, function (data) {
-                    if (!common_1.isDefined(data.id))
+                    if (!(0, common_1.isDefined)(data.id))
                         return;
                     var task = _this.tasks.getItemById(data.id);
-                    if (common_1.isDefined(data.start))
+                    if ((0, common_1.isDefined)(data.start))
                         task.start = data.start;
-                    if (common_1.isDefined(data.end))
+                    if ((0, common_1.isDefined)(data.end))
                         task.end = data.end;
-                    if (common_1.isDefined(data.progress))
+                    if ((0, common_1.isDefined)(data.progress))
                         task.progress = data.progress;
                 });
         }
@@ -19090,8 +19298,8 @@ var ViewVisualModel = (function () {
             var successorId = this.convertInternalToPublicKey("task", dependency.successorId);
             return {
                 id: dependency.id,
-                predecessorId: common_1.isDefined(predecessorId) ? predecessorId : dependency.predecessorId,
-                successorId: common_1.isDefined(successorId) ? successorId : dependency.successorId,
+                predecessorId: (0, common_1.isDefined)(predecessorId) ? predecessorId : dependency.predecessorId,
+                successorId: (0, common_1.isDefined)(successorId) ? successorId : dependency.successorId,
                 type: dependency.type
             };
         }
@@ -19114,8 +19322,8 @@ var ViewVisualModel = (function () {
             var resourceId = this.convertInternalToPublicKey("resource", assignment.resourceId);
             return {
                 id: assignment.id,
-                taskId: common_1.isDefined(taskId) ? taskId : assignment.taskId,
-                resourceId: common_1.isDefined(resourceId) ? resourceId : assignment.resourceId
+                taskId: (0, common_1.isDefined)(taskId) ? taskId : assignment.taskId,
+                resourceId: (0, common_1.isDefined)(resourceId) ? resourceId : assignment.resourceId
             };
         }
         return null;
@@ -19416,7 +19624,7 @@ var tslib_1 = __webpack_require__(0);
 var Task_1 = __webpack_require__(222);
 var CollectionBase_1 = __webpack_require__(22);
 var TaskCollection = (function (_super) {
-    tslib_1.__extends(TaskCollection, _super);
+    (0, tslib_1.__extends)(TaskCollection, _super);
     function TaskCollection() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -19438,7 +19646,7 @@ var tslib_1 = __webpack_require__(0);
 var common_1 = __webpack_require__(1);
 var DataObject_1 = __webpack_require__(19);
 var Task = (function (_super) {
-    tslib_1.__extends(Task, _super);
+    (0, tslib_1.__extends)(Task, _super);
     function Task() {
         var _this = _super.call(this) || this;
         _this.start = null;
@@ -19456,10 +19664,10 @@ var Task = (function (_super) {
         return _this;
     }
     Task.prototype.assignFromObject = function (sourceObj) {
-        if (common_1.isDefined(sourceObj)) {
+        if ((0, common_1.isDefined)(sourceObj)) {
             _super.prototype.assignFromObject.call(this, sourceObj);
             this.owner = sourceObj.owner;
-            this.parentId = common_1.isDefined(sourceObj.parentId) ? String(sourceObj.parentId) : null;
+            this.parentId = (0, common_1.isDefined)(sourceObj.parentId) ? String(sourceObj.parentId) : null;
             this.description = sourceObj.description;
             this.title = sourceObj.title;
             this.start = typeof sourceObj.start === "string" ? new Date(sourceObj.start) : sourceObj.start || new Date(0);
@@ -19467,9 +19675,9 @@ var Task = (function (_super) {
             this.duration = sourceObj.duration;
             this.progress = sourceObj.progress;
             this.taskType = sourceObj.taskType;
-            if (common_1.isDefined(sourceObj.expanded))
+            if ((0, common_1.isDefined)(sourceObj.expanded))
                 this.expanded = !!sourceObj.expanded;
-            if (common_1.isDefined(sourceObj.color))
+            if ((0, common_1.isDefined)(sourceObj.color))
                 this.color = sourceObj.color;
             this.assignCustomFields(sourceObj.customFields);
         }
@@ -19507,9 +19715,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DependencyCollection = void 0;
 var tslib_1 = __webpack_require__(0);
 var CollectionBase_1 = __webpack_require__(22);
-var Dependency_1 = __webpack_require__(83);
+var Dependency_1 = __webpack_require__(84);
 var DependencyCollection = (function (_super) {
-    tslib_1.__extends(DependencyCollection, _super);
+    (0, tslib_1.__extends)(DependencyCollection, _super);
     function DependencyCollection() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -19529,9 +19737,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ResourceAssignmentCollection = void 0;
 var tslib_1 = __webpack_require__(0);
 var CollectionBase_1 = __webpack_require__(22);
-var ResourceAssignment_1 = __webpack_require__(84);
+var ResourceAssignment_1 = __webpack_require__(85);
 var ResourceAssignmentCollection = (function (_super) {
-    tslib_1.__extends(ResourceAssignmentCollection, _super);
+    (0, tslib_1.__extends)(ResourceAssignmentCollection, _super);
     function ResourceAssignmentCollection() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -19574,7 +19782,7 @@ var ViewVisualModelItem = (function () {
         configurable: true
     });
     ViewVisualModelItem.prototype.addChild = function (child) {
-        if (common_1.isDefined(child) && this.children.indexOf(child) < 0)
+        if ((0, common_1.isDefined)(child) && this.children.indexOf(child) < 0)
             this.children.push(child);
     };
     ViewVisualModelItem.prototype.removeChild = function (child) {
@@ -19738,7 +19946,7 @@ var tslib_1 = __webpack_require__(0);
 var CollectionBase_1 = __webpack_require__(22);
 var WorkingTimeRule_1 = __webpack_require__(229);
 var WorkingDayRuleCollection = (function (_super) {
-    tslib_1.__extends(WorkingDayRuleCollection, _super);
+    (0, tslib_1.__extends)(WorkingDayRuleCollection, _super);
     function WorkingDayRuleCollection() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -19760,10 +19968,10 @@ var tslib_1 = __webpack_require__(0);
 var DataObject_1 = __webpack_require__(19);
 var common_1 = __webpack_require__(1);
 var DateTimeUtils_1 = __webpack_require__(7);
-var RecurrenceFactory_1 = __webpack_require__(85);
-var Daily_1 = __webpack_require__(86);
+var RecurrenceFactory_1 = __webpack_require__(86);
+var Daily_1 = __webpack_require__(87);
 var WorkingTimeRule = (function (_super) {
-    tslib_1.__extends(WorkingTimeRule, _super);
+    (0, tslib_1.__extends)(WorkingTimeRule, _super);
     function WorkingTimeRule(recurrence, isWorkDay, workTimeRanges) {
         if (recurrence === void 0) { recurrence = null; }
         if (isWorkDay === void 0) { isWorkDay = true; }
@@ -19778,12 +19986,12 @@ var WorkingTimeRule = (function (_super) {
         return _this;
     }
     WorkingTimeRule.prototype.assignFromObject = function (sourceObj) {
-        if (common_1.isDefined(sourceObj)) {
+        if ((0, common_1.isDefined)(sourceObj)) {
             _super.prototype.assignFromObject.call(this, sourceObj);
             this.recurrence = RecurrenceFactory_1.RecurrenceFactory.createRecurrenceByType(sourceObj.recurrenceType) || new Daily_1.Daily();
-            if (common_1.isDefined(sourceObj.recurrence))
+            if ((0, common_1.isDefined)(sourceObj.recurrence))
                 this.recurrence.assignFromObject(sourceObj.recurrence);
-            if (common_1.isDefined(sourceObj.isWorkDay))
+            if ((0, common_1.isDefined)(sourceObj.isWorkDay))
                 this.isWorkDay = !!sourceObj.isWorkDay;
             var ranges = DateTimeUtils_1.DateTimeUtils.convertToTimeRanges(sourceObj.workTimeRanges);
             if (ranges)
@@ -19852,7 +20060,7 @@ var tslib_1 = __webpack_require__(0);
 var RecurrenceBase_1 = __webpack_require__(41);
 var DateTimeUtils_1 = __webpack_require__(7);
 var Weekly = (function (_super) {
-    tslib_1.__extends(Weekly, _super);
+    (0, tslib_1.__extends)(Weekly, _super);
     function Weekly() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -19907,7 +20115,7 @@ var RecurrenceBase_1 = __webpack_require__(41);
 var DateTimeUtils_1 = __webpack_require__(7);
 var MonthInfo_1 = __webpack_require__(234);
 var Monthly = (function (_super) {
-    tslib_1.__extends(Monthly, _super);
+    (0, tslib_1.__extends)(Monthly, _super);
     function Monthly() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -20011,7 +20219,7 @@ var tslib_1 = __webpack_require__(0);
 var RecurrenceBase_1 = __webpack_require__(41);
 var DateTimeUtils_1 = __webpack_require__(7);
 var Yearly = (function (_super) {
-    tslib_1.__extends(Yearly, _super);
+    (0, tslib_1.__extends)(Yearly, _super);
     function Yearly() {
         return _super !== null && _super.apply(this, arguments) || this;
     }

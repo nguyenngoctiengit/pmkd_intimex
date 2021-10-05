@@ -28,3 +28,18 @@ C:\Users\Windows 10\Desktop\pmkd_intimex\Application\obj\Debug\net5.0\Applicatio
 C:\Users\Windows 10\Desktop\pmkd_intimex\Application\obj\Debug\net5.0\Application.dll
 C:\Users\Windows 10\Desktop\pmkd_intimex\Application\obj\Debug\net5.0\ref\Application.dll
 C:\Users\Windows 10\Desktop\pmkd_intimex\Application\obj\Debug\net5.0\Application.pdb
+C:\Users\User\Desktop\pmkd_intimex\Application\bin\Debug\net5.0\Application.deps.json
+C:\Users\User\Desktop\pmkd_intimex\Application\bin\Debug\net5.0\Application.dll
+C:\Users\User\Desktop\pmkd_intimex\Application\bin\Debug\net5.0\ref\Application.dll
+C:\Users\User\Desktop\pmkd_intimex\Application\bin\Debug\net5.0\Application.pdb
+C:\Users\User\Desktop\pmkd_intimex\Application\bin\Debug\net5.0\Data.dll
+C:\Users\User\Desktop\pmkd_intimex\Application\bin\Debug\net5.0\Data.pdb
+C:\Users\User\Desktop\pmkd_intimex\Application\obj\Debug\net5.0\Application.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\pmkd_intimex\Application\obj\Debug\net5.0\Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\Desktop\pmkd_intimex\Application\obj\Debug\net5.0\Application.AssemblyInfoInputs.cache
+C:\Users\User\Desktop\pmkd_intimex\Application\obj\Debug\net5.0\Application.AssemblyInfo.cs
+C:\Users\User\Desktop\pmkd_intimex\Application\obj\Debug\net5.0\Application.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\pmkd_intimex\Application\obj\Debug\net5.0\Application.csproj.CopyComplete
+C:\Users\User\Desktop\pmkd_intimex\Application\obj\Debug\net5.0\Application.dll
+C:\Users\User\Desktop\pmkd_intimex\Application\obj\Debug\net5.0\ref\Application.dll
+C:\Users\User\Desktop\pmkd_intimex\Application\obj\Debug\net5.0\Application.pdb

@@ -32,3 +32,20 @@ C:\Users\Windows 10\Desktop\pmkd_intimex\ViewModel\obj\Debug\net5.0\ViewModel.cs
 C:\Users\Windows 10\Desktop\pmkd_intimex\ViewModel\obj\Debug\net5.0\ViewModel.dll
 C:\Users\Windows 10\Desktop\pmkd_intimex\ViewModel\obj\Debug\net5.0\ref\ViewModel.dll
 C:\Users\Windows 10\Desktop\pmkd_intimex\ViewModel\obj\Debug\net5.0\ViewModel.pdb
+C:\Users\User\Desktop\pmkd_intimex\ViewModel\bin\Debug\net5.0\ViewModel.deps.json
+C:\Users\User\Desktop\pmkd_intimex\ViewModel\bin\Debug\net5.0\ViewModel.dll
+C:\Users\User\Desktop\pmkd_intimex\ViewModel\bin\Debug\net5.0\ref\ViewModel.dll
+C:\Users\User\Desktop\pmkd_intimex\ViewModel\bin\Debug\net5.0\ViewModel.pdb
+C:\Users\User\Desktop\pmkd_intimex\ViewModel\bin\Debug\net5.0\Application.dll
+C:\Users\User\Desktop\pmkd_intimex\ViewModel\bin\Debug\net5.0\Data.dll
+C:\Users\User\Desktop\pmkd_intimex\ViewModel\bin\Debug\net5.0\Application.pdb
+C:\Users\User\Desktop\pmkd_intimex\ViewModel\bin\Debug\net5.0\Data.pdb
+C:\Users\User\Desktop\pmkd_intimex\ViewModel\obj\Debug\net5.0\ViewModel.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\pmkd_intimex\ViewModel\obj\Debug\net5.0\ViewModel.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\Desktop\pmkd_intimex\ViewModel\obj\Debug\net5.0\ViewModel.AssemblyInfoInputs.cache
+C:\Users\User\Desktop\pmkd_intimex\ViewModel\obj\Debug\net5.0\ViewModel.AssemblyInfo.cs
+C:\Users\User\Desktop\pmkd_intimex\ViewModel\obj\Debug\net5.0\ViewModel.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\pmkd_intimex\ViewModel\obj\Debug\net5.0\ViewModel.csproj.CopyComplete
+C:\Users\User\Desktop\pmkd_intimex\ViewModel\obj\Debug\net5.0\ViewModel.dll
+C:\Users\User\Desktop\pmkd_intimex\ViewModel\obj\Debug\net5.0\ref\ViewModel.dll
+C:\Users\User\Desktop\pmkd_intimex\ViewModel\obj\Debug\net5.0\ViewModel.pdb

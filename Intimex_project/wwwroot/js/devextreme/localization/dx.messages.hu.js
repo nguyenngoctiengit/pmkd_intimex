@@ -1,7 +1,7 @@
 /*!
 * DevExtreme (dx.messages.hu.js)
-* Version: 21.1.5
-* Build date: Mon Aug 02 2021
+* Version: 21.1.6
+* Build date: Mon Sep 27 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -507,7 +507,14 @@
             "dxGantt-zoomIn": "TODO",
             "dxGantt-zoomOut": "TODO",
             "dxGantt-fullScreen": "TODO",
-            "dxGantt-quarter": "TODO"
+            "dxGantt-quarter": "TODO",
+            "dxGantt-sortingAscendingText": "N\xf6vekv\u0151",
+            "dxGantt-sortingDescendingText": "Cs\xf6kken\u0151",
+            "dxGantt-sortingClearText": "Rendez\xe9s t\xf6rl\xe9se",
+            "dxGantt-showResources": "TODO",
+            "dxGantt-showDependencies": "TODO",
+            "dxGantt-dialogStartDateValidation": "TODO",
+            "dxGantt-dialogEndDateValidation": "TODO"
         }
     })
 }));

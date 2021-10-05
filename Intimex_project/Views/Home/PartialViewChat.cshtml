@@ -1,6 +1,6 @@
 ﻿<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="~/css/chat1.css" rel="stylesheet" />
+<link href="~/css/chat.css" rel="stylesheet" />
 <!------ Include the above in your HEAD tag ---------->
 
 <!DOCTYPE html>
@@ -44,24 +44,27 @@
                     </div>
                     <div class="srch_bar">
                         <div class="stylish-input-group">
-                            <input type="text" class="search-bar" placeholder="Search">
+                            <input type="text" class="search-bar" placeholder="Search" id="keySearch" onkeyup="Search()">
                         </div>
                     </div>
                 </div>
                 <div class="inbox_chat scroll">
                     @{ foreach (var item in ViewBag.user)
                         {
-            <button class="buttonChat" onclick="location.href='@item.Id'" style="padding:0;border:none;background:none" type="submit">
-                <div class="chat_list">
-                    <div class="chat_people">
+                            <button class="buttonChat"  onclick="location.href='@item.Id'" value="@item.NormalizedUserName" style="padding:0;border:none;background:none" type="submit">
+                                <div class="chat_list">
+                                    <div class="chat_people">
                         
-                        <div class="chat_img"> <img src="~/Images/@item.Image" /> </div>
-                        <div class="chat_ib">
-                            <h5>@item.NormalizedUserName <span class="chat_date">Dec 25</span></h5>
-                        </div>
-                    </div>
-                </div>
-            </button> } }
+                                        <div class="chat_img"> <img src="~/Images/@item.Image" /> </div>
+                                        <div class="chat_ib">
+                                            <h5 id="h5">@item.NormalizedUserName <span class="chat_date">Dec 25</span></h5>
+                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </button> 
+                        } 
+                        }
                 </div>
             </div>
             <input type="text" id="senderInput" value="@ViewBag.sender" hidden />
@@ -124,7 +127,7 @@
         </div>
     </div>
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/chat1.js"></script>
+    <script src="~/js/chat.js"></script>
     <script type="text/javascript">
         document.getElementById('messageInput').addEventListener('keyup', function (event) {
             event.preventDefault();
@@ -132,6 +135,19 @@
                 document.getElementById('sendButton').click();
             }
         });
+        function Search() {
+            var searchKey = document.getElementById('keySearch');
+            var filter = searchKey.value.toUpperCase();
+            var button = document.querySelectorAll('.buttonChat');
+            for (var i of button) {
+                var item = i.value;
+                if (item.toUpperCase().indexOf(filter) > -1) {
+                    i.style.display = '';
+                } else {
+                    i.style.display = 'none';
+                }
+            }
+        }
     </script>
 </body>
 </html>

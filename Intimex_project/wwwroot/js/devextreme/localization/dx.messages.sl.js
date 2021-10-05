@@ -1,7 +1,7 @@
 /*!
 * DevExtreme (dx.messages.sl.js)
-* Version: 21.1.5
-* Build date: Mon Aug 02 2021
+* Version: 21.1.6
+* Build date: Mon Sep 27 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -506,7 +506,14 @@
             "dxGantt-zoomIn": "TODO",
             "dxGantt-zoomOut": "TODO",
             "dxGantt-fullScreen": "TODO",
-            "dxGantt-quarter": "TODO"
+            "dxGantt-quarter": "TODO",
+            "dxGantt-sortingAscendingText": "Razvrsti nara\u0161\u010dajo\u010de",
+            "dxGantt-sortingDescendingText": "Razvrsti padajo\u010de",
+            "dxGantt-sortingClearText": "Brez razvr\u0161\u010danja",
+            "dxGantt-showResources": "TODO",
+            "dxGantt-showDependencies": "TODO",
+            "dxGantt-dialogStartDateValidation": "TODO",
+            "dxGantt-dialogEndDateValidation": "TODO"
         }
     })
 }));
