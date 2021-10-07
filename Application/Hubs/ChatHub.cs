@@ -20,12 +20,20 @@ namespace Application.Hubs
         }
         public override Task OnConnectedAsync()
         {
+            AspNetUser user = _context.AspNetUsers.Where(a => a.Id == UserIdParameter.userId).FirstOrDefault();
+            user.Online = true;
+            _context.AspNetUsers.Update(user);
+            _context.SaveChanges();
             ListUser.CurrentConnection.Add(UserIdParameter.userId);
             Groups.AddToGroupAsync(Context.ConnectionId, UserIdParameter.userId);
             return base.OnConnectedAsync();
         }
         public override Task OnDisconnectedAsync(Exception exception)
         {
+            AspNetUser user = _context.AspNetUsers.Where(a => a.Id == UserIdParameter.userId).FirstOrDefault();
+            user.Online = false;
+            _context.AspNetUsers.Update(user);
+            _context.SaveChanges();
             ListUser.CurrentConnection.Remove(UserIdParameter.userId);
             return base.OnDisconnectedAsync(exception);
         }

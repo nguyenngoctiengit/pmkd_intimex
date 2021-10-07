@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JsFpD/yBasREJDehtkZRBo7bbJq0IFg9bJMkPXkAnbY21l+xbYYu2kNJgoazKLO/HVS8TxKG+TX58C1eLwALAA==",
+  "dgSpecHash": "W07MChqJy7zYuV81ThdUUSLsqe08gEHIdOd2EF02fAljYaE5CsrX2J+xbMhsEAi3aQ/2MTmmfksF9YUC2XzQpg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\User\\Desktop\\pmkd_intimex\\ViewModel\\ViewModel.csproj",
+  "projectFilePath": "C:\\Users\\User\\Desktop\\project_intimex\\ViewModel\\ViewModel.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\User\\.nuget\\packages\\bcrypt.net-core\\1.6.0\\bcrypt.net-core.1.6.0.nupkg.sha512",
     "C:\\Program Files (x86)\\DevExpress 21.1\\Components\\Offline Packages\\devexpress.aspnetcore.common\\21.1.6\\devexpress.aspnetcore.common.21.1.6.nupkg.sha512",

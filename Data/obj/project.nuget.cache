@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "84ucdJLnyQ1QAsucsN4oPKzKF+Th09wy5GhfleGiRAgTdBO8wrNN8El1rGyEJaqNWBEF+fezVAdEpVqaaFLihQ==",
+  "dgSpecHash": "Hah4cl8nFtxk9CaUX9u6Dtbbw7ZxyD5tdwwC9jSNkgOQr9XqjacB0GkeAcXw20tazf/EJjVRAMc1pWhAD+i4Ew==",
   "success": true,
-  "projectFilePath": "C:\\Users\\User\\Desktop\\pmkd_intimex\\Data\\Data.csproj",
+  "projectFilePath": "C:\\Users\\User\\Desktop\\project_intimex\\Data\\Data.csproj",
   "expectedPackageFiles": [
     "C:\\Program Files (x86)\\DevExpress 21.1\\Components\\Offline Packages\\devexpress.aspnetcore.common\\21.1.6\\devexpress.aspnetcore.common.21.1.6.nupkg.sha512",
     "C:\\Program Files (x86)\\DevExpress 21.1\\Components\\Offline Packages\\devexpress.aspnetcore.core\\21.1.6\\devexpress.aspnetcore.core.21.1.6.nupkg.sha512",

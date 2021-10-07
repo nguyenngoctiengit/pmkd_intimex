@@ -59,21 +59,31 @@
                                         <div class="chat_ib">
                                             <h5>
                                                 @item.NormalizedUserName
-                                                <span class="chat_date">Offline</span>
+                                            @{
+                                                if (item.Online == true)
+                                                {
+                                                    <span class="chat_date">Online</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="chat_date">Offline</span>
+                                                }
+                                            }
 
-                                                </h5>
-                                        </div>
+                                        </h5>
                                     </div>
                                 </div>
-                            </button>
-                        }
+                            </div>
+                        </button>
+                    }
                     }
 
                 </div>
             </div>
         </div>
     </div>
-
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat1.js"></script>
 </body>
 </html>
 
