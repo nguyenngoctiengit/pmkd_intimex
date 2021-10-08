@@ -12,9 +12,11 @@ connection.on("ReceiveMessage", function (sender, reciever, message) {
     var senderInput = document.getElementById("senderInput").value;
     if (senderInput == sender) {
         window.location.reload();
+        document.getElementById('messageInput').focus();
     }
     else {
         window.location.reload();
+        document.getElementById('messageInput').focus();
 
     }
 });

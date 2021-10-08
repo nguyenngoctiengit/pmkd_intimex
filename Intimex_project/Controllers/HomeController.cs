@@ -66,5 +66,20 @@ namespace Intimex_project.Controllers
             var data = query.OrderBy(a => a.Id).ToList();
             return Json(data);
         }
+        public IActionResult PartialViewChat1(string id)
+        {
+            ViewBag.listUserOnline = ListUser.CurrentConnection.ToList();
+            ViewBag.messingTo = _context.AspNetUsers.Where(a => a.Id == id).Select(a => a.NormalizedUserName).FirstOrDefault();
+            var sender = HttpContext.Session.GetString("userId");
+            var receiver = id;
+            var query = (from a in _context.Messages where (a.FromUser == sender && a.ToUser == receiver) || (a.FromUser == receiver && a.ToUser == sender) orderby a.Id descending select a).Take(10);
+            ViewBag.outMsg = query.OrderBy(a => a.Id).ToList();
+            ViewBag.sender = HttpContext.Session.GetString("userId");
+            ViewBag.receiver = id;
+            UserIdParameter.userId = HttpContext.Session.GetString("userId");
+            UserIdParameter.userIdChat = id;
+            ViewBag.user = _context.AspNetUsers.Where(a => a.Id != HttpContext.Session.GetString("userId")).ToList();
+            return View("PartialViewChat1");
+        }
     }
 }
