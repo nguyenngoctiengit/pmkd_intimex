@@ -6,7 +6,7 @@
 @*<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>*@
-<link href="~/css/chat1.css" rel="stylesheet" />
+<link href="~/css/chat.css" rel="stylesheet" />
 <style>
     .buttonChat {
         text-align: left;
@@ -71,6 +71,13 @@
             <input type="text" id="senderInput" value="@ViewBag.sender" hidden />
             <input type="text" id="receiverInput" value="@ViewBag.receiver" hidden />
             <div class="mesgs">
+                <div class="headind_srch">
+                    <div class="srch_bar">
+                        <div class="stylish-input-group">
+                            <input type="text" class="search-bar" placeholder="Search" id="keySearchMessage" onkeyup="SearchMessage()">
+                        </div>
+                    </div>
+                </div>
                 <div class="msg_history" id="msg_history">
                     <script type="text/javascript">
                         function scrollChat() {
@@ -142,8 +149,23 @@
             }
         }
     }
+    function SearchMessage() {
+        var searchKey = document.getElementById('keySearchMessage');
+        var filter = searchKey.value.toUpperCase();
+        var count = 0;
+        $('#msg_history div').each(function () {
+            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                $(this).hide();  // MY CHANGE
+
+                // Show the list item if the phrase matches and increase the count by 1
+            } else {
+                $(this).show(); // MY CHANGE
+                count++;
+            }
+        })
+    }
     $('.msg_history').scroll(function () {
-        if ($('.msg_history').scrollTop() == $(document).height() - $(window).height()) {
+        if ($(window).scrollTop() == $(document).height() - $(window).height()) {
             GetDataMessage();
         }
     });
