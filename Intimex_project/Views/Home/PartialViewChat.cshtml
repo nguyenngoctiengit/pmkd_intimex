@@ -169,7 +169,7 @@
         }
     });
     var pageSize = 10;
-    var pageIndex = 2;
+    var pageIndex = 1;    
     var id = document.getElementById('receiverInput').value;
     var sender = document.getElementById('senderInput').value;
     var receiver = document.getElementById('receiverInput').value;
@@ -199,18 +199,17 @@
                                 '<div class="received_msg">' +
                                 '<div class="received_withd_msg">' +
                                 '<p>' + data[i].Message1 + '</p>' +
-                                '<span class="time_date">' + data[i].Date + '||' +  data[i].Id + '</span>' +
+                                '<span class="time_date">' + data[i].Date + '||' + data[i].Id + '</span>' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>');
                         }
                     }
+                    
                 }
-                else if (data == null || data == 0) {
-                    alert('data is null');
-                }
-                pageIndex++;
+                
             },
         })
+        pageIndex++;
     }
 </script>

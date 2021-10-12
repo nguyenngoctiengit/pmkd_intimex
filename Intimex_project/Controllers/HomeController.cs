@@ -11,6 +11,9 @@ using Data.Models.SignalR;
 using Microsoft.AspNetCore.Http;
 using Application.Parameter;
 using Data.Public_class;
+using DevExtreme.AspNet.Mvc;
+using DevExtreme.AspNet.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Intimex_project.Controllers
 {
@@ -57,14 +60,24 @@ namespace Intimex_project.Controllers
             ViewBag.user = _context.AspNetUsers.Where(a => a.Id != HttpContext.Session.GetString("userId")).ToList();
             return View("PartialViewChat");
         }
-        public JsonResult GetDataMessage(int pageIndex,int pageSize,string id)
+        public async Task<JsonResult> GetDataMessage(int pageIndex,int pageSize,string id)
         {
-            System.Threading.Thread.Sleep(3000);
-            var sender = HttpContext.Session.GetString("userId");
-            var receiver = id;
-            var query = (from a in _context.Messages where (a.FromUser == sender && a.ToUser == receiver) || (a.FromUser == receiver && a.ToUser == sender) orderby a.Id descending select a).Skip(pageSize*pageIndex).Take(pageSize);
-            var data = query.OrderByDescending(a => a.Id).ToList();
-            return Json(data);
+            var countMessage = _context.Messages.Count();
+            double count = countMessage / 10;
+            if (pageIndex >= count)
+            {
+                return null;
+            }
+            else
+            {
+                
+                var sender = HttpContext.Session.GetString("userId");
+                var receiver = id;
+                var query = (from a in _context.Messages where (a.FromUser == sender && a.ToUser == receiver) || (a.FromUser == receiver && a.ToUser == sender) orderby a.Id descending select a).Skip(pageSize * pageIndex).Take(pageSize);
+                var data = query.OrderByDescending(a => a.Id).ToListAsync();
+                return Json(await data);
+            }
+            
         }
     }
 }

@@ -58,6 +58,7 @@ namespace Intimex_project.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                 }
+                ViewBag.Message = "Sai tài khoản hoặc mật khẩu";
                 return View("Index");
             }
             else
@@ -119,6 +120,7 @@ namespace Intimex_project.Controllers
                 aspNetUser.PasswordHash = BCrypt.Net.BCrypt.HashString(aspNetUser.PasswordHash.Trim());
                 aspNetUser.Status = false;
                 aspNetUser.SecurityStamp = RandomHelper.RandomString(6);
+                aspNetUser.Image = "Avatar.PNG";
                 _context.AspNetUsers.Add(aspNetUser);
                 _context.SaveChanges();
                 var mailHelper = new MailHelper(configuration);
@@ -162,7 +164,7 @@ namespace Intimex_project.Controllers
             else
             {
                 ViewBag.Message = "Code sai!";
-                return View("ActiveAccount");
+                return RedirectToAction("ActiveAccount");
             }
         }
     }
