@@ -63,7 +63,7 @@ namespace Intimex_project.Controllers
             var sender = HttpContext.Session.GetString("userId");
             var receiver = id;
             var query = (from a in _context.Messages where (a.FromUser == sender && a.ToUser == receiver) || (a.FromUser == receiver && a.ToUser == sender) orderby a.Id descending select a).Skip(pageSize*pageIndex).Take(pageSize);
-            var data = query.OrderBy(a => a.Id).ToList();
+            var data = query.OrderByDescending(a => a.Id).ToList();
             return Json(data);
         }
     }

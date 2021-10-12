@@ -95,7 +95,7 @@
                                         <p>
                                             @item.Message1
                                         </p>
-                                        <span class="time_date"> @item.Date</span>
+                                        <span class="time_date"> @item.Date + @item.Id</span>
                                     </div>
                                 </div> }
                             else
@@ -162,8 +162,10 @@
         })
     }
     $('.msg_history').scroll(function () {
-        if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-            GetDataMessage();
+        if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+            if (GetDataMessage() != 0) {
+                GetDataMessage();
+            }
         }
     });
     var pageSize = 10;
@@ -186,7 +188,7 @@
                                 '<p>'
                                 + data[i].Message1 +
                                 '</p>' +
-                                '<span class="time_date">' + data[i].Date + '</span>' +
+                                '<span class="time_date">' + data[i].Date + '||' + data[i].Id + '</span>' +
                                 '</div>' +
                                 '</div>');
 
@@ -197,12 +199,15 @@
                                 '<div class="received_msg">' +
                                 '<div class="received_withd_msg">' +
                                 '<p>' + data[i].Message1 + '</p>' +
-                                '<span class="time_date">' + data[i].Date + '</span>' +
+                                '<span class="time_date">' + data[i].Date + '||' +  data[i].Id + '</span>' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>');
                         }
                     }
+                }
+                else if (data == null || data == 0) {
+                    alert('data is null');
                 }
                 pageIndex++;
             },

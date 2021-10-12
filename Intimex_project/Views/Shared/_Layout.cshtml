@@ -219,13 +219,13 @@
                     <div class="profile clearfix">
                         @{
                             var userId = Context.Session.GetString("userId");
-                            var name = Context.Session.GetString("UnitName");
-                            if (userId != null)
+                            var fullName = Context.Session.GetString("fullName");
+                            if (fullName != null)
                             {
 
                                 <div class="profile_info">
                                     <span>Welcome,</span>
-                                    <h2>@name</h2>
+                                    <h2>@fullName</h2>
                                 </div>
 
                             }
@@ -645,12 +645,12 @@
                             <li class="nav-item dropdown open" style="padding-left: 15px;">
                                 @{
                                     var user = Context.Session.GetString("userId");
-                                    var ten = Context.Session.GetString("FullName1");
-                                    if (userId != null)
+                                    var fullName1 = Context.Session.GetString("fullName");
+                                    if (fullName1 != null)
                                     {
 
                                         <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                                            @ten
+                                            @fullName1
                                         </a>
 
                                     }
