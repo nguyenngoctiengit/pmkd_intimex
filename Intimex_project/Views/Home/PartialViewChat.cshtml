@@ -1,47 +1,33 @@
-﻿<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+﻿
+@{
+    ViewData["Title"] = "chat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 <link href="~/css/chat.css" rel="stylesheet" />
-<!------ Include the above in your HEAD tag ---------->
+<style>
+    .buttonChat {
+        text-align: left;
+    }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    .text-center {
+        text-align: center;
+    }
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://kit.fontawesome.com/2d19aa43dc.js" crossorigin="anonymous"></script>
-    <style>
-        .buttonChat {
-            text-align: left;
-        }
-        .text-center {
-            text-align: center;
-        }
-        .btn {
-            background-color: #494e52; /* Blue background */
-            border: none; /* Remove borders */
-            color: white; /* White text */
-            padding: 12px 16px; /* Some padding */
-            font-size: 16px; /* Set a font size */
-            cursor: pointer; /* Mouse pointer on hover */
-        }
-    </style>
-
-</head>
-<body>
+    .btn {
+        background-color: #494e52; /* Blue background */
+        border: none; /* Remove borders */
+        color: white; /* White text */
+        padding: 12px 16px; /* Some padding */
+        font-size: 16px; /* Set a font size */
+        cursor: pointer; /* Mouse pointer on hover */
+    }
+</style>
+<div class="right_col" role="main" style="height: 100%">
     <h3 class="text-center">Messing to @ViewBag.messingTo</h3>
     <div class="messaging">
         <div class="inbox_msg">
             <div class="inbox_people">
                 <div class="headind_srch">
-                    <div class="recent_heading">
-                        <h4><button class="btn" onclick="location.href='/home/index'"><i class="fas fa-home"></i></button></h4>
-                    </div>
                     <div class="srch_bar">
                         <div class="stylish-input-group">
                             <input type="text" class="search-bar" placeholder="Search" id="keySearch" onkeyup="Search()">
@@ -82,6 +68,13 @@
             <input type="text" id="senderInput" value="@ViewBag.sender" hidden />
             <input type="text" id="receiverInput" value="@ViewBag.receiver" hidden />
             <div class="mesgs">
+                <div class="headind_srch">
+                    <div class="srch_bar">
+                        <div class="stylish-input-group">
+                            <input type="text" class="search-bar" placeholder="Search" id="keySearchMessage" onkeyup="SearchMessage()">
+                        </div>
+                    </div>
+                </div>
                 <div class="msg_history" id="msg_history">
                     <script type="text/javascript">
                         function scrollChat() {
@@ -90,7 +83,7 @@
                             document.getElementById('messageInput').focus();
                         }
                         window.addEventListener('load', scrollChat);
-                        
+
                     </script>
                     <div class=""></div>
                     @{ foreach (var item in ViewBag.outMsg)
@@ -130,80 +123,89 @@
             </div>
         </div>
     </div>
-    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/chat1.js"></script>
-    <script type="text/javascript">
-        document.getElementById('messageInput').addEventListener('keyup', function (event) {
-            event.preventDefault();
-            if (event.keyCode === 13) {
-                document.getElementById('sendButton').click();
-            }
-        });
-        function Search() {
-            var searchKey = document.getElementById('keySearch');
-            var filter = searchKey.value.toUpperCase();
-            var button = document.querySelectorAll('.buttonChat');
-            for (var i of button) {
-                var item = i.value;
-                if (item.toUpperCase().indexOf(filter) > -1) {
-                    i.style.display = '';
-                } else {
-                    i.style.display = 'none';
-                }
+</div>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat1.js"></script>
+<script type="text/javascript">
+    document.getElementById('messageInput').addEventListener('keyup', function (event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+            document.getElementById('sendButton').click();
+        }
+    });
+    function Search() {
+        var searchKey = document.getElementById('keySearch');
+        var filter = searchKey.value.toUpperCase();
+        var button = document.querySelectorAll('.buttonChat');
+        for (var i of button) {
+            var item = i.value;
+            if (item.toUpperCase().indexOf(filter) > -1) {
+                i.style.display = '';
+            } else {
+                i.style.display = 'none';
             }
         }
-        $('.msg_history').scroll(function () {
-            if ($('.msg_history').scrollTop() == $(document).height() - $(window).height()) {
-                GetDataMessage();
-            }
-        });
-        var pageSize = 10;
-        var pageIndex = 2;
-        var id = document.getElementById('receiverInput').value;
-        var sender = document.getElementById('senderInput').value;
-        var receiver = document.getElementById('receiverInput').value;
-        function GetDataMessage() {
-            $.ajax({
-                type: 'GET',
-                url: '/home/GetDataMessage',
-                data: { "pageindex": pageIndex, "pagesize": pageSize, "id": id },
-                dataType: 'json',
-                success: function (data) {
-                    if (data != null) {
-                        for (var i = 0; i < data.length; i++) {
-                            if (data[i].FromUser == sender && data[i].ToUser == receiver) {
-                                $('#msg_history').prepend(' <div class="outgoing_msg">' +
-                                    '<div class="sent_msg">' +
-                                    '<p>'
-                                    + data[i].Message1 +
-                                    '</p>' +
-                                    '<span class="time_date">' + data[i].Date + '</span>' +
-                                    '</div>' +
-                                    '</div>');
+    }
+    function SearchMessage() {
+        var searchKey = document.getElementById('keySearchMessage');
+        var filter = searchKey.value.toUpperCase();
+        var count = 0;
+        $('#msg_history div').each(function () {
+            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                $(this).hide();  // MY CHANGE
 
-                            } else {
-                                $('#msg_history').prepend('<div class="incoming_msg">'+
-                                        '<div class="incoming_msg_img">' +                                           
-                                       ' </div>' +
-                                        '<div class="received_msg">' +
-                                            '<div class="received_withd_msg">' +
-                                                '<p>' + data[i].Message1 + '</p>' +
-                                                '<span class="time_date">' + data[i].Date + '</span>' +
-                                                '</div>' +
-                                            '</div>' +
-                                        '</div>');
-                                }
-                            }
+                // Show the list item if the phrase matches and increase the count by 1
+            } else {
+                $(this).show(); // MY CHANGE
+                count++;
+            }
+        })
+    }
+    $('.msg_history').scroll(function () {
+        if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+            GetDataMessage();
+        }
+    });
+    var pageSize = 10;
+    var pageIndex = 2;
+    var id = document.getElementById('receiverInput').value;
+    var sender = document.getElementById('senderInput').value;
+    var receiver = document.getElementById('receiverInput').value;
+    function GetDataMessage() {
+        $.ajax({
+            type: 'GET',
+            url: '/home/GetDataMessage',
+            data: { "pageindex": pageIndex, "pagesize": pageSize, "id": id },
+            dataType: 'json',
+            success: function (data) {
+                if (data != null) {
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].FromUser == sender && data[i].ToUser == receiver) {
+                            $('#msg_history').prepend(' <div class="outgoing_msg">' +
+                                '<div class="sent_msg">' +
+                                '<p>'
+                                + data[i].Message1 +
+                                '</p>' +
+                                '<span class="time_date">' + data[i].Date + '</span>' +
+                                '</div>' +
+                                '</div>');
+
+                        } else {
+                            $('#msg_history').prepend('<div class="incoming_msg">' +
+                                '<div class="incoming_msg_img">' +
+                                ' </div>' +
+                                '<div class="received_msg">' +
+                                '<div class="received_withd_msg">' +
+                                '<p>' + data[i].Message1 + '</p>' +
+                                '<span class="time_date">' + data[i].Date + '</span>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>');
                         }
-                        pageIndex++;
-                    },
-                })
-            }
-    </script>
-</body>
-</html>
-
-
-
-
-
+                    }
+                }
+                pageIndex++;
+            },
+        })
+    }
+</script>

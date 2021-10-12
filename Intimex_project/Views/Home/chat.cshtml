@@ -3,10 +3,7 @@
     ViewData["Title"] = "chat";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="~/css/chat1.css" rel="stylesheet" />
+<link href="~/css/chat.css" rel="stylesheet" />
 <style>
     .buttonChat {
         text-align: left;
@@ -41,7 +38,7 @@
                     <div class="inbox_chat scroll">
                         @{ foreach (var item in ViewBag.user)
                             {
-                                <button class="buttonChat" onclick="location.href='PartialViewChat1/@item.Id'" style="padding:0;border:none;background:none" type="submit">
+                                <button class="buttonChat" onclick="location.href='PartialViewChat/@item.Id'" style="padding:0;border:none;background:none" type="submit">
                                     <div class="chat_list">
                                         <div class="chat_people">
                                             <div class="chat_img"> <img src="~/Images/@item.Image" /> </div>
