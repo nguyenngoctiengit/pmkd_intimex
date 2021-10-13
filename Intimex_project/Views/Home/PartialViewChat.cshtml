@@ -162,7 +162,7 @@
         })
     }
     $('.msg_history').scroll(function () {
-        if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+        if ($('.msg_history').scrollTop() == 0) {
             if (GetDataMessage() != 0) {
                 GetDataMessage();
             }
@@ -205,10 +205,13 @@
                                 '</div>');
                         }
                     }
-                    
+
                 }
                 
             },
+            error: function () {
+                alert('Đã load hết dữ liệu chat !!');
+            }
         })
         pageIndex++;
     }
