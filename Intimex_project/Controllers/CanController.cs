@@ -280,8 +280,8 @@ namespace Intimex_project.Controllers
                 return RedirectToAction("cantrongluong");
 
             }
-            TempData["alertMessage1"] = "Lỗi, vui lòng xem lại";
-            return RedirectToAction("phieunhapkho");
+            /*TempData["alertMessage1"] = "Lỗi, vui lòng xem lại";*/
+            /*return RedirectToAction("phieunhapkho");*/
         }
     }
 }

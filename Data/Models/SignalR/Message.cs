@@ -11,6 +11,7 @@ namespace Data.Models.SignalR
         public string FromUser { get; set; }
         public string ToUser { get; set; }
         public string Message1 { get; set; }
+        public string FileAttach { get; set; }
         public DateTime? Date { get; set; }
 
         public virtual AspNetUser FromUserNavigation { get; set; }

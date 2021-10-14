@@ -3,7 +3,7 @@
     ViewData["Title"] = "chat";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="~/css/chat.css" rel="stylesheet" />
+<link href="~/css/ChatPartialView.css" rel="stylesheet" />
 <style>
     .buttonChat {
         text-align: left;
@@ -125,7 +125,7 @@
     </div>
 </div>
 <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/chat1.js"></script>
+<script src="~/js/chat.js"></script>
 <script type="text/javascript">
     document.getElementById('messageInput').addEventListener('keyup', function (event) {
         event.preventDefault();
@@ -165,6 +165,7 @@
         if ($('.msg_history').scrollTop() == 0) {
             if (GetDataMessage() != 0) {
                 GetDataMessage();
+                $('.msg_history').scrollTop(30);
             }
         }
     });

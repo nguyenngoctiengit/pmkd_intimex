@@ -222,3 +222,29 @@
     height: 516px;
     overflow-y: auto;
 }
+
+@media only screen and (max-width: 46.1875em) {
+    .mesgs {
+        width: 100%;
+    }
+
+    .inbox_people {
+        display: none;
+    }
+
+    .sent_msg {
+        float: right;
+        width: 100%;
+    }
+
+    .received_withd_msg {
+        width: 100%;
+    }
+
+    .received_msg {
+        display: inline-block;
+        padding: 0 0 0 10px;
+        vertical-align: top;
+        width: 100%;
+    }
+}

@@ -3,7 +3,7 @@
     ViewData["Title"] = "chat";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="~/css/chat.css" rel="stylesheet" />
+<link href="~/css/chat1.css" rel="stylesheet" />
 <style>
     .buttonChat {
         text-align: left;
@@ -31,14 +31,14 @@
                     <div class="headind_srch">
                         <div class="srch_bar">
                             <div class="stylish-input-group">
-                                <input type="text" class="search-bar" placeholder="Search">
+                                <input type="text" class="search-bar" placeholder="Search" id="keySearch" onkeyup="Search()">
                             </div>
                         </div>
                     </div>
                     <div class="inbox_chat scroll">
                         @{ foreach (var item in ViewBag.user)
                             {
-                                <button class="buttonChat" onclick="location.href='PartialViewChat/@item.Id'" style="padding:0;border:none;background:none" type="submit">
+                                <button class="buttonChat" onclick="location.href='PartialViewChat/@item.Id'" value="@item.NormalizedUserName" style="padding:0;border:none;background:none" type="submit">
                                     <div class="chat_list">
                                         <div class="chat_people">
                                             <div class="chat_img"> <img src="~/Images/@item.Image" /> </div>
@@ -70,4 +70,19 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function Search() {
+        var searchKey = document.getElementById('keySearch');
+        var filter = searchKey.value.toUpperCase();
+        var button = document.querySelectorAll('.buttonChat');
+        for (var i of button) {
+            var item = i.value;
+            if (item.toUpperCase().indexOf(filter) > -1) {
+                i.style.display = '';
+            } else {
+                i.style.display = 'none';
+            }
+        }
+    }
+</script>
 

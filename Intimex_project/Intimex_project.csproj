@@ -26,4 +26,7 @@
     <PackageReference Include="DevExtreme.AspNet.Core" Version="21.1.6" />
     <PackageReference Include="DevExtreme.AspNet.Data" Version="2.8.2" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\DocCome\" />
+  </ItemGroup>
 </Project>
