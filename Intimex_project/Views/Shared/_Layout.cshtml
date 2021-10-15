@@ -612,7 +612,7 @@
                                     <a asp-action="chat" asp-controller="home"><i class="fa fa-sitemap"></i>Chat</a>
                                 </li>
                             </ul>
-                        </div>                       
+                        </div>
                     </div>
                     <!-- /sidebar menu -->
                     <!-- /menu footer buttons -->
@@ -699,6 +699,12 @@
                     </nav>
                 </div>
             </div>
+            <div class="type_msg" hidden>
+                <div class="input_msg_write">
+                    <input type="text" class="write_msg" id="messageInput" placeholder="Type a message" disabled/>
+                    <button class="msg_send_btn" type="button" id="sendButton" disabled><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                </div>
+            </div>
             <!-- /top navigation -->
             <!-- page content -->
             @RenderBody()
@@ -713,6 +719,9 @@
             <!-- /footer content -->
         </div>
     </div>
+    <!-- signalr -->
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat1.js"></script>
     <!-- datepicker -->
     <script src="~/js/js_create/lookup.js"></script>
     <!-- dialog -->

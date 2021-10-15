@@ -114,7 +114,7 @@
 }
 
 .inbox_chat {
-    height: 550px;
+    height: 570px;
     overflow-y: scroll;
 }
 
@@ -140,7 +140,6 @@
 
 .received_withd_msg p {
     background: #ebebeb none repeat scroll 0 0;
-    border-radius: 0 15px 15px 15px;
     color: #646464;
     font-size: 14px;
     margin: 0;
@@ -167,7 +166,6 @@
 
 .sent_msg p {
     background: #0465ac;
-    border-radius: 12px 15px 15px 0;
     font-size: 14px;
     margin: 0;
     color: #fff;
@@ -219,7 +217,7 @@
 }
 
 .msg_history {
-    height: 516px;
+    height: 520px;
     overflow-y: auto;
 }
 
@@ -227,7 +225,9 @@
     .mesgs {
         width: 100%;
     }
-
+    .incoming_msg_img{
+        display:none;
+    }
     .inbox_people {
         display: none;
     }

@@ -14,6 +14,8 @@ using Data.Public_class;
 using DevExtreme.AspNet.Mvc;
 using DevExtreme.AspNet.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace Intimex_project.Controllers
 {
@@ -60,39 +62,6 @@ namespace Intimex_project.Controllers
             ViewBag.user = _context.AspNetUsers.Where(a => a.Id != HttpContext.Session.GetString("userId")).ToList();
             return View("PartialViewChat");
         }
-/*        public async Task<JsonResult> GetDataMessage(int pageIndex,int pageSize,string id)
-        {
-            var countMessage = _context.Messages.Count();
-            double count = countMessage / 10;
-            if (pageIndex > count)
-            {
-                return null;
-            }else if (pageIndex == count)
-            {
-                if (count * 10 - countMessage == 0)
-                {
-                    return null;
-                }
-                else
-                {
-                    var index = pageIndex * 10 - countMessage;
-                    var sender = HttpContext.Session.GetString("userId");
-                    var receiver = id;
-                    var query = (from a in _context.Messages where (a.FromUser == sender && a.ToUser == receiver) || (a.FromUser == receiver && a.ToUser == sender) orderby a.Id descending select a).Skip(pageSize * pageIndex).Take(index);
-                    var data = query.OrderByDescending(a => a.Id).ToListAsync();
-                    return Json(await data);
-                }
-            }
-            else
-            {                
-                var sender = HttpContext.Session.GetString("userId");
-                var receiver = id;
-                var query = (from a in _context.Messages where (a.FromUser == sender && a.ToUser == receiver) || (a.FromUser == receiver && a.ToUser == sender) orderby a.Id descending select a).Skip(pageSize * pageIndex).Take(pageSize);
-                var data = query.OrderByDescending(a => a.Id).ToListAsync();
-                return Json(await data);
-            }
-            
-        }*/
         public async Task<JsonResult> GetDataMessage(int pageIndex, int pageSize, string id)
         {
             var sender = HttpContext.Session.GetString("userId");
@@ -101,6 +70,24 @@ namespace Intimex_project.Controllers
             var data = query.OrderByDescending(a => a.Id).ToListAsync();
             return Json(await data);
 
+        }
+        [HttpPost]
+        public IActionResult Upload(IFormFile file,[FromServices] IHostingEnvironment hostingEnvironment)
+        {
+            string fileName = $"{hostingEnvironment.WebRootPath}\\FileUploads\\{file.FileName}";
+            Message message = new Message();
+            message.FromUser = UserIdParameter.userId;
+            message.ToUser = UserIdParameter.userIdChat;
+            message.Message1 = file.FileName;
+            message.Date = DateTime.Now;
+            _context.Messages.Add(message);
+            _context.SaveChanges();
+            using (FileStream fileStream = System.IO.File.Create(fileName))
+            {
+                file.CopyTo(fileStream);
+                fileStream.Flush();
+            }
+            return RedirectToAction("PartialViewChat",new { id = UserIdParameter.userIdChat });
         }
     }
 }

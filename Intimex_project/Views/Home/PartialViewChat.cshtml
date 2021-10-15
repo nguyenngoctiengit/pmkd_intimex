@@ -95,7 +95,7 @@
                                         <p>
                                             @item.Message1
                                         </p>
-                                        <span class="time_date"> @item.Date + @item.Id</span>
+                                        <span class="time_date"> @item.Date</span>
                                     </div>
                                 </div> }
                             else
@@ -113,24 +113,33 @@
                                 </div> }
 
                         } }
+                    <div id="createDiv_incoming_msg"></div>
+                    <div id="createDiv_outgoing_msg"></div>
+                </div>
+                <div>
+                    <form asp-action="upload" asp-controller="home" method="post" enctype="multipart/form-data" id="uploadForm">
+                        <input type="file" name="file" id="fileUpload">
+                    </form>
                 </div>
                 <div class="type_msg">
                     <div class="input_msg_write">
-                        <input type="text" class="write_msg" id="messageInput" placeholder="Type a message" />
-                        <button class="msg_send_btn" type="button" id="sendButton"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                        <input type="text" class="write_msg" id="messageInput1" placeholder="Type a message" />
+                        <button class="msg_send_btn" type="button" id="sendButton1"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/chat.js"></script>
+
 <script type="text/javascript">
-    document.getElementById('messageInput').addEventListener('keyup', function (event) {
+    document.getElementById('fileUpload').onchange = function () {
+        document.getElementById('uploadForm').submit();
+    }
+    document.getElementById('messageInput1').addEventListener('keyup', function (event) {
         event.preventDefault();
         if (event.keyCode === 13) {
-            document.getElementById('sendButton').click();
+            document.getElementById('sendButton1').click();
         }
     });
     function Search() {
@@ -170,7 +179,7 @@
         }
     });
     var pageSize = 10;
-    var pageIndex = 1;    
+    var pageIndex = 1;
     var id = document.getElementById('receiverInput').value;
     var sender = document.getElementById('senderInput').value;
     var receiver = document.getElementById('receiverInput').value;
@@ -189,18 +198,19 @@
                                 '<p>'
                                 + data[i].Message1 +
                                 '</p>' +
-                                '<span class="time_date">' + data[i].Date + '||' + data[i].Id + '</span>' +
+                                '<span class="time_date">' + data[i].Date + '</span>' +
                                 '</div>' +
                                 '</div>');
 
                         } else {
                             $('#msg_history').prepend('<div class="incoming_msg">' +
                                 '<div class="incoming_msg_img">' +
+                                '<img src="/Images/Avatar.PNG" />'+
                                 ' </div>' +
                                 '<div class="received_msg">' +
                                 '<div class="received_withd_msg">' +
                                 '<p>' + data[i].Message1 + '</p>' +
-                                '<span class="time_date">' + data[i].Date + '||' + data[i].Id + '</span>' +
+                                '<span class="time_date">' + data[i].Date  + '</span>' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>');
@@ -208,7 +218,7 @@
                     }
 
                 }
-                
+
             },
             error: function () {
                 alert('Đã load hết dữ liệu chat !!');

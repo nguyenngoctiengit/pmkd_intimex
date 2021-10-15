@@ -49,7 +49,7 @@ namespace Intimex_project.Controllers
                     }
                     else
                     {
-                        ListUser.CurrentConnection.Add(user.Id);
+                        UserIdParameter.userId = user.Id;
                         var userdetails = _context.AspNetUsers.SingleOrDefault(m => m.UserName == user.UserName && m.Status == true);
                         HttpContext.Session.SetString("userId", user.Id);
                         HttpContext.Session.SetString("UserName", user.UserName);
@@ -74,7 +74,7 @@ namespace Intimex_project.Controllers
             user.Online = true;
             _context.AspNetUsers.Update(user).Property(a => a.Id).IsModified = false;
             _context.SaveChanges();
-            ListUser.CurrentConnection.Add(user.Id);
+            UserIdParameter.userId = user.Id;
             HttpContext.Session.SetString("userId", user.Id);
             HttpContext.Session.SetString("UserName", user.UserName);
             HttpContext.Session.SetString("fullName", user.NormalizedUserName);
@@ -121,6 +121,8 @@ namespace Intimex_project.Controllers
                 aspNetUser.Status = false;
                 aspNetUser.SecurityStamp = RandomHelper.RandomString(6);
                 aspNetUser.Image = "Avatar.PNG";
+                aspNetUser.Online = false;
+                aspNetUser.UnitName = "INX";
                 _context.AspNetUsers.Add(aspNetUser);
                 _context.SaveChanges();
                 var mailHelper = new MailHelper(configuration);
