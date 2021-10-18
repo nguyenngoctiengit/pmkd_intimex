@@ -8,6 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Data.Public_class;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Hubs
 {
@@ -20,6 +24,7 @@ namespace Application.Hubs
         }
         public override Task OnConnectedAsync()
         {
+            
             AspNetUser user = _context.AspNetUsers.Where(a => a.Id == UserIdParameter.userId).FirstOrDefault();
             user.Online = true;
             _context.AspNetUsers.Update(user);
@@ -41,7 +46,7 @@ namespace Application.Hubs
         {
             return ListUser.CurrentConnection.ToList();
         }
-        public Task SendMessageToGroup(string sender, string receiver, string message)
+        public Task SendMessageToGroup(string sender, string receiver, string message, IFormFile fromFile, [FromServices] IHostingEnvironment hostingEnvironment)
         {
             Groups.AddToGroupAsync(Context.ConnectionId, receiver);
             Message _message = new Message();
@@ -49,8 +54,6 @@ namespace Application.Hubs
             _message.ToUser = receiver;
             _message.Message1 = message;
             _message.Date = DateTime.Now;
-            /*int maxId = _context.Messages.Max(a => a.Id);
-            _message.Id = maxId + 1;*/
             _context.Messages.Add(_message);
             _context.SaveChanges();
             var nguoiGui = _context.AspNetUsers.Where(a => a.Id == sender).Select(a => a.NormalizedUserName).FirstOrDefault();

@@ -22,9 +22,12 @@ namespace Intimex_project.Controllers
     public class HomeController : Controller
     {
         private SignalRChatContext _context = new SignalRChatContext();
-
-        public HomeController()
+        private IHostingEnvironment _env;
+        private string _dir;
+        public HomeController(IHostingEnvironment env)
         {
+            _env = env;
+            _dir = _env.ContentRootPath;
         }
         public IActionResult Index()
         {
@@ -72,22 +75,32 @@ namespace Intimex_project.Controllers
 
         }
         [HttpPost]
-        public IActionResult Upload(IFormFile file,[FromServices] IHostingEnvironment hostingEnvironment)
+        public void Upload(IFormFile file)
         {
-            string fileName = $"{hostingEnvironment.WebRootPath}\\FileUploads\\{file.FileName}";
-            Message message = new Message();
-            message.FromUser = UserIdParameter.userId;
-            message.ToUser = UserIdParameter.userIdChat;
-            message.Message1 = file.FileName;
-            message.Date = DateTime.Now;
-            _context.Messages.Add(message);
-            _context.SaveChanges();
+            string fileName = $"{_env.WebRootPath}\\FileUploads\\{file.FileName}";
             using (FileStream fileStream = System.IO.File.Create(fileName))
             {
                 file.CopyTo(fileStream);
                 fileStream.Flush();
             }
-            return RedirectToAction("PartialViewChat",new { id = UserIdParameter.userIdChat });
+        }
+        public async Task<IActionResult> DownloadDocument()
+        {
+            var filename = "truyen.txt";
+            if (filename == null)
+                return Content("filename not present");
+
+            var path = Path.Combine(
+                           Directory.GetCurrentDirectory(),
+                           "wwwroot/FileUploads", filename);
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            return File(memory, "APPLICATION/octet-stream", Path.GetFileName(path));
         }
     }
 }

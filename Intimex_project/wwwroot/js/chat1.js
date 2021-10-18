@@ -27,7 +27,7 @@ function createDiv_outgoing_msg(message) {
     var datetime = new Date().toLocaleString().replace(",", "").replace(/:.. /, " ");
     var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     var div = document.createElement('div');
-    div.innerHTML = '<div class="sent_msg">'+
+    div.innerHTML = '<div class="sent_msg">' +
         '<p>' +
         msg +
         '</p >' +
@@ -45,16 +45,17 @@ connection.on("ReceiveMessage", function (sender, reciever, message) {
     var scrolElement = (document.getElementById('msg_history'));
     if (senderInput == sender) {
         createDiv_outgoing_msg(msg);
-        document.getElementById('messageInput1').value = '';
+        document.querySelector('#messageInput1').value = '';
         scrolElement.scrollTop = scrolElement.scrollHeight - scrolElement.clientHeight;
-        document.getElementById('messageInput1').focus();
+        document.querySelector('#messageInput1').focus();
+        document.getElementById('fileUpload').value = null;
     }
     else {
         createDiv_incoming_msg(msg);
-        document.getElementById('messageInput1').value = '';
+        document.querySelector('#messageInput1').value = '';
         scrolElement.scrollTop = scrolElement.scrollHeight - scrolElement.clientHeight;
-        document.getElementById('messageInput1').focus();
-
+        document.querySelector('#messageInput1').focus();
+        document.getElementById('fileUpload').value = null;
     }
 });
 
@@ -83,6 +84,39 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 
     event.preventDefault();
 });
+
+/*document.getElementById('fileUpload').onchange = function () {
+    var x = document.getElementById('fileUpload').value;
+    var item = x.split(/(\\|\/)/g).pop();
+    var sender = document.getElementById("senderInput").value;
+    var receiver = document.getElementById("receiverInput").value;
+    var message = item;
+    if (receiver != "") {
+        connection.invoke("SendMessageToGroup", sender, receiver, message).catch(function (err) {
+            return console.error(err.toString());
+        });
+    }
+}*/
+var UploadFile = function (e) {
+    var x = document.getElementById('fileUpload').value;
+    var item = x.split(/(\\|\/)/g).pop();
+    var sender = document.getElementById("senderInput").value;
+    var receiver = document.getElementById("receiverInput").value;
+    var message = item;
+    if (receiver != "") {
+        connection.invoke("SendMessageToGroup", sender, receiver, message).catch(function (err) {
+            return console.error(err.toString());
+        });
+    }
+    var file = e.target.files[0];
+    var formData = new FormData();
+    formData.append("file", file);
+    axios.post("/Home/Upload", formData);
+}
+
+document.getElementById('fileUpload').onchange = function () {
+    alert(document.getElementById("fileUpload").file[0]);
+}
 
 document.getElementById("sendButton1").addEventListener("click", function (event) {
     var sender = document.getElementById("senderInput").value;
