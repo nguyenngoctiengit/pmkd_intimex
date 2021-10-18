@@ -103,6 +103,7 @@ var UploadFile = function (e) {
     var formData = new FormData();
     formData.append("file", file);
     axios.post("/Home/Upload", formData);
+    alert("upload success");
 /*
     var x = document.getElementById('fileUpload').value;
     var item = x.split(/(\\|\/)/g).pop();
