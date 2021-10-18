@@ -104,7 +104,7 @@ var UploadFile = function (e) {
     formData.append("file", file);
     axios.post("/Home/Upload", formData);
     alert("upload success");
-/*
+
     var x = document.getElementById('fileUpload').value;
     var item = x.split(/(\\|\/)/g).pop();
     var sender = document.getElementById("senderInput").value;
@@ -114,7 +114,7 @@ var UploadFile = function (e) {
         connection.invoke("SendMessageToGroup", sender, receiver, message).catch(function (err) {
             return console.error(err.toString());
         });
-    }*/
+    }
 }
 
 document.getElementById("sendButton1").addEventListener("click", function (event) {
