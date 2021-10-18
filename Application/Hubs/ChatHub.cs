@@ -46,7 +46,7 @@ namespace Application.Hubs
         {
             return ListUser.CurrentConnection.ToList();
         }
-        public Task SendMessageToGroup(string sender, string receiver, string message, IFormFile fromFile, [FromServices] IHostingEnvironment hostingEnvironment)
+        public Task SendMessageToGroup(string sender, string receiver, string message)
         {
             Groups.AddToGroupAsync(Context.ConnectionId, receiver);
             Message _message = new Message();
