@@ -39,7 +39,6 @@
           "DevExpress.AspNetCore.Spreadsheet": "21.1.6",
           "DevExpress.Data": "21.1.6",
           "DevExpress.Document.Processor": "21.1.6",
-          "DevExpress.Web.Mvc": "21.1.6",
           "DevExtreme.AspNet.Core": "21.1.6",
           "DevExtreme.AspNet.Data": "2.8.2",
           "Microsoft.EntityFrameworkCore.Design": "5.0.9",
@@ -713,17 +712,6 @@
         },
         "compile": {
           "lib/netstandard2.0/DevExpress.TreeMap.v21.1.Core.dll": {}
-        }
-      },
-      "DevExpress.Web.Mvc/21.1.6": {
-        "runtime": {
-          "lib/net452/DevExpress.Web.Mvc.v21.1.dll": {
-            "assemblyVersion": "21.1.6.0",
-            "fileVersion": "21.1.6.0"
-          }
-        },
-        "compile": {
-          "lib/net452/DevExpress.Web.Mvc.v21.1.dll": {}
         }
       },
       "DevExpress.Xpo/21.1.6": {
@@ -4830,13 +4818,6 @@
       "sha512": "sha512-Kcw0LmCUGJ1voeXiWrWaVpm3dzmjS/6XgepgglcaKkvasoc2k+0wkPUe9gbaYs3dvQPVw2chb6jqV+3ybEAS3Q==",
       "path": "devexpress.treemap.core/21.1.6",
       "hashPath": "devexpress.treemap.core.21.1.6.nupkg.sha512"
-    },
-    "DevExpress.Web.Mvc/21.1.6": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-CxTf0ehwLhJXhGxEImPOLCgiAPls7E6EdNrIbTZ3sN78WCyMeedU5SHRySzymyMQkHEMFmbQzM7WPRiGQAoamA==",
-      "path": "devexpress.web.mvc/21.1.6",
-      "hashPath": "devexpress.web.mvc.21.1.6.nupkg.sha512"
     },
     "DevExpress.Xpo/21.1.6": {
       "type": "package",

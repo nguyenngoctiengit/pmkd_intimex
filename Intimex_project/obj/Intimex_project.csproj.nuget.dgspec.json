@@ -251,10 +251,6 @@
               "target": "Package",
               "version": "[21.1.6, )"
             },
-            "DevExpress.Web.Mvc": {
-              "target": "Package",
-              "version": "[21.1.6, )"
-            },
             "DevExtreme.AspNet.Core": {
               "target": "Package",
               "version": "[21.1.6, )"

@@ -341,15 +341,6 @@
           "lib/netstandard2.0/DevExpress.TreeMap.v21.1.Core.dll": {}
         }
       },
-      "DevExpress.Web.Mvc/21.1.6": {
-        "type": "package",
-        "compile": {
-          "lib/net452/DevExpress.Web.Mvc.v21.1.dll": {}
-        },
-        "runtime": {
-          "lib/net452/DevExpress.Web.Mvc.v21.1.dll": {}
-        }
-      },
       "DevExpress.Xpo/21.1.6": {
         "type": "package",
         "dependencies": {
@@ -3851,23 +3842,6 @@
         "lib/net452/DevExpress.TreeMap.v21.1.Core.xml",
         "lib/netstandard2.0/DevExpress.TreeMap.v21.1.Core.dll",
         "lib/netstandard2.0/DevExpress.TreeMap.v21.1.Core.xml"
-      ]
-    },
-    "DevExpress.Web.Mvc/21.1.6": {
-      "sha512": "CxTf0ehwLhJXhGxEImPOLCgiAPls7E6EdNrIbTZ3sN78WCyMeedU5SHRySzymyMQkHEMFmbQzM7WPRiGQAoamA==",
-      "type": "package",
-      "path": "devexpress.web.mvc/21.1.6",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Content/Views/Web.config.install.xdt",
-        "Content/Views/Web.config.uninstall.xdt",
-        "Content/Web.config.install.xdt",
-        "Content/Web.config.uninstall.xdt",
-        "devexpress.web.mvc.21.1.6.nupkg.sha512",
-        "devexpress.web.mvc.nuspec",
-        "lib/net452/DevExpress.Web.Mvc.v21.1.dll",
-        "lib/net452/DevExpress.Web.Mvc.v21.1.xml"
       ]
     },
     "DevExpress.Xpo/21.1.6": {
@@ -10696,7 +10670,6 @@
       "DevExpress.AspNetCore.Spreadsheet >= 21.1.6",
       "DevExpress.Data >= 21.1.6",
       "DevExpress.Document.Processor >= 21.1.6",
-      "DevExpress.Web.Mvc >= 21.1.6",
       "DevExtreme.AspNet.Core >= 21.1.6",
       "DevExtreme.AspNet.Data >= 2.8.2",
       "Microsoft.EntityFrameworkCore.Design >= 5.0.9",
@@ -10785,10 +10758,6 @@
             "target": "Package",
             "version": "[21.1.6, )"
           },
-          "DevExpress.Web.Mvc": {
-            "target": "Package",
-            "version": "[21.1.6, )"
-          },
           "DevExtreme.AspNet.Core": {
             "target": "Package",
             "version": "[21.1.6, )"
@@ -10839,17 +10808,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'DevExpress.Web.Mvc 21.1.6' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
-      "libraryId": "DevExpress.Web.Mvc",
-      "targetGraphs": [
-        "net5.0"
-      ]
-    }
-  ]
+  }
 }

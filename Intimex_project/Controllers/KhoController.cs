@@ -15,7 +15,6 @@ using System.IO;
 using System.IO.Ports;
 using DevExpress.AspNetCore.Spreadsheet;
 using DevExpress.Spreadsheet;
-using DevExpress.Web.Mvc;
 using Data.Models.Trading_system;
 using Application.Parameter;
 using ViewModel;

@@ -15,7 +15,7 @@ function createDiv_incoming_msg(message) {
         '</div >' +
         '<div class="received_msg">' +
         '<div class="received_withd_msg">' +
-        '<p>' + msg + '</p>' +
+        '<p  onclick="DownloadDocument(\'' + msg + '\')" style="cursor: pointer">' + msg + '</p>' +
         '<span class="time_date">' + datetime + '</span>' +
         '</div>' +
         '</div>' +
@@ -28,11 +28,11 @@ function createDiv_outgoing_msg(message) {
     var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     var div = document.createElement('div');
     div.innerHTML = '<div class="sent_msg">' +
-        '<p>' +
+        '<p  onclick="DownloadDocument(\'' + msg + '\')" style="cursor: pointer">' +
         msg +
         '</p >' +
         '<span class="time_date">' + datetime + '</span>' +
-        '</div >'
+        '</div >';
     div.className = 'outgoing_msg';
     document.getElementById('createDiv_outgoing_msg').appendChild(div);
 }
@@ -49,6 +49,7 @@ connection.on("ReceiveMessage", function (sender, reciever, message) {
         scrolElement.scrollTop = scrolElement.scrollHeight - scrolElement.clientHeight;
         document.querySelector('#messageInput1').focus();
         document.getElementById('fileUpload').value = null;
+        $("#emojionearea-editor").html("");
     }
     else {
         createDiv_incoming_msg(msg);
@@ -56,6 +57,7 @@ connection.on("ReceiveMessage", function (sender, reciever, message) {
         scrolElement.scrollTop = scrolElement.scrollHeight - scrolElement.clientHeight;
         document.querySelector('#messageInput1').focus();
         document.getElementById('fileUpload').value = null;
+        $("#emojionearea-editor").html("");
     }
 });
 
@@ -85,37 +87,35 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     event.preventDefault();
 });
 
-/*document.getElementById('fileUpload').onchange = function () {
-    var x = document.getElementById('fileUpload').value;
-    var item = x.split(/(\\|\/)/g).pop();
-    var sender = document.getElementById("senderInput").value;
-    var receiver = document.getElementById("receiverInput").value;
-    var message = item;
-    if (receiver != "") {
-        connection.invoke("SendMessageToGroup", sender, receiver, message).catch(function (err) {
-            return console.error(err.toString());
-        });
-    }
-}*/
 var UploadFile = function (e) {
-    var x = document.getElementById('fileUpload').value;
-    var item = x.split(/(\\|\/)/g).pop();
+    var file = document.getElementById('fileUpload').value;
+    var extensionFile = file.split(/(\\|\/)/g).pop();
     var sender = document.getElementById("senderInput").value;
     var receiver = document.getElementById("receiverInput").value;
-    var message = item;
-    if (receiver != "") {
-        connection.invoke("SendMessageToGroup", sender, receiver, message).catch(function (err) {
-            return console.error(err.toString());
-        });
+    var message = extensionFile;
+    var allowedFiles = ["docx", "jpg", "jpeg", "gif", "png", "doc", "pdf", "xls",
+        "xlsx", "xlsm", "pptx", "pptm", "ppt", "txt", "mp3", "mp4", "rar", "zip"];
+    var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
+    if (!regex.test(file.toLowerCase())) {
+        $.notify("Please upload files having extensions: " + allowedFiles.join(', ') + " only.", "error");
+        alert();
+        document.getElementById('fileUpload').value = null;
+        return false;
     }
-    var file = e.target.files[0];
-    var formData = new FormData();
-    formData.append("file", file);
-    axios.post("/Home/Upload", formData);
-}
+    else {
+        var file = e.target.files[0];
+        var formData = new FormData();
+        formData.append("file", file);
+        axios.post("/Home/Upload", formData);
+        $.notify("Upload file success", "success");
+        if (receiver != "") {
+            connection.invoke("SendMessageToGroup", sender, receiver, message).catch(function (err) {
+                return console.error(err.toString());
+            });
+        }
+    }
 
-document.getElementById('fileUpload').onchange = function () {
-    alert(document.getElementById("fileUpload").file[0]);
+
 }
 
 document.getElementById("sendButton1").addEventListener("click", function (event) {

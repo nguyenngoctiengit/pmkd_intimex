@@ -16,15 +16,16 @@ using DevExtreme.AspNet.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Microsoft.Extensions.Hosting;
 
 namespace Intimex_project.Controllers
 {
     public class HomeController : Controller
     {
         private SignalRChatContext _context = new SignalRChatContext();
-        private IHostingEnvironment _env;
+        private IHostEnvironment _env;
         private string _dir;
-        public HomeController(IHostingEnvironment env)
+        public HomeController(IHostEnvironment env)
         {
             _env = env;
             _dir = _env.ContentRootPath;
@@ -46,24 +47,39 @@ namespace Intimex_project.Controllers
 
         public IActionResult chat()
         {
-            ViewBag.listUserOnline = ListUser.CurrentConnection.ToList();
-            ViewBag.user = _context.AspNetUsers.Where(a => a.Id != HttpContext.Session.GetString("userId")).ToList();
-            return View("chat");
-        }
+            if (HttpContext.Session.GetString("userId") == null)
+            {
+                return RedirectToAction("index", "Account");
+            }
+            else
+            {
+                ViewBag.listUserOnline = ListUser.CurrentConnection.ToList();
+                ViewBag.user = _context.AspNetUsers.Where(a => a.Id != HttpContext.Session.GetString("userId")).ToList();
+                return View("chat");
+            }  
+        }          
         public IActionResult PartialViewChat(string id)
         {
-            ViewBag.listUserOnline = ListUser.CurrentConnection.ToList();
-            ViewBag.messingTo = _context.AspNetUsers.Where(a => a.Id == id).Select(a => a.NormalizedUserName).FirstOrDefault();
-            var sender = HttpContext.Session.GetString("userId");
-            var receiver = id;
-            var query = (from a in _context.Messages where (a.FromUser == sender && a.ToUser == receiver) || (a.FromUser == receiver && a.ToUser == sender) orderby a.Id descending select a).Take(10);
-            ViewBag.outMsg = query.OrderBy(a => a.Id).ToList();
-            ViewBag.sender = HttpContext.Session.GetString("userId");
-            ViewBag.receiver = id;
-            UserIdParameter.userId = HttpContext.Session.GetString("userId");
-            UserIdParameter.userIdChat = id;
-            ViewBag.user = _context.AspNetUsers.Where(a => a.Id != HttpContext.Session.GetString("userId")).ToList();
-            return View("PartialViewChat");
+            if (HttpContext.Session.GetString("userId") == null)
+            {
+                return RedirectToAction("index", "Account");
+            }
+            else
+            {
+                ViewBag.listUserOnline = ListUser.CurrentConnection.ToList();
+                ViewBag.messingTo = _context.AspNetUsers.Where(a => a.Id == id).Select(a => a.NormalizedUserName).FirstOrDefault();
+                var sender = HttpContext.Session.GetString("userId");
+                var receiver = id;
+                var query = (from a in _context.Messages where (a.FromUser == sender && a.ToUser == receiver) || (a.FromUser == receiver && a.ToUser == sender) orderby a.Id descending select a).Take(10);
+                ViewBag.outMsg = query.OrderBy(a => a.Id).ToList();
+                ViewBag.sender = HttpContext.Session.GetString("userId");
+                ViewBag.receiver = id;
+                UserIdParameter.userId = HttpContext.Session.GetString("userId");
+                UserIdParameter.userIdChat = id;
+                ViewBag.user = _context.AspNetUsers.Where(a => a.Id != HttpContext.Session.GetString("userId")).ToList();
+                return View("PartialViewChat");
+            }
+            
         }
         public async Task<JsonResult> GetDataMessage(int pageIndex, int pageSize, string id)
         {
@@ -77,16 +93,16 @@ namespace Intimex_project.Controllers
         [HttpPost]
         public void Upload(IFormFile file)
         {
-            string fileName = $"{_env.WebRootPath}\\FileUploads\\{file.FileName}";
+            string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\{file.FileName}";
             using (FileStream fileStream = System.IO.File.Create(fileName))
             {
                 file.CopyTo(fileStream);
                 fileStream.Flush();
             }
         }
-        public async Task<IActionResult> DownloadDocument()
+        public async Task<IActionResult> DownloadDocument(string id)
         {
-            var filename = "truyen.txt";
+            var filename = id;
             if (filename == null)
                 return Content("filename not present");
 

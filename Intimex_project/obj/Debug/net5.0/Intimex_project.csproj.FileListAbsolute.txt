@@ -517,7 +517,6 @@ C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\DevExpres
 C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\DevExpress.Spreadsheet.v21.1.Core.dll
 C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\DevExpress.XtraTreeMap.v21.1.dll
 C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\DevExpress.TreeMap.v21.1.Core.dll
-C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\DevExpress.Web.Mvc.v21.1.dll
 C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\DevExpress.Xpo.v21.1.dll
 C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\DevExtreme.AspNet.Core.dll
 C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\DevExtreme.AspNet.Data.dll

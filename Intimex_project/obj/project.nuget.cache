@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "XKfSKCx4+B5uWhBVq/XbF1x/fXg5MkZHtOo8zSC4523HpmlmbC0NahNfuPMX8KWPV4o8tPFYa/4cc8GByIW4vQ==",
+  "dgSpecHash": "BZiRQPdkQHn1kynGp9uU0LknjWXJOJbN3bWsq9TZhCRfX9sX+s6xpVWmVN/juCRViJ2tTGUCQ3moQPPd09G04Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\User\\Desktop\\project_intimex\\Intimex_project\\Intimex_project.csproj",
   "expectedPackageFiles": [
@@ -24,7 +24,6 @@
     "C:\\Program Files (x86)\\DevExpress 21.1\\Components\\Offline Packages\\devexpress.spreadsheet.core\\21.1.6\\devexpress.spreadsheet.core.21.1.6.nupkg.sha512",
     "C:\\Program Files (x86)\\DevExpress 21.1\\Components\\Offline Packages\\devexpress.treemap\\21.1.6\\devexpress.treemap.21.1.6.nupkg.sha512",
     "C:\\Program Files (x86)\\DevExpress 21.1\\Components\\Offline Packages\\devexpress.treemap.core\\21.1.6\\devexpress.treemap.core.21.1.6.nupkg.sha512",
-    "C:\\Program Files (x86)\\DevExpress 21.1\\Components\\Offline Packages\\devexpress.web.mvc\\21.1.6\\devexpress.web.mvc.21.1.6.nupkg.sha512",
     "C:\\Program Files (x86)\\DevExpress 21.1\\Components\\Offline Packages\\devexpress.xpo\\21.1.6\\devexpress.xpo.21.1.6.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\devextreme.aspnet.core\\21.1.6\\devextreme.aspnet.core.21.1.6.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\devextreme.aspnet.data\\2.8.2\\devextreme.aspnet.data.2.8.2.nupkg.sha512",
@@ -232,16 +231,5 @@
     "C:\\Users\\User\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'DevExpress.Web.Mvc 21.1.6' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
-      "libraryId": "DevExpress.Web.Mvc",
-      "targetGraphs": [
-        "net5.0"
-      ]
-    }
-  ]
+  "logs": []
 }

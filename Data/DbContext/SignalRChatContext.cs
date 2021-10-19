@@ -208,8 +208,6 @@ namespace Data.Models.SignalR
 
                 entity.Property(e => e.Id);
 
-                entity.Property(e => e.FileAttach);
-
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
                 entity.Property(e => e.FromUser).HasMaxLength(450);
