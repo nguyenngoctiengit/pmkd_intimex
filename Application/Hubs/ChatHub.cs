@@ -12,12 +12,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using Application.Encrypt;
 
 namespace Application.Hubs
 {
     public class ChatHub : Hub
     {
         SignalRChatContext _context = new SignalRChatContext();
+
         public Task SendMessage(string sender, string user, string message)
         {
             return Clients.All.SendAsync("ReceiveMessage", user, message);
@@ -52,7 +54,7 @@ namespace Application.Hubs
             Message _message = new Message();
             _message.FromUser = sender;
             _message.ToUser = receiver;
-            _message.Message1 = message;
+            _message.Message1 = EncryptString.Encrypt(message, "0933652637");
             _message.Date = DateTime.Now;
             _context.Messages.Add(_message);
             _context.SaveChanges();

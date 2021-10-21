@@ -3,7 +3,7 @@
     ViewData["Title"] = "chat";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<script src="~/js/notify.min.js"></script>
 <div class="right_col" role="main">
     top tiles
     <div class="row" style="display: inline-block;">
@@ -708,14 +708,22 @@
                             </div>
                         </div>
                     </div>
-                    
+                    <input type="text" value="@ViewBag.userId" id="userId" hidden>
+
                 </div>
                 end of weather widget
             </div>
         </div>
     </div>
 </div>
-
+<div class="type_msg" hidden>
+    <div class="input_msg_write">
+        <input type="text" class="write_msg" id="messageInput" placeholder="Type a message" disabled />
+        <button class="msg_send_btn" type="button" id="sendButton" disabled><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+    </div>
+</div>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>
 
 
 

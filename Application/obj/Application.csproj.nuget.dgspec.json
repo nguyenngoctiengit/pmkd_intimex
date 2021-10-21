@@ -66,6 +66,10 @@
             "Microsoft.Extensions.Configuration.Abstractions": {
               "target": "Package",
               "version": "[5.0.0, )"
+            },
+            "System.Security.SecureString": {
+              "target": "Package",
+              "version": "[4.3.0, )"
             }
           },
           "imports": [

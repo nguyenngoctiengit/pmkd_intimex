@@ -8,6 +8,7 @@
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
+    <PackageReference Include="System.Security.SecureString" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>

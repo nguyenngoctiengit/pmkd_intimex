@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.Extensions.Hosting;
+using Application.Encrypt;
 
 namespace Intimex_project.Controllers
 {
@@ -33,6 +34,7 @@ namespace Intimex_project.Controllers
         public IActionResult Index()
         {
             var id = HttpContext.Session.GetString("userId");
+            ViewBag.userId = id;
             if (id != null)
             {
                 ViewBag.CountUserOnline = (from a in _context.AspNetUsers where a.Online == true select a.NormalizedUserName).Count();
@@ -70,8 +72,13 @@ namespace Intimex_project.Controllers
                 ViewBag.messingTo = _context.AspNetUsers.Where(a => a.Id == id).Select(a => a.NormalizedUserName).FirstOrDefault();
                 var sender = HttpContext.Session.GetString("userId");
                 var receiver = id;
-                var query = (from a in _context.Messages where (a.FromUser == sender && a.ToUser == receiver) || (a.FromUser == receiver && a.ToUser == sender) orderby a.Id descending select a).Take(10);
-                ViewBag.outMsg = query.OrderBy(a => a.Id).ToList();
+                ViewBag.outMsg = (from a in _context.Messages where (a.FromUser == sender && a.ToUser == receiver) || (a.FromUser == receiver && a.ToUser == sender) orderby a.Id descending select new Message{
+                    Id = a.Id,
+                    FromUser = a.FromUser,
+                    ToUser = a.ToUser,
+                    Date = a.Date,
+                    Message1 = EncryptString.Decrypt(a.Message1, "0933652637"),
+                }).Take(10).OrderBy(a => a.Id).ToList();
                 ViewBag.sender = HttpContext.Session.GetString("userId");
                 ViewBag.receiver = id;
                 UserIdParameter.userId = HttpContext.Session.GetString("userId");
@@ -85,8 +92,18 @@ namespace Intimex_project.Controllers
         {
             var sender = HttpContext.Session.GetString("userId");
             var receiver = id;
-            var query = (from a in _context.Messages where (a.FromUser == sender && a.ToUser == receiver) || (a.FromUser == receiver && a.ToUser == sender) orderby a.Id descending select a).Skip(pageSize * pageIndex).Take(pageSize);
-            var data = query.OrderByDescending(a => a.Id).ToListAsync();
+            var query1 = (from a in _context.Messages
+                              where (a.FromUser == sender && a.ToUser == receiver) || (a.FromUser == receiver && a.ToUser == sender)
+                              orderby a.Id descending
+                              select new Message
+                              {
+                                  Id = a.Id,
+                                  FromUser = a.FromUser,
+                                  ToUser = a.ToUser,
+                                  Date = a.Date,
+                                  Message1 = EncryptString.Decrypt(a.Message1, "0933652637"),
+                              }).Skip(pageSize * pageIndex).Take(pageSize);
+            var data = query1.OrderByDescending(a => a.Id).ToListAsync();
             return Json(await data);
 
         }

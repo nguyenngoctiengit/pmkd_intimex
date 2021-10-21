@@ -671,20 +671,20 @@
                             <li role="presentation" class="nav-item dropdown open">
                                 <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-envelope-o"></i>
-                                    <span class="badge bg-green">6</span>
+                                    <span class="badge bg-green" id="countMessage">0</span>
                                 </a>
                                 <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
                                     <li class="nav-item">
-
-                                    </li>
-                                    <li class="nav-item">
-
-                                    </li>
-                                    <li class="nav-item">
-
-                                    </li>
-                                    <li class="nav-item">
-
+                                        <a class="dropdown-item">
+                                            <span class="image"><img src="~/public/images/img.jpg" alt="Profile Image" /></span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                            </span>
+                                        </a>
                                     </li>
                                     <li class="nav-item">
                                         <div class="text-center">
@@ -702,7 +702,7 @@
             </div>
             <div class="type_msg" hidden>
                 <div class="input_msg_write">
-                    <input type="text" class="write_msg" id="messageInput" placeholder="Type a message" disabled/>
+                    <input type="text" class="write_msg" id="messageInput" placeholder="Type a message" disabled />
                     <button class="msg_send_btn" type="button" id="sendButton" disabled><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                 </div>
             </div>
@@ -720,7 +720,8 @@
             <!-- /footer content -->
         </div>
     </div>
-
+    <!-- signalr -->
+    
     <!-- datepicker -->
     <script src="~/js/js_create/lookup.js"></script>
     <!-- dialog -->
