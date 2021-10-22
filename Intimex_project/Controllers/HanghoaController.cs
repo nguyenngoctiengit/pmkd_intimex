@@ -22,16 +22,8 @@ namespace Intimex_project.Controllers
         public HanghoaController()
         {
         }
-        public void listUser()
-        {
-            using (SignalRChatContext _context = new SignalRChatContext())
-            {
-               ViewBag.ListUser = (from a in _context.AspNetUsers select new Data.Models.SignalR.AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online, Id = a.Id }).OrderByDescending(a => a.Online).ToList();
-            }       
-        }
         public IActionResult hanghoa()
         {
-            listUser();
             return View();
 
         }
@@ -39,7 +31,6 @@ namespace Intimex_project.Controllers
         [Route("hanghoa/danhmuc/themnhomhang")]
         public IActionResult themnhomhang()
         {
-            listUser();
             return View("themnhomhang");
         }
         //hàm thêm nhóm hàng hóa

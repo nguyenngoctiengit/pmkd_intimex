@@ -1,7 +1,9 @@
-﻿/*using DevExtreme.AspNet.Mvc.FileManagement;
-
+﻿using Application.Parameter;
+using Data.Models.Trading_system;
+using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Mvc;
+using DevExtreme.AspNet.Mvc.FileManagement;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting.IHostEnvironment;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,31 +14,31 @@ namespace Intimex_project.Controllers
 {
     public class DocComeController : Controller
     {
-        public IHostingEnvironment _hostingEnvironment;
-
-        public DocComeController(IHostingEnvironment hostingEnvironment)
+        public tradingsystemContext _context = new tradingsystemContext(ConnectionParameter.connectionString);
+        public DocComeController()
         {
-            _hostingEnvironment = hostingEnvironment;
         }
 
         public IActionResult DocCome()
         {
             return View("DocCome");
         }
-        [Route("api/file-manager-file-system-images", Name = "FileManagement")]
-        public object FileManagement(FileSystemCommand command, string arguments)
+        [HttpGet]
+        public async Task<IActionResult>  Get(DataSourceLoadOptions loadOptions)
         {
-            var config = new FileSystemConfiguration
+            var item_return = _context.Documents.Select(i => new
             {
-                Request = Request,
-                FileSystemProvider = new PhysicalFileSystemProvider(_hostingEnvironment.ContentRootPath + "/wwwroot")
-                //...
-            };
-            var processor = new FileSystemCommandProcessor(config);
-            var result = processor.Execute(command, arguments);
-            return result.GetClientCommandResult();
+                i.DocId,
+                i.DocDate,
+                i.DateCome,
+                i.NumberCome,
+                i.Contents,
+                i.DocTypeId,
+                i.NumberSign,
+                i.DocPlaceId,
+                i.DocLever,
+            });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
         }
-
     }
 }
-*/

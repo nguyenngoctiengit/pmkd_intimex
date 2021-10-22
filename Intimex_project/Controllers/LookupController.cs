@@ -302,5 +302,16 @@ namespace Intimex_project.Controllers
             var item_return = (from a in _context.DanhMucLos select new { a.MaLo, a.TenLo });
             return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
         }
+        public async Task<IActionResult> getDoctype(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = (from a in _context.DocTypes select new { a.DocTypeId,a.TypeCode, a.TypeName });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
+
+        public async Task<IActionResult> getDocplace(DataSourceLoadOptions loadOptions)
+        {
+            var item_return = (from a in _context.DocPlaces select new { a.DocPlaceId, a.DocPlaceCode, a.DocPlaceName });
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }
     }
 }

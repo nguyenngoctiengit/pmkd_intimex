@@ -141,4 +141,13 @@ var sudung_hanghoa = [{
 }
 ];
 
+var DocLever = [{
+    "id": 0, "name": "BT"
+}, {
+    "id": 1, "name": "K"
+}, {
+    "id": 2, "name": "M"
+}
+];
+
 

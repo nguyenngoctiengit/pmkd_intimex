@@ -1,8 +1,10 @@
-﻿@{
-    ViewData["Title"] = "hanghoa";
+﻿
+@{
+    ViewData["Title"] = "DocCome";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model IEnumerable<Data.Models.Trading_system.Hanghoa>
+
+@model IEnumerable<Data.Models.Trading_system.Document>
 <div class="right_col" role="main" style="height: 500px">
     <div class="">
         <div class="page-title">
@@ -63,49 +65,44 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive">
-                                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Hanghoa>().ID("gridContainer")
+                                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Document>().ID("gridContainer")
                                     .DataSource(ds => ds.Mvc()
-                                        .Controller("hanghoa")
+                                        .Controller("doccome")
                                         .LoadAction("Get")
                                         .InsertAction("Post")
                                         .UpdateAction("Put")
                                         .DeleteAction("Delete")
-                                        .Key("Idhanghoa", "Mahang")
+                                        .Key("DocId")
                                     )
                                     .RemoteOperations(true)
                                     .Columns(columns => {
 
-                                        columns.AddFor(m => m.Idhanghoa).Visible(false).Caption("ID hàng hóa").AllowEditing(false);
+                                        columns.AddFor(m => m.DocDate).Caption("Ngày VB");
 
-                                        columns.AddFor(m => m.Mahang).Fixed(true).Caption("Mã hàng");
+                                        columns.AddFor(m => m.DateCome).Caption("Ngày nhận");
 
-                                        columns.AddFor(m => m.Tenhang).Caption("Tên hàng");
+                                        columns.AddFor(m => m.NumberCome).Caption("Số văn bản đến");
 
-                                        columns.AddFor(m => m.Tenhangvat).Caption("Tên hàng VAT");
+                                        columns.AddFor(m => m.Contents).Caption("Tên loại và trích yếu nội dung văn bản");
 
-                                        columns.AddFor(m => m.MaNhom).Caption("Mã nhóm").Lookup(lookup => lookup
-                                        .DataSource(d => d.Mvc().Controller("lookup").LoadAction("Getnhomhang").Key("Manhom"))
-                                        .DisplayExpr("Manhom")
-                                        .ValueExpr("Manhom")
+                                        columns.AddFor(m => m.DocTypeId).Caption("Hình thức").Lookup(lookup => lookup
+                                        .DataSource(d => d.Mvc().Controller("lookup").LoadAction("getDoctype").Key("DocTypeId"))
+                                        .DisplayExpr("TypeName")
+                                        .ValueExpr("DocTypeId")
                                         );
 
-                                        columns.AddFor(m => m.Dvt).Caption("DVT").Lookup(lookup => lookup
-                                        .DataSource(new[] { "KGS","TAN","CAI"})
+                                        columns.AddFor(m => m.NumberSign).Caption("Số / Ký hiệu");
+
+                                        columns.AddFor(m => m.DocPlaceId).Caption("Nơi gửi").Lookup(lookup => lookup
+                                        .DataSource(d => d.Mvc().Controller("lookup").LoadAction("getDocplace").Key("DocPlaceId"))
+                                        .DisplayExpr("DocPlaceName")
+                                        .ValueExpr("DocPlaceId")
                                         );
 
-                                        columns.AddFor(m => m.Vat).Caption("Vat").Lookup(lookup => lookup
-                                        .DataSource(new[] { "0","5","10"})
-                                        );
 
-                                        columns.AddFor(m => m.Sudung).Caption("Sử dụng").Visible(false).Lookup(lookup => lookup.DataSource(new JS("sudung_hanghoa")).ValueExpr("id").DisplayExpr("name"));
+                                        columns.AddFor(m => m.DocLever).Caption("Độ khẩn").Lookup(lookup => lookup.DataSource(new JS("DocLever")).ValueExpr("id").DisplayExpr("name"));
 
-                                        columns.AddFor(m => m.Fullname).Caption("Tên đầy đủ").Visible(false);
-
-                                        columns.AddFor(m => m.Quicach).Caption("Qui cách").Visible(false);
-
-                                        columns.AddFor(m => m.Baobi).Caption("Bao bì").Visible(false);
-
-                                        columns.AddFor(m => m.Kiemdinh).Caption("Kiểm định").Visible(false);
+                                        columns.Add().Caption("Đã chuyển");
 
                                     })
                                     .Editing(e => e
@@ -121,16 +118,14 @@
                                                     .ColSpan(2)
                                                     .Items(groupItems =>
                                                     {
-                                                        groupItems.AddSimpleFor(m => m.Mahang);
-                                                        groupItems.AddSimpleFor(m => m.Tenhang);
-                                                        groupItems.AddSimpleFor(m => m.Tenhangvat);
-                                                        groupItems.AddSimpleFor(m => m.Dvt);
-                                                        groupItems.AddSimpleFor(m => m.Vat);
-                                                        groupItems.AddSimpleFor(m => m.Sudung);
-                                                        groupItems.AddSimpleFor(m => m.Fullname).ColSpan(2);
-                                                        groupItems.AddSimpleFor(m => m.Quicach).ColSpan(2).Editor(e => e.TextArea().Height(70));
-                                                        groupItems.AddSimpleFor(m => m.Baobi).ColSpan(2).Editor(e => e.TextArea().Height(70));
-                                                        groupItems.AddSimpleFor(m => m.Kiemdinh).ColSpan(2).Editor(e => e.TextArea().Height(70));
+                                                        groupItems.AddSimpleFor(m => m.DocDate);
+                                                        groupItems.AddSimpleFor(m => m.DateCome);
+                                                        groupItems.AddSimpleFor(m => m.NumberCome);
+                                                        groupItems.AddSimpleFor(m => m.Contents);
+                                                        groupItems.AddSimpleFor(m => m.DocTypeId);
+                                                        groupItems.AddSimpleFor(m => m.NumberSign);
+                                                        groupItems.AddSimpleFor(m => m.DocPlaceId);
+                                                        groupItems.AddSimpleFor(m => m.DocLever);
 
                                                     });
 
@@ -138,7 +133,6 @@
                                         }))
                                     )
 
-                                    .OnToolbarPreparing("toolbarhanghoa")
                                     .Export(e => e.Enabled(true))
                                     .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
                                     .HeaderFilter(hearder => hearder.Visible(true))
@@ -168,7 +162,7 @@
         </div>
     </div>
 </div>
-<script src="~/js/js_create/hanghoa.js"></script>
+<script src="~/js/hanghoa.js"></script>
 <!-- /page content -->
 <!-- /page content -->
 <!-- footer content -->
