@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.Extensions.Hosting;
 using Application.Encrypt;
+using Application.AccountMail;
 
 namespace Intimex_project.Controllers
 {
@@ -108,13 +109,13 @@ namespace Intimex_project.Controllers
 
         }
         [HttpPost]
-        public void Upload(IFormFile file)
+        public async void Upload(IFormFile file)
         {
             string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\{file.FileName}";
             using (FileStream fileStream = System.IO.File.Create(fileName))
             {
-                file.CopyTo(fileStream);
-                fileStream.Flush();
+                await file.CopyToAsync(fileStream);
+                await fileStream.FlushAsync();
             }
         }
         public async Task<IActionResult> DownloadDocument(string id)

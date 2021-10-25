@@ -66,19 +66,17 @@ connection.on("ReceiveMessage", function (sender, reciever, message, nguoiGui) {
     var scrolElement = (document.getElementById('msg_history'));
     if (senderInput == sender) {
         createDiv_outgoing_msg(msg);
-        document.querySelector('#messageInput1').value = '';
         scrolElement.scrollTop = scrolElement.scrollHeight - scrolElement.clientHeight;
-        document.querySelector('#messageInput1').focus();
         document.getElementById('fileUpload').value = null;
-        $("#emojionearea-editor").html("");
+        document.getElementById('messageInput1').value = '';
+        document.getElementById('messageInput1').focus();
     }
     else {
         createDiv_incoming_msg(msg);
-        document.querySelector('#messageInput1').value = '';
         scrolElement.scrollTop = scrolElement.scrollHeight - scrolElement.clientHeight;
-        document.querySelector('#messageInput1').focus();
         document.getElementById('fileUpload').value = null;
-        $("#emojionearea-editor").html("");
+        document.getElementById('messageInput1').value = '';
+        document.getElementById('messageInput1').focus();
         var count = $("#countMessage").html();
         count++;
         $("#countMessage").html(count);
@@ -92,6 +90,17 @@ connection.start().then(function () {
 }).catch(function (err) {
     return console.error(err.toString());
 });
+
+function randomString(length) {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() *
+            charactersLength));
+    }
+    return result;
+}
 
 var UploadFile = function (e) {
     var file = document.getElementById('fileUpload').value;
@@ -110,11 +119,12 @@ var UploadFile = function (e) {
     else {
         var file = e.target.files[0];
         var formData = new FormData();
-        formData.append("file", file);
+        var newFileName = randomString(6) + "_" + extensionFile;
+        formData.append("file", file, newFileName);
         axios.post("/Home/Upload", formData);
         $.notify("Upload file success", "success");
         if (receiver != "") {
-            connection.invoke("SendMessageToGroup", sender, receiver, message).catch(function (err) {
+            connection.invoke("SendMessageToGroup", sender, receiver, newFileName).catch(function (err) {
                 return console.error(err.toString());
             });
         }
@@ -133,6 +143,7 @@ document.getElementById("sendButton1").addEventListener("click", function (event
         connection.invoke("SendMessageToGroup", sender, receiver, message).catch(function (err) {
             return console.error(err.toString());
         });
+        $("#emojionearea-editor").html();
     }
     else {
         connection.invoke("SendMessage", sender, message).catch(function (err) {

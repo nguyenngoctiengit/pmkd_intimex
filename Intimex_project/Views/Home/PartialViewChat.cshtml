@@ -4,12 +4,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!--EmojiOneArea -->
+<link href="~/css/emojiPicker/jquery1.emojipicker.css" rel="stylesheet" />
+<script src="~/js/emojiPicker/jquery.emojipicker.js"></script>
+<link href="~/css/emojiPicker/jquery.emojipicker.tw.css" rel="stylesheet" />
+<script src="~/js/emojiPicker/jquery.emojis.js"></script>
 <!--css chat -->
 <link href="~/css/ChatPartialView.css" rel="stylesheet" />
 @*<link href="~/css/chat1.css" rel="stylesheet" />*@
 <script src="~/js/notify.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js" integrity="sha512-hkvXFLlESjeYENO4CNi69z3A1puvONQV5Uh+G4TUDayZxSLyic5Kba9hhuiNLbHqdnKNMk2PxXKm0v7KDnWkYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css" integrity="sha512-vEia6TQGr3FqC6h55/NdU3QSM5XR6HSl5fW71QTKrgeER98LIMGwymBVM867C1XHIkYD9nMTfWK2A0xcodKHNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <style>
     .buttonChat {
         text-align: left;
@@ -34,7 +37,11 @@
 </style>
 <script>
     $(function () {
-        $("#messageInput1").emojioneArea();
+        $("#messageInput1").emojiPicker({
+            position: 'right'
+
+        });
+        document.getElementById('messageInput1').style.width = '100%';
     });
 </script>
 <div class="right_col" role="main" style="height: 100%">
@@ -140,7 +147,7 @@
                     </label>
                     <div class="type_msg">
                         <div class="input_msg_write">
-                            <textarea type="text" class="write_msg" id="messageInput1" placeholder="Type a message"></textarea>
+                            <input type="text" class="write_msg" id="messageInput1" placeholder="Type a message" style="width:100%"/>
                             <button class="msg_send_btn" type="button" id="sendButton1"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                         </div>
                     </div>
