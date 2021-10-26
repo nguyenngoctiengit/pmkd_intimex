@@ -215,6 +215,49 @@
             }
         }
     });
+
+    function createLi_message(id,sender, nguoiGui, message) {
+        var datetime = new Date().toLocaleString().replace(",", "").replace(/:.. /, " ");
+        var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        var a = document.createElement('a');
+        a.className = 'dropdown-item';
+        a.href = '/home/GetPageFromNotification/' + id;
+        a.innerHTML = '<span class="image"><img src="/public/images/img.jpg" alt="Profile Image" /></span>' +
+            '<span>' +
+            '<span>' + nguoiGui + '</span>' +
+            '<span class="time" style="text-align:right;">' + datetime + '</span>' +
+            '</span>' +
+            '<span class="message">' +
+            msg +
+            '</span>';
+        document.getElementById("messageIncoming").appendChild(a);
+    }
+
+    function updateNotification() {
+        $('#messageIncoming').empty();
+        $.ajax({
+            type: 'GET',
+            url: '/home/GetNotification',
+            success: function (respone) {
+                $.each(respone, function (index, value) {
+                    var FromUser = document.getElementById('senderInput').value;
+                    console.log(value);
+                    if (FromUser == value.FromUser) {
+
+                    } else {
+                        var FromUser = document.getElementById('receiverInput').value;
+                        createLi_message(value.Id, FromUser, value.FromUser, value.Message1);
+                    }
+
+                    
+                })
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    }
+
     var pageSize = 10;
     var pageIndex = 1;
     var id = document.getElementById('receiverInput').value;

@@ -69,10 +69,13 @@ namespace Intimex_project.Controllers
             }
             else
             {
-                ViewBag.listUserOnline = ListUser.CurrentConnection.ToList();
+                
                 ViewBag.messingTo = _context.AspNetUsers.Where(a => a.Id == id).Select(a => a.NormalizedUserName).FirstOrDefault();
                 var sender = HttpContext.Session.GetString("userId");
                 var receiver = id;
+                var itemRemove = NotificationList.messages.Where(a => a.FromUser == sender && a.ToUser == receiver).ToList();
+                var itemRemove1 = _context.Messages.Where(a => a.FromUser == sender && a.ToUser == receiver).FirstOrDefault();
+                NotificationList.messages.Remove(itemRemove1);
                 ViewBag.outMsg = (from a in _context.Messages where (a.FromUser == sender && a.ToUser == receiver) || (a.FromUser == receiver && a.ToUser == sender) orderby a.Id descending select new Message{
                     Id = a.Id,
                     FromUser = a.FromUser,
@@ -135,6 +138,37 @@ namespace Intimex_project.Controllers
             }
             memory.Position = 0;
             return File(memory, "APPLICATION/octet-stream", Path.GetFileName(path));
+        }
+
+        public JsonResult GetNotification() {
+            var list = NotificationList.messages;
+            return Json(list); 
+        }
+
+        public IActionResult GetPageFromNotification(int id) {
+            var message = _context.Messages.Where(a => a.Id == id).FirstOrDefault();
+            if (HttpContext.Session.GetString("userId") == null) {
+                return RedirectToAction("index", "Account");
+            } else {
+                var fromUser = message.FromUser;
+                ViewBag.messingTo = _context.AspNetUsers.Where(a => a.Id == fromUser).Select(a => a.NormalizedUserName).FirstOrDefault();
+                var sender = message.FromUser;
+                var receiver = message.ToUser;
+                NotificationList.messages.RemoveAll(a => a.Id == id);
+                ViewBag.outMsg = (from a in _context.Messages where (a.FromUser == sender && a.ToUser == receiver) || (a.FromUser == receiver && a.ToUser == sender) orderby a.Id descending select new Message {
+                    Id = a.Id,
+                    FromUser = a.FromUser,
+                    ToUser = a.ToUser,
+                    Date = a.Date,
+                    Message1 = EncryptString.Decrypt(a.Message1, "0933652637"),
+                }).Take(10).OrderBy(a => a.Id).ToList();
+                ViewBag.sender = message.FromUser;
+                ViewBag.receiver = message.ToUser;
+                UserIdParameter.userId = HttpContext.Session.GetString("userId");
+                UserIdParameter.userIdChat = message.ToUser;
+                ViewBag.user = _context.AspNetUsers.Where(a => a.Id != HttpContext.Session.GetString("userId")).ToList();
+                return View("PartialViewChat");
+            }
         }
     }
 }
