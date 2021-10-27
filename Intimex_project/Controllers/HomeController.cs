@@ -69,11 +69,14 @@ namespace Intimex_project.Controllers
             }
             else
             {
-                
+                ViewBag.listUserOnline = ListUser.CurrentConnection.ToList();
                 ViewBag.messingTo = _context.AspNetUsers.Where(a => a.Id == id).Select(a => a.NormalizedUserName).FirstOrDefault();
                 var sender = HttpContext.Session.GetString("userId");
                 var receiver = id;
+<<<<<<< HEAD
                 var notificationList = NotificationList.notifications;
+=======
+>>>>>>> parent of 8f3f2e38 (26/10)
                 ViewBag.outMsg = (from a in _context.Messages where (a.FromUser == sender && a.ToUser == receiver) || (a.FromUser == receiver && a.ToUser == sender) orderby a.Id descending select new Message{
                     Id = a.Id,
                     FromUser = a.FromUser,
@@ -137,6 +140,7 @@ namespace Intimex_project.Controllers
             memory.Position = 0;
             return File(memory, "APPLICATION/octet-stream", Path.GetFileName(path));
         }
+<<<<<<< HEAD
 
         public JsonResult GetNotification() {
             var list = NotificationList.notifications;
@@ -149,5 +153,7 @@ namespace Intimex_project.Controllers
             NotificationList.notifications.RemoveAll(a => a.id == id);
             return RedirectToAction("PartialViewChat", "home",new { id = message.FromUser });
         }
+=======
+>>>>>>> parent of 8f3f2e38 (26/10)
     }
 }

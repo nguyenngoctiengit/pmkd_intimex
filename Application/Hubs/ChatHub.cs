@@ -57,6 +57,7 @@ namespace Application.Hubs
             _message.ToUser = receiver;
             _message.Message1 = EncryptString.Encrypt(message, "0933652637");
             _message.Date = DateTime.Now;
+<<<<<<< HEAD
             Notification notification = new Notification();
             var maxId = _context.Messages.Max(a => a.Id);
             notification.id = maxId + 1;
@@ -65,16 +66,21 @@ namespace Application.Hubs
             notification.nguoiGui = _context.AspNetUsers.Where(a => a.Id == sender).Select(a => a.NormalizedUserName).FirstOrDefault();
             notification.Message1 = message;
             NotificationList.notifications.Add(notification);
+=======
+>>>>>>> parent of 8f3f2e38 (26/10)
             _context.Messages.Add(_message);
             _context.SaveChanges();
             var nguoiGui = _context.AspNetUsers.Where(a => a.Id == sender).Select(a => a.NormalizedUserName).FirstOrDefault();
             return Clients.Group(receiver).SendAsync("ReceiveMessage", sender,receiver, message,nguoiGui);
         }
         public string GetConnectionId() => Context.ConnectionId;
+<<<<<<< HEAD
 
         public List<Notification> GetListNotification() {
             return  NotificationList.notifications.ToList();
         }
 
+=======
+>>>>>>> parent of 8f3f2e38 (26/10)
     }
 }
