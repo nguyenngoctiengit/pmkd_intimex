@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data.Public_class {
     public class NotificationList {
-        public static List<Message> messages { get; set; } = new List<Message>();
+        public static List<Notification> notifications { get; set; } = new List<Notification>();
     }
     
 }

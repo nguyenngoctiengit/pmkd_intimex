@@ -9,7 +9,7 @@
 <link href="~/css/emojiPicker/jquery.emojipicker.tw.css" rel="stylesheet" />
 <script src="~/js/emojiPicker/jquery.emojis.js"></script>
 <!--css chat -->
-<link href="~/css/ChatPartialView.css" rel="stylesheet" />
+<link href="~/css/PartialViewChat1.css" rel="stylesheet" />
 @*<link href="~/css/chat1.css" rel="stylesheet" />*@
 <script src="~/js/notify.min.js"></script>
 
@@ -44,8 +44,10 @@
         document.getElementById('messageInput1').style.width = '100%';
     });
 </script>
+
 <div class="right_col" role="main" style="height: 100%">
     <div class="">
+
         <h3 class="text-center">Messing to @ViewBag.messingTo</h3>
         <div class="messaging">
             <div class="inbox_msg">
@@ -147,7 +149,7 @@
                     </label>
                     <div class="type_msg">
                         <div class="input_msg_write">
-                            <input type="text" class="write_msg" id="messageInput1" placeholder="Type a message" style="width:100%"/>
+                            <input type="text" class="write_msg" id="messageInput1" placeholder="Type a message" style="width:100%" />
                             <button class="msg_send_btn" type="button" id="sendButton1"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                         </div>
                     </div>
@@ -158,9 +160,15 @@
 </div>
 <!-- signalr -->
 <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/chat1.js"></script>
+<script src="~/js/chat.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
+    $(window).on('load', function () {
+        $('.loader').fadeOut(1000);
+        $('.container').fadeIn(1000);
+        scrollChat();
+    })
+
     document.getElementById('messageInput1').addEventListener('keyup', function (event) {
         event.preventDefault();
         if (event.keyCode === 13) {
@@ -216,12 +224,13 @@
         }
     });
 
-    function createLi_message(id,sender, nguoiGui, message) {
+    function createLi_message(id, sender, nguoiGui, message) {
         var datetime = new Date().toLocaleString().replace(",", "").replace(/:.. /, " ");
         var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         var a = document.createElement('a');
         a.className = 'dropdown-item';
-        a.href = '/home/GetPageFromNotification/' + id;
+        a.href = '/home/ViewNotification/' + id;
+        a.style.color = 'black';
         a.innerHTML = '<span class="image"><img src="/public/images/img.jpg" alt="Profile Image" /></span>' +
             '<span>' +
             '<span>' + nguoiGui + '</span>' +
@@ -235,21 +244,19 @@
 
     function updateNotification() {
         $('#messageIncoming').empty();
+        var senderInput = document.getElementById('senderInput').value;
         $.ajax({
             type: 'GET',
             url: '/home/GetNotification',
             success: function (respone) {
                 $.each(respone, function (index, value) {
-                    var FromUser = document.getElementById('senderInput').value;
-                    console.log(value);
-                    if (FromUser == value.FromUser) {
+                    if (value.FromUser == senderInput) {
 
-                    } else {
-                        var FromUser = document.getElementById('receiverInput').value;
-                        createLi_message(value.Id, FromUser, value.FromUser, value.Message1);
+                    }
+                    else {
+                        createLi_message(value.id, value.FromUser, value.nguoiGui, value.Message1);
                     }
 
-                    
                 })
             },
             error: function (error) {

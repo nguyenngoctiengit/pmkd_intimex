@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Application.Encrypt;
+using Application.AccountMail;
 
 namespace Application.Hubs
 {
@@ -56,14 +57,14 @@ namespace Application.Hubs
             _message.ToUser = receiver;
             _message.Message1 = EncryptString.Encrypt(message, "0933652637");
             _message.Date = DateTime.Now;
-            Message message1 = new Message();
+            Notification notification = new Notification();
             var maxId = _context.Messages.Max(a => a.Id);
-            message1.Id = maxId + 1;
-            message1.FromUser = _context.AspNetUsers.Where(a => a.Id == sender).Select(a => a.NormalizedUserName).FirstOrDefault();
-            message1.ToUser = receiver;
-            message1.Message1 = message;
-            message1.Date = DateTime.Now;
-            NotificationList.messages.Add(message1);
+            notification.id = maxId + 1;
+            notification.FromUser = sender;
+            notification.ToUser = receiver;
+            notification.nguoiGui = _context.AspNetUsers.Where(a => a.Id == sender).Select(a => a.NormalizedUserName).FirstOrDefault();
+            notification.Message1 = message;
+            NotificationList.notifications.Add(notification);
             _context.Messages.Add(_message);
             _context.SaveChanges();
             var nguoiGui = _context.AspNetUsers.Where(a => a.Id == sender).Select(a => a.NormalizedUserName).FirstOrDefault();
@@ -71,8 +72,8 @@ namespace Application.Hubs
         }
         public string GetConnectionId() => Context.ConnectionId;
 
-        public List<Message> GetListNotification() {
-            return  NotificationList.messages.ToList();
+        public List<Notification> GetListNotification() {
+            return  NotificationList.notifications.ToList();
         }
 
     }
