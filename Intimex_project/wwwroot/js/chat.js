@@ -9,22 +9,6 @@ $("#countMessage").mouseover(function () {
     $("#countMessage").html('0');
 })
 
-function createLi_message(sender, nguoiGui, message) {
-    var datetime = new Date().toLocaleString().replace(",", "").replace(/:.. /, " ");
-    var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    var a = document.createElement('a');
-    a.className = 'dropdown-item';
-    a.href = '/home/PartialViewChat/' + sender;
-    a.innerHTML = '<span class="image"><img src="/public/images/img.jpg" alt="Profile Image" /></span>' +
-        '<span>' +
-        '<span>' + nguoiGui + '</span>' +
-        '<span class="time" style="text-align:right;">' + datetime + '</span>' +
-        '</span>' +
-        '<span class="message">' +
-        msg +
-        '</span>';
-    document.getElementById("messageIncoming").appendChild(a);
-}
 
 function createDiv_incoming_msg(message) {
     var datetime = new Date().toLocaleString().replace(",", "").replace(/:.. /, " ");
@@ -81,7 +65,6 @@ connection.on("ReceiveMessage", function (sender, reciever, message, nguoiGui) {
         count++;
         $("#countMessage").html(count);
         $.notify("You are recieve a message from " + nguoiGui, "success");
-        createLi_message(sender, nguoiGui, message);
     }
 });
 

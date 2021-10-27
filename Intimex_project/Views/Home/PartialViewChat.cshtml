@@ -4,12 +4,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!--EmojiOneArea -->
-<link href="~/css/emojiPicker/jquery1.emojipicker.css" rel="stylesheet" />
+<link href="~/css/emojiPicker/jquery.emojipicker.css" rel="stylesheet" />
 <script src="~/js/emojiPicker/jquery.emojipicker.js"></script>
+<!-- Emoji Data -->
 <link href="~/css/emojiPicker/jquery.emojipicker.tw.css" rel="stylesheet" />
 <script src="~/js/emojiPicker/jquery.emojis.js"></script>
 <!--css chat -->
-<link href="~/css/PartialViewChat1.css" rel="stylesheet" />
+<link href="~/css/PartialViewChat.css" rel="stylesheet" />
 @*<link href="~/css/chat1.css" rel="stylesheet" />*@
 <script src="~/js/notify.min.js"></script>
 
@@ -24,6 +25,11 @@
 
     .emojionearea-button {
         margin-top: 50px;
+    }
+
+    .emojiPickerIcon .black {
+        height: 40px;
+        width: 40px;
     }
 
     .btn {
@@ -223,7 +229,6 @@
             }
         }
     });
-<<<<<<< HEAD
 
     function createLi_message(id, sender, nguoiGui, message) {
         var datetime = new Date().toLocaleString().replace(",", "").replace(/:.. /, " ");
@@ -266,8 +271,6 @@
         })
     }
 
-=======
->>>>>>> parent of 8f3f2e38 (26/10)
     var pageSize = 10;
     var pageIndex = 1;
     var id = document.getElementById('receiverInput').value;

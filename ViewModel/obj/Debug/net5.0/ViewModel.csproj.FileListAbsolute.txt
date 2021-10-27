@@ -62,7 +62,7 @@ C:\Users\User\Desktop\project_intimex\ViewModel\obj\Debug\net5.0\ViewModel.Gener
 C:\Users\User\Desktop\project_intimex\ViewModel\obj\Debug\net5.0\ViewModel.AssemblyInfoInputs.cache
 C:\Users\User\Desktop\project_intimex\ViewModel\obj\Debug\net5.0\ViewModel.AssemblyInfo.cs
 C:\Users\User\Desktop\project_intimex\ViewModel\obj\Debug\net5.0\ViewModel.csproj.CoreCompileInputs.cache
-C:\Users\User\Desktop\project_intimex\ViewModel\obj\Debug\net5.0\ViewModel.csproj.CopyComplete
 C:\Users\User\Desktop\project_intimex\ViewModel\obj\Debug\net5.0\ViewModel.dll
 C:\Users\User\Desktop\project_intimex\ViewModel\obj\Debug\net5.0\ref\ViewModel.dll
 C:\Users\User\Desktop\project_intimex\ViewModel\obj\Debug\net5.0\ViewModel.pdb
+C:\Users\User\Desktop\project_intimex\ViewModel\obj\Debug\net5.0\ViewModel.csproj.CopyComplete
