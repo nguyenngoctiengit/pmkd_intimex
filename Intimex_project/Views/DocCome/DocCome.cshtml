@@ -9,7 +9,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Thông tin hàng hóa</h3>
+                <h3>Thông tin văn bản đến</h3>
             </div>
             <div class="title_right">
                 <div class="col-md-5 col-sm-5   form-group pull-right top_search">
@@ -43,7 +43,7 @@
             <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Hàng hóa</h2>
+                        <h2>Văn bản đến</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li>
                                 <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -102,37 +102,16 @@
 
                                         columns.AddFor(m => m.DocLever).Caption("Độ khẩn").Lookup(lookup => lookup.DataSource(new JS("DocLever")).ValueExpr("id").DisplayExpr("name"));
 
-                                        columns.Add().Caption("Đã chuyển");
+                                        columns.Add().DataField("IsChuyen").Caption("Đã chuyển");
 
                                     })
                                     .Editing(e => e
                                         .Mode(GridEditMode.Popup)
                                         .Popup(p => p.Title("Hàng hóa").ShowTitle(true).Width(700).Height(500))
-                                        .AllowAdding(true)
-                                        .AllowUpdating(true)
                                         .AllowDeleting(true)
                                         .UseIcons(true)
-                                        .Form(f => f.Items(items => {
-                                            items.AddGroup()
-                                                    .ColCount(2)
-                                                    .ColSpan(2)
-                                                    .Items(groupItems =>
-                                                    {
-                                                        groupItems.AddSimpleFor(m => m.DocDate);
-                                                        groupItems.AddSimpleFor(m => m.DateCome);
-                                                        groupItems.AddSimpleFor(m => m.NumberCome);
-                                                        groupItems.AddSimpleFor(m => m.Contents);
-                                                        groupItems.AddSimpleFor(m => m.DocTypeId);
-                                                        groupItems.AddSimpleFor(m => m.NumberSign);
-                                                        groupItems.AddSimpleFor(m => m.DocPlaceId);
-                                                        groupItems.AddSimpleFor(m => m.DocLever);
-
-                                                    });
-
-
-                                        }))
                                     )
-
+                                    .OnToolbarPreparing("toolbar_DocCome")
                                     .Export(e => e.Enabled(true))
                                     .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
                                     .HeaderFilter(hearder => hearder.Visible(true))
@@ -162,7 +141,7 @@
         </div>
     </div>
 </div>
-<script src="~/js/hanghoa.js"></script>
+<script src="~/js/js_create/doccome.js"></script>
 <!-- /page content -->
 <!-- /page content -->
 <!-- footer content -->
