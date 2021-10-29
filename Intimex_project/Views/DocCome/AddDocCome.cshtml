@@ -16,7 +16,7 @@
 <div class="right_col" role="main" style="height:800px">
     <div class="">
         <div class="col-md-12 col-sm-12">
-            <form method="post" asp-action="add_doccome" asp-controller="DocCome">
+            <form method="post" asp-action="add_doccome" asp-controller="DocCome" enctype="multipart/form-data">
 
                 <div class="x_panel">
                     <div class="x_title">
@@ -138,16 +138,23 @@
                                 <div class="form-group col-md-12">
                                     <label class="col-form-label col-md-1 col-sm-1"></label>
                                     <div class="col-md-9 col-sm-9">
-                                        <textarea id="fileSelected" style="width:100%"></textarea>
+                                        <textarea id="fileSelected" style="width:100%" disabled></textarea>
                                     </div>
                                     <div class="col-md-1 col-sm-1">
                                         <label class="custom-file-upload">
-                                            <input type="file" id="fileUpload" onchange="uploadMultipleFile()" multiple hidden />
+                                            <input type="file" id="fileUpload" onchange="uploadMultipleFile()" name="files" multiple hidden />
                                             <i class="fa fa-cloud-upload"></i>
                                         </label>
                                     </div>
                                     <div class="col-md-1 col-sm-1">
                                         @Html.DevExtreme().Button().Icon("fa fa-print")
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="form-group col-md-12">
+                                    <div id="filelist">
+                                        <!--show proccessbar-->
                                     </div>
                                 </div>
                             </div>
@@ -191,12 +198,15 @@
     </div>
 </div>
 <script type="text/javascript">
+         /* event submit form upload*/
     function uploadMultipleFile() {
         var fileUpload = document.getElementById('fileUpload');
         for (var i = 0; i < fileUpload.files.length; i++) {
-            document.getElementById('fileSelected').value += fileUpload.files.item(i).name + ' || ';
+            document.getElementById('fileSelected').value += fileUpload.files.item(i).name + '\n';
         }
     }
+
+
 
 
 </script>

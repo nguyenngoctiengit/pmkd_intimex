@@ -5,6 +5,7 @@ using DevExtreme.AspNet.Mvc;
 using DevExtreme.AspNet.Mvc.FileManagement;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,8 +17,11 @@ namespace Intimex_project.Controllers
     public class DocComeController : Controller
     {
         public tradingsystemContext _context = new tradingsystemContext(ConnectionParameter.connectionString);
-        public DocComeController()
+
+        private IHostEnvironment _env;
+        public DocComeController(IHostEnvironment env)
         {
+            _env = env;
         }
 
         public IActionResult DocCome()
@@ -47,8 +51,17 @@ namespace Intimex_project.Controllers
         {
             return View("AddDocCome");
         }
-        public async Task<IActionResult> add_doccome(Document document)
-        {
+        public async Task<IActionResult> add_doccome(Document document,IEnumerable<IFormFile> files)
+        { 
+            foreach(var file in files)
+            {
+                string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{file.FileName}";
+                using (FileStream fileStream = System.IO.File.Create(fileName))
+                {
+                    await file.CopyToAsync(fileStream);
+                    await fileStream.FlushAsync();
+                }
+            }
             Document _document = new Document();
             _document.DateCreate = DateTime.Now;
             _document.DocLever = document.DocLever;
@@ -69,5 +82,26 @@ namespace Intimex_project.Controllers
             TempData["alertMessage"] = "thêm văn bản đến thành công";
             return RedirectToAction("DocCome");
         }
+        [HttpPost]
+        public async Task<IActionResult> UploadFile(List<IFormFile> files)
+        {
+            if (ModelState.IsValid)
+            {
+                var filesPath = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome";
+                foreach (var file in files)
+                {
+                    string ImageName = Path.GetFileName(file.FileName);//get filename
+                    var fullFilePath = Path.Combine(filesPath, ImageName);
+                    using (var stream = new FileStream(fullFilePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                }
+                return Ok(1);
+            }
+            return Ok(0);
+
+        }
+
     }
 }

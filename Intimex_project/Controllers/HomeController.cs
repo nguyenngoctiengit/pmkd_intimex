@@ -19,6 +19,7 @@ using System.IO;
 using Microsoft.Extensions.Hosting;
 using Application.Encrypt;
 using Application.AccountMail;
+using Microsoft.Extensions.Configuration;
 
 namespace Intimex_project.Controllers
 {
@@ -26,11 +27,11 @@ namespace Intimex_project.Controllers
     {
         private SignalRChatContext _context = new SignalRChatContext();
         private IHostEnvironment _env;
-        private string _dir;
-        public HomeController(IHostEnvironment env)
+        private IConfiguration _configuration;
+        public HomeController(IHostEnvironment env, IConfiguration iconfig)
         {
             _env = env;
-            _dir = _env.ContentRootPath;
+            _configuration = iconfig;
         }
         public IActionResult Index()
         {
@@ -69,17 +70,18 @@ namespace Intimex_project.Controllers
             }
             else
             {
-                
                 ViewBag.messingTo = _context.AspNetUsers.Where(a => a.Id == id).Select(a => a.NormalizedUserName).FirstOrDefault();
                 var sender = HttpContext.Session.GetString("userId");
                 var receiver = id;
                 var notificationList = NotificationList.notifications;
+                var SecurityStampSender = _context.AspNetUsers.Where(a => a.Id == sender).Select(a => a.SecurityStamp).FirstOrDefault();
+                var SecurityStampReceiver = _context.AspNetUsers.Where(a => a.Id == receiver).Select(a => a.SecurityStamp).FirstOrDefault();
                 ViewBag.outMsg = (from a in _context.Messages where (a.FromUser == sender && a.ToUser == receiver) || (a.FromUser == receiver && a.ToUser == sender) orderby a.Id descending select new Message{
                     Id = a.Id,
                     FromUser = a.FromUser,
                     ToUser = a.ToUser,
                     Date = a.Date,
-                    Message1 = EncryptString.Decrypt(a.Message1, "0933652637"),
+                    Message1 = EncryptString.Decrypt(a.Message1, (a.FromUser == sender && a.ToUser == receiver) ? SecurityStampSender : SecurityStampReceiver),
                 }).Take(10).OrderBy(a => a.Id).ToList();
                 ViewBag.sender = HttpContext.Session.GetString("userId");
                 ViewBag.receiver = id;
@@ -94,6 +96,8 @@ namespace Intimex_project.Controllers
         {
             var sender = HttpContext.Session.GetString("userId");
             var receiver = id;
+            var SecurityStampSender = _context.AspNetUsers.Where(a => a.Id == sender).Select(a => a.SecurityStamp).FirstOrDefault();
+            var SecurityStampReceiver = _context.AspNetUsers.Where(a => a.Id == receiver).Select(a => a.SecurityStamp).FirstOrDefault();
             var query1 = (from a in _context.Messages
                               where (a.FromUser == sender && a.ToUser == receiver) || (a.FromUser == receiver && a.ToUser == sender)
                               orderby a.Id descending
@@ -103,7 +107,7 @@ namespace Intimex_project.Controllers
                                   FromUser = a.FromUser,
                                   ToUser = a.ToUser,
                                   Date = a.Date,
-                                  Message1 = EncryptString.Decrypt(a.Message1, "0933652637"),
+                                  Message1 = EncryptString.Decrypt(a.Message1, (a.FromUser == sender && a.ToUser == receiver) ? SecurityStampSender : SecurityStampReceiver),
                               }).Skip(pageSize * pageIndex).Take(pageSize);
             var data = query1.OrderByDescending(a => a.Id).ToListAsync();
             return Json(await data);
@@ -112,7 +116,7 @@ namespace Intimex_project.Controllers
         [HttpPost]
         public async void Upload(IFormFile file)
         {
-            string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\{file.FileName}";
+            string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\Chat\\{file.FileName}";
             using (FileStream fileStream = System.IO.File.Create(fileName))
             {
                 await file.CopyToAsync(fileStream);
@@ -127,7 +131,7 @@ namespace Intimex_project.Controllers
 
             var path = Path.Combine(
                            Directory.GetCurrentDirectory(),
-                           "wwwroot/FileUploads", filename);
+                           "wwwroot/FileUploads/Chat", filename);
 
             var memory = new MemoryStream();
             using (var stream = new FileStream(path, FileMode.Open))

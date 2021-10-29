@@ -14,12 +14,19 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 using Application.Encrypt;
 using Application.AccountMail;
+using Microsoft.Extensions.Configuration;
 
 namespace Application.Hubs
 {
     public class ChatHub : Hub
     {
         SignalRChatContext _context = new SignalRChatContext();
+
+        private IConfiguration _configuration;
+        public ChatHub(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
         public Task SendMessage(string sender, string user, string message)
         {
@@ -51,14 +58,16 @@ namespace Application.Hubs
         }
         public Task SendMessageToGroup(string sender, string receiver, string message)
         {
+            var SecurityStamp = _context.AspNetUsers.Where(a => a.Id == sender).Select(a => a.SecurityStamp).FirstOrDefault();
+            var maxId1 = _context.Messages.Select(a => a.Id).FirstOrDefault();
+            var maxId = maxId1 == 0 ? 1 : _context.Messages.Max(a => a.Id);
             Groups.AddToGroupAsync(Context.ConnectionId, receiver);
             Message _message = new Message();
             _message.FromUser = sender;
             _message.ToUser = receiver;
-            _message.Message1 = EncryptString.Encrypt(message, "0933652637");
+            _message.Message1 = EncryptString.Encrypt(message, SecurityStamp);
             _message.Date = DateTime.Now;
             Notification notification = new Notification();
-            var maxId = _context.Messages.Max(a => a.Id);
             notification.id = maxId + 1;
             notification.FromUser = sender;
             notification.ToUser = receiver;
