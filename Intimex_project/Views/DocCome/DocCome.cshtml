@@ -104,6 +104,7 @@
 
                                         columns.Add().DataField("IsChuyen").Caption("Đã chuyển");
 
+                                        columns.Add().DataField("Image").Caption("Image");
                                     })
                                     .Editing(e => e
                                         .Mode(GridEditMode.Popup)
@@ -111,6 +112,14 @@
                                         .AllowDeleting(true)
                                         .UseIcons(true)
                                     )
+                                    .MasterDetail(md => {
+                                        md.Enabled(true);
+                                        md.Template(@<text>
+                                            <img src="<%- data.Image %>">
+
+                                        </text>);
+
+                                    })
                                     .OnToolbarPreparing("toolbar_DocCome")
                                     .Export(e => e.Enabled(true))
                                     .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
@@ -132,6 +141,11 @@
                                         paper.ShowInfo(true);
                                     })
                                 )
+                                    @using (Html.DevExtreme().NamedTemplate("templete_Doccome"))
+                                    {
+
+                                        <div>Nguyễn Ngọc Tiến</div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -142,6 +156,8 @@
     </div>
 </div>
 <script src="~/js/js_create/doccome.js"></script>
+<script>
+</script>
 <!-- /page content -->
 <!-- /page content -->
 <!-- footer content -->

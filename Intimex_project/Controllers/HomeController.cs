@@ -114,13 +114,13 @@ namespace Intimex_project.Controllers
 
         }
         [HttpPost]
-        public async void Upload(IFormFile file)
+        public void Upload(IFormFile file)
         {
             string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\Chat\\{file.FileName}";
             using (FileStream fileStream = System.IO.File.Create(fileName))
             {
-                await file.CopyToAsync(fileStream);
-                await fileStream.FlushAsync();
+                 file.CopyTo(fileStream);
+                 fileStream.Flush();
             }
         }
         public async Task<IActionResult> DownloadDocument(string id)

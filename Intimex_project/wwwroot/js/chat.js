@@ -100,13 +100,12 @@ var UploadFile = function (e) {
         $.notify("Please upload files having size is bigger than: " + 52428800 + ".", "error");
         document.getElementById('fileUpload').value = null;
         return false;
-    }else if (!regex.test(file.toLowerCase())) {
+    } else if (!regex.test(file.toLowerCase())) {
         $.notify("Please upload files having extensions: " + allowedFiles.join(', ') + " only.", "error");
         document.getElementById('fileUpload').value = null;
         return false;
     }
-    else
-    {
+    else {
         var file = e.target.files[0];
         var formData = new FormData();
         var newFileName = randomString(6) + "_" + extensionFile;
@@ -125,22 +124,174 @@ var UploadFile = function (e) {
 }
 
 document.getElementById("sendButton1").addEventListener("click", function (event) {
-    var sender = document.getElementById("senderInput").value;
-    var receiver = document.getElementById("receiverInput").value;
-    var message = document.getElementById("messageInput1").value;
-    if (receiver != "") {
+    if (document.getElementById('messageInput1').value != '') {
+        var sender = document.getElementById("senderInput").value;
+        var receiver = document.getElementById("receiverInput").value;
+        var message = document.getElementById("messageInput1").value;
+        if (receiver != "") {
 
-        connection.invoke("SendMessageToGroup", sender, receiver, message).catch(function (err) {
-            return console.error(err.toString());
-        });
-        $("#emojionearea-editor").html();
+            connection.invoke("SendMessageToGroup", sender, receiver, message).catch(function (err) {
+                return console.error(err.toString());
+            });
+            $("#emojionearea-editor").html();
+        }
+        else {
+            connection.invoke("SendMessage", sender, message).catch(function (err) {
+                return console.error(err.toString());
+            });
+        }
+        event.preventDefault();
+    } else {
+        document.getElementById('messageInput1').focus();
     }
-    else {
-        connection.invoke("SendMessage", sender, message).catch(function (err) {
-            return console.error(err.toString());
-        });
-    }
-
-
-    event.preventDefault();
 });
+$(window).on('load', function () {
+    $('.loader').fadeOut(1000);
+    $('.container').fadeIn(1000);
+    scrollChat();
+})
+
+document.getElementById('messageInput1').addEventListener('keyup', function (event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById('sendButton1').click();
+    }
+});
+
+function DownloadDocument(id) {
+    var extensionFile = ["docx", "jpg", "jpeg", "gif", "png", "doc", "pdf", "xls",
+        "xlsx", "xlsm", "pptx", "pptm", "ppt", "txt", "mp3", "mp4", "rar", "zip"];
+    var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + extensionFile.join('|') + ")$");
+    if (!regex.test(id.toLowerCase())) {
+        $.notify("This is not a file. Cannot download !!", "error");
+    } else {
+        location.href = '/home/DownloadDocument/' + id;
+    }
+}
+
+function Search() {
+    var searchKey = document.getElementById('keySearch');
+    var filter = searchKey.value.toUpperCase();
+    var button = document.querySelectorAll('.buttonChat');
+    for (var i of button) {
+        var item = i.value;
+        if (item.toUpperCase().indexOf(filter) > -1) {
+            i.style.display = '';
+        } else {
+            i.style.display = 'none';
+        }
+    }
+}
+function SearchMessage() {
+    var searchKey = document.getElementById('keySearchMessage');
+    var filter = searchKey.value.toUpperCase();
+    var count = 0;
+    $('#msg_history div').each(function () {
+        if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+            $(this).hide();  // MY CHANGE
+
+            // Show the list item if the phrase matches and increase the count by 1
+        } else {
+            $(this).show(); // MY CHANGE
+            count++;
+        }
+    })
+}
+$('.msg_history').scroll(function () {
+    if ($('.msg_history').scrollTop() == 0) {
+        if (GetDataMessage() != 0) {
+            GetDataMessage();
+            $('.msg_history').scrollTop(30);
+        }
+    }
+});
+
+function createLi_message(id, sender, nguoiGui, message) {
+    var datetime = new Date().toLocaleString().replace(",", "").replace(/:.. /, " ");
+    var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    var a = document.createElement('a');
+    a.className = 'dropdown-item';
+    a.href = '/home/ViewNotification/' + id;
+    a.style.color = 'black';
+    a.innerHTML = '<span class="image"><img src="/public/images/img.jpg" alt="Profile Image" /></span>' +
+        '<span>' +
+        '<span>' + nguoiGui + '</span>' +
+        '<span class="time" style="text-align:right;">' + datetime + '</span>' +
+        '</span>' +
+        '<span class="message">' +
+        msg +
+        '</span>';
+    document.getElementById("messageIncoming").appendChild(a);
+}
+
+function updateNotification() {
+    $('#messageIncoming').empty();
+    var senderInput = document.getElementById('senderInput').value;
+    $.ajax({
+        type: 'GET',
+        url: '/home/GetNotification',
+        success: function (respone) {
+            $.each(respone, function (index, value) {
+                if (value.FromUser == senderInput) {
+
+                }
+                else {
+                    createLi_message(value.id, value.FromUser, value.nguoiGui, value.Message1);
+                }
+
+            })
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    })
+}
+
+var pageSize = 10;
+var pageIndex = 1;
+var id = document.getElementById('receiverInput').value;
+var sender = document.getElementById('senderInput').value;
+var receiver = document.getElementById('receiverInput').value;
+function GetDataMessage() {
+    $.ajax({
+        type: 'GET',
+        url: '/home/GetDataMessage',
+        data: { "pageindex": pageIndex, "pagesize": pageSize, "id": id },
+        dataType: 'json',
+        success: function (data) {
+            if (data != null) {
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].FromUser == sender && data[i].ToUser == receiver) {
+                        $('#msg_history').prepend(' <div class="outgoing_msg">' +
+                            '<div class="sent_msg">' +
+                            '<p onclick="DownloadDocument(\'' + data[i].Message1 + '\')" style="cursor: pointer">'
+                            + data[i].Message1 +
+                            '</p>' +
+                            '<span class="time_date">' + data[i].Date + '</span>' +
+                            '</div>' +
+                            '</div>');
+
+                    } else {
+                        $('#msg_history').prepend('<div class="incoming_msg">' +
+                            '<div class="incoming_msg_img">' +
+                            '<img src="/Images/Avatar.PNG" />' +
+                            ' </div>' +
+                            '<div class="received_msg">' +
+                            '<div class="received_withd_msg">' +
+                            '<p onclick="DownloadDocument(\'' + data[i].Message1 + '\')" style="cursor: pointer">' + data[i].Message1 + '</p>' +
+                            '<span class="time_date">' + data[i].Date + '</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>');
+                    }
+                }
+
+            }
+
+        },
+        error: function () {
+            alert('Đã load hết dữ liệu chat !!');
+        }
+    })
+    pageIndex++;
+}

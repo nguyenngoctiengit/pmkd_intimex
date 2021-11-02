@@ -31,7 +31,8 @@ namespace Intimex_project.Controllers
         [HttpGet]
         public async Task<IActionResult>  Get(DataSourceLoadOptions loadOptions)
         {
-            var item_return = (from a in _context.Documents
+            var item_return = (from a in _context.Documents join b in _context.DocFileAttaches on a.DocId equals b.DocId into dfa
+                               from b in dfa.DefaultIfEmpty()
                                select new
                                {
                                    DocId = a.DocId,
@@ -43,7 +44,8 @@ namespace Intimex_project.Controllers
                                    NumberSign = a.NumberSign,
                                    DocPlaceId = a.DocPlaceId,
                                    DocLever = a.DocLever,
-                                   IsChuyen = _context.DocProcesses.Count(b => b.DocId == a.DocId) > 0 ? true : false
+                                   IsChuyen = _context.DocProcesses.Count(b => b.DocId == a.DocId) > 0 ? true : false,
+                                   Image = b.FileSource
                                });
             return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
         }
@@ -51,8 +53,22 @@ namespace Intimex_project.Controllers
         {
             return View("AddDocCome");
         }
+        [HttpPost]
+        public void upLoadFiles(IEnumerable<IFormFile> files)
+        {
+            foreach (var file in files)
+            {
+                string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{file.FileName}";
+                using (FileStream fileStream = System.IO.File.Create(fileName))
+                {
+                     file.CopyTo(fileStream);
+                     fileStream.Flush();
+                }
+            }
+        }
         public async Task<IActionResult> add_doccome(Document document,IEnumerable<IFormFile> files)
-        { 
+        {
+            var maxDocId = _context.Documents.Max(a => a.DocId);
             foreach(var file in files)
             {
                 string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{file.FileName}";
@@ -61,6 +77,13 @@ namespace Intimex_project.Controllers
                     await file.CopyToAsync(fileStream);
                     await fileStream.FlushAsync();
                 }
+                DocFileAttach docFileAttach = new DocFileAttach();
+                docFileAttach.DocId = maxDocId + 1;
+                docFileAttach.FileAttach = file.FileName;
+                docFileAttach.FileSource = file.FileName;
+                await _context.DocFileAttaches.AddAsync(docFileAttach);
+                await _context.SaveChangesAsync();
+
             }
             Document _document = new Document();
             _document.DateCreate = DateTime.Now;
@@ -82,26 +105,7 @@ namespace Intimex_project.Controllers
             TempData["alertMessage"] = "thêm văn bản đến thành công";
             return RedirectToAction("DocCome");
         }
-        [HttpPost]
-        public async Task<IActionResult> UploadFile(List<IFormFile> files)
-        {
-            if (ModelState.IsValid)
-            {
-                var filesPath = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome";
-                foreach (var file in files)
-                {
-                    string ImageName = Path.GetFileName(file.FileName);//get filename
-                    var fullFilePath = Path.Combine(filesPath, ImageName);
-                    using (var stream = new FileStream(fullFilePath, FileMode.Create))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
-                }
-                return Ok(1);
-            }
-            return Ok(0);
-
-        }
+        
 
     }
 }
