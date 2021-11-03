@@ -138,7 +138,7 @@
                                 <div class="form-group col-md-12">
                                     <div class="col-md-1 col-sm-1">
                                         <label class="custom-file-upload">
-                                            <input type="file" id="fileUpload" onchange="uploadMultipleFile(event)" multiple hidden />
+                                            <input type="file" id="fileUpload" onchange="uploadMultipleFile(event)" name="files" multiple hidden />
                                             <i class="fa fa-cloud-upload"></i>
                                         </label>
                                     </div>
@@ -226,8 +226,6 @@
             var extensionFile = files[i].name;
             var markup = "<tr><td><a data-toggle='modal' data-target='#exampleModal' data-imageid=" + extensionFile + ">" + extensionFile + "</a></td><td><a href='#' onclick='DeleteFile(\"" + extensionFile + "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>";
             $("#ListofFiles tbody").append(markup);
-@*            $('#fileUpload').val('');*@
-            console.log(extensionFile);
         }
         axios.post("/DocCome/upLoadFiles", formData);
 

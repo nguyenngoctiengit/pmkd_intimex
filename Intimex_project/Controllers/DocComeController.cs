@@ -1,4 +1,5 @@
-﻿using Application.Parameter;
+﻿using Application.AutoId;
+using Application.Parameter;
 using Data.Models.Trading_system;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
@@ -31,8 +32,7 @@ namespace Intimex_project.Controllers
         [HttpGet]
         public async Task<IActionResult>  Get(DataSourceLoadOptions loadOptions)
         {
-            var item_return = (from a in _context.Documents join b in _context.DocFileAttaches on a.DocId equals b.DocId into dfa
-                               from b in dfa.DefaultIfEmpty()
+            var item_return = (from a in _context.Documents
                                select new
                                {
                                    DocId = a.DocId,
@@ -45,7 +45,7 @@ namespace Intimex_project.Controllers
                                    DocPlaceId = a.DocPlaceId,
                                    DocLever = a.DocLever,
                                    IsChuyen = _context.DocProcesses.Count(b => b.DocId == a.DocId) > 0 ? true : false,
-                                   Image = b.FileSource
+                                   Image = _context.DocFileAttaches.Where(b => b.DocId == a.DocId).Select(b => b.FileAttach).ToList()
                                });
             return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
         }
@@ -58,7 +58,8 @@ namespace Intimex_project.Controllers
         {
             foreach (var file in files)
             {
-                string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{file.FileName}";
+                var FileName = AutoId.AutoIdFileStored("FileStored");
+                string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{FileName + ".JPG"}";
                 using (FileStream fileStream = System.IO.File.Create(fileName))
                 {
                      file.CopyTo(fileStream);

@@ -313,5 +313,10 @@ namespace Intimex_project.Controllers
             var item_return = (from a in _context.DocPlaces select new { a.DocPlaceId, a.DocPlaceCode, a.DocPlaceName });
             return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
         }
+        [HttpGet]
+        public object getImageDocCome(int DocId,DataSourceLoadOptions options)
+        {
+            return DataSourceLoader.Load(_context.DocFileAttaches.Where(a => a.DocId == DocId), options);
+        }
     }
 }

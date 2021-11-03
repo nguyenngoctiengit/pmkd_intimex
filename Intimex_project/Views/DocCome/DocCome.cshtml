@@ -5,6 +5,12 @@
 }
 
 @model IEnumerable<Data.Models.Trading_system.Document>
+<style>
+    .image_DocCome{
+        width:50px;
+        height:50px;
+    }
+</style>
 <div class="right_col" role="main" style="height: 500px">
     <div class="">
         <div class="page-title">
@@ -104,7 +110,6 @@
 
                                         columns.Add().DataField("IsChuyen").Caption("Đã chuyển");
 
-                                        columns.Add().DataField("Image").Caption("Image");
                                     })
                                     .Editing(e => e
                                         .Mode(GridEditMode.Popup)
@@ -114,10 +119,7 @@
                                     )
                                     .MasterDetail(md => {
                                         md.Enabled(true);
-                                        md.Template(@<text>
-                                            <img src="<%- data.Image %>">
-
-                                        </text>);
+                                        md.Template(new TemplateName("gridContainer-details"));
 
                                     })
                                     .OnToolbarPreparing("toolbar_DocCome")
@@ -141,11 +143,42 @@
                                         paper.ShowInfo(true);
                                     })
                                 )
-                                    @using (Html.DevExtreme().NamedTemplate("templete_Doccome"))
+                                    @using (Html.DevExtreme().NamedTemplate("gridContainer-details"))
                                     {
-
-                                        <div>Nguyễn Ngọc Tiến</div>
+                                        @(Html.DevExtreme().Form()
+                                            .ElementAttr("class", "form-container")
+                                            .Items(items => {
+                                                items.AddSimple()
+                                                    .Label(l => l.Text("List Image"))
+                                                    .Editor(e => e.SelectBox()
+                                                        .DataSource(d => d.Mvc()
+                                                            .Controller("Lookup")
+                                                            .LoadAction("getImageDocCome")
+                                                            .LoadParams(new { DocId = new JS("data.DocId") })
+                                                            .Key("Id")
+                                                        )
+                                                        .ValueExpr("FileAttach")
+                                                        .DisplayExpr("FileAttach")
+                                                        .OnValueChanged("image")
+                                                    );
+                                            })
+                                    )
                                     }
+                                    <div class="modal fade" id="Popup_img" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+
+                                                <div class="modal-body">
+                                                    <img id="img_id" style="width:100%;height:100%">
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -157,6 +190,10 @@
 </div>
 <script src="~/js/js_create/doccome.js"></script>
 <script>
+    function image(data) {
+        document.getElementById('img_id').src = '/FileUploads/DocCome/' + data.value;
+        $('#Popup_img').modal('show');
+    }
 </script>
 <!-- /page content -->
 <!-- /page content -->
