@@ -143,8 +143,9 @@
                                         </label>
                                     </div>
                                     <div class="col-md-1 col-sm-1">
-                                        @Html.DevExtreme().Button().Icon("fa fa-print")
+                                        @*@Html.DevExtreme().Button().Icon("fa fa-print")*@
                                     </div>
+                                    <button type="button" onclick="insertData()">Luu du lieu</button>
                                     <div class="col-md-10 col-sm-10">
                                         <table class="table" id="ListofFiles">
                                             <tr>
@@ -219,16 +220,28 @@
 <script type="text/javascript">
     /* event submit form upload*/
     function uploadMultipleFile(e) {
+       
         var files = e.target.files;
         var formData = new FormData();
         for (var i = 0; i < files.length; i++) {
             formData.append("files", files[i]);
             var extensionFile = files[i].name;
-            var markup = "<tr><td><a data-toggle='modal' data-target='#exampleModal' data-imageid=" + extensionFile + ">" + extensionFile + "</a></td><td><a href='#' onclick='DeleteFile(\"" + extensionFile + "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>";
+            var markup = "<tr><td><a data-toggle='modal' data-target='#exampleModal' data-imageid=" + extensionFile + ">" + extensionFile + "</a></td><td><a href='#' onclick='DeleteFile(this,\"" + extensionFile + "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>";
             $("#ListofFiles tbody").append(markup);
         }
         axios.post("/DocCome/upLoadFiles", formData);
+        var itemlist = [];
+        $("#ListofFiles tr:not(:first)").each(function () {
+            var tdlist = $(this).find("td > a");
+            var Item = $(tdlist[0]).html();
+            itemlist.push(Item);
+        })
 
+        console.log(itemlist);
+
+        $.get('/DocCome/InsertValue', $.param({ data: itemlist }, true), function (data) {
+            alert("success")
+        });
     }
 
     $('#exampleModal').on('show.bs.modal', function (event) {
@@ -236,5 +249,15 @@
         $(this).find('.modal-body input').val(bookId)
         document.getElementById('myImg').src = "/FileUploads/DocCome/" + bookId;
     })
+
+    function DeleteFile(r, extensionFile) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById('ListofFiles').deleteRow(i);
+        $.post("/DocCome/DeleteFile", $.param({ extensionFile: extensionFile }, true));
+    }
+    function insertData() {
+        
+
+    }
 </script>
 

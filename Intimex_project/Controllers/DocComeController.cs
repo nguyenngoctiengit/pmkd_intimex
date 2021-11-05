@@ -19,6 +19,8 @@ namespace Intimex_project.Controllers
     {
         public tradingsystemContext _context = new tradingsystemContext(ConnectionParameter.connectionString);
 
+        List<string> image = new List<string>();
+
         private IHostEnvironment _env;
         public DocComeController(IHostEnvironment env)
         {
@@ -58,34 +60,33 @@ namespace Intimex_project.Controllers
         {
             foreach (var file in files)
             {
-                var FileName = AutoId.AutoIdFileStored("FileStored");
-                string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{FileName + ".JPG"}";
+                string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{file.FileName}";
                 using (FileStream fileStream = System.IO.File.Create(fileName))
                 {
                      file.CopyTo(fileStream);
                      fileStream.Flush();
                 }
+                string newFileName = AutoId.AutoIdFileStored("FileStored");
+                string ext = Path.GetExtension(file.FileName);
+                string newFile = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{newFileName}{ext}";
+                using (FileStream fileStream = System.IO.File.Create(newFile))
+                {
+                    file.CopyTo(fileStream);
+                    fileStream.Flush();
+                }
             }
         }
-        public async Task<IActionResult> add_doccome(Document document,IEnumerable<IFormFile> files)
-        {
-            var maxDocId = _context.Documents.Max(a => a.DocId);
-            foreach(var file in files)
-            {
-                string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{file.FileName}";
-                using (FileStream fileStream = System.IO.File.Create(fileName))
-                {
-                    await file.CopyToAsync(fileStream);
-                    await fileStream.FlushAsync();
-                }
-                DocFileAttach docFileAttach = new DocFileAttach();
-                docFileAttach.DocId = maxDocId + 1;
-                docFileAttach.FileAttach = file.FileName;
-                docFileAttach.FileSource = file.FileName;
-                await _context.DocFileAttaches.AddAsync(docFileAttach);
-                await _context.SaveChangesAsync();
 
-            }
+
+
+        public ActionResult DeleteFile(string extensionFile)
+        {
+            string file = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{extensionFile}";
+            System.IO.File.Delete(file);
+            return Json("success");
+        }
+        public async Task<IActionResult> add_doccome(Document document)
+        {
             Document _document = new Document();
             _document.DateCreate = DateTime.Now;
             _document.DocLever = document.DocLever;
@@ -103,10 +104,36 @@ namespace Intimex_project.Controllers
             _document.Macn = HttpContext.Session.GetString("UnitName");
             await _context.Documents.AddAsync(_document);
             await _context.SaveChangesAsync();
+            var maxDocId = _context.Documents.Max(a => a.DocId);
+            foreach(var item in image)
+            {
+                string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{item}";
+                System.IO.File.Delete(fileName);
+                string newFileName = AutoId.AutoIdFileStored("FileStored");
+                string ext = Path.GetExtension(item);
+                string newFile = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{newFileName}{ext}";
+                DocFileAttach docFileAttach = new DocFileAttach();
+                docFileAttach.DocId = maxDocId;
+                docFileAttach.FileAttach = newFileName + ext;
+                docFileAttach.FileSource = item;
+                await _context.DocFileAttaches.AddAsync(docFileAttach);
+                await _context.SaveChangesAsync();
+            }
+
             TempData["alertMessage"] = "thêm văn bản đến thành công";
             return RedirectToAction("DocCome");
         }
-        
+        [HttpGet]
+        public ActionResult InsertValue(IEnumerable<string[]> data)
+        {
+            foreach (IEnumerable<string> i in data)
+            {
+                image.AddRange(i);
+
+            }
+            return Json("Ok");
+        }
+
 
     }
 }
