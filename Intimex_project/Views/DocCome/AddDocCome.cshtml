@@ -145,7 +145,6 @@
                                     <div class="col-md-1 col-sm-1">
                                         @*@Html.DevExtreme().Button().Icon("fa fa-print")*@
                                     </div>
-                                    <button type="button" onclick="insertData()">Luu du lieu</button>
                                     <div class="col-md-10 col-sm-10">
                                         <table class="table" id="ListofFiles">
                                             <tr>
@@ -230,18 +229,6 @@
             $("#ListofFiles tbody").append(markup);
         }
         axios.post("/DocCome/upLoadFiles", formData);
-        var itemlist = [];
-        $("#ListofFiles tr:not(:first)").each(function () {
-            var tdlist = $(this).find("td > a");
-            var Item = $(tdlist[0]).html();
-            itemlist.push(Item);
-        })
-
-        console.log(itemlist);
-
-        $.get('/DocCome/InsertValue', $.param({ data: itemlist }, true), function (data) {
-            alert("success")
-        });
     }
 
     $('#exampleModal').on('show.bs.modal', function (event) {
@@ -254,10 +241,6 @@
         var i = r.parentNode.parentNode.rowIndex;
         document.getElementById('ListofFiles').deleteRow(i);
         $.post("/DocCome/DeleteFile", $.param({ extensionFile: extensionFile }, true));
-    }
-    function insertData() {
-        
-
     }
 </script>
 

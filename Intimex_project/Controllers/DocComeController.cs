@@ -1,4 +1,5 @@
 ﻿using Application.AutoId;
+using Application.DataLog;
 using Application.Parameter;
 using Data.Models.Trading_system;
 using DevExtreme.AspNet.Data;
@@ -6,8 +7,11 @@ using DevExtreme.AspNet.Mvc;
 using DevExtreme.AspNet.Mvc.FileManagement;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,8 +22,7 @@ namespace Intimex_project.Controllers
     public class DocComeController : Controller
     {
         public tradingsystemContext _context = new tradingsystemContext(ConnectionParameter.connectionString);
-
-        List<string> image = new List<string>();
+        public static List<DocFileAttach> docFiles { get; set; } = new List<DocFileAttach>();
 
         private IHostEnvironment _env;
         public DocComeController(IHostEnvironment env)
@@ -55,35 +58,12 @@ namespace Intimex_project.Controllers
         {
             return View("AddDocCome");
         }
-        [HttpPost]
-        public void upLoadFiles(IEnumerable<IFormFile> files)
-        {
-            foreach (var file in files)
-            {
-                string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{file.FileName}";
-                using (FileStream fileStream = System.IO.File.Create(fileName))
-                {
-                     file.CopyTo(fileStream);
-                     fileStream.Flush();
-                }
-                string newFileName = AutoId.AutoIdFileStored("FileStored");
-                string ext = Path.GetExtension(file.FileName);
-                string newFile = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{newFileName}{ext}";
-                using (FileStream fileStream = System.IO.File.Create(newFile))
-                {
-                    file.CopyTo(fileStream);
-                    fileStream.Flush();
-                }
-            }
-        }
 
-
-
-        public ActionResult DeleteFile(string extensionFile)
+        public void DeleteFile(string extensionFile)
         {
             string file = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{extensionFile}";
             System.IO.File.Delete(file);
-            return Json("success");
+            docFiles.RemoveAll(x => x.FileSource == extensionFile);
         }
         public async Task<IActionResult> add_doccome(Document document)
         {
@@ -105,35 +85,34 @@ namespace Intimex_project.Controllers
             await _context.Documents.AddAsync(_document);
             await _context.SaveChangesAsync();
             var maxDocId = _context.Documents.Max(a => a.DocId);
-            foreach(var item in image)
+            foreach(var item in docFiles)
             {
-                string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{item}";
+                string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{item.FileSource}";
                 System.IO.File.Delete(fileName);
-                string newFileName = AutoId.AutoIdFileStored("FileStored");
-                string ext = Path.GetExtension(item);
-                string newFile = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{newFileName}{ext}";
                 DocFileAttach docFileAttach = new DocFileAttach();
                 docFileAttach.DocId = maxDocId;
-                docFileAttach.FileAttach = newFileName + ext;
-                docFileAttach.FileSource = item;
+                docFileAttach.FileAttach = item.FileAttach;
+                docFileAttach.FileSource = item.FileSource;
                 await _context.DocFileAttaches.AddAsync(docFileAttach);
                 await _context.SaveChangesAsync();
+               
             }
-
-            TempData["alertMessage"] = "thêm văn bản đến thành công";
+            TempData["alertMessage"] = "Thêm văn bản đến thành công";
             return RedirectToAction("DocCome");
         }
-        [HttpGet]
-        public ActionResult InsertValue(IEnumerable<string[]> data)
+        [HttpDelete]
+        public async Task<IActionResult> Delete(string key)
         {
-            foreach (IEnumerable<string> i in data)
+            var model = await _context.Documents.FirstOrDefaultAsync(item =>
+                            item.DocId == long.Parse(key));
+            if (_context.DocProcesses.Any(a => a.DocId == model.DocId))
             {
-                image.AddRange(i);
-
+                return BadRequest("Không thể xóa công văn đã gửi");
             }
-            return Json("Ok");
+            _context.Documents.Remove(model);
+            await _context.SaveChangesAsync();
+            var aaaa = UpdateDataLog.DisplayStates(_context.ChangeTracker.Entries());
+            return Ok();
         }
-
-
     }
 }
