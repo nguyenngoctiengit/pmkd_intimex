@@ -27,9 +27,9 @@ namespace Application.DataLog
             _context.EditDataLogs.Add(dataLog);
             _context.SaveChanges();
         }
-        public static string DisplayStates(IEnumerable<EntityEntry> entities)
+        public static string DisplayStates(tradingsystemContext context)
         {
-            foreach(var entry in entities)
+            foreach(EntityEntry entry in context.ChangeTracker.Entries())
             {
                 return entry.State.ToString();
             }

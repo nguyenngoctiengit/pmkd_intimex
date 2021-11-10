@@ -57,3 +57,4 @@ C:\Users\User\Desktop\project_intimex\Application\obj\Debug\net5.0\Application.c
 C:\Users\User\Desktop\project_intimex\Application\obj\Debug\net5.0\Application.dll
 C:\Users\User\Desktop\project_intimex\Application\obj\Debug\net5.0\ref\Application.dll
 C:\Users\User\Desktop\project_intimex\Application\obj\Debug\net5.0\Application.pdb
+C:\Users\User\Desktop\project_intimex\Application\obj\Debug\net5.0\Application.csproj.CopyComplete

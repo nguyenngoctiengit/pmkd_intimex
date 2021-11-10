@@ -110,6 +110,8 @@
 
                                         columns.Add().DataField("IsChuyen").Caption("Đã chuyển");
 
+                                        columns.Add().DataField("DateCreate").Visible(false).SortOrder(SortOrder.Desc);
+
                                     })
                                     .Editing(e => e
                                         .Mode(GridEditMode.Popup)
@@ -122,6 +124,10 @@
                                         md.Template(new TemplateName("gridContainer-details"));
 
                                     })
+                                    
+                                    .HoverStateEnabled(true)
+                                    .ShowBorders(true)
+                                    .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
                                     .OnToolbarPreparing("toolbar_DocCome")
                                     .Export(e => e.Enabled(true))
                                     .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
@@ -190,9 +196,68 @@
 </div>
 <script src="~/js/js_create/doccome.js"></script>
 <script>
+    function getDataGridInstance() {
+        return $("#gridContainer").dxDataGrid("instance");
+    }
     function image(data) {
         document.getElementById('img_id').src = '/FileUploads/DocCome/' + data.value;
         $('#Popup_img').modal('show');
+    }
+    function toolbar_DocCome(e) {
+        e.toolbarOptions.items.unshift({
+            location: "after",
+            widget: "dxButton",
+            options: {
+                icon: "add",
+                onClick: function () {
+                    location.href = "/doccome/AddDocCome";
+                }
+            }
+        });
+        e.toolbarOptions.items.unshift({
+            location: "after",
+            widget: "dxButton",
+            options: {
+                icon: "edit",
+                onClick: function () {
+                    getDataGridInstance().getSelectedRowsData().done(function (rowData) {
+                        for (var i = 0; i < rowData.length; i++) {
+                            var id = rowData[i].DocId;
+                            if (id) {
+                                location.href = "/doccome/editdoccome/" + id;
+                            }
+                            else {
+                                $.notify("please choose the document you want to edit", "error");
+                            }
+                        }
+
+                    })
+                },
+            }
+
+        })
+        e.toolbarOptions.items.unshift({
+            location: "after",
+            widget: "dxButton",
+            options: {
+                text: "Lưu hồ sơ",
+                onClick: function () {
+                    getDataGridInstance().getSelectedRowsData().done(function (rowData) {
+                        for (var i = 0; i < rowData.length; i++) {
+                            var id = rowData[i].DocId;
+                            if (id) {
+                                location.href = "/doccome/addarchive/" + id;
+                            }
+                            else {
+                                $.notify("please choose the document you want to edit", "error");
+                            }
+                        }
+
+                    })
+                },
+            }
+
+        })
     }
 </script>
 <!-- /page content -->

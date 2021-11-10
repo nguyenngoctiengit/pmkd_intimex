@@ -1,8 +1,9 @@
 ﻿
 @{
-    ViewData["Title"] = "AddDocCome";
+    ViewData["Title"] = "EditDocCome";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 @model Data.Models.Trading_system.Document
 <style>
     .custom-file-upload {
@@ -16,11 +17,10 @@
 <div class="right_col" role="main" style="height:800px">
     <div class="">
         <div class="col-md-12 col-sm-12">
-            <form method="post" asp-action="add_doccome" asp-controller="DocCome" enctype="multipart/form-data">
-
+            <form method="post" asp-action="EditDocCome" asp-controller="DocCome" asp-route-id="@ViewBag.DocId" enctype="multipart/form-data">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Thêm<small>văn bản đến</small></h2>
+                        <h2>Edit<small>văn bản đến</small></h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li>
                                 <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -60,18 +60,53 @@
                         {
                             <div class="form-group row">
                                 <div class="form-group col-md-6">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.DocLever)" value="0" checked>
-                                        <label class="form-check-label" for="inlineRadio1">Văn bản thường</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.DocLever)" value="1">
-                                        <label class="form-check-label" for="inlineRadio2">Văn bản khẩn</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.DocLever)" value="2">
-                                        <label class="form-check-label" for="inlineRadio2">Văn bản mật</label>
-                                    </div>
+                                    @{
+                                        if (Model.DocLever == 0)
+                                        {
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.DocLever)" value="0" checked>
+                                                <label class="form-check-label" for="inlineRadio1">Văn bản thường</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.DocLever)" value="1">
+                                                <label class="form-check-label" for="inlineRadio2">Văn bản khẩn</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.DocLever)" value="2">
+                                                <label class="form-check-label" for="inlineRadio2">Văn bản mật</label>
+                                            </div>
+                                        }
+                                        else if (Model.DocLever == 1)
+                                        {
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.DocLever)" value="0">
+                                                <label class="form-check-label" for="inlineRadio1">Văn bản thường</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.DocLever)" value="1" checked>
+                                                <label class="form-check-label" for="inlineRadio2">Văn bản khẩn</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.DocLever)" value="2">
+                                                <label class="form-check-label" for="inlineRadio2">Văn bản mật</label>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.DocLever)" value="0">
+                                                <label class="form-check-label" for="inlineRadio1">Văn bản thường</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.DocLever)" value="1">
+                                                <label class="form-check-label" for="inlineRadio2">Văn bản khẩn</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.DocLever)" value="2" checked>
+                                                <label class="form-check-label" for="inlineRadio2">Văn bản mật</label>
+                                            </div>
+                                        }
+                                    }
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -155,6 +190,21 @@
                                                     Action
                                                 </th>
                                             </tr>
+                                            @{
+                                                foreach (var item in ViewBag.listImage)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <a data-toggle="modal" data-target="#exampleModal" data-imageid="@item.FileAttach">
+                                                                @item.FileAttach
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a href='#' onclick='DeleteFile(this,"@item.FileAttach")'><span class='glyphicon glyphicon-remove red'></span></a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
                                         </table>
                                     </div>
                                 </div>
@@ -219,7 +269,7 @@
 <script type="text/javascript">
     /* event submit form upload*/
     function uploadMultipleFile(e) {
-       
+
         var files = e.target.files;
         var formData = new FormData();
         for (var i = 0; i < files.length; i++) {
@@ -238,14 +288,14 @@
     })
 
     function DeleteFile(r, extensionFile) {
-        var i = r.parentNode.parentNode.rowIndex;
-        document.getElementById('ListofFiles').deleteRow(i);
-        try {
-            $.post("/DocCome/DeleteFile", $.param({ extensionFile: extensionFile }, true));
-        }
-        catch {
-            $.notify("something wrong", "error");
+        var result = confirm("Are you sure you want to delete this file ?");
+        if (result) {
+            var i = r.parentNode.parentNode.rowIndex;
+            document.getElementById('ListofFiles').deleteRow(i);
+            $.post("/DocCome/DeleteFileEdit", $.param({ extensionFile: extensionFile }, true));
         }
     }
 </script>
+
+
 

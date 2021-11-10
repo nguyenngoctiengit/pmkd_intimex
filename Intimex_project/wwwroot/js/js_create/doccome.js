@@ -9,4 +9,15 @@
             }
         }
     });
+    e.toolbarOptions.items.unshift({
+        location: "after",
+        widget: "dxButton",
+        options: {
+            icon: "edit",
+            onClick: function () {
+                alert(1);
+            }
+        }
+
+    })
 }
