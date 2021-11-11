@@ -62,7 +62,7 @@
                     <div class="x_content">
                         <div class="row">
                             <div class="col-sm-12">
-                                <input type="text" id="DocId" value="@ViewBag.DocId">
+                                <input type="text" id="DocId" value="@ViewBag.DocId" hidden>
                                 <div class="card-box table-responsive">
                                     @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Archive>().ID("dataGrib_archive")
                                     .DataSource(ds => ds.Mvc()
@@ -126,13 +126,16 @@
                         rowData.forEach(element => { array.push(element.ArchivesId) })
                         console.log(array);
                         $.ajax({
-                            type: 'GET',
+                            traditional: true,
+                            type: 'POST',
                             url: '/DocCome/addarchive1',
-                            contentType: 'application/json; charset=utf-8',
-                            data: { array: JSON.stringify(array), DocId: DocId },
                             dataType: 'JSON',
-                            success: function () {
-                                alert(success);
+                            data: { array: array, DocId: DocId },
+                            success: function (data) {
+                                window.location.href = data
+                            },
+                            error: function (request) {
+                                $.notify("Something went wrong!!", "error");
                             }
                         })
                     })

@@ -216,26 +216,44 @@ namespace Intimex_project.Controllers
                               };
             return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
         }
-        [HttpGet]
-        public IActionResult addarchive1(IEnumerable<long[]>  array,long DocId)
+        [HttpPost]
+        public ActionResult addarchive1(string[] array, long DocId)
         {
-            List<long> listArchive = new List<long>();
-            foreach (IEnumerable<long> i in array)
+            List<string> listArchive = new List<string>();
+            foreach (string i in array)
             {
-                
-                listArchive.AddRange(i);
-                
+
+                listArchive.Add(i);
+
             }
-            for (var i = 0;i < listArchive.Count(); i++)
+            for (var i = 0; i < listArchive.Count(); i++)
             {
                 DocArchive doc = new DocArchive();
                 doc.DocId = DocId;
-                doc.ArchivesId = listArchive[i];
+                doc.ArchivesId = long.Parse(listArchive[i]);
                 _context.DocArchives.Add(doc);
                 _context.SaveChanges();
             }
-            TempData["alertMessage"] = "Chỉnh sửa văn bản đến thành công";
-            return RedirectToAction("DocCome");
+            TempData["alertMessage"] = "Lưu văn bản đến thành công";
+            return Json(Url.Action("DocCome", "Doccome"));
         }
+        public IActionResult DocTransfer(long id)
+        {
+            ViewBag.DocId = id;
+            return View("DocTransfer");
+        }
+/*        [HttpGet]
+        public async Task<IActionResult> GetUserRight(DataSourceLoadOptions loadOptions)
+        {
+
+            var item_return = from a in _context.UserRights select new
+            {
+                a.UserName1,
+                a.FullName1,
+
+            }
+            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+        }*/
+
     }
 }
