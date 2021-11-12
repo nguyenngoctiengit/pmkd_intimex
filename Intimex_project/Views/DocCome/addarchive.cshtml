@@ -124,7 +124,6 @@
                     getDataGridInstance().getSelectedRowsData().done(function (rowData) {
                         var array = []
                         rowData.forEach(element => { array.push(element.ArchivesId) })
-                        console.log(array);
                         $.ajax({
                             traditional: true,
                             type: 'POST',

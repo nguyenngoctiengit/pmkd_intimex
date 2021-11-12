@@ -26,6 +26,8 @@ namespace Intimex_project.Controllers
 
         public static List<DocFileAttach> docFilesEdit { get; set; } = new List<DocFileAttach>();
 
+        public static List<string> ListReciever { get; set; } = new List<string>();
+
         private IHostEnvironment _env;
         public DocComeController(IHostEnvironment env)
         {
@@ -39,7 +41,7 @@ namespace Intimex_project.Controllers
         [HttpGet]
         public async Task<IActionResult>  Get(DataSourceLoadOptions loadOptions)
         {
-            var item_return = (from a in _context.Documents
+            var item_return = (from a in _context.Documents where a.DocStyleId == 3
                                select new
                                {
                                    DateCreate = a.DateCreate,
@@ -126,7 +128,8 @@ namespace Intimex_project.Controllers
             _document.Contents = document.Contents;
             _document.Note = document.Note;
             _document.Singer = "";
-            _document.UserCreate = HttpContext.Session.GetString("userId");
+            _document.DocStyleId = 3;
+            _document.UserCreate = HttpContext.Session.GetString("UserName");
             _document.Macn = HttpContext.Session.GetString("UnitName");
             await _context.Documents.AddAsync(_document);
             await _context.SaveChangesAsync();
@@ -155,7 +158,8 @@ namespace Intimex_project.Controllers
             {
                 return BadRequest("Không thể xóa công văn đã gửi");
             }
-            _context.Documents.Remove(model);
+            model.IsDelete = true;
+            _context.Documents.Update(model);
             await _context.SaveChangesAsync();
             return Ok();
         }
@@ -239,21 +243,58 @@ namespace Intimex_project.Controllers
         }
         public IActionResult DocTransfer(long id)
         {
+            var document = _context.Documents.Where(a => a.DocId == id).FirstOrDefault();
+            ViewBag.NumberSign = document.NumberSign;
+            ViewBag.DocDate = document.DocDate;
+            ViewBag.DocType = _context.DocTypes.Where(a => a.DocTypeId == document.DocTypeId).Select(a => a.TypeName).FirstOrDefault();
+            ViewBag.Contents = document.Contents;
             ViewBag.DocId = id;
             return View("DocTransfer");
         }
-/*        [HttpGet]
+        [HttpGet]
         public async Task<IActionResult> GetUserRight(DataSourceLoadOptions loadOptions)
         {
 
-            var item_return = from a in _context.UserRights select new
-            {
-                a.UserName1,
-                a.FullName1,
-
-            }
+            var item_return = from a in _context.UserRights
+                              join b in _context.Departments on a.Department equals b.DepartmentId
+                              join c in _context.Branches on b.BranchId equals c.Id
+                              select new
+                              {
+                                  FullName1 = a.FullName1,
+                                  UserName1 = a.UserName1,
+                                  BranchId = b.DepartmentName,
+                                  NameV = c.NameV,
+                              };
             return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
-        }*/
-
+        }
+        [HttpPost]
+        public ActionResult update_ListReciever(string[] array_ListReciever)
+        {
+            foreach (string i in array_ListReciever)
+            {
+                ListReciever.Add(i);
+            }
+            return Json("Update success");
+        }
+        [HttpPost]
+        public async Task<IActionResult> DocTransfer(DocProcess docProcess,long id)
+        {
+            DocProcess doc = new DocProcess();
+            for (var i = 0;i< ListReciever.Count; i++)
+            {
+                doc.DocProcessId = 0;
+                doc.UserSend = HttpContext.Session.GetString("UserName");
+                doc.DocId = id;
+                doc.ObjectProcess = ListReciever[i];
+                doc.DateLimit = docProcess.DateLimit;
+                doc.DateReceive = docProcess.DateLimit;
+                doc.StatusProcess = 1;
+                doc.Command = docProcess.Command == null ? "" : docProcess.Command;
+                await _context.DocProcesses.AddAsync(doc);
+                await _context.SaveChangesAsync();
+            }
+            TempData["alertMessage"] = "Gửi văn bản đến thành công";
+            return RedirectToAction("DocCome");
+        }
     }
 }

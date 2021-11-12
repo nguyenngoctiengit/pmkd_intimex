@@ -12,7 +12,7 @@
         display: table; /* This is important */
         overflow-y: auto;
         overflow-x: auto;
-        width: 1000px;
+        width: auto;
         min-width: 300px;
     }
 </style>
@@ -45,117 +45,120 @@
         <div class="clearfix"></div>
         <div class="row" style="display: block;">
             <div class="col-md-12 col-sm-12 ">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Văn bản đến</h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li>
-                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Settings 1</a>
-                                    <a class="dropdown-item" href="#">Settings 2</a>
-                                </div>
-                            </li>
-                            <li>
-                                <a class="close-link"><i class="fa fa-close"></i></a>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                        <div class="form-group row">
-                            <div class="form-group col-md-12">
-                                <label class="col-form-label col-md-2 col-sm-2" style="width:100%">Số/ký hiệu VB</label>
-                                <div class="col-md-2 col-sm-2">
-                                    @(Html.DevExtreme().TextBox())
-                                </div>
-                                <label class="col-form-label col-md-1 col-sm-1">Ngày vb</label>
-                                <div class="col-md-3 col-sm-3">
-                                    @Html.DevExtreme().DateBox()
-                                </div>
-                                <label class="col-form-label col-md-1 col-sm-1">Loại VB</label>
-                                <div class="col-md-3 col-sm-3">
-                                    @Html.DevExtreme().TextBox()
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row" style="margin-bottom:0px">
-                            <div class="form-group col-md-12">
-                                <label class="col-form-label col-md-12 col-sm-12">Tên và loại trích yếu văn bản</label>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-12 col-sm-12">
-                                @(Html.DevExtreme().TextArea())
-                            </div>
-                        </div>
-                        <div class="form-group row" style="margin-bottom:0px">
-                            <div class="form-group col-md-12">
-                                <label class="col-form-label col-md-12 col-sm-12">Phân phối VB</label>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="form-group col-md-12">
-                                <label class="col-form-label col-md-3 col-sm-3">Thời gian giải quyết</label>
-                                <div class="col-md-3 col-sm-3">
-                                    @(Html.DevExtreme().DateBoxFor(m => m.DateLimit))
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row" style="margin-bottom:0px">
-                            <div class="form-group col-md-12">
-                                <label class="col-form-label col-md-12 col-sm-12">Ý kiến</label>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-12 col-sm-12">
-                                @(Html.DevExtreme().TextBoxFor(m => m.Command))
-                            </div>
-                        </div>
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" style="display:table">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title" id="myModalLabel">Chọn nhân viên</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <form method="post" asp-action="DocTransfer" asp-controller="DocCome" asp-route-id="@ViewBag.DocId">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Văn bản đến</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Settings 1</a>
+                                        <a class="dropdown-item" href="#">Settings 2</a>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="form-group row">
-                                            <div class="form-group col-md-12">
-                                                @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.NsDmcbnv>()
+                                </li>
+                                <li>
+                                    <a class="close-link"><i class="fa fa-close"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            @using (Html.DevExtreme().ValidationGroup())
+                            {
+                                <div class="form-group row">
+                                    <div class="form-group col-md-12">
+                                        <label class="col-form-label col-md-2 col-sm-2" style="width:100%">Số/ký hiệu VB</label>
+                                        <div class="col-md-2 col-sm-2">
+                                            @(Html.DevExtreme().TextBox().Disabled(true).Value(ViewBag.NumberSign))
+                                        </div>
+                                        <label class="col-form-label col-md-1 col-sm-1">Ngày vb</label>
+                                        <div class="col-md-3 col-sm-3">
+                                            @Html.DevExtreme().DateBox().Disabled(true).Value(ViewBag.DocDate)
+                                        </div>
+                                        <label class="col-form-label col-md-1 col-sm-1">Loại VB</label>
+                                        <div class="col-md-3 col-sm-3">
+                                            @Html.DevExtreme().TextBox().Disabled(true).Value(ViewBag.DocType)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row" style="margin-bottom:0px">
+                                    <div class="form-group col-md-12">
+                                        <label class="col-form-label col-md-12 col-sm-12">Tên và loại trích yếu văn bản</label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-12 col-sm-12">
+                                        @(Html.DevExtreme().TextArea().Disabled(true).Value(ViewBag.Contents))
+                                    </div>
+                                </div>
+                                <div class="form-group row" style="margin-bottom:0px">
+                                    <div class="form-group col-md-12">
+                                        <label class="col-form-label col-md-12 col-sm-12">Phân phối VB</label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="form-group col-md-12">
+                                        <label class="col-form-label col-md-2 col-sm-2">Thời gian giải quyết</label>
+                                        <div class="col-md-3 col-sm-3">
+                                            @(Html.DevExtreme().DateBoxFor(m => m.DateLimit))
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row" style="margin-bottom:0px">
+                                    <div class="form-group col-md-12">
+                                        <label class="col-form-label col-md-12 col-sm-12">Ý kiến</label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-12 col-sm-12">
+                                        @(Html.DevExtreme().TextBoxFor(m => m.Command))
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" style="display:table">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="myModalLabel">Chọn nhân viên</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group row">
+                                                    <div class="form-group col-md-12">
+                                                        @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.UserRight>()
                                                     .ID("grib_dsnv")
-                                                    .DataSource(d => d.Mvc().LoadAction("getCbnv")
-                                                                            .Controller("quanlinhansu")
-                                                                            .Key("IdNs"))
+                                                    .DataSource(d => d.Mvc().LoadAction("GetUserRight")
+                                                                            .Controller("DocCome")
+                                                                            .Key("UserName1"))
                                                     .RemoteOperations(true)
                                                     .Columns(colunms => {
 
-                                                        colunms.AddFor(m => m.TenCbNv).Caption("Tên nhân viên").Fixed(true);
+                                                        colunms.AddFor(m => m.FullName1).Caption("Tên nhân viên").Fixed(true);
 
-                                                        colunms.AddFor(m => m.MaBp).Caption("Bộ phận").Lookup(l => l.DataSource(d => d.Mvc()
+                                                        colunms.Add().DataField("BranchId").Caption("Bộ phận")@*.Lookup(l => l.DataSource(d => d.Mvc()
                                                                                                                                         .Controller("lookup")
                                                                                                                                         .LoadAction("getbophan"))
                                                                                                                         .ValueExpr("DepartmentCode")
-                                                                                                                        .DisplayExpr("DepartmentName"));
+                                                                                                                        .DisplayExpr("DepartmentName"))*@;
 
-                                                        colunms.AddFor(m => m.Macn).Caption("Chi nhánh").Lookup(l => l.DataSource(d => d.Mvc()
+                                                        colunms.Add().DataField("NameV").Caption("Chi nhánh")@*.Lookup(l => l.DataSource(d => d.Mvc()
                                                                                                                                         .Controller("lookup")
                                                                                                                                         .LoadAction("getchinhanh"))
                                                                                                                         .ValueExpr("Id")
-                                                                                                                        .DisplayExpr("NameV")).Width(400);
+                                                                                                                        .DisplayExpr("NameV")).Width(400)*@;
 
-                                                        colunms.AddFor(m => m.MaCbNv).Caption("Mã nhân viên").Fixed(true).Visible(false);
+                                                        colunms.AddFor(m => m.UserName1).Caption("Mã nhân viên").Fixed(true).Visible(false);
 
-                                                        
 
-                                                        
+
+
 
                                                     })
                                                     .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
-                                                    .Selection(s => s.Mode(SelectionMode.Multiple))
+                                                    .Selection(s => s.Mode(SelectionMode.Multiple).Deferred(true))
                                                     .HoverStateEnabled(true)
                                                     .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
                                                     .HeaderFilter(header => header.Visible(true))
@@ -175,37 +178,50 @@
                                                         paper.ShowInfo(true);
                                                     })
                                                 )
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" onclick="ChooseReceiver()">Chọn</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" onclick="ChooseReceiver()">Chọn</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="form-group col-md-12">
+                                        <div class="col-md-10 col-sm-10">
+                                            <table class="table" id="ListReciever">
+                                                <tr>
+                                                    <th style="display:none">
+                                                        Mã người nhận
+                                                    </th>
+                                                    <th>
+                                                        Người nhận
+                                                    </th>
+                                                    <th>
+                                                        Action
+                                                    </th>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-2 col-sm-2">
+                                            @(Html.DevExtreme().Button().Text("Người nhận").OnClick("OpenPopUp_Receiver"))
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="form-group col-md-12">
-                                <div class="col-md-10 col-sm-10">
-                                    <table class="table" id="ListofFiles">
-                                        <tr>
-                                            <th>
-                                                Files
-                                            </th>
-                                            <th>
-                                                Action
-                                            </th>
-                                        </tr>
-                                    </table>
+                                <div class="ln_solid"></div>
+                                <div class="form-group row">
+                                    <div class="col-md-9 col-sm-9  offset-md-5">
+                                        <button type="submit" class="btn btn-success" disabled id="button_send">Lưu</button>
+                                        <button type="button" class="btn btn-primary" onclick="update_ListReciever()">Cập nhật</button>
+                                    </div>
                                 </div>
-                                <div class="col-md-2 col-sm-2">
-                                    @(Html.DevExtreme().Button().Text("Người nhận").OnClick("OpenPopUp_Receiver"))
-                                </div>
-                            </div>
+                            }
+
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -223,22 +239,41 @@
     function ChooseReceiver() {
         getDataGridInstance().getSelectedRowsData().done(function (rowData) {
             var array = []
-            rowData.forEach(element => { array.push(element.ArchivesId) })
-            console.log(array);
+            rowData.forEach(element => { array.push(element) })
+            for (var i = 0; i < array.length; i++) {
+                var markup = "<tr><td style='display: none'>" + array[i].UserName1 + "</td><td>" + array[i].FullName1 + " - " + array[i].BranchId + "</td><td><a href='#' onclick='DeleteFile()'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>";
+                $("#ListReciever tbody").append(markup);
+            }
+            $('#myModal').modal('toggle');
+        })
+    }
+    function update_ListReciever() {
+        var array_ListReciever = [];
+        var ListReciever = [];
+        $("#ListReciever tr:not(:first)").each(function () {
+            array_ListReciever.push($(this).find("td:first").text()); //put elements into array
+            array_ListReciever.forEach(element => { ListReciever.push(element.UserName1) })
+        });
+        console.log(array_ListReciever);
+        if (array_ListReciever.length != 0) {
             $.ajax({
                 traditional: true,
+                dataType: 'json',
                 type: 'POST',
-                url: '/DocCome/addarchive1',
-                dataType: 'JSON',
-                data: { array: array, DocId: DocId },
+                url: '/DocCome/update_ListReciever',
+                data: { array_ListReciever: array_ListReciever},
                 success: function (data) {
-                    window.location.href = data
+                    $.notify(data, "success");
+                    document.getElementById("button_send").disabled = false;
                 },
-                error: function (request) {
-                    $.notify("Something went wrong!!", "error");
+                error: function () {
+                    $.notify("Something went wrong", "error");
                 }
             })
-        })
+        }
+        else if (array_ListReciever.length == 0) {
+            $.notify("please choose reciever!", "error");
+        }
     }
 </script>
 <!-- /page content -->
