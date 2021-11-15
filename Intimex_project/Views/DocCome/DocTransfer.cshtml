@@ -96,8 +96,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group row" style="margin-bottom:0px">
-                                    <div class="form-group col-md-12">
+                                    <div class="form-group col-md-2">
                                         <label class="col-form-label col-md-12 col-sm-12">Phân phối VB</label>
+                                    </div>
+                                    <div class="form-group col-md-10">
+                                        <div class="ln_solid"></div>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -254,7 +257,6 @@
             array_ListReciever.push($(this).find("td:first").text()); //put elements into array
             array_ListReciever.forEach(element => { ListReciever.push(element.UserName1) })
         });
-        console.log(array_ListReciever);
         if (array_ListReciever.length != 0) {
             $.ajax({
                 traditional: true,

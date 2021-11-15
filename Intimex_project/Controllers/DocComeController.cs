@@ -55,7 +55,6 @@ namespace Intimex_project.Controllers
                                    DocPlaceId = a.DocPlaceId,
                                    DocLever = a.DocLever,
                                    IsChuyen = _context.DocProcesses.Count(b => b.DocId == a.DocId) > 0 ? true : false,
-                                   Image = _context.DocFileAttaches.Where(b => b.DocId == a.DocId).Select(b => b.FileAttach).ToList()
                                }).OrderByDescending(a => a.DocDate);
             return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
         }

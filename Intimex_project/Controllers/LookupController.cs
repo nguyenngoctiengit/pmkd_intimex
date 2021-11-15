@@ -318,5 +318,12 @@ namespace Intimex_project.Controllers
         {
             return DataSourceLoader.Load(_context.DocFileAttaches.Where(a => a.DocId == DocId), options);
         }
+        [HttpGet]
+        public object getSigner(DataSourceLoadOptions options)
+        {
+            var item_signer = from a in _context.UserRights where a.Signer == true && a.UnitCode == HttpContext.Session.GetString("UnitName")
+                              select new { a.UserName1, a.FullName1 };
+            return DataSourceLoader.Load(item_signer,options);
+        }
     }
 }
