@@ -244,7 +244,7 @@
             var array = []
             rowData.forEach(element => { array.push(element) })
             for (var i = 0; i < array.length; i++) {
-                var markup = "<tr><td style='display: none'>" + array[i].UserName1 + "</td><td>" + array[i].FullName1 + " - " + array[i].BranchId + "</td><td><a href='#' onclick='DeleteFile()'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>";
+                var markup = "<tr><td style='display: none'>" + array[i].UserName1 + "</td><td>" + array[i].FullName1 + " - " + array[i].BranchId + "</td><td><a href='#' onclick='DeleteReceiver(this,\"" + array[i].UserName1 + "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>";
                 $("#ListReciever tbody").append(markup);
             }
             $('#myModal').modal('toggle');
@@ -276,6 +276,11 @@
         else if (array_ListReciever.length == 0) {
             $.notify("please choose reciever!", "error");
         }
+    }
+    function DeleteReceiver(r, id) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById('ListReciever').deleteRow(i);
+        $.post("/DocCome/DeleteReceiver", $.param({ id: id }, true));
     }
 </script>
 <!-- /page content -->

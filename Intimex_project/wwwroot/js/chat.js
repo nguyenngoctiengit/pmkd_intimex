@@ -92,7 +92,7 @@ var UploadFile = function (e) {
     var receiver = document.getElementById("receiverInput").value;
     var message = extensionFile;
     var allowedFiles = ["docx", "jpg", "jpeg", "gif", "png", "doc", "pdf", "xls",
-        "xlsx", "xlsm", "pptx", "pptm", "ppt", "txt", "mp3", "mp4", "rar", "zip"];
+        "xlsx", "xlsm", "pptx", "pptm", "ppt", "txt", "mp3", "mp4", "rar", "zip","tif"];
     var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
     var file1 = document.getElementById('fileUpload');
     var filesize = file1.files[0].size;
@@ -105,7 +105,8 @@ var UploadFile = function (e) {
         document.getElementById('fileUpload').value = null;
         return false;
     }
-    else {
+    else
+    {
         var file = e.target.files[0];
         var formData = new FormData();
         var newFileName = randomString(6) + "_" + extensionFile;

@@ -295,5 +295,35 @@ namespace Intimex_project.Controllers
             TempData["alertMessage"] = "Gửi văn bản đến thành công";
             return RedirectToAction("DocCome");
         }
+
+        [HttpPost]
+        public void DeleteReceiver(string id)
+        {
+            for(var i = 0;i < ListReciever.Count; i++)
+            {
+                if (ListReciever[i] == id)
+                {
+                    ListReciever.Remove(ListReciever[i]);
+                }
+            }
+        }
+        public async Task<IActionResult> DownloadDocument(string id)
+        {
+            var filename = id;
+            if (filename == null)
+                return Content("filename not present");
+
+            var path = Path.Combine(
+                           Directory.GetCurrentDirectory(),
+                           "wwwroot/FileUploads/DocCome", filename);
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            return File(memory, "APPLICATION/octet-stream", Path.GetFileName(path));
+        }
     }
 }

@@ -101,7 +101,7 @@ namespace Intimex_project.Controllers
             _document.NumberSign = document.NumberSign;
             _document.DateCome = DateTime.Now;
             _document.DocTypeId = document.DocTypeId;
-            _document.DocPlaceId = document.DocPlaceId;
+            _document.DocPlaceId = document.DocStyleId == 1 ? document.DocPlaceId : 0;
             _document.Contents = document.Contents;
             _document.Note = document.Note;
             _document.Singer = document.Singer;
@@ -126,6 +126,60 @@ namespace Intimex_project.Controllers
             }
             TempData["alertMessage"] = "Thêm văn bản đến thành công";
             return RedirectToAction("DocGo");
+        }
+        public IActionResult EditDocGo(string id)
+        {
+            ViewBag.DocId = id;
+            ViewBag.listImage = _context.DocFileAttaches.Where(a => a.DocId == long.Parse(id)).ToList();
+            var model = _context.Documents.Where(a => a.DocId == long.Parse(id)).FirstOrDefault();
+            return View("EditDocGo", model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditDocGo(string id, Document document)
+        {
+            var _document = _context.Documents.FirstOrDefault(a => a.DocId == long.Parse(id));
+            _document.DocLever = document.DocLever;
+            _document.DocDate = document.DocDate;
+            _document.NumberOfPage = document.NumberOfPage;
+            _document.NumberSign = document.NumberSign;
+            _document.DateCome = document.DateCome;
+            _document.DocTypeId = document.DocTypeId;
+            _document.DocPlaceId = document.DocStyleId == 1 ? document.DocPlaceId : 0;
+            _document.Contents = document.Contents;
+            _document.Note = document.Note;
+            _context.Documents.Update(_document);
+            await _context.SaveChangesAsync();
+            foreach (var item in docFilesEdit)
+            {
+                DocFileAttach docFileAttach = new DocFileAttach();
+                docFileAttach.DocId = long.Parse(id);
+                docFileAttach.FileAttach = item.FileAttach;
+                docFileAttach.FileSource = item.FileSource;
+                await _context.DocFileAttaches.AddAsync(docFileAttach);
+                await _context.SaveChangesAsync();
+
+            }
+            docFilesEdit.Clear();
+            TempData["alertMessage"] = "Chỉnh sửa văn bản đến thành công";
+            return RedirectToAction("DocGo");
+        }
+        public void DeleteFileEdit(string extensionFile)
+        {
+            if (extensionFile.StartsWith("F000"))
+            {
+                string file = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocGo\\{extensionFile}";
+                System.IO.File.Delete(file);
+                var delete_item = _context.DocFileAttaches.FirstOrDefault(a => a.FileAttach == extensionFile);
+                _context.DocFileAttaches.Remove(delete_item);
+                _context.SaveChanges();
+            }
+            else
+            {
+                string file = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocGo\\{extensionFile}";
+                System.IO.File.Delete(file);
+                docFilesEdit.RemoveAll(x => x.FileSource == extensionFile);
+            }
+
         }
     }
 }

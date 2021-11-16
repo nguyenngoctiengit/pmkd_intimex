@@ -200,8 +200,20 @@
         return $("#gridContainer").dxDataGrid("instance");
     }
     function image(data) {
-        document.getElementById('img_id').src = '/FileUploads/DocCome/' + data.value;
-        $('#Popup_img').modal('show');
+        var id = data.value;
+        var extensionFile = ["jpg", "jpeg","png"];
+        var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + extensionFile.join('|') + ")$");
+        try {
+            if (!regex.test(id.toLowerCase())) {
+                location.href = '/DocCome/DownloadDocument/' + id;
+            } else {
+                document.getElementById('img_id').src = '/FileUploads/DocCome/' + data.value;
+                $('#Popup_img').modal('show');
+            }
+        }
+        catch {
+            $.notify("something is wrong!", "error");
+        }
     }
     function toolbar_DocCome(e) {
         e.toolbarOptions.items.unshift({
