@@ -303,6 +303,8 @@ namespace Data.Models.Trading_system
         public virtual DbSet<XuatKhoChiTiet> XuatKhoChiTiets { get; set; }
         public virtual DbSet<Nhom_hang_hoa> Nhom_hang_hoas { get; set; }
 
+        public virtual DbSet<SP_GetArchives> SP_GetArchives { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

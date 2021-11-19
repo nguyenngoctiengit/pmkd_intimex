@@ -247,7 +247,7 @@
                         for (var i = 0; i < rowData.length; i++) {
                             var id = rowData[i].DocId;
                             if (id) {
-                                location.href = "/doccome/addarchive/" + id;
+                                location.href = "/DocCome/AddArchive/" + id;
                             }
                             else {
                                 $.notify("please choose the document you want to edit", "error");
@@ -263,7 +263,7 @@
             location: "after",
             widget: "dxButton",
             options: {
-                text: "Chuyển VB",
+                text: "Gửi nội bộ",
                 onClick: function () {
                     getDataGridInstance().getSelectedRowsData().done(function (rowData) {
                         for (var i = 0; i < rowData.length; i++) {

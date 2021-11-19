@@ -41,7 +41,7 @@ namespace Intimex_project.Controllers
         [HttpGet]
         public async Task<IActionResult>  Get(DataSourceLoadOptions loadOptions)
         {
-            var item_return = (from a in _context.Documents where a.DocStyleId == 3
+            var item_return = (from a in _context.Documents where a.DocStyleId == 3 && a.IsDelete == false
                                select new
                                {
                                    DateCreate = a.DateCreate,
@@ -145,6 +145,8 @@ namespace Intimex_project.Controllers
                 await _context.SaveChangesAsync();
                
             }
+            docFiles.Clear();
+            docFilesEdit.Clear();
             TempData["alertMessage"] = "Thêm văn bản đến thành công";
             return RedirectToAction("DocCome");
         }
@@ -195,6 +197,8 @@ namespace Intimex_project.Controllers
                 await _context.SaveChangesAsync();
 
             }
+            docFiles.Clear();
+            docFilesEdit.Clear();
             TempData["alertMessage"] = "Chỉnh sửa văn bản đến thành công";
             return RedirectToAction("DocCome");
         }
@@ -237,6 +241,7 @@ namespace Intimex_project.Controllers
                 _context.DocArchives.Add(doc);
                 _context.SaveChanges();
             }
+            listArchive.Clear();
             TempData["alertMessage"] = "Lưu văn bản đến thành công";
             return Json(Url.Action("DocCome", "Doccome"));
         }
@@ -292,8 +297,19 @@ namespace Intimex_project.Controllers
                 await _context.DocProcesses.AddAsync(doc);
                 await _context.SaveChangesAsync();
             }
-            TempData["alertMessage"] = "Gửi văn bản đến thành công";
-            return RedirectToAction("DocCome");
+            ListReciever.Clear();
+            var docStyle = _context.Documents.Where(a => a.DocId == id).Select(a => a.DocStyleId).FirstOrDefault();
+            if (docStyle == 3)
+            {
+                TempData["alertMessage"] = "Gửi văn bản đến thành công";
+                return RedirectToAction("DocCome");
+            }
+            else
+            {
+                TempData["alertMessage"] = "Gửi văn bản đi thành công";
+                return RedirectToAction("DocGo","DocGo");
+            }
+            
         }
 
         [HttpPost]

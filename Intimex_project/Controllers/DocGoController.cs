@@ -5,6 +5,7 @@ using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -42,7 +43,7 @@ namespace Intimex_project.Controllers
         public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
         {
             var item_return = (from a in _context.Documents
-                               where a.DocStyleId != 3
+                               where a.DocStyleId != 3 && a.IsDelete == false
                                select new
                                {
                                    DateCreate = a.DateCreate,
@@ -180,6 +181,21 @@ namespace Intimex_project.Controllers
                 docFilesEdit.RemoveAll(x => x.FileSource == extensionFile);
             }
 
+        }
+        [HttpDelete]
+        public async Task<IActionResult> Delete(string key)
+        {
+            var model = await _context.Documents.FirstOrDefaultAsync(item =>
+                            item.DocId == long.Parse(key));
+            if (_context.DocProcesses.Any(a => a.DocId == model.DocId))
+            {
+                return BadRequest("Không thể xóa công văn đã gửi");
+            }
+            model.IsDelete = true;
+            _context.Documents.Update(model);
+            await _context.SaveChangesAsync();
+            TempData["alertMessage"] = "Xóa văn bản đến thành công";
+            return Ok();
         }
     }
 }
