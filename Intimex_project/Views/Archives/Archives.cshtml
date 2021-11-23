@@ -3,7 +3,6 @@
     ViewData["Title"] = "Archives";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="right_col" role="main" style="height: 500px">
     <div class="">
         <div class="page-title">
@@ -56,7 +55,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive">
-                                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.SP_GetArchives>().ID("gridContainer")
+                                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.SP_GetArchives>().ID("gridContainer_Archive")
                                     .DataSource(ds => ds.Mvc()
                                         .Controller("Archives")
                                         .LoadAction("Get")
@@ -67,7 +66,7 @@
 
                                         columns.AddFor(a => a.ArchivesName).Caption("Tên công việc");
 
-                                        columns.AddFor(a => a.ArchivesCode).Caption("Trích yếu");
+                                        columns.AddFor(a => a.Contents).Caption("Trích yếu");
 
                                         columns.AddFor(a => a.UserCreateName).Caption("Người tạo");
 
@@ -77,9 +76,29 @@
 
                                         columns.AddFor(a => a.IsFinish).Caption("Hoàn thành");
 
-                                        columns.AddFor(a => a.StatusArchiver).DataField("StatusArchiver");
+                                        columns.AddFor(a => a.StatusArchiver).Caption("Trạng thái");
 
+                                        columns.Add().Width(80).AllowFiltering(false)
+                                        .AllowSorting(false).CellTemplate(@<text>
+                                                <button type="button" onclick="AssignTask(<%= data.ArchivesId%>)">G.việc</button>
+                                        </text>);
+
+                                        columns.Add().Width(80).AllowFiltering(false)
+                                                 .AllowSorting(false).CellTemplate(@<text>
+                                                <button type="button">V.Bản</button>
+                                        </text>);
+
+                                        columns.Add().Width(80).AllowFiltering(false)
+                                                .AllowSorting(false).CellTemplate(@<text>
+                                                <button type="button">P.Hồi</button>
+                                        </text>);
+
+                                        columns.Add().Width(85).AllowFiltering(false)
+                                                .AllowSorting(false).CellTemplate(@<text>
+                                                <button type="button">CT C.việc</button>
+                                        </text>);
                                     })
+                                    .OnToolbarPreparing("toolbar_Archives")
                                     .HoverStateEnabled(true)
                                     .ShowBorders(true)
                                     .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
@@ -90,11 +109,12 @@
                                     .AllowColumnReordering(true)
                                     .ColumnChooser(c => c.Enabled(true))
                                     .ColumnFixing(c => c.Enabled(true))
+                                    .ColumnAutoWidth(true)
                                     .ShowBorders(true)
                                     .Grouping(group => group.AutoExpandAll(true))
                                     .SearchPanel(searchPanel => searchPanel.Visible(true))
                                     .GroupPanel(groupPanel => groupPanel.Visible(true))
-                                    .Paging(paging => paging.PageSize(5))
+                                    .Paging(paging => paging.PageSize(10))
                                     .Pager(paper =>
                                     {
                                         paper.ShowPageSizeSelector(true);
@@ -102,7 +122,21 @@
                                         paper.ShowInfo(true);
                                     })
                                 )
-                                        
+
+                                </div>
+
+                                <div class="modal fade bd-example-modal-xl" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            </div>
+                                            <div id="_PartiView_AddOrUpdate_Archive">
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -113,6 +147,68 @@
     </div>
 </div>
 <script src="~/js/js_create/doccome.js"></script>
+<script type="text/javascript">
+    function AssignTask(e) {
+        $.post('/Archives/AssignTask', { 'id': e }, function (response) {
+            $("#_PartiView_AddOrUpdate_Archive").html(response);
+            $("#myModal").modal("show");
+
+        })
+    }
+
+    function getDataGridInstance() {
+        return $("#gridContainer_Archive").dxDataGrid("instance");
+    }
+    function toolbar_Archives(e) {
+        e.toolbarOptions.items.unshift({
+            location: "after",
+            widget: "dxButton",
+            options: {
+                text: "Thêm",
+                onClick: function () {
+                    $('#myModal').modal('hide');
+                    $.ajax({
+                        url: '/Archives/AddArchive',
+                        data: {},
+                        type: 'POST',
+                        dataType: 'HTML',
+                        success: function (response) {
+                            $("#_PartiView_AddOrUpdate_Archive").html(response);
+                            $("#myModal").modal("show");
+                        }
+                    })
+                }
+            }
+        });
+        e.toolbarOptions.items.unshift({
+            location: "after",
+            widget: "dxButton",
+            options: {
+                text: "Sửa",
+                onClick: function () {
+                    getDataGridInstance().getSelectedRowsData().done(function (rowData) {
+                        for (var i = 0; i < rowData.length; i++) {
+                            var id = rowData[i].ArchivesId;
+                            if (id) {
+                                $.post('/Archives/EditArchive', { 'id': id }, function (response) {
+                                    $("#_PartiView_AddOrUpdate_Archive").html(response);
+                                    $("#myModal").modal("show");
+
+                                })
+                            }
+                            else {
+                                $.notify("please choose the document you want to edit", "error");
+                            }
+                        }
+
+                    })
+                    
+                }
+            }
+        });
+    }
+    
+</script>
 <!-- /page content -->
 <!-- /page content -->
 <!-- footer content -->

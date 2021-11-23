@@ -723,3 +723,7 @@ C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Vie
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocGo\AddDocGo.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocGo\EditDocGo.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Archives\Archives.cshtml.g.cs
+C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Archives\_PartiView_AddOrUpdate_Archive.cshtml.g.cs
+C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\EntityFramework.SqlServer.dll
+C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\EntityFramework.dll
+C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Archives\_PartiView_AssignTask.cshtml.g.cs
