@@ -3,6 +3,16 @@
     ViewData["Title"] = "Archives";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .modal-dialog {
+        overflow-y: initial !important
+    }
+
+    .modal-body {
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+    }
+</style>
 <div class="right_col" role="main" style="height: 500px">
     <div class="">
         <div class="page-title">
@@ -125,8 +135,8 @@
 
                                 </div>
 
-                                <div class="modal fade bd-example-modal-xl" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-xl">
+                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>

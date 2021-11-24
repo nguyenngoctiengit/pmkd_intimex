@@ -1,7 +1,7 @@
 ﻿
 @model Data.Models.Trading_system.ArchivesAssignTask
 
-<form method="post" asp-controller="Archives" asp-action="AddArchives">
+<form method="post" asp-controller="Archives" asp-action="AddAssignTask" asp-route-id="@ViewBag.id">
     <div class="modal-body">
         <div class="form-group row">
             <div class="form-group col-md-12">
@@ -32,11 +32,11 @@
             <div class="form-group col-md-12">
                 <label class="col-form-label col-md-1 col-sm-1">N.giao</label>
                 <div class="col-md-2 col-sm-2">
-                    @(Html.DevExtreme().DateBox())
+                    @(Html.DevExtreme().DateBoxFor(a => a.DateAssign).DisplayFormat("dd/MM/yyyy"))
                 </div>
                 <label class="col-form-label col-md-1 col-sm-1">N.Kết thúc</label>
                 <div class="col-md-2 col-sm-2">
-                    @(Html.DevExtreme().DateBox())
+                    @(Html.DevExtreme().DateBoxFor(a => a.DateFinishAssign).DisplayFormat("dd/MM/yyyy"))
                 </div>
             </div>
         </div>
@@ -48,23 +48,23 @@
                 </div>
                 <label class="col-form-label col-md-1 col-sm-1">Ghi chú</label>
                 <div class="col-md-5 col-sm-5">
-                    <input type="text" name="Contents" asp-for="Contents" class="form-control" required>
+                    <input type="text" name="Note" asp-for="Note" class="form-control">
                 </div>
             </div>
         </div>
         <div class="form-group row">
             <div class="form-group col-md-12">
                 <div class="form-group col-md-6">
-                    <button type="button" class="btn btn-secondary btn-sm">Người xử lý</button>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="OpenPopUp_Handler()">Người xử lý</button>
                 </div>
                 <div class="form-group col-md-6">
-                    <button type="button" class="btn btn-secondary btn-sm">Người tham gia</button>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="OpenPopUp_Participant()">Người tham gia</button>
                 </div>
             </div>
         </div>
         <div class="form-group row">
             <div class="form-group col-md-6">
-                <table class="table" id="ListofFiles">
+                <table class="table" id="List_handler">
                     <tr>
                         <th>
                             Người xử lí
@@ -76,7 +76,7 @@
                 </table>
             </div>
             <div class="form-group col-md-6">
-                <table class="table" id="ListofFiles">
+                <table class="table" id="List_Participants">
                     <tr>
                         <th>
                             Người tham gia
@@ -96,24 +96,24 @@
                                         .LoadAction("GetAssignTask")
                                         .LoadParams(new { id = ViewBag.id })
                                         .DeleteAction("Delete")
-                                        .Key("ArchivesAssignTasks")
+                                        .Key("ArchivesAssignTaskId")
                                     )
                                     .RemoteOperations(true)
                                     .Columns(columns => {
 
-                                    columns.AddFor(m => m.DateAssign).Caption("Ngày giao");
+                                    columns.AddFor(m => m.DateAssign).Caption("Ngày giao").Format("dd/MM/yyyy");
 
                                     columns.AddFor(m => m.UserAssign).Caption("Người giao");
 
-                                    columns.AddFor(m => m.UserAccept).Caption("Người xử lí");
+                                    columns.Add().DataField("FullUserProcess").Caption("Người xử lí");
 
-                                    columns.AddFor(m => m.UserAccept).Caption("Người tham gia");
+                                    columns.Add().DataField("FullUserView").Caption("Người tham gia");
 
                                     columns.AddFor(m => m.Contents).Caption("Nội dung");
 
                                     columns.AddFor(m => m.Note).Caption("Ghi chú");
 
-                                    columns.AddFor(m => m.DateFinishAssign).Caption("Ngày kết thúc");
+                                    columns.AddFor(m => m.DateFinishAssign).Caption("Ngày kết thúc").Format("dd/MM/yyyy");
 
                                     })
                                     .HoverStateEnabled(true)
@@ -137,8 +137,149 @@
                                 )
             </div>
         </div>
+        <div class="modal fade" id="choose_handler_participant" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="display:table">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Chọn nhân viên</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" id="choose_handler">
+                        <div class="form-group row">
+                            <div class="form-group col-md-12">
+                                @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.UserRight>()
+                                                    .ID("grib_dsnv")
+                                                    .DataSource(d => d.Mvc().LoadAction("GetUserRight")
+                                                                            .Controller("DocCome")
+                                                                            .Key("UserName1"))
+                                                    .RemoteOperations(true)
+                                                    .Columns(colunms => {
+
+                                                        colunms.AddFor(m => m.FullName1).Caption("Tên nhân viên").Fixed(true);
+
+                                                        colunms.Add().DataField("BranchId").Caption("Bộ phận");
+
+                                                        colunms.Add().DataField("NameV").Caption("Chi nhánh");
+
+                                                        colunms.AddFor(m => m.UserName1).Caption("Mã nhân viên").Fixed(true).Visible(false);
+
+                                                    })
+                                                    .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                    .Selection(s => s.Mode(SelectionMode.Multiple).Deferred(true))
+                                                    .HoverStateEnabled(true)
+                                                    .AllowColumnReordering(true)
+                                                    .AllowColumnResizing(true)
+                                                    .ColumnAutoWidth(true)
+                                                    .ColumnChooser(c => c.Enabled(true))
+                                                    .ColumnFixing(c => c.Enabled(true))
+                                                    .ShowBorders(true)
+                                                    .Grouping(group => group.AutoExpandAll(true))
+                                                    .GroupPanel(groupPanel => groupPanel.Visible(true))
+                                                    .Paging(paging => paging.PageSize(5))
+                                                    .Pager(paper =>
+                                                    {
+                                                        paper.ShowPageSizeSelector(true);
+                                                        paper.AllowedPageSizes(new[] { 5, 10, 20 });
+                                                        paper.ShowInfo(true);
+                                                    })
+                                                )
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="choose_Handler_Participant">Chọn</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="modal-footer">
-        <button type="submit" asp-action="AddArchives" asp-controller="Archives" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary">Save</button>
     </div>
 </form>
+<script type="text/javascript">
+    function OpenPopUp_Handler() {
+        document.getElementById("choose_Handler_Participant").onclick = ChooseHandler;
+        $('#choose_handler_participant').modal('show');
+    }
+    function OpenPopUp_Participant() {
+        document.getElementById("choose_Handler_Participant").onclick = ChooseParticipant;
+        $('#choose_handler_participant').modal('show');
+    }
+    function getDataGridInstance() {
+        return $("#grib_dsnv").dxDataGrid("instance");
+    }
+    function ChooseHandler() {
+        getDataGridInstance().getSelectedRowsData().done(function (rowData) {
+            var array = []
+            rowData.forEach(element => { array.push(element) })
+            for (var i = 0; i < array.length; i++) {
+                var markup = "<tr><td style='display: none'>" + array[i].UserName1 + "</td><td>" + array[i].FullName1 + " - " + array[i].BranchId + "</td><td><a href='#' onclick='DeleteReceiver(this,\"" + array[i].UserName1 + "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>";
+                $("#List_handler tbody").append(markup);
+                var array_ListHandler = [];
+                var ListHandler = [];
+                $("#List_handler tr:not(:first)").each(function () {
+                    array_ListHandler.push($(this).find("td:first").text()); //put elements into array
+                    array_ListHandler.forEach(element => { ListHandler.push(element.UserName1) })
+                });
+                if (array_ListHandler.length != 0) {
+                    $.ajax({
+                        traditional: true,
+                        dataType: 'json',
+                        type: 'POST',
+                        url: '/Archives/update_ListHandler',
+                        data: { array_ListHandler: array_ListHandler },
+                        success: function (data) {
+                            $.notify(data, "success");
+                        },
+                        error: function () {
+                            $.notify("Something went wrong", "error");
+                        }
+                    })
+                }
+                else if (array_ListReciever.length == 0) {
+                    $.notify("please choose reciever!", "error");
+                }
+            }
+            $('#choose_handler_participant').modal('toggle');
+        })
+    }
+    function ChooseParticipant() {
+        getDataGridInstance().getSelectedRowsData().done(function (rowData) {
+            var array = []
+            rowData.forEach(element => { array.push(element) })
+            for (var i = 0; i < array.length; i++) {
+                var markup = "<tr><td style='display: none'>" + array[i].UserName1 + "</td><td>" + array[i].FullName1 + " - " + array[i].BranchId + "</td><td><a href='#' onclick='DeleteReceiver(this,\"" + array[i].UserName1 + "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>";
+                $("#List_Participants tbody").append(markup);
+                var array_ListParticipant = [];
+                var ListParticipant = [];
+                $("#List_Participants tr:not(:first)").each(function () {
+                    array_ListParticipant.push($(this).find("td:first").text()); //put elements into array
+                    array_ListParticipant.forEach(element => { ListParticipant.push(element.UserName1) })
+                });
+                if (array_ListParticipant.length != 0) {
+                    $.ajax({
+                        traditional: true,
+                        dataType: 'json',
+                        type: 'POST',
+                        url: '/Archives/update_ListParticipant',
+                        data: { array_ListParticipant: array_ListParticipant },
+                        success: function (data) {
+                            $.notify(data, "success");
+                        },
+                        error: function () {
+                            $.notify("Something went wrong", "error");
+                        }
+                    })
+                }
+                else if (array_ListParticipant.length == 0) {
+                    $.notify("please choose reciever!", "error");
+                }
+            }
+            $('#choose_handler_participant').modal('toggle');
+        })
+    }
+
+</script>

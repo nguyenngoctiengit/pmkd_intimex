@@ -17,6 +17,10 @@ namespace Intimex_project.Controllers
     public class ArchivesController : Controller
     {
         public tradingsystemContext _context = new tradingsystemContext(ConnectionParameter.connectionString);
+
+        public static List<string> ListHandler { get; set; } = new List<string>();
+
+        public static List<string> ListParticipant { get; set; } = new List<string>();
         public IActionResult Archives()
         {
             return View("Archives");
@@ -96,8 +100,104 @@ namespace Intimex_project.Controllers
         [HttpGet]
         public object GetAssignTask(DataSourceLoadOptions loadOptions,long id)
         {
+            var item_return = (from a in _context.ArchivesAssignTasks
+                              where a.ArchivesId == id
+                              select new
+                              {
+                                  ArchivesAssignTaskId = a.ArchivesAssignTaskId,
+                                  DateAssign = a.DateAssign,
+                                  DateFinishAssign = a.DateFinishAssign,
+                                  UserAssign = _context.UserRights.Where(b => b.UserName1 == a.UserAssign).Select(a => a.FullName1).FirstOrDefault(),
+                                  FullUserProcess = a.IsProcess == 1 ? _context.UserRights.Where(b => b.UserName1 == a.UserAccept).Select(a => a.FullName1).FirstOrDefault() : "",
+                                  FullUserView = a.IsProcess == 0 ? _context.UserRights.Where(b => b.UserName1 == a.UserAccept).Select(a => a.FullName1).FirstOrDefault() : "",
+                                  Contents = a.Contents,
+                                  Note = a.Note
+                              });
             var item = _context.ArchivesAssignTasks.Where(a => a.ArchivesId == id).ToList();
-            return DataSourceLoader.Load(item, loadOptions);
+            return DataSourceLoader.Load(item_return, loadOptions);
+        }
+        [HttpPost]
+        public ActionResult update_ListHandler(string[] array_ListHandler)
+        {
+            ListHandler.Clear();
+            foreach (string i in array_ListHandler)
+            {
+                ListHandler.Add(i);
+            }
+            return Json("Update success");
+        }
+        [HttpPost]
+        public ActionResult update_ListParticipant(string[] array_ListParticipant)
+        {
+            ListParticipant.Clear();
+            foreach (string i in array_ListParticipant)
+            {
+                ListParticipant.Add(i);
+            }
+            return Json("Update success");
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddAssignTask(long id,ArchivesAssignTask archivesAssignTask)
+        {
+            var item = new ArchivesAssignTask();
+            if (ListHandler.Count > 0)
+            {
+                for (var i = 0; i < ListHandler.Count; i++)
+                {
+                    if (_context.ArchivesAssignTasks.Where(a => a.UserAccept == ListHandler[i] && a.ArchivesId == id).Count() == 0)
+                    {
+                        item.DateCreate = DateTime.Now;
+                        item.ArchivesId = id;
+                        item.DateAssign = archivesAssignTask.DateAssign;
+                        item.UserAssign = HttpContext.Session.GetString("UserName");
+                        item.UserAccept = ListHandler[i];
+                        item.Contents = archivesAssignTask.Contents;
+                        item.IsProcess = 1;
+                        item.DateFinishAssign = archivesAssignTask.DateFinishAssign;
+                        item.Note = archivesAssignTask.Note;
+                        _context.ArchivesAssignTasks.Add(item);
+                        await _context.SaveChangesAsync();
+                        
+                    }
+                    else
+                    {
+                        var nv = _context.UserRights.Where(a => a.UserName1 == ListHandler[i]).Select(a => a.FullName1).FirstOrDefault();
+                        TempData["alertMessage"] = "Nhân viên " + nv + " đã được giao việc";
+                        return RedirectToAction("Archives");
+                    }
+                }
+                ListHandler.Clear();
+            }
+            if (ListParticipant.Count > 0)
+            {
+                for (var i = 0; i < ListParticipant.Count; i++)
+                {
+                    if (_context.ArchivesAssignTasks.Where(a => a.UserAccept == ListParticipant[i] && a.ArchivesId == id).Count() == 0)
+                    {
+                        item.DateCreate = DateTime.Now;
+                        item.ArchivesId = id;
+                        item.DateAssign = archivesAssignTask.DateAssign;
+                        item.UserAssign = HttpContext.Session.GetString("UserName");
+                        item.UserAccept = ListParticipant[i];
+                        item.Contents = archivesAssignTask.Contents;
+                        item.IsProcess = 0;
+                        item.DateFinishAssign = archivesAssignTask.DateFinishAssign;
+                        item.Note = archivesAssignTask.Note;
+                        _context.ArchivesAssignTasks.Add(item);
+                        await _context.SaveChangesAsync();
+                        
+                    }
+                    else
+                    {
+                        var nv = _context.UserRights.Where(a => a.UserName1 == ListHandler[i]).Select(a => a.FullName1).FirstOrDefault();
+                        TempData["alertMessage"] = "Nhân viên " + nv + " đã được giao việc";
+                        return RedirectToAction("Archives");
+                    }
+                }
+                ListParticipant.Clear();
+            }
+            TempData["alertMessage"] = "Giao việc cho văn thư:" + id + "thành công";
+            return RedirectToAction("Archives");
         }
     }
 

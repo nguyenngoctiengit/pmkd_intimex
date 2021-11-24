@@ -14761,8 +14761,6 @@ namespace Data.Models.Trading_system
 
                 entity.ToTable("UserRight");
 
-                entity.Property(a => a.Online).HasColumnName("Online");
-
                 entity.Property(e => e.UserName1).HasMaxLength(50);
 
                 entity.Property(e => e.AutoMaticSms).HasColumnName("AutoMaticSMS");
