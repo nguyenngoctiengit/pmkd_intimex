@@ -95,7 +95,7 @@
 
                                         columns.Add().Width(80).AllowFiltering(false)
                                                  .AllowSorting(false).CellTemplate(@<text>
-                                                <button type="button">V.Bản</button>
+                                                <button type="button" onclick="DocArchive(<%= data.ArchivesId%>)">V.Bản</button>
                                         </text>);
 
                                         columns.Add().Width(80).AllowFiltering(false)
@@ -160,6 +160,14 @@
 <script type="text/javascript">
     function AssignTask(e) {
         $.post('/Archives/AssignTask', { 'id': e }, function (response) {
+            $("#_PartiView_AddOrUpdate_Archive").html(response);
+            $("#myModal").modal("show");
+
+        })
+    }
+
+    function DocArchive(e) {
+        $.post('/Archives/DocArchive', { 'id': e }, function (response) {
             $("#_PartiView_AddOrUpdate_Archive").html(response);
             $("#myModal").modal("show");
 

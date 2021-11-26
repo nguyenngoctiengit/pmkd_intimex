@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -7,6 +8,7 @@ namespace Data.Models.Trading_system
 {
     public partial class ArchivesAssignTask
     {
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public long ArchivesAssignTaskId { get; set; }
         public long ArchivesId { get; set; }
         public DateTime DateAssign { get; set; }

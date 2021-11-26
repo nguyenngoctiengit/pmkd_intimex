@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -137,15 +138,16 @@ namespace Intimex_project.Controllers
             return Json("Update success");
         }
         [HttpPost]
-        public async Task<IActionResult> AddAssignTask(long id,ArchivesAssignTask archivesAssignTask)
+        public IActionResult AddAssignTask(long id,ArchivesAssignTask archivesAssignTask)
         {
-            var item = new ArchivesAssignTask();
+            
             if (ListHandler.Count > 0)
             {
                 for (var i = 0; i < ListHandler.Count; i++)
                 {
                     if (_context.ArchivesAssignTasks.Where(a => a.UserAccept == ListHandler[i] && a.ArchivesId == id).Count() == 0)
                     {
+                        var item = new ArchivesAssignTask();
                         item.DateCreate = DateTime.Now;
                         item.ArchivesId = id;
                         item.DateAssign = archivesAssignTask.DateAssign;
@@ -156,8 +158,7 @@ namespace Intimex_project.Controllers
                         item.DateFinishAssign = archivesAssignTask.DateFinishAssign;
                         item.Note = archivesAssignTask.Note;
                         _context.ArchivesAssignTasks.Add(item);
-                        await _context.SaveChangesAsync();
-                        
+                        _context.SaveChanges();
                     }
                     else
                     {
@@ -174,6 +175,7 @@ namespace Intimex_project.Controllers
                 {
                     if (_context.ArchivesAssignTasks.Where(a => a.UserAccept == ListParticipant[i] && a.ArchivesId == id).Count() == 0)
                     {
+                        var item = new ArchivesAssignTask();
                         item.DateCreate = DateTime.Now;
                         item.ArchivesId = id;
                         item.DateAssign = archivesAssignTask.DateAssign;
@@ -184,8 +186,7 @@ namespace Intimex_project.Controllers
                         item.DateFinishAssign = archivesAssignTask.DateFinishAssign;
                         item.Note = archivesAssignTask.Note;
                         _context.ArchivesAssignTasks.Add(item);
-                        await _context.SaveChangesAsync();
-                        
+                        _context.SaveChanges();
                     }
                     else
                     {
@@ -196,8 +197,82 @@ namespace Intimex_project.Controllers
                 }
                 ListParticipant.Clear();
             }
-            TempData["alertMessage"] = "Giao việc cho văn thư:" + id + "thành công";
+            TempData["alertMessage"] = "Giao việc cho văn thư thành công";
             return RedirectToAction("Archives");
+        }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAssignTask(string key)
+        {
+            var model = await _context.ArchivesAssignTasks.FirstOrDefaultAsync(item =>
+                            item.ArchivesAssignTaskId == long.Parse(key));
+
+            if (model.UserAssign != HttpContext.Session.GetString("UserName"))
+            {
+                return BadRequest("Bạn không có quyền xóa giao việc này");
+            }
+            else
+            {
+                _context.ArchivesAssignTasks.Remove(model);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            
+        }
+        [HttpPut]
+        public IActionResult EditAssignTask(string key,string values)
+        {
+            var item = _context.ArchivesAssignTasks.FirstOrDefault(a => a.ArchivesAssignTaskId == long.Parse(key));
+            
+            if (item.UserAssign != HttpContext.Session.GetString("UserName"))
+            {
+                return BadRequest("Bạn không có quyền chỉnh sửa giao việc này");
+            }
+            else
+            {
+                JsonConvert.PopulateObject(values, item);
+                _context.SaveChanges();
+            }
+            return Ok();
+        }
+       [HttpPost]
+        public void DeleteList_handler(string id)
+        {
+            for (var i = 0; i < ListHandler.Count; i++)
+            {
+                if (ListHandler[i] == id)
+                {
+                    ListHandler.Remove(ListHandler[i]);
+                }
+            }
+        }
+        [HttpPost]
+        public void DeleteList_participant(string id)
+        {
+            for (var i = 0; i < ListParticipant.Count; i++)
+            {
+                if (ListParticipant[i] == id)
+                {
+                    ListParticipant.Remove(ListParticipant[i]);
+                }
+            }
+        }
+        [HttpPost]
+        public IActionResult DocArchive(long id)
+        {
+            ViewBag.id = id;
+            var item = _context.Archives.Where(a => a.ArchivesId == id).FirstOrDefault();
+            ViewBag.ArchivesCode = item.ArchivesCode;
+            ViewBag.DateCreate = item.DateCreate;
+            ViewBag.ArchivesName = item.ArchivesName;
+            ViewBag.Contents = item.Contents;
+            return PartialView("_PartiView_DocArchive");
+        }
+        [HttpGet]
+        public object GetDocument_HasArchive(long id,DataSourceLoadOptions loadOptions)
+        {
+            var Sp = "exec Sp_GetDocument_Archive @ArchivesId = " + id + ", @user = " + HttpContext.Session.GetString("UserName") + ",@IsHasArchives = '1',@DocStyleId = '0',@DocTypeId = '0'";
+            var item = _context.Sp_GetDocument_Archives.FromSqlRaw(Sp).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
         }
     }
 
