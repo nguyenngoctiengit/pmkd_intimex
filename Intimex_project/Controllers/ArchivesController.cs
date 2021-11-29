@@ -1,4 +1,5 @@
-﻿using Application.Parameter;
+﻿using Application.AutoId;
+using Application.Parameter;
 using Data.Models.Trading_system;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
@@ -6,10 +7,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,9 +22,15 @@ namespace Intimex_project.Controllers
     {
         public tradingsystemContext _context = new tradingsystemContext(ConnectionParameter.connectionString);
 
+        private IHostEnvironment _env;
         public static List<string> ListHandler { get; set; } = new List<string>();
 
         public static List<string> ListParticipant { get; set; } = new List<string>();
+
+        public ArchivesController(IHostEnvironment env)
+        {
+            _env = env;
+        }
         public IActionResult Archives()
         {
             return View("Archives");
@@ -259,6 +268,7 @@ namespace Intimex_project.Controllers
         [HttpPost]
         public IActionResult DocArchive(long id)
         {
+            ViewBag.ListFileAttach = _context.ArchivesFileAttaches.Where(a => a.ArchivesId == id).ToList();
             ViewBag.id = id;
             var item = _context.Archives.Where(a => a.ArchivesId == id).FirstOrDefault();
             ViewBag.ArchivesCode = item.ArchivesCode;
@@ -273,6 +283,33 @@ namespace Intimex_project.Controllers
             var Sp = "exec Sp_GetDocument_Archive @ArchivesId = " + id + ", @user = " + HttpContext.Session.GetString("UserName") + ",@IsHasArchives = '1',@DocStyleId = '0',@DocTypeId = '0'";
             var item = _context.Sp_GetDocument_Archives.FromSqlRaw(Sp).ToList();
             return DataSourceLoader.Load(item, loadOptions);
+        }
+        [HttpPost]
+        public void Add_file_attach(IEnumerable<IFormFile> files,string id)
+        {
+            foreach (var file in files)
+            {
+                string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\ArchivesFileAttach\\{file.FileName}";
+                using (FileStream fileStream = System.IO.File.Create(fileName))
+                {
+                    file.CopyTo(fileStream);
+                    fileStream.Flush();
+                }
+                string newFileName = AutoId.AutoIdFileStored("FileStored");
+                string ext = Path.GetExtension(file.FileName);
+                string newFile = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{newFileName}{ext}";
+                ArchivesFileAttach archivesFileAttach = new ArchivesFileAttach();
+                archivesFileAttach.ArchivesId = long.Parse(id);
+                archivesFileAttach.FileSource = file.FileName;
+                archivesFileAttach.FileAttach = newFileName + ext;
+                _context.ArchivesFileAttaches.Add(archivesFileAttach);
+                _context.SaveChanges();
+            }
+        }
+        public void DeleteFileAttach(string extensionFile,string id)
+        {
+            string file = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{extensionFile}";
+            System.IO.File.Delete(file);
         }
     }
 
