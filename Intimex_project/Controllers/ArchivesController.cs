@@ -22,6 +22,8 @@ namespace Intimex_project.Controllers
     {
         public tradingsystemContext _context = new tradingsystemContext(ConnectionParameter.connectionString);
 
+        public static List<ArchivesFbfileAttach> archivesFbfileAttaches = new List<ArchivesFbfileAttach>();
+
         private IHostEnvironment _env;
         public static List<string> ListHandler { get; set; } = new List<string>();
 
@@ -284,6 +286,13 @@ namespace Intimex_project.Controllers
             var item = _context.Sp_GetDocument_Archives.FromSqlRaw(Sp).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
+        [HttpGet]
+        public object GetDocument_NoHasArchive(long id, DataSourceLoadOptions loadOptions)
+        {
+            var Sp = "exec Sp_GetDocument_Archive @ArchivesId = " + id + ", @user = " + HttpContext.Session.GetString("UserName") + ",@IsHasArchives = '0',@DocStyleId = '0',@DocTypeId = '0'";
+            var item = _context.Sp_GetDocument_Archives.FromSqlRaw(Sp).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
+        }
         [HttpPost]
         public void Add_file_attach(IEnumerable<IFormFile> files,string id)
         {
@@ -306,10 +315,114 @@ namespace Intimex_project.Controllers
                 _context.SaveChanges();
             }
         }
-        public void DeleteFileAttach(string extensionFile,string id)
+        public void DeleteFileAttach(string Id)
         {
-            string file = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{extensionFile}";
+            var extensionFile = _context.ArchivesFileAttaches.Where(a => a.Id == long.Parse(Id)).Select(a => a.FileSource).FirstOrDefault();
+            string file = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\ArchivesFileAttach\\{extensionFile}";
             System.IO.File.Delete(file);
+            var item = _context.ArchivesFileAttaches.Where(a => a.Id == long.Parse(Id)).FirstOrDefault();
+            _context.ArchivesFileAttaches.Remove(item);
+            _context.SaveChanges();
+        }
+        public async Task<IActionResult> DownloadDocument(string id)
+        {
+            var filename = id;
+            if (filename == null)
+                return Content("filename not present");
+
+            var path = Path.Combine(
+                           Directory.GetCurrentDirectory(),
+                           "wwwroot/FileUploads/ArchivesFileAttach", filename);
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            return File(memory, "APPLICATION/octet-stream", Path.GetFileName(path));
+        }
+        [HttpPost]
+        public IActionResult Add_document_Archive(string[] array,string id)
+        {
+            foreach (string i in array)
+            {
+                DocArchive docArchive = new DocArchive();
+                docArchive.DocId = long.Parse(i);
+                docArchive.ArchivesId = long.Parse(id);
+                _context.DocArchives.Add(docArchive);
+                _context.SaveChanges();
+
+            }
+            return Json("Add document success");
+        }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteDocument_Archive(string key)
+        {
+            var model = await _context.DocArchives.FirstOrDefaultAsync(item =>
+                            item.DocId == long.Parse(key));
+            _context.DocArchives.Remove(model);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+        [HttpPost]
+        public IActionResult ArchiveFeedBack(long id)
+        {
+            ViewBag.ListFileAttach = _context.ArchivesFileAttaches.Where(a => a.ArchivesId == id).ToList();
+            ViewBag.id = id;
+            var item = _context.Archives.Where(a => a.ArchivesId == id).FirstOrDefault();
+            ViewBag.ArchivesCode = item.ArchivesCode;
+            ViewBag.DateCreate = item.DateCreate;
+            ViewBag.ArchivesName = item.ArchivesName;
+            ViewBag.Contents = item.Contents;
+            return PartialView("_PartiView_ArchiveFeedBack");
+        }
+        [HttpPost]
+        public void upLoadFilesFeedBack(IEnumerable<IFormFile> files)
+        {
+            foreach (var file in files)
+            {
+                string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\ArchivesFileFeedBack\\{file.FileName}";
+                using (FileStream fileStream = System.IO.File.Create(fileName))
+                {
+                    file.CopyTo(fileStream);
+                    fileStream.Flush();
+                }
+                string newFileName = AutoId.AutoIdFileStored("FileStored");
+                string ext = Path.GetExtension(file.FileName);
+                string newFile = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\ArchivesFileFeedBack\\{newFileName}{ext}";
+                using (FileStream fileStream = System.IO.File.Create(newFile))
+                {
+                    file.CopyTo(fileStream);
+                    fileStream.Flush();
+                }
+                archivesFbfileAttaches.Clear();
+                archivesFbfileAttaches.Add(new ArchivesFbfileAttach { FileAttach = newFileName + ext, FileSource = file.FileName });
+            }
+        }
+        [HttpPost]
+        public IActionResult Add_ArchiveFeedBack(string id,ArchivesFeedBack archivesFeedBack)
+        {
+            ArchivesFeedBack archive = new ArchivesFeedBack();
+            archive.Contents = archivesFeedBack.Contents;
+            archive.IsFinish = archivesFeedBack.IsFinish;
+            archive.ArchivesId = long.Parse(id);
+            archive.UserCreate = HttpContext.Session.GetString("UserName");
+            archive.DateCreate = DateTime.Now;
+            _context.ArchivesFeedBacks.Add(archive);
+            _context.SaveChanges();
+            for(var i = 0;i < archivesFbfileAttaches.Count; i++)
+            {
+                ArchivesFbfileAttach attach = new ArchivesFbfileAttach();
+                attach.ArchivesFbid = _context.ArchivesFeedBacks.Max(a => a.ArchivesFeedBackId);
+                attach.FileAttach = archivesFbfileAttaches[i].FileAttach;
+                attach.FileSource = archivesFbfileAttaches[i].FileSource;
+                _context.ArchivesFbfileAttaches.Add(attach);
+                _context.SaveChanges();
+                archivesFbfileAttaches.Clear();
+            }
+            TempData["alertMessage"] = "Phản hồi công việc thành công";
+            return RedirectToAction("Archives");
         }
     }
 

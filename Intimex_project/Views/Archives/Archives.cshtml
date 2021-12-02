@@ -100,7 +100,7 @@
 
                                         columns.Add().Width(80).AllowFiltering(false)
                                                 .AllowSorting(false).CellTemplate(@<text>
-                                                <button type="button">P.Hồi</button>
+                                                <button type="button" onclick="DocFeedBack(<%= data.ArchivesId%>)">P.Hồi</button>
                                         </text>);
 
                                         columns.Add().Width(85).AllowFiltering(false)
@@ -156,8 +156,13 @@
         </div>
     </div>
 </div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="~/js/js_create/doccome.js"></script>
-<script type="text/javascript">
+<script type="text/javascript"> 
+    
+
+
+    @*-----------------------------------Archives--------------------------------*@
     function AssignTask(e) {
         $.post('/Archives/AssignTask', { 'id': e }, function (response) {
             $("#_PartiView_AddOrUpdate_Archive").html(response);
@@ -168,6 +173,14 @@
 
     function DocArchive(e) {
         $.post('/Archives/DocArchive', { 'id': e }, function (response) {
+            $("#_PartiView_AddOrUpdate_Archive").html(response);
+            $("#myModal").modal("show");
+
+        })
+    }
+
+    function DocFeedBack(e) {
+        $.post('/Archives/ArchiveFeedBack', { 'id': e }, function (response) {
             $("#_PartiView_AddOrUpdate_Archive").html(response);
             $("#myModal").modal("show");
 

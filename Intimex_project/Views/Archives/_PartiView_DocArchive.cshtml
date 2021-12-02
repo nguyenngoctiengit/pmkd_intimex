@@ -12,7 +12,7 @@
                 </div>
                 <label class="col-form-label col-md-1 col-sm-1">Ngày tạo</label>
                 <div class="col-md-2 col-sm-2">
-                    @(Html.DevExtreme().DateBox().Disabled(true).Value(@ViewBag.DateCreate))
+                    @(Html.DevExtreme().DateBox().Disabled(true).DisplayFormat("dd/MM/yyyy").Value(@ViewBag.DateCreate))
                 </div>
                 <label class="col-form-label col-md-1 col-sm-1">Tên CV</label>
                 <div class="col-md-5 col-sm-5">
@@ -45,12 +45,12 @@
                         {
                             <tr>
                                 <td>
-                                    <a data-toggle="modal" data-target="#exampleModal" data-imageid="@item.FileSource">
-                                        @item.FileSource
-                                    </a>
+                                    @item.FileSource
                                 </td>
                                 <td>
-                                    <a href='#' onclick='DeleteFile(this, "@item.FileSource")'><span class='glyphicon glyphicon-remove red'></span></a>
+                                    <a href='#' onclick='DeleteFile(this, "@item.Id")'><span class='glyphicon glyphicon-remove red' aria-hidden="true"> | </span></a>
+                                    <a href='#' onclick='DownloadFileAttach("@item.FileSource")'><span class='fa fa-download' aria-hidden="true"> | </span></a>
+                                    <a href='#' onclick='ViewFileAttach("@item.FileSource")'><span class='fa fa-eye' aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                         }
@@ -59,7 +59,7 @@
             </div>
             <div class="form-group col-md-6">
                 <div class="card-box table-responsive">
-                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Sp_GetDocument_Archive>().ID("gridContainer")
+                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Sp_GetDocument_Archive>()
                                     .DataSource(ds => ds.Mvc()
                                         .Controller("Archives")
                                         .LoadAction("GetDocument_HasArchive")
@@ -75,6 +75,7 @@
                                         columns.AddFor(m => m.Contents).Caption("Nội dung văn bản");
 
                                     })
+                                    .Editing(e => e.AllowDeleting(true).UseIcons(true))
                                     .HoverStateEnabled(true)
                                     .ShowBorders(true)
                                     .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
@@ -98,30 +99,40 @@
         </div>
         <div class="form-group row">
             <div class="form-group col-md-6">
-                <label for="Add_file_attach"  class="btn btn-secondary btn-sm">File đính kèm</label>
+                <label for="Add_file_attach" class="btn btn-secondary btn-sm">File đính kèm</label>
                 <input type="file" id="Add_file_attach" onchange="uploadMultipleFile(event)" name="files" style="display:none">
             </div>
             <div class="form-group col-md-6">
-                <button type="button" class="btn btn-secondary btn-sm">Add văn bản</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="choose_Document_NoHasArchive()">Add văn bản</button>
             </div>
         </div>
-        <div class="modal fade" id="choose_handler_participant" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="Popup_img" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <img id="img_id" style="width:100%;height:100%">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#Popup_img" onclick="Close_Popup_img()">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="choose_Document_NoHasArchive" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" style="display:table">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel">Chọn nhân viên</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Chọn văn bản đính kèm</h4>
+                        <button type="button" class="close" onclick="Close_choose_Document_NoHasArchive()" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <input type="text" id="choose_handler">
-                        <div class="form-group row">
-                            <div class="form-group col-md-12">
-                                @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Sp_GetDocument_Archive>().ID("gridContainer")
+                        @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Sp_GetDocument_Archive>().ID("grid_document_archive")
                                     .DataSource(ds => ds.Mvc()
                                         .Controller("Archives")
-                                        .LoadAction("GetDocument_HasArchive")
+                                        .LoadAction("GetDocument_NoHasArchive")
                                         .LoadParams(new { id = ViewBag.id })
-                                        .DeleteAction("DeleteDocument_Archive")
                                         .Key("DocId")
                                     )
                                     .RemoteOperations(true)
@@ -132,9 +143,9 @@
                                         columns.AddFor(m => m.Contents).Caption("Nội dung văn bản");
 
                                     })
+                                    .Selection(s => s.Mode(SelectionMode.Multiple).Deferred(true))
                                     .HoverStateEnabled(true)
                                     .ShowBorders(true)
-                                    .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
                                     .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
                                     .HeaderFilter(hearder => hearder.Visible(true))
                                     .AllowColumnResizing(true)
@@ -150,12 +161,10 @@
                                         paper.ShowInfo(true);
                                     })
                                 )
-                            </div>
-                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="choose_Handler_Participant">Chọn</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="Choose_Document()">Chọn</button>
+                        <button type="button" class="btn btn-default" data-target="#choose_Document_NoHasArchive" onclick="Close_choose_Document_NoHasArchive()">Close</button>
                     </div>
                 </div>
             </div>
@@ -164,8 +173,23 @@
     <div class="modal-footer">
     </div>
 </form>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+@* ------------------- _Partiview_DocArchive-------------------------------*@
 <script type="text/javascript">
+    function DeleteFile(r, Id) {
+        var result = confirm("Are you sure you want to delete this file ?");
+        if (result) {
+            var i = r.parentNode.parentNode.rowIndex;
+            document.getElementById('List_file_attach').deleteRow(i);
+            try {
+                $.post('/Archives/DeleteFileAttach', { 'Id': Id }, function (respone) {
+
+                    $.notify("delete success", "success");
+                });
+            } catch {
+                $.notify("something went wrong", "error");
+            }
+        }
+    }
     function uploadMultipleFile(e) {
         var id = document.getElementById("id").value;
         var files = e.target.files;
@@ -174,111 +198,63 @@
             formData.append("files", files[i]);
             formData.append("id", id);
             var extensionFile = files[i].name;
-            var markup = "<tr><td><a data-toggle='modal' data-target='#exampleModal' data-imageid=" + extensionFile + ">" + extensionFile + "</a></td><td><a href='#' onclick='DeleteFile(this,\"" + extensionFile + "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>";
+            var markup = "<tr><td><a>" + extensionFile + "</a></td><td><a href='#' onclick='ViewFileAttach(\"" + extensionFile + "\")'><span class='fa fa-eye' aria-hidden='true'></span></a></td></tr>";
             $("#List_file_attach tbody").append(markup);
         }
         axios.post("/Archives/Add_file_attach", formData);
     }
-
-    function OpenPopUp_Handler() {
-        document.getElementById("choose_Handler_Participant").onclick = ChooseHandler;
-        $('#choose_handler_participant').modal('show');
+    function ViewFileAttach(ex) {
+        if (ex.endsWith(".png") || ex.endsWith(".jpeg") || ex.endsWith(".jpg")) {
+            document.getElementById("img_id").src = '/FileUploads/ArchivesFileAttach/' + ex;
+            $('#Popup_img').modal('show');
+        }
+        else {
+            location.href = '/Archives/DownloadDocument/' + ex;
+        }
     }
-    function OpenPopUp_Participant() {
-        document.getElementById("choose_Handler_Participant").onclick = ChooseParticipant;
-        $('#choose_handler_participant').modal('show');
+    function DownloadFileAttach(ex) {
+        location.href = '/Archives/DownloadDocument/' + ex;
+    }
+    function choose_Document_NoHasArchive() {
+        $('#choose_Document_NoHasArchive').modal('show');
+    }
+    function Close_choose_Document_NoHasArchive() {
+        $("#choose_Document_NoHasArchive").modal('hide');
+    }
+    function Close_Popup_img() {
+        $("#Popup_img").modal('hide');
     }
     function getDataGridInstance() {
-        return $("#grib_dsnv").dxDataGrid("instance");
+        return $("#grid_document_archive").dxDataGrid("instance");
     }
-    function ChooseHandler() {
+    function Choose_Document() {
         getDataGridInstance().getSelectedRowsData().done(function (rowData) {
-            var array = []
-            rowData.forEach(element => { array.push(element) })
-            for (var i = 0; i < array.length; i++) {
-                var markup = "<tr><td style='display: none'>" + array[i].UserName1 + "</td><td>" + array[i].FullName1 + " - " + array[i].BranchId + "</td><td><a href='#' onclick='DeleteHandler(this,\"" + array[i].UserName1 + "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>";
-                $("#List_handler tbody").append(markup);
-                var array_ListHandler = [];
-                var ListHandler = [];
-                $("#List_handler tr:not(:first)").each(function () {
-                    array_ListHandler.push($(this).find("td:first").text()); //put elements into array
-                    array_ListHandler.forEach(element => { ListHandler.push(element.UserName1) })
-                });
-                if (array_ListHandler.length != 0) {
-                    $.ajax({
-                        traditional: true,
-                        dataType: 'json',
-                        type: 'POST',
-                        url: '/Archives/update_ListHandler',
-                        data: { array_ListHandler: array_ListHandler },
-                        success: function (data) {
-                            $.notify(data, "success");
-                        },
-                        error: function () {
-                            $.notify("Something went wrong", "error");
-                        }
-                    })
-                }
-                else if (array_ListReciever.length == 0) {
-                    $.notify("please choose reciever!", "error");
-                }
+            var id = document.getElementById("id").value;
+            var array = [];
+            rowData.forEach(element => { array.push(element.DocId) })
+            console.log(array);
+            if (array.length != 0) {
+                $.ajax({
+                    traditional: true,
+                    dataType: 'JSON',
+                    url: '/Archives/Add_document_Archive',
+                    type: 'POST',
+                    data: { array: array, id: id },
+                    success: function (data) {
+                        $.notify(data, "success");
+                        $("#choose_Document_NoHasArchive").modal('toggle');
+                        $("#myModal").modal('toggle');
+                    },
+                    error: function () {
+                        $.notify("something went wrong","error")
+                    }
+
+                })
+                   
             }
-            $('#choose_handler_participant').modal('toggle');
         })
     }
-    function ChooseParticipant() {
-        getDataGridInstance().getSelectedRowsData().done(function (rowData) {
-            var array = []
-            rowData.forEach(element => { array.push(element) })
-            for (var i = 0; i < array.length; i++) {
-                var markup = "<tr><td style='display: none'>" + array[i].UserName1 + "</td><td>" + array[i].FullName1 + " - " + array[i].BranchId + "</td><td><a href='#' onclick='DeleteParticipant(this,\"" + array[i].UserName1 + "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>";
-                $("#List_Participants tbody").append(markup);
-                var array_ListParticipant = [];
-                var ListParticipant = [];
-                $("#List_Participants tr:not(:first)").each(function () {
-                    array_ListParticipant.push($(this).find("td:first").text()); //put elements into array
-                    array_ListParticipant.forEach(element => { ListParticipant.push(element.UserName1) })
-                });
-                if (array_ListParticipant.length != 0) {
-                    $.ajax({
-                        traditional: true,
-                        dataType: 'json',
-                        type: 'POST',
-                        url: '/Archives/update_ListParticipant',
-                        data: { array_ListParticipant: array_ListParticipant },
-                        success: function (data) {
-                            $.notify(data, "success");
-                        },
-                        error: function () {
-                            $.notify("Something went wrong", "error");
-                        }
-                    })
-                }
-                else if (array_ListParticipant.length == 0) {
-                    $.notify("please choose reciever!", "error");
-                }
-            }
-            $('#choose_handler_participant').modal('toggle');
-        })
-    }
-    function DeleteHandler(r, id) {
-        var i = r.parentNode.parentNode.rowIndex;
-        document.getElementById('List_handler').deleteRow(i);
-        $.post("/Archives/DeleteList_handler", $.param({ id: id }, true));
-    }
-    function DeleteParticipant(r, id) {
-        var i = r.parentNode.parentNode.rowIndex;
-        document.getElementById('List_Participants').deleteRow(i);
-        $.post("/Archives/DeleteList_participant", $.param({ id: id }, true));
-    }
-    function DeleteFile(r, extensionFile) {
-        var i = r.parentNode.parentNode.rowIndex;
-        document.getElementById('List_file_attach').deleteRow(i);
-        try {
-            $.post("/Archives/DeleteFileAttach", $.param({ extensionFile: "1", id = "12" }, true));
-        }
-        catch {
-            $.notify("something wrong", "error");
-        }
-    }
+
 </script>
+    
+

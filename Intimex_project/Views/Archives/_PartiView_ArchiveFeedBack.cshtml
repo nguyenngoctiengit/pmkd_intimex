@@ -1,0 +1,71 @@
+﻿
+@model Data.Models.Trading_system.ArchivesFeedBack
+
+<form method="post" asp-controller="Archives" asp-action="Add_ArchiveFeedBack" asp-route-id="@ViewBag.id">
+    <div class="modal-body">
+        <div class="form-group row">
+            <div class="form-group col-md-12">
+                <input type="text" value="@ViewBag.id" id="id" hidden>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-md-12">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.IsFinish)" value="false" checked>
+                    <label class="form-check-label" for="inlineRadio1">Công việc thực hiện tiếp theo</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="@Html.NameFor(m => m.IsFinish)" value="true">
+                    <label class="form-check-label" for="inlineRadio2">Công việc đã hoàn thành</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row" style="margin-bottom:0px">
+            <div class="form-group col-md-6">
+                <label class="col-form-label col-md-6 col-sm-6" style="margin-bottom:0px">Nội dung</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="Add_file_attach" class="btn btn-secondary btn-sm" style="margin-bottom:0px">File đính kèm</label>
+                <input type="file" id="Add_file_attach" onchange="uploadMultipleFile(event)" name="files" style="display:none" multiple>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <textarea class="form-control" asp-for="Contents" style="height:80px" required></textarea>
+            </div>
+            <div class="form-group col-md-6">
+                <table class="table" id="ListFile_FeedBack">
+                    <tr>
+                        <th>
+                            Tên file
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Lưu</button>
+        <button type="button" class="btn btn-default" data-target="#choose_Document_NoHasArchive" data-dismiss="modal">Close</button>
+    </div>
+</form>
+@* ------------------- _Partiview_DocArchive-------------------------------*@
+<script type="text/javascript">
+    function uploadMultipleFile(e) {
+        var files = e.target.files;
+        var formData = new FormData();
+        for (var i = 0; i < files.length; i++) {
+            formData.append("files", files[i]);
+            var extensionFile = files[i].name;
+            var markup = "<tr><td><a data-toggle='modal' data-target='#exampleModal' data-imageid=" + extensionFile + ">" + extensionFile + "</a></td><td><a href='#' onclick='DeleteFile(this,\"" + extensionFile + "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>";
+            $("#ListFile_FeedBack tbody").append(markup);
+        }
+        axios.post("/Archives/upLoadFilesFeedBack", formData);
+    }
+
+</script>
+
+

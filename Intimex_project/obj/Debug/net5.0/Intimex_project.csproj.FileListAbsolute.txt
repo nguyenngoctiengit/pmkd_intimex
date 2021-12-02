@@ -728,3 +728,4 @@ C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\EntityFra
 C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\EntityFramework.dll
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Archives\_PartiView_AssignTask.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Archives\_PartiView_DocArchive.cshtml.g.cs
+C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Archives\_PartiView_ArchiveFeedBack.cshtml.g.cs
