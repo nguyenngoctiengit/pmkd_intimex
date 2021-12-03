@@ -60,12 +60,21 @@
         for (var i = 0; i < files.length; i++) {
             formData.append("files", files[i]);
             var extensionFile = files[i].name;
-            var markup = "<tr><td><a data-toggle='modal' data-target='#exampleModal' data-imageid=" + extensionFile + ">" + extensionFile + "</a></td><td><a href='#' onclick='DeleteFile(this,\"" + extensionFile + "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>";
+            var markup = "<tr><td><a>" + extensionFile + "</a></td><td><a href='#' onclick='DeleteFile(this,\"" + extensionFile + "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>";
             $("#ListFile_FeedBack tbody").append(markup);
         }
         axios.post("/Archives/upLoadFilesFeedBack", formData);
     }
-
+    function DeleteFile(r, extensionFile) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById('ListFile_FeedBack').deleteRow(i);
+        try {
+            $.post("/Archives/DeleteFile_AttachFeedBack", $.param({ extensionFile: extensionFile }, true));
+        }
+        catch {
+            $.notify("something wrong", "error");
+        }
+    }
 </script>
 
 

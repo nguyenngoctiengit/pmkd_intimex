@@ -105,7 +105,7 @@
 
                                         columns.Add().Width(85).AllowFiltering(false)
                                                 .AllowSorting(false).CellTemplate(@<text>
-                                                <button type="button">CT C.việc</button>
+                                                <button type="button" onclick="DetailArchives(<%= data.ArchivesId%>)">CT C.việc</button>
                                         </text>);
                                     })
                                     .OnToolbarPreparing("toolbar_Archives")
@@ -124,7 +124,7 @@
                                     .Grouping(group => group.AutoExpandAll(true))
                                     .SearchPanel(searchPanel => searchPanel.Visible(true))
                                     .GroupPanel(groupPanel => groupPanel.Visible(true))
-                                    .Paging(paging => paging.PageSize(10))
+                                    .Paging(paging => paging.PageSize(5))
                                     .Pager(paper =>
                                     {
                                         paper.ShowPageSizeSelector(true);
@@ -139,7 +139,6 @@
                                     <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                             </div>
                                             <div id="_PartiView_AddOrUpdate_Archive">
@@ -181,6 +180,14 @@
 
     function DocFeedBack(e) {
         $.post('/Archives/ArchiveFeedBack', { 'id': e }, function (response) {
+            $("#_PartiView_AddOrUpdate_Archive").html(response);
+            $("#myModal").modal("show");
+
+        })
+    }
+
+    function DetailArchives(e) {
+        $.post('/Archives/DetailArchives', { 'id': e }, function (response) {
             $("#_PartiView_AddOrUpdate_Archive").html(response);
             $("#myModal").modal("show");
 

@@ -1,0 +1,163 @@
+﻿
+@using Microsoft.AspNetCore.Http
+
+<style>
+    .form-inline label {
+        margin: 4px 5px 5px 5px;
+    }
+
+    .dx-texteditor-input-container {
+        height: 30px;
+        width: 120px;
+    }
+
+    .form-inline input {
+        height: 30px;
+    }
+</style>
+
+<form method="post">
+    <div class="modal-body">
+        <div class="form-inline">
+            <label for="">Tên CV</label>
+            <input type="text" value="@ViewBag.ArchivesName" disabled>
+            <label for="">Ngày tạo</label>
+            @(Html.DevExtreme().DateBox().DisplayFormat("dd/MM/yyyy").Disabled(true).Value(@ViewBag.DateCreate))
+            <label for="">Người tạo</label>
+            <input type="text" value="@ViewBag.UserCreate" disabled>
+            <label for="">Ngày hoàn thành</label>
+            @{
+                if (@ViewBag.DateClose == null)
+                {
+                    @(Html.DevExtreme().DateBox().DisplayFormat("dd/MM/yyyy").Disabled(true))
+                }
+                else
+                {
+                    @(Html.DevExtreme().DateBox().DisplayFormat("dd/MM/yyyy").Disabled(true).Value(@ViewBag.DateClose))
+                }
+            }
+            @{
+                if (@ViewBag.IsFinish == true)
+                {
+                    <input type="checkbox" style="margin-left:5px" checked disabled><label style="margin-left:12px"> Đã hoàn thành</label>
+                }
+                else
+                {
+                    <input type="checkbox" style="margin-left:5px" disabled><label style="margin-left:12px"> Đã hoàn thành</label>
+                }
+            }
+
+        </div>
+        <div class="form-inline" style="margin-top:5px;">
+            <label for="">Trích yếu</label>
+            <input type="text" class="form-control" value="@ViewBag.Contents" disabled style="width:90%">
+        </div>
+        <div class="ln_solid"></div>
+        <div class="card-box table-responsive">
+            @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.ArchivesAssignTask>().ID("gridContainer")
+                                    .DataSource(ds => ds.Mvc()
+                                        .Controller("Archives")
+                                        .LoadAction("GetAssignTask")
+                                        .LoadParams(new { id = ViewBag.id })
+                                        .UpdateAction("EditAssignTask")
+                                        .DeleteAction("DeleteAssignTask")
+                                        .Key("ArchivesAssignTaskId")
+                                    )
+                                    .RemoteOperations(true)
+                                    .Columns(columns => {
+
+                                        columns.AddFor(m => m.DateAssign).Caption("Ngày giao").Format("dd/MM/yyyy");
+
+                                        columns.AddFor(m => m.UserAssign).Caption("Người giao");
+
+                                        columns.Add().DataField("FullUserProcess").Caption("Người xử lí");
+
+                                        columns.Add().DataField("FullUserView").Caption("Người tham gia");
+
+                                        columns.AddFor(m => m.Contents).Caption("Nội dung");
+
+                                        columns.AddFor(m => m.Note).Caption("Ghi chú");
+
+                                        columns.AddFor(m => m.DateFinishAssign).Caption("Ngày kết thúc").Format("dd/MM/yyyy");
+
+                                    })
+                                    .HoverStateEnabled(true)
+                                    .ShowBorders(true)
+                                    .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
+                                    .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                    .HeaderFilter(hearder => hearder.Visible(true))
+                                    .AllowColumnResizing(true)
+                                    .AllowColumnReordering(true)
+                                    .ColumnFixing(c => c.Enabled(true))
+                                    .ColumnAutoWidth(true)
+                                    .ColumnFixing(c => c.Enabled(true))
+                                    .Paging(paging => paging.PageSize(5))
+                                    .Pager(paper =>
+                                    {
+                                        paper.ShowPageSizeSelector(true);
+                                        paper.AllowedPageSizes(new[] { 5, 10, 20 });
+                                        paper.ShowInfo(true);
+                                    })
+                                )
+        </div>
+        <div class="ln_solid"></div>
+        <div class="card-box table-responsive">
+            @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Sp_GetArchivesFeedBack>().ID("ArchivesFeedBack")
+                                    .DataSource(ds => ds.Mvc()
+                                        .Controller("Archives")
+                                        .LoadAction("GetDetailArchives")
+                                        .LoadParams(new { id = ViewBag.id })
+                                        .Key("ArchivesFeedBackId")
+                                    )
+                                    .RemoteOperations(true)
+                                    .Columns(columns => {
+
+                                        columns.AddFor(m => m.UserCreate).Caption("Người phản hồi");
+
+                                        columns.AddFor(m => m.DateCreate).Caption("Ngày phản hồi");
+
+                                        columns.AddFor(m => m.Contents).Caption("Nội dung");
+
+                                        columns.AddFor(m => m.IsAttach).Caption("File Attach");
+
+                                    })
+                                    .HoverStateEnabled(true)
+                                    .ShowBorders(true)
+                                    .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
+                                    .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                    .HeaderFilter(hearder => hearder.Visible(true))
+                                    .AllowColumnResizing(true)
+                                    .AllowColumnReordering(true)
+                                    .ColumnFixing(c => c.Enabled(true))
+                                    .ColumnAutoWidth(true)
+                                    .ColumnFixing(c => c.Enabled(true))
+                                    .Paging(paging => paging.PageSize(5))
+                                    .Pager(paper =>
+                                    {
+                                        paper.ShowPageSizeSelector(true);
+                                        paper.AllowedPageSizes(new[] { 5, 10, 20 });
+                                        paper.ShowInfo(true);
+                                    })
+                                )
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="DocFeedBack(@ViewBag.Id)">Download File</button>
+        @{
+            if (ViewBag.UserCreate == Context.Session.GetString("UserName"))
+            {
+                <button type="button" class="btn btn-success" onclick="FinishArchives(@ViewBag.Id)">Kết thúc</button>
+            }
+        }
+        <button type="button" class="btn btn-primary" onclick="DocFeedBack(@ViewBag.Id)">Phản hồi</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</form>
+<script type="text/javascript">
+    function FinishArchives(id) {
+        $.post("/Archives/FinishArchives", { id: id }, function (data) {
+            $.notify(data, "success");
+            $("#myModal").modal('toggle');
+        });
+    }
+</script>

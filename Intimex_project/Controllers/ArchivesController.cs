@@ -368,18 +368,13 @@ namespace Intimex_project.Controllers
         [HttpPost]
         public IActionResult ArchiveFeedBack(long id)
         {
-            ViewBag.ListFileAttach = _context.ArchivesFileAttaches.Where(a => a.ArchivesId == id).ToList();
             ViewBag.id = id;
-            var item = _context.Archives.Where(a => a.ArchivesId == id).FirstOrDefault();
-            ViewBag.ArchivesCode = item.ArchivesCode;
-            ViewBag.DateCreate = item.DateCreate;
-            ViewBag.ArchivesName = item.ArchivesName;
-            ViewBag.Contents = item.Contents;
             return PartialView("_PartiView_ArchiveFeedBack");
         }
         [HttpPost]
         public void upLoadFilesFeedBack(IEnumerable<IFormFile> files)
         {
+            archivesFbfileAttaches.Clear();
             foreach (var file in files)
             {
                 string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\ArchivesFileFeedBack\\{file.FileName}";
@@ -396,7 +391,6 @@ namespace Intimex_project.Controllers
                     file.CopyTo(fileStream);
                     fileStream.Flush();
                 }
-                archivesFbfileAttaches.Clear();
                 archivesFbfileAttaches.Add(new ArchivesFbfileAttach { FileAttach = newFileName + ext, FileSource = file.FileName });
             }
         }
@@ -413,16 +407,54 @@ namespace Intimex_project.Controllers
             _context.SaveChanges();
             for(var i = 0;i < archivesFbfileAttaches.Count; i++)
             {
+                string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\ArchivesFileFeedBack\\{archivesFbfileAttaches[i].FileSource}";
+                System.IO.File.Delete(fileName);
                 ArchivesFbfileAttach attach = new ArchivesFbfileAttach();
                 attach.ArchivesFbid = _context.ArchivesFeedBacks.Max(a => a.ArchivesFeedBackId);
                 attach.FileAttach = archivesFbfileAttaches[i].FileAttach;
                 attach.FileSource = archivesFbfileAttaches[i].FileSource;
                 _context.ArchivesFbfileAttaches.Add(attach);
                 _context.SaveChanges();
-                archivesFbfileAttaches.Clear();
             }
+            archivesFbfileAttaches.Clear();
             TempData["alertMessage"] = "Phản hồi công việc thành công";
             return RedirectToAction("Archives");
+        }
+        public void DeleteFile_AttachFeedBack(string extensionFile)
+        {
+            string file = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\ArchivesFileFeedBack\\{extensionFile}";
+            System.IO.File.Delete(file);
+            archivesFbfileAttaches.RemoveAll(x => x.FileSource == extensionFile);
+        }
+        [HttpPost]
+        public IActionResult DetailArchives(long id)
+        {
+            ViewBag.id = id;
+            var item = _context.Archives.Where(a => a.ArchivesId == id).FirstOrDefault();
+            ViewBag.ArchivesName = item.ArchivesName;
+            ViewBag.Contents = item.Contents;
+            ViewBag.DateCreate = item.DateCreate;
+            ViewBag.UserCreate = item.UserCreate;
+            ViewBag.DateClose = item.DateClose;
+            ViewBag.IsFinish = item.IsFinish;
+            return PartialView("_PartiView_DetailArchives");
+        }
+        [HttpGet]
+        public object GetDetailArchives(long id,DataSourceLoadOptions loadOptions)
+        {
+            var Sp = "exec sp_Document;37 @Id = " + id + ",@User = "+ HttpContext.Session.GetString("UserName") + "";
+            var item = _context.Sp_GetArchivesFeedBacks.FromSqlRaw(Sp).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
+        }
+        [HttpPost]
+        public IActionResult FinishArchives(string id)
+        {
+            Archive archive = _context.Archives.Where(a => a.ArchivesId == long.Parse(id)).FirstOrDefault();
+            archive.IsFinish = true;
+            archive.DateClose = DateTime.Now;
+            _context.Archives.Update(archive);
+            _context.SaveChanges();
+            return Json("Công việc đã hoàn thành");
         }
     }
 
