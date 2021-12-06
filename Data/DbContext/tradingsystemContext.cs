@@ -306,6 +306,7 @@ namespace Data.Models.Trading_system
         public virtual DbSet<SP_GetArchives> SP_GetArchives { get; set; }
         public virtual DbSet<Sp_GetDocument_Archive> Sp_GetDocument_Archives { get; set; }
         public virtual DbSet<Sp_GetArchivesFeedBack> Sp_GetArchivesFeedBacks { get; set; }
+        public virtual DbSet<Sp_GetDocumentManage> Sp_GetDocumentManages { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -730,3 +730,4 @@ C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Vie
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Archives\_PartiView_DocArchive.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Archives\_PartiView_ArchiveFeedBack.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Archives\_PartiView_DetailArchives.cshtml.g.cs
+C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocProcess\DocProcess.cshtml.g.cs

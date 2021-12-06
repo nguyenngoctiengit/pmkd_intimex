@@ -325,5 +325,10 @@ namespace Intimex_project.Controllers
                               select new { a.UserName1, a.FullName1 };
             return DataSourceLoader.Load(item_signer,options);
         }
+        [HttpGet]
+        public object getFileAttachFeedback(long ArchivesFeedBackId, DataSourceLoadOptions options)
+        {
+            return DataSourceLoader.Load(_context.ArchivesFbfileAttaches.Where(a => a.ArchivesFbid == ArchivesFeedBackId), options);
+        }
     }
 }

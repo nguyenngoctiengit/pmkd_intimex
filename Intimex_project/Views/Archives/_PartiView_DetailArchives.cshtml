@@ -83,7 +83,6 @@
                                     })
                                     .HoverStateEnabled(true)
                                     .ShowBorders(true)
-                                    .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
                                     .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
                                     .HeaderFilter(hearder => hearder.Visible(true))
                                     .AllowColumnResizing(true)
@@ -121,6 +120,12 @@
                                         columns.AddFor(m => m.IsAttach).Caption("File Attach");
 
                                     })
+                                    .MasterDetail(md =>
+                                    {
+                                        md.Enabled(true);
+                                        md.Template(new TemplateName("gridContainer-details"));
+
+                                    })
                                     .HoverStateEnabled(true)
                                     .ShowBorders(true)
                                     .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
@@ -140,9 +145,43 @@
                                     })
                                 )
         </div>
+        @using (Html.DevExtreme().NamedTemplate("gridContainer-details"))
+        {
+            @(Html.DevExtreme().Form()
+                .ElementAttr("class", "form-container")
+                .Items(items => {
+                    items.AddSimple()
+                        .Label(l => l.Text("List Image"))
+                        .Editor(e => e.SelectBox()
+                            .DataSource(d => d.Mvc()
+                                .Controller("Lookup")
+                                .LoadAction("getFileAttachFeedback")
+                                .LoadParams(new { ArchivesFeedBackId = new JS("data.ArchivesFeedBackId") })
+                                .Key("Id")
+                            )
+                            .ValueExpr("FileAttach")
+                            .DisplayExpr("FileAttach")
+                            .OnValueChanged("image")
+                        );
+                })
+            )
+        }
+        <div class="modal fade" id="Popup_img" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <img id="img_id" style="width:100%;height:100%">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="Close_Popup_img()">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="DocFeedBack(@ViewBag.Id)">Download File</button>
         @{
             if (ViewBag.UserCreate == Context.Session.GetString("UserName"))
             {
@@ -159,5 +198,24 @@
             $.notify(data, "success");
             $("#myModal").modal('toggle');
         });
+    }
+    function image(data) {
+        var id = data.value;
+        var extensionFile = ["jpg", "jpeg", "png"];
+        var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + extensionFile.join('|') + ")$");
+        try {
+            if (!regex.test(id.toLowerCase())) {
+                location.href = '/Archives/DownloadDocument/' + id;
+            } else {
+                document.getElementById('img_id').src = '/FileUploads/ArchivesFileFeedBack/' + data.value;
+                $('#Popup_img').modal('show');
+            }
+        }
+        catch {
+            $.notify("something is wrong!", "error");
+        }
+    }
+    function Close_Popup_img() {
+        $('#Popup_img').modal('hide');
     }
 </script>

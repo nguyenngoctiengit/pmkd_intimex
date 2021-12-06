@@ -332,7 +332,7 @@ namespace Intimex_project.Controllers
 
             var path = Path.Combine(
                            Directory.GetCurrentDirectory(),
-                           "wwwroot/FileUploads/ArchivesFileAttach", filename);
+                           "wwwroot/FileUploads/ArchivesFileFeedBack", filename);
 
             var memory = new MemoryStream();
             using (var stream = new FileStream(path, FileMode.Open))
@@ -451,11 +451,12 @@ namespace Intimex_project.Controllers
         {
             Archive archive = _context.Archives.Where(a => a.ArchivesId == long.Parse(id)).FirstOrDefault();
             archive.IsFinish = true;
-            archive.DateClose = DateTime.Now;
+            archive.DateClose = DateTime.Now;   
             _context.Archives.Update(archive);
             _context.SaveChanges();
             return Json("Công việc đã hoàn thành");
         }
+        
     }
 
 }
