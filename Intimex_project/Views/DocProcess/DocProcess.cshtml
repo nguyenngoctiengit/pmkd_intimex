@@ -68,19 +68,43 @@
                                     .RemoteOperations(true)
                                     .Columns(columns => {
 
-                                        columns.AddFor(m => m.StyleCode).Caption("Loại VB");
-
-                                        columns.AddFor(m => m.DocDate).Caption("Ngày VB");
-
-                                        columns.AddFor(m => m.DateReceive).Caption("Ngày gửi");
-
                                         columns.AddFor(m => m.NumberSign).Caption("Số / Ký hiệu");
+
+                                        columns.AddFor(m => m.DocDate).Caption("Ngày VB").Format("dd/MM/yyyy");
+
+                                        columns.AddFor(m => m.DateReceive).Caption("Ngày gửi").Format("dd/MM/yyyy");
 
                                         columns.AddFor(m => m.Contents).Caption("Tên loại và trích yếu nội dung VB");
 
                                         columns.AddFor(m => m.DocLevelName).Caption("Độ khẩn");
 
                                         columns.AddFor(m => m.UserSend).Caption("Người gửi");
+
+                                        columns.AddFor(m => m.StyleName).Caption("Loại văn bản");
+
+                                        columns.AddFor(m => m.TypeName).Caption("Hình thức");
+
+                                        columns.AddFor(m => m.IsProcessReady).Caption("Trạng thái").Lookup(lookup => lookup.DataSource(new JS("IsProcessReady")).ValueExpr("id").DisplayExpr("name"));
+
+                                        columns.Add().AllowFiltering(false)
+                                        .AllowSorting(false).CellTemplate(@<text>
+                                                <button type="button" onclick="AddArchive(<%= data.DocId%>)">Chuyển VB</button>
+                                        </text>);
+
+                                        columns.Add().AllowFiltering(false)
+                                                 .AllowSorting(false).CellTemplate(@<text>
+                                                <button type="button" onclick="DocArchive(<%= data.DocId%>)">Chuyển tiếp</button>
+                                        </text>);
+
+                                        columns.Add().AllowFiltering(false)
+                                                .AllowSorting(false).CellTemplate(@<text>
+                                                <button type="button" onclick="DocFeedBack(<%= data.DocId%>)">Xem VB</button>
+                                        </text>);
+
+                                        columns.Add().AllowFiltering(false)
+                                                .AllowSorting(false).CellTemplate(@<text>
+                                                <button type="button" onclick="DetailArchives(<%= data.DocId%>)">Re-download</button>
+                                        </text>);
 
                                     })
                                     .HoverStateEnabled(true)
@@ -115,4 +139,9 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function AddArchive(id) {
+        location.href = "/doccome/addarchive/" + id;
+    }
+</script>
 

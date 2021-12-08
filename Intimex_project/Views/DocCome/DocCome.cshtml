@@ -71,7 +71,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive">
-                                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Document>().ID("gridContainer")
+                                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Sp_GetDocCome>().ID("gridContainer")
                                     .DataSource(ds => ds.Mvc()
                                         .Controller("doccome")
                                         .LoadAction("Get")
@@ -110,7 +110,6 @@
 
                                         columns.Add().DataField("IsChuyen").Caption("Đã chuyển");
 
-                                        columns.Add().DataField("DateCreate").Visible(false).SortOrder(SortOrder.Desc);
 
                                     })
                                     .Editing(e => e

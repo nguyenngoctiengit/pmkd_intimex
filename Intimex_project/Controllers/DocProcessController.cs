@@ -27,7 +27,15 @@ namespace Intimex_project.Controllers
         [HttpGet]
         public object Get(DataSourceLoadOptions loadOptions)
         {
-            var Sp = "exec Sp_GetDocumentManage @UserName = "+ HttpContext.Session.GetString("UserName") + "";
+            var Sp = "exec [dbo].[sp_Document];12 @DocStyleId = '0',"+
+                        "@DateFrom = '2012/01/01',"+
+                        "@DateTo = '"+ DateTime.Now.ToString("yyyy/MM/dd") +"',"+
+                        "@DocTypeId = '0',"+
+                        "@SignNumber = '',"+
+                        "@StatusProcess = '2',"+
+                        "@UserName = '"+ HttpContext.Session.GetString("UserName") + "',"+
+                        "@DocProcessId = '0',"+
+                        "@StatusDoc = '2'";
             var item = _context.Sp_GetDocumentManages.FromSqlRaw(Sp).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }

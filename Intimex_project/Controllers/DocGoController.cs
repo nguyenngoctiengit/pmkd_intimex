@@ -40,27 +40,18 @@ namespace Intimex_project.Controllers
             return View("DocGo");
         }
         [HttpGet]
-        public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
+        public object Get(DataSourceLoadOptions loadOptions)
         {
-            var item_return = (from a in _context.Documents
-                               where a.DocStyleId != 3 && a.IsDelete == false
-                               select new
-                               {
-                                   DateCreate = a.DateCreate,
-                                   DocId = a.DocId,
-                                   DocDate = a.DocDate,
-                                   DateCome = a.DateCome,
-                                   NumberCome = a.NumberCome,
-                                   Contents = a.Contents,
-                                   DocTypeId = a.DocTypeId,
-                                   NumberSign = a.NumberSign,
-                                   DocPlaceId = a.DocPlaceId,
-                                   DocLever = a.DocLever,
-                                   Singer = a.Singer,
-                                   DocStyleId = a.DocStyleId == 2 ? "Gửi nội bộ" : "Gửi ra ngoài",
-                                   IsChuyen = _context.DocProcesses.Count(b => b.DocId == a.DocId) > 0 ? true : false,
-                               }).OrderByDescending(a => a.DocDate);
-            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+            var Sp = "EXEC sp_Document;2 @DocStyleId = ''," +
+                            "@DateFrom = '2012-01-01'," +
+                            "@DateTo = '" + DateTime.Now.ToString("yyyy-MM-dd") + "'," +
+                            "@DocTypeId = '0'," +
+                            "@SignNumber = ''," +
+                            "@User = '" + HttpContext.Session.GetString("UserName") + "'," +
+                            "@IsChuyen = '2'," +
+                            "@macn = '" + HttpContext.Session.GetString("UnitName") + "'";
+            var item = _context.Sp_GetDocComes.FromSqlRaw(Sp).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
         }
 
         public IActionResult AddDocGo()

@@ -17,13 +17,13 @@ namespace Data.Models.Trading_system
         public string Contents { get; set; }
         public string DocLevelName { get; set; }
         public string UserSend { get; set; }
-        public DateTime DateReceive { get; set; }
+        public string DateReceive { get; set; }
         public int FeedBackNum { get; set; }
         public int StatusProcess { get; set; }
         public int NumberArchives { get; set; }
         public int IsProcessReady { get; set; }
-        public DateTime DateProcess { get; set; }
-        public DateTime DateCome { get; set; }
+        public string DateProcess { get; set; }
+        public DateTime? DateCome { get; set; }
         public string NumberCome { get; set; }
         public int DocLever { get; set; }
         public int NumberOfPage { get; set; }

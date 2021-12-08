@@ -71,10 +71,12 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive">
-                                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Document>().ID("gridContainer")
+                                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Sp_GetDocCome>().ID("gridContainer")
                                     .DataSource(ds => ds.Mvc()
                                         .Controller("DocGo")
                                         .LoadAction("Get")
+                                        .InsertAction("Post")
+                                        .UpdateAction("Put")
                                         .DeleteAction("Delete")
                                         .Key("DocId")
                                     )
@@ -83,13 +85,11 @@
 
                                         columns.AddFor(m => m.DocDate).Caption("Ngày VB");
 
-                                        columns.AddFor(m => m.DateCome).Caption("Ngày nhận").Visible(false);
+                                        columns.AddFor(m => m.DateCome).Caption("Ngày nhận");
 
-                                        columns.AddFor(m => m.NumberCome).Caption("Số văn bản đến").Visible(false);
+                                        columns.AddFor(m => m.NumberCome).Caption("Số văn bản đến");
 
                                         columns.AddFor(m => m.Contents).Caption("Tên loại và trích yếu nội dung văn bản");
-
-                                        columns.AddFor(m => m.NumberSign).Caption("Số / Ký hiệu");
 
                                         columns.AddFor(m => m.DocTypeId).Caption("Hình thức").Lookup(lookup => lookup
                                         .DataSource(d => d.Mvc().Controller("lookup").LoadAction("getDoctype").Key("DocTypeId"))
@@ -97,21 +97,19 @@
                                         .ValueExpr("DocTypeId")
                                         );
 
-                                        columns.AddFor(m => m.DocPlaceId).Caption("Nơi nhận").Lookup(lookup => lookup
+                                        columns.AddFor(m => m.NumberSign).Caption("Số / Ký hiệu");
+
+                                        columns.AddFor(m => m.DocPlaceId).Caption("Nơi gửi").Lookup(lookup => lookup
                                         .DataSource(d => d.Mvc().Controller("lookup").LoadAction("getDocplace").Key("DocPlaceId"))
                                         .DisplayExpr("DocPlaceName")
                                         .ValueExpr("DocPlaceId")
                                         );
 
-                                        columns.Add().DataField("Singer").Caption("Người kí");
 
                                         columns.AddFor(m => m.DocLever).Caption("Độ khẩn").Lookup(lookup => lookup.DataSource(new JS("DocLever")).ValueExpr("id").DisplayExpr("name"));
 
-                                        columns.Add().DataField("DocStyleId").Caption("Loại văn bản");
-
                                         columns.Add().DataField("IsChuyen").Caption("Đã chuyển");
 
-                                        columns.Add().DataField("DateCreate").Visible(false).SortOrder(SortOrder.Desc);
 
                                     })
                                     .Editing(e => e
