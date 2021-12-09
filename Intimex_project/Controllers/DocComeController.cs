@@ -54,7 +54,7 @@ namespace Intimex_project.Controllers
         }
         public IActionResult AddDocCome()
         {
-            return View("AddDocCome");
+            return PartialView("_PartiView_AddDocCome");
         }
 
         public void DeleteFile(string extensionFile)
@@ -158,15 +158,16 @@ namespace Intimex_project.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
+        [HttpPost]
         public IActionResult EditDocCome(string id)
         {
             ViewBag.DocId = id;
             ViewBag.listImage = _context.DocFileAttaches.Where(a => a.DocId == long.Parse(id)).ToList();
             var model = _context.Documents.Where(a => a.DocId == long.Parse(id)).FirstOrDefault();
-            return View("EditDocCome",model);
+            return PartialView("_PartiView_EditDocCome", model);
         }
         [HttpPost]
-        public async Task<IActionResult>  EditDocCome(string id,Document document)
+        public async Task<IActionResult> Edit_DocCome(string id, Document document)
         {
             var _document = _context.Documents.FirstOrDefault(a => a.DocId == long.Parse(id));
             _document.DocLever = document.DocLever;
@@ -199,7 +200,7 @@ namespace Intimex_project.Controllers
         public IActionResult addarchive(long id)
         {
             ViewBag.DocId = id;
-            return View("addarchive");
+            return PartialView("_PartiView_AddArchive");
         }
         [HttpGet]
         public async Task<IActionResult> GetArchive(string id, DataSourceLoadOptions loadOptions)
@@ -239,6 +240,7 @@ namespace Intimex_project.Controllers
             TempData["alertMessage"] = "Lưu văn bản đến thành công";
             return Json(Url.Action("DocCome", "Doccome"));
         }
+        [HttpPost]
         public IActionResult DocTransfer(long id)
         {
             var document = _context.Documents.Where(a => a.DocId == id).FirstOrDefault();
@@ -247,7 +249,7 @@ namespace Intimex_project.Controllers
             ViewBag.DocType = _context.DocTypes.Where(a => a.DocTypeId == document.DocTypeId).Select(a => a.TypeName).FirstOrDefault();
             ViewBag.Contents = document.Contents;
             ViewBag.DocId = id;
-            return View("DocTransfer");
+            return PartialView("_PartiView_DocTranfer");
         }
         [HttpGet]
         public async Task<IActionResult> GetUserRight(DataSourceLoadOptions loadOptions)
@@ -268,6 +270,7 @@ namespace Intimex_project.Controllers
         [HttpPost]
         public ActionResult update_ListReciever(string[] array_ListReciever)
         {
+            ListReciever.Clear();
             foreach (string i in array_ListReciever)
             {
                 ListReciever.Add(i);
@@ -275,7 +278,7 @@ namespace Intimex_project.Controllers
             return Json("Update success");
         }
         [HttpPost]
-        public async Task<IActionResult> DocTransfer(DocProcess docProcess,long id)
+        public async Task<IActionResult> Doc_Transfer(DocProcess docProcess,long id)
         {
             DocProcess doc = new DocProcess();
             for (var i = 0;i< ListReciever.Count; i++)

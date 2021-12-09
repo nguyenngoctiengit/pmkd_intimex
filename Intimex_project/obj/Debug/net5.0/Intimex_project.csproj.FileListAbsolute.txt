@@ -715,10 +715,6 @@ C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\zh-Hant\M
 C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\runtimes\win-arm\lib\net5.0\dotnet-aspnet-codegenerator-design.exe
 C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\runtimes\win-arm64\lib\net5.0\dotnet-aspnet-codegenerator-design.exe
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocCome\DocCome.cshtml.g.cs
-C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocCome\AddDocCome.cshtml.g.cs
-C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocCome\EditDocCome.cshtml.g.cs
-C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocCome\addarchive.cshtml.g.cs
-C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocCome\DocTransfer.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocGo\DocGo.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocGo\AddDocGo.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocGo\EditDocGo.cshtml.g.cs
@@ -731,3 +727,7 @@ C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Vie
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Archives\_PartiView_ArchiveFeedBack.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Archives\_PartiView_DetailArchives.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocProcess\DocProcess.cshtml.g.cs
+C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocCome\_PartiView_AddDocCome.cshtml.g.cs
+C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocCome\_PartiView_EditDocCome.cshtml.g.cs
+C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocCome\_PartiView_DocTranfer.cshtml.g.cs
+C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocCome\_PartiView_AddArchive.cshtml.g.cs

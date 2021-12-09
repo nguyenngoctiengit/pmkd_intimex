@@ -6,11 +6,21 @@
 
 @model IEnumerable<Data.Models.Trading_system.Document>
 <style>
-    .image_DocCome{
-        width:50px;
-        height:50px;
+    .image_DocCome {
+        width: 50px;
+        height: 50px;
+    }
+    .modal-dialog {
+        overflow-y: initial !important
+    }
+
+    .modal-body {
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
     }
 </style>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
 <div class="right_col" role="main" style="height: 500px">
     <div class="">
         <div class="page-title">
@@ -33,14 +43,6 @@
             {
                 <div style="color:red;font-size:30px">
                     @TempData["alertMessage"].ToString()
-                </div>
-            }
-        }
-        @{
-            if (TempData["alertMessage1"] != null)
-            {
-                <div style="color:red;font-size:30px">
-                    @TempData["alertMessage1"].ToString()
                 </div>
             }
         }
@@ -71,7 +73,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive">
-                                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Sp_GetDocCome>().ID("gridContainer")
+                                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Sp_GetDocCome>().ID("grid_DocCome")
                                     .DataSource(ds => ds.Mvc()
                                         .Controller("doccome")
                                         .LoadAction("Get")
@@ -123,10 +125,11 @@
                                         md.Template(new TemplateName("gridContainer-details"));
 
                                     })
-                                    
+
                                     .HoverStateEnabled(true)
                                     .ShowBorders(true)
-                                    .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
+                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                    .OnSelectionChanged("Change_DocId")
                                     .OnToolbarPreparing("toolbar_DocCome")
                                     .Export(e => e.Enabled(true))
                                     .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
@@ -169,21 +172,31 @@
                                             })
                                     )
                                     }
-                                    <div class="modal fade" id="Popup_img" tabindex="-1" role="dialog">
-                                        <div class="modal-dialog" role="document">
+                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
                                             <div class="modal-content">
-
-                                                <div class="modal-body">
-                                                    <img id="img_id" style="width:100%;height:100%">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" onclick="Close_myModal()">&times;</button>
                                                 </div>
+                                                <div id="_PartiView_AddOrUpdate_Archive">
 
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="modal fade" id="Popup_img" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <img id="img_id" style="width:100%;height:100%">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="text" id="DocIdSelected" hidden>
                                 </div>
                             </div>
                         </div>
@@ -195,12 +208,21 @@
 </div>
 <script src="~/js/js_create/doccome.js"></script>
 <script>
+    function Change_DocId(selectedItems) {
+        var data = selectedItems.selectedRowsData[0];
+        if (data) {
+            document.getElementById("DocIdSelected").value = data.DocId;
+        }
+    }
+    function Close_myModal() {
+        $("#myModal").modal("hide");
+    }
     function getDataGridInstance() {
-        return $("#gridContainer").dxDataGrid("instance");
+        return $("#grid_DocCome").dxDataGrid("instance");
     }
     function image(data) {
         var id = data.value;
-        var extensionFile = ["jpg", "jpeg","png"];
+        var extensionFile = ["jpg", "jpeg", "png"];
         var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + extensionFile.join('|') + ")$");
         try {
             if (!regex.test(id.toLowerCase())) {
@@ -221,7 +243,11 @@
             options: {
                 icon: "add",
                 onClick: function () {
-                    location.href = "/doccome/AddDocCome";
+                    $.post('/DocCome/AddDocCome', function (response) {
+                        $("#_PartiView_AddOrUpdate_Archive").html(response);
+                        $("#myModal").modal("show");
+
+                    })
                 }
             }
         });
@@ -231,18 +257,16 @@
             options: {
                 icon: "edit",
                 onClick: function () {
-                    getDataGridInstance().getSelectedRowsData().done(function (rowData) {
-                        for (var i = 0; i < rowData.length; i++) {
-                            var id = rowData[i].DocId;
-                            if (id) {
-                                location.href = "/doccome/editdoccome/" + id;
-                            }
-                            else {
-                                $.notify("please choose the document you want to edit", "error");
-                            }
-                        }
-
-                    })
+                    var id = document.getElementById("DocIdSelected").value;
+                    if (id) {
+                        $.post('/DocCome/EditDocCome', { 'id': id }, function (response) {
+                            $("#_PartiView_AddOrUpdate_Archive").html(response);
+                            $("#myModal").modal("show");
+                        })
+                    } else {
+                        $.notify("please choose the document you want to edit!", "error");
+                    }
+                    
                 },
             }
 
@@ -253,18 +277,18 @@
             options: {
                 text: "Lưu hồ sơ",
                 onClick: function () {
-                    getDataGridInstance().getSelectedRowsData().done(function (rowData) {
-                        for (var i = 0; i < rowData.length; i++) {
-                            var id = rowData[i].DocId;
-                            if (id) {
-                                location.href = "/doccome/addarchive/" + id;
-                            }
-                            else {
-                                $.notify("please choose the document you want to edit", "error");
-                            }
-                        }
-
-                    })
+                    var id = document.getElementById("DocIdSelected").value;
+                    if (id) {
+                        $.post('/doccome/addarchive', { 'id': id }, function (response) {
+                            console.log(id);
+                            $("#_PartiView_AddOrUpdate_Archive").html(response);
+                            $("#myModal").modal("show");
+                        })
+                    }
+                    else {
+                        $.notify("please choose the document you want to save!", "error");
+                    }
+                    
                 },
             }
 
@@ -275,18 +299,19 @@
             options: {
                 text: "Chuyển VB",
                 onClick: function () {
-                    getDataGridInstance().getSelectedRowsData().done(function (rowData) {
-                        for (var i = 0; i < rowData.length; i++) {
-                            var id = rowData[i].DocId;
-                            if (id) {
-                                location.href = "/doccome/DocTransfer/" + id;
-                            }
-                            else {
-                                $.notify("please choose the document you want to transfer", "error");
-                            }
-                        }
-
-                    })
+                    var id = document.getElementById("DocIdSelected").value;
+                    if (id) {
+                        $.post('/doccome/DocTransfer', { 'id': id }, function (response) {
+                            console.log(id);
+                            $("#_PartiView_AddOrUpdate_Archive").html(response);
+                            document.getElementById("Form_DocTranfer").action = "/DocCome/Doc_Transfer/" + id;
+                            $("#myModal").modal("show");
+                        })
+                    }
+                    else {
+                        $.notify("choose the document you want to tranfer !", "error");
+                    }
+                    
                 },
             }
 
