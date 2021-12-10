@@ -53,15 +53,34 @@ namespace Intimex_project.Controllers
             var item = _context.Sp_GetDocComes.FromSqlRaw(Sp).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
+        public async Task<IActionResult> DownloadDocument(string id)
+        {
+            var filename = id;
+            if (filename == null)
+                return Content("filename not present");
 
+            var path = Path.Combine(
+                           Directory.GetCurrentDirectory(),
+                           "wwwroot/FileUploads/DocGo", filename);
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            return File(memory, "APPLICATION/octet-stream", Path.GetFileName(path));
+        }
         public IActionResult AddDocGo()
         {
-            return View("AddDocGo");
+            return PartialView("_PartiView_AddDocGo");
         }
 
         [HttpPost]
         public void upLoadFiles(IEnumerable<IFormFile> files)
         {
+            docFiles.Clear();
+            docFilesEdit.Clear();
             foreach (var file in files)
             {
                 string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocGo\\{file.FileName}";
@@ -124,10 +143,10 @@ namespace Intimex_project.Controllers
             ViewBag.DocId = id;
             ViewBag.listImage = _context.DocFileAttaches.Where(a => a.DocId == long.Parse(id)).ToList();
             var model = _context.Documents.Where(a => a.DocId == long.Parse(id)).FirstOrDefault();
-            return View("EditDocGo", model);
+            return PartialView("_PartiView_EditDocGo", model);
         }
         [HttpPost]
-        public async Task<IActionResult> EditDocGo(string id, Document document)
+        public async Task<IActionResult> Edit_DocGo(string id, Document document)
         {
             var _document = _context.Documents.FirstOrDefault(a => a.DocId == long.Parse(id));
             _document.DocLever = document.DocLever;
@@ -187,6 +206,28 @@ namespace Intimex_project.Controllers
             await _context.SaveChangesAsync();
             TempData["alertMessage"] = "Xóa văn bản đến thành công";
             return Ok();
+        }
+        [HttpPost]
+        public ActionResult addarchive1(string[] array, long DocId)
+        {
+            List<string> listArchive = new List<string>();
+            foreach (string i in array)
+            {
+
+                listArchive.Add(i);
+
+            }
+            for (var i = 0; i < listArchive.Count(); i++)
+            {
+                DocArchive doc = new DocArchive();
+                doc.DocId = DocId;
+                doc.ArchivesId = long.Parse(listArchive[i]);
+                _context.DocArchives.Add(doc);
+                _context.SaveChanges();
+            }
+            listArchive.Clear();
+            TempData["alertMessage"] = "Lưu văn bản đến thành công";
+            return Json(Url.Action("DocGo", "DocGo"));
         }
     }
 }

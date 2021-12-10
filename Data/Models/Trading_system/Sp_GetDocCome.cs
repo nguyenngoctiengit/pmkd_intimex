@@ -12,7 +12,7 @@ namespace Data.Models.Trading_system
         [Key]
         public long DocId { get; set; }
         public DateTime DocDate { get; set; }
-        public DateTime DateCome { get; set; }
+        public DateTime? DateCome { get; set; }
         public string Contents { get; set; }
         public int DocLever { get; set; }
         public string NumberCome { get; set; }

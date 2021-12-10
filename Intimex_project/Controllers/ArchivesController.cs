@@ -41,7 +41,7 @@ namespace Intimex_project.Controllers
         public object Get(DataSourceLoadOptions loadOptions)
         {
             var Sp = "exec GetArchives " +
-                            "@macn = " + HttpContext.Session.GetString("UnitName") + "," +
+                            "@macn = '" + HttpContext.Session.GetString("UnitName") + "'," +
                             "@user = '" + HttpContext.Session.GetString("UserName") + "'";
             var item = _context.SP_GetArchives.FromSqlRaw(Sp).ToList();
             return DataSourceLoader.Load(item, loadOptions);

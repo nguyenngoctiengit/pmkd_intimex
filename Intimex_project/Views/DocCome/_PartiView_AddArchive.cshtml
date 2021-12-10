@@ -38,13 +38,13 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" onclick="AddArchive()" class="btn btn-outline-dark">Lưu</button>
+    <button type="button" id="btn_Save" onclick="AddArchive()" class="btn btn-outline-dark">Lưu</button>
 </div>
 <script type="text/javascript">
     function getDataGridInstance() {
         return $("#dataGrib_archive").dxDataGrid("instance");
     }
-    var DocId = document.getElementById('DocId').value;
+    var DocId = document.getElementById('DocId').value; 
     function AddArchive() {
         getDataGridInstance().getSelectedRowsData().done(function (rowData) {
             var array = []
@@ -53,6 +53,44 @@
                 traditional: true,
                 type: 'POST',
                 url: '/DocCome/addarchive1',
+                dataType: 'JSON',
+                data: { array: array, DocId: DocId },
+                success: function (data) {
+                    window.location.href = data
+                },
+                error: function (request) {
+                    $.notify("Something went wrong!!", "error");
+                }
+            })
+        })
+    }
+    function SaveForDocProcess() {
+        getDataGridInstance().getSelectedRowsData().done(function (rowData) {
+            var array = []
+            rowData.forEach(element => { array.push(element.ArchivesId) })
+            $.ajax({
+                traditional: true,
+                type: 'POST',
+                url: '/DocProcess/addarchive1',
+                dataType: 'JSON',
+                data: { array: array, DocId: DocId },
+                success: function (data) {
+                    window.location.href = data
+                },
+                error: function (request) {
+                    $.notify("Something went wrong!!", "error");
+                }
+            })
+        })
+    }
+    function SaveForDocGo() {
+        getDataGridInstance().getSelectedRowsData().done(function (rowData) {
+            var array = []
+            rowData.forEach(element => { array.push(element.ArchivesId) })
+            $.ajax({
+                traditional: true,
+                type: 'POST',
+                url: '/DocGo/addarchive1',
                 dataType: 'JSON',
                 data: { array: array, DocId: DocId },
                 success: function (data) {

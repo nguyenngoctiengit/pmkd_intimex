@@ -39,5 +39,31 @@ namespace Intimex_project.Controllers
             var item = _context.Sp_GetDocumentManages.FromSqlRaw(Sp).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
+        [HttpPost]
+        public ActionResult addarchive1(string[] array, long DocId)
+        {
+            List<string> listArchive = new List<string>();
+            foreach (string i in array)
+            {
+
+                listArchive.Add(i);
+
+            }
+            for (var i = 0; i < listArchive.Count(); i++)
+            {
+                DocArchive doc = new DocArchive();
+                doc.DocId = DocId;
+                doc.ArchivesId = long.Parse(listArchive[i]);
+                _context.DocArchives.Add(doc);
+                _context.SaveChanges();
+            }
+            listArchive.Clear();
+            TempData["alertMessage"] = "Lưu văn bản đến thành công";
+            return Json(Url.Action("DocProcess", "DocProcess"));
+        }
+        public IActionResult DocFeedBack(string DocId,string DocProcessId)
+        {
+            return PartialView("_PartiView_DocFeedBack");
+        }
     }
 }

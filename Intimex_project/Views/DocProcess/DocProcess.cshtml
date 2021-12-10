@@ -86,14 +86,14 @@
 
                                         columns.AddFor(m => m.IsProcessReady).Caption("Trạng thái").Lookup(lookup => lookup.DataSource(new JS("IsProcessReady")).ValueExpr("id").DisplayExpr("name"));
 
-                                        columns.Add().AllowFiltering(false)
+                                        columns.Add().AllowFiltering(false).Width("100")
                                         .AllowSorting(false).CellTemplate(@<text>
                                                 <button type="button" onclick="AddArchive(<%= data.DocId%>)">Chuyển VB</button>
                                         </text>);
 
-                                        columns.Add().AllowFiltering(false)
+                                        columns.Add().AllowFiltering(false).Width("100")
                                                  .AllowSorting(false).CellTemplate(@<text>
-                                                <button type="button" onclick="DocArchive(<%= data.DocId%>)">Chuyển tiếp</button>
+                                                <button type="button" onclick="DocFeedBack(<%= data.DocId %>,<%= data.DocProcessId %>)">Chuyển tiếp</button>
                                         </text>);
 
                                         columns.Add().AllowFiltering(false)
@@ -107,6 +107,7 @@
                                         </text>);
 
                                     })
+                                    .ColumnAutoWidth(true)
                                     .HoverStateEnabled(true)
                                     .ShowBorders(true)
                                     .Export(e => e.Enabled(true))
@@ -114,7 +115,6 @@
                                     .HeaderFilter(hearder => hearder.Visible(true))
                                     .AllowColumnResizing(true)
                                     .AllowColumnReordering(true)
-                                    .ColumnAutoWidth(true)
                                     .ColumnChooser(c => c.Enabled(true))
                                     .ColumnFixing(c => c.Enabled(true))
                                     .ShowBorders(true)
@@ -133,14 +133,48 @@
                             </div>
                         </div>
                     </div>
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" onclick="Close_myModal()">&times;</button>
+                                </div>
+                                <div id="_PartiView_AddOrUpdate_Archive">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
+    function Close_myModal() {
+        $("#myModal").modal("hide");
+    }
     function AddArchive(id) {
-        location.href = "/doccome/addarchive/" + id;
+        if (id) {
+            $.post('/doccome/addarchive', { 'id': id }, function (response) {
+                $("#_PartiView_AddOrUpdate_Archive").html(response);
+                document.getElementById("btn_Save").onclick = SaveForDocProcess;
+                $("#myModal").modal("show");
+            })
+        }
+        else {
+            $.notify("please choose the document you want to save!", "error");
+        }
+    }
+    function DocFeedBack(DocId, DocProcessId) {
+        if (DocId) {
+            $.post('/DocProcess/DocFeedBack', { 'DocId': DocId, 'DocProcessId': DocProcessId }, function (response) {
+                $("#_PartiView_AddOrUpdate_Archive").html(response);
+                $("#myModal").modal("show");
+            })
+        } else {
+            $.notify("please choose the document you want to save!", "error");
+        }
     }
 </script>
 
