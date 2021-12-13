@@ -75,17 +75,9 @@
 
                                                         colunms.AddFor(m => m.FullName1).Caption("Tên nhân viên").Fixed(true);
 
-                                                        colunms.Add().DataField("BranchId").Caption("Bộ phận")@*.Lookup(l => l.DataSource(d => d.Mvc()
-                                                                                                                                        .Controller("lookup")
-                                                                                                                                        .LoadAction("getbophan"))
-                                                                                                                        .ValueExpr("DepartmentCode")
-                                                                                                                        .DisplayExpr("DepartmentName"))*@;
+                                                        colunms.Add().DataField("BranchId").Caption("Bộ phận");
 
-                                                        colunms.Add().DataField("NameV").Caption("Chi nhánh")@*.Lookup(l => l.DataSource(d => d.Mvc()
-                                                                                                                                        .Controller("lookup")
-                                                                                                                                        .LoadAction("getchinhanh"))
-                                                                                                                        .ValueExpr("Id")
-                                                                                                                        .DisplayExpr("NameV")).Width(400)*@;
+                                                        colunms.Add().DataField("NameV").Caption("Chi nhánh");
 
                                                         colunms.AddFor(m => m.UserName1).Caption("Mã nhân viên").Fixed(true).Visible(false);
 

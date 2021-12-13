@@ -1,7 +1,7 @@
 ﻿<div class="modal-body">
     <input type="text" id="DocId" value="@ViewBag.DocId" hidden>
     <div class="card-box table-responsive">
-        @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Archive>().ID("dataGrib_archive")
+        @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Sp_GetArchivesForAdd>().ID("dataGrib_archive")
                                     .DataSource(ds => ds.Mvc()
                                         .Controller("DocCome")
                                         .LoadAction("GetArchive")
@@ -9,13 +9,9 @@
                                         .Key("ArchivesId")
                                     )
                                     .Columns(columns => {
-                                        columns.Add().DataField("ArchivesId").Visible(false);
+                                        columns.AddFor(a => a.ArchivesId).Visible(false);
 
-                                        columns.Add().DataField("ArchivesName").Caption("Ngày VB");
-
-                                        columns.Add().DataField("IsFinish").Caption("Trạng thái");
-
-                                        columns.Add().DataField("ArchivesType").Caption("Loại hồ sơ");
+                                        columns.AddFor(a => a.ArchivesName).Caption("Tên công việc");
                                     })
                                     .Selection(s => s.Mode(SelectionMode.Multiple).Deferred(true))
                                     .HoverStateEnabled(true)

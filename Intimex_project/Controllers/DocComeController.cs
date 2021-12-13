@@ -203,20 +203,15 @@ namespace Intimex_project.Controllers
             return PartialView("_PartiView_AddArchive");
         }
         [HttpGet]
-        public async Task<IActionResult> GetArchive(string id, DataSourceLoadOptions loadOptions)
+        public object GetArchive(string id, DataSourceLoadOptions loadOptions)
         {
-
-            var item_return = from a in _context.Archives
-                              where a.MaCn == HttpContext.Session.GetString("UnitName")
-                              && !(from b in _context.DocArchives where b.DocId == long.Parse(id) select b.ArchivesId).Contains(a.ArchivesId)
-                              select new
-                              {
-                                  ArchivesId = a.ArchivesId,
-                                  ArchivesName = a.ArchivesName,
-                                  IsFinish = a.IsFinish == true ? "Hoàn thành" : "Chưa hoàn thành",
-                                  ArchivesType = a.ArchivesType == 0 ? "Công việc" : a.ArchivesType == 1 ? "Hồ sơ" : "Tất cả",
-                              };
-            return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
+            var Sp = "exec sp_Document;18 @MaCN = '"+ HttpContext.Session.GetString("UnitName") + "',"+
+                        "@DocId = '"+ id +"',"+
+                        "@Status = '2',"+
+                        "@UserName = '" + HttpContext.Session.GetString("UserName") + "',"+
+                        "@ArchivesType = '2'";
+            var item = _context.Sp_GetArchivesForAdds.FromSqlRaw(Sp).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
         }
         [HttpPost]
         public ActionResult addarchive1(string[] array, long DocId)

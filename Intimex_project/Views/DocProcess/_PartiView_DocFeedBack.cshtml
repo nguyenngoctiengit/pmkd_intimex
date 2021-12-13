@@ -3,14 +3,16 @@
         <div class="form-group col-md-12">
             <label class="col-form-label col-md-1 col-sm-1">Nội dung</label>
             <div class="col-md-11 col-sm-11">
-                <textarea class="form-control" style="height:100px"></textarea>
+                <textarea class="form-control" id="Idea" style="height:100px">@ViewBag.Contents</textarea>
             </div>
         </div>
     </div>
+    <input type="text" id="DocProcessId" value="@ViewBag.DocProcessId" hidden>
+    <input type="text" id="FeedbackId" hidden>
     <div class="form-group row" style="margin-bottom:0px">
         <div class="form-group col-md-12" style="margin-bottom:0px">
             <div class="form-group col-md-6">
-                <button type="button" class="btn btn-secondary btn-sm" onclick="OpenPopUp_Handler()">Người nhận</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="OpenPopUp_Reciever()">Người nhận</button>
             </div>
             <div class="form-group col-md-6">
                 <button type="button" class="btn btn-secondary btn-sm" onclick="OpenPopUp_Participant()">File Attach</button>
@@ -19,7 +21,7 @@
     </div>
     <div class="form-group row">
         <div class="form-group col-md-6">
-            <table class="table" id="List_handler">
+            <table class="table" id="ListReciever">
                 <tr>
                     <th>
                         Người nhận
@@ -31,7 +33,7 @@
             </table>
         </div>
         <div class="form-group col-md-6">
-            <table class="table" id="List_Participants">
+            <table class="table" id="aaaaa">
                 <tr>
                     <th>
                         Tệp
@@ -40,10 +42,178 @@
                         Action
                     </th>
                 </tr>
+                @{
+                    foreach (var item in ViewBag.ListFileAttach)
+                    {
+                        <tr>
+                            <td>
+                                <a data-toggle="modal" data-target="#exampleModal" data-imageid="@item.FileSource">
+                                    @item.FileSource
+                                </a>
+                            </td>
+                            <td>
+                                <a href='#' onclick='DeleteFile(this,"@item.FileSource")'><span class='glyphicon glyphicon-remove red'></span></a>
+                            </td>
+                        </tr>
+                    }
+                }
             </table>
         </div>
     </div>
+    <div class="modal fade" id="Popup_choose_receiver" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="display:table">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Chọn nhân viên</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="form-group col-md-12">
+                            @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.UserRight>()
+                                                    .ID("grib_dsnv")
+                                                    .DataSource(d => d.Mvc().LoadAction("GetUserRight")
+                                                                            .Controller("DocCome")
+                                                                            .Key("UserName1"))
+                                                    .RemoteOperations(true)
+                                                    .Columns(colunms => {
+
+                                                        colunms.AddFor(m => m.FullName1).Caption("Tên nhân viên").Fixed(true);
+
+                                                        colunms.Add().DataField("BranchId").Caption("Bộ phận");
+
+                                                        colunms.Add().DataField("NameV").Caption("Chi nhánh");
+
+                                                        colunms.AddFor(m => m.UserName1).Caption("Mã nhân viên").Fixed(true).Visible(false);
+
+                                                    })
+                                                    .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                    .Selection(s => s.Mode(SelectionMode.Multiple).Deferred(true))
+                                                    .HoverStateEnabled(true)
+                                                    .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                    .HeaderFilter(header => header.Visible(true))
+                                                    .AllowColumnReordering(true)
+                                                    .AllowColumnResizing(true)
+                                                    .ColumnAutoWidth(true)
+                                                    .ColumnChooser(c => c.Enabled(true))
+                                                    .ColumnFixing(c => c.Enabled(true))
+                                                    .ShowBorders(true)
+                                                    .Grouping(group => group.AutoExpandAll(true))
+                                                    .GroupPanel(groupPanel => groupPanel.Visible(true))
+                                                    .Paging(paging => paging.PageSize(5))
+                                                    .Pager(paper =>
+                                                    {
+                                                        paper.ShowPageSizeSelector(true);
+                                                        paper.AllowedPageSizes(new[] { 5, 10, 20 });
+                                                        paper.ShowInfo(true);
+                                                    })
+                                                )
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="ChooseReceiver()">Chọn</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Sp_GetDocFeedback>()
+                                                    .ID("grib_DocFeedBack")
+                                                    .DataSource(d => d.Mvc().LoadAction("GetDocFeedBack")
+                                                                            .DeleteAction("DeleteDocFeedBack")
+                                                                            .Controller("DocProcess")
+                                                                            .Key("DocFeedBackId")
+                                                                            .LoadParams(new { DocProcessId = ViewBag.DocProcessId }))
+                                                    .RemoteOperations(true)
+                                                    .Columns(colunms => {
+
+                                                        colunms.AddFor(m => m.Idea).Caption("Nội dung");
+
+                                                        colunms.AddFor(m => m.DateCreate).Caption("Ngày gửi");
+
+                                                        colunms.AddFor(m => m.UserReceive).Caption("Người nhận");
+
+                                                        colunms.AddFor(m => m.StatusFeedBack).Caption("Đã xem");
+
+                                                    })
+                                                    .OnSelectionChanged("ChooseFeedbackParentId")
+                                                    .Editing(editing => editing.AllowDeleting(true).UseIcons(true))
+                                                    .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                                    .HoverStateEnabled(true)
+                                                    .HeaderFilter(header => header.Visible(true))
+                                                    .AllowColumnReordering(true)
+                                                    .AllowColumnResizing(true)
+                                                    .ColumnFixing(c => c.Enabled(true))
+                                                    .ShowBorders(true)
+                                                    .Grouping(group => group.AutoExpandAll(true))
+                                                    .Paging(paging => paging.PageSize(5))
+                                                    .Pager(paper =>
+                                                    {
+                                                        paper.ShowPageSizeSelector(true);
+                                                        paper.AllowedPageSizes(new[] { 5, 10, 20 });
+                                                        paper.ShowInfo(true);
+                                                    })
+                                                )
+    </div>
 </div>
 <div class="modal-footer">
-
+    <button type="button" class="btn btn-primary" onclick="SaveDocFeedBack()">Gửi</button>
+    <button type="button" class="btn btn-link" onclick="Close_myModal()">Thoát</button>
 </div>
+<script type="text/javascript">
+
+    function OpenPopUp_Reciever() {
+        $('#Popup_choose_receiver').modal('show');
+    }
+    function getDataGridInstance() {
+        return $("#grib_dsnv").dxDataGrid("instance");
+    }
+    function ChooseReceiver() {
+        getDataGridInstance().getSelectedRowsData().done(function (rowData) {
+            var array = []
+            rowData.forEach(element => { array.push(element) })
+            for (var i = 0; i < array.length; i++) {
+                var markup = "<tr><td style='display: none'>" + array[i].UserName1 + "</td><td>" + array[i].FullName1 + " - " + array[i].BranchId + "</td><td><a href='#' onclick='DeleteReceiver(this,\"" + array[i].UserName1 + "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>";
+                $("#ListReciever tbody").append(markup);
+            }
+            $('#Popup_choose_receiver').modal('toggle');
+        })
+    }
+    function SaveDocFeedBack() {
+        var array_ListReciever = [];
+        var ListReciever = [];
+        var DocProcessId = document.getElementById("DocProcessId").value;
+        var Idea = document.getElementById("Idea").value;
+        var FeedbackId = document.getElementById("FeedbackId").value;
+        $("#ListReciever tr:not(:first)").each(function () {
+            array_ListReciever.push($(this).find("td:first").text()); //put elements into array
+            array_ListReciever.forEach(element => { ListReciever.push(element.UserName1) })
+        });
+        if (array_ListReciever.length != 0) {
+            $.ajax({
+                traditional: true,
+                dataType: 'json',
+                type: 'POST',
+                url: '/DocProcess/SaveDocFeedBack',
+                data: { array_ListReciever: array_ListReciever, DocProcessId: DocProcessId, Idea: Idea, FeedbackId: FeedbackId },
+                success: function (data) {
+                    $("#myModal").modal("toggle");
+                    $.notify(data, "success");
+                },
+                error: function () {
+                    $.notify("Something went wrong", "error");
+                }
+            })
+        }
+        else if (array_ListReciever.length == 0) {
+            $.notify("please choose reciever!", "error");
+        }
+    }
+    function Close_myModal() {
+        $("#myModal").modal("hide");
+    }
+
+</script>

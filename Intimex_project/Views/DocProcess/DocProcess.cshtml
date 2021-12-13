@@ -3,7 +3,21 @@
     ViewData["Title"] = "DocProcess";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .image_DocCome {
+        width: 50px;
+        height: 50px;
+    }
 
+    .modal-dialog {
+        overflow-y: initial !important
+    }
+
+    .modal-body {
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+    }
+</style>
 <div class="right_col" role="main" style="height: 500px">
     <div class="">
         <div class="page-title">
@@ -175,6 +189,10 @@
         } else {
             $.notify("please choose the document you want to save!", "error");
         }
+    }
+    function ChooseFeedbackParentId(selectedItems) {
+        var data = selectedItems.selectedRowsData[0];
+        document.getElementById("FeedbackId").value = data.DocFeedBackId;
     }
 </script>
 
