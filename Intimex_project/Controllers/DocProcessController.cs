@@ -1,12 +1,15 @@
-﻿using Application.Parameter;
+﻿using Application.AutoId;
+using Application.Parameter;
 using Data.Models.Trading_system;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,6 +18,14 @@ namespace Intimex_project.Controllers
     public class DocProcessController : Controller
     {
         public tradingsystemContext _context = new tradingsystemContext(ConnectionParameter.connectionString);
+
+        private IHostEnvironment _env;
+
+        public static List<FeedBackFileAttach> ListFileAttachFeedback { get; set; } = new List<FeedBackFileAttach>();
+        public DocProcessController(IHostEnvironment env)
+        {
+            _env = env;
+        }
         public IActionResult Index()
         {
             return View();
@@ -82,7 +93,7 @@ namespace Intimex_project.Controllers
         {
             foreach(var i in array_ListReciever)
             {
-                if (CheckUser(i, DocProcessId))
+                if (CheckUser(i, DocProcessId) == false)
                 {
                     var user = _context.UserRights.Where(a => a.UserName1 == i).Select(a => a.FullName1).FirstOrDefault();
                     return Json("Văn bản này đã được chuyển đến cho " + user);
@@ -100,6 +111,18 @@ namespace Intimex_project.Controllers
                     docFeedBack.DocFeedBackParentId = FeedbackId == 0 ? 0 : FeedbackId;
                     _context.DocFeedBacks.Add(docFeedBack);
                     _context.SaveChanges();
+                    for(var j = 0;j < ListFileAttachFeedback.Count; j++)
+                    {
+                        FeedBackFileAttach feedBackFileAttach = new FeedBackFileAttach();
+                        feedBackFileAttach.FeedBackId = _context.DocFeedBacks.Max(a => a.DocFeedBackId);
+                        feedBackFileAttach.FileAttach = ListFileAttachFeedback[j].FileAttach;
+                        feedBackFileAttach.FileSource = ListFileAttachFeedback[j].FileSource;
+                        _context.FeedBackFileAttaches.Add(feedBackFileAttach);
+                        _context.SaveChanges();
+
+                    }
+                    ListFileAttachFeedback.Clear();
+                    
                 }
             }
             return Json("Update success");
@@ -124,7 +147,29 @@ namespace Intimex_project.Controllers
                 return true;
             }
         }
-
+        [HttpPost]
+        public void Add_file_attach(IEnumerable<IFormFile> files)
+        {
+            ListFileAttachFeedback.Clear();
+            foreach (var file in files)
+            {
+                string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\FeedbackFileAttach\\{file.FileName}";
+                using (FileStream fileStream = System.IO.File.Create(fileName))
+                {
+                    file.CopyTo(fileStream);
+                    fileStream.Flush();
+                }
+                string newFileName = AutoId.AutoIdFileStored("FileStored");
+                string ext = Path.GetExtension(file.FileName);
+                string newFile = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\FeedbackFileAttach\\{newFileName}{ext}";
+                using (FileStream fileStream = System.IO.File.Create(newFile))
+                {
+                    file.CopyTo(fileStream);
+                    fileStream.Flush();
+                }
+                ListFileAttachFeedback.Add(new FeedBackFileAttach { FileAttach = newFileName + ext, FileSource = file.FileName });
+            }
+        }
 
 
     }

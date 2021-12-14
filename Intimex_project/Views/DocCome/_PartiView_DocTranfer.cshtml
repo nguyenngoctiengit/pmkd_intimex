@@ -41,7 +41,7 @@
             <div class="form-group col-md-12">
                 <label class="col-form-label col-md-2 col-sm-2">Thời gian giải quyết</label>
                 <div class="col-md-3 col-sm-3">
-                    @(Html.DevExtreme().DateBoxFor(m => m.DateLimit))
+                    @(Html.DevExtreme().DateBoxFor(m => m.DateLimit).DisplayFormat("dd/MM/yyyy"))
                 </div>
             </div>
         </div>

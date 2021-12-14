@@ -283,7 +283,7 @@ namespace Intimex_project.Controllers
                 doc.DocId = id;
                 doc.ObjectProcess = ListReciever[i];
                 doc.DateLimit = docProcess.DateLimit;
-                doc.DateReceive = docProcess.DateLimit;
+                doc.DateReceive = DateTime.Now;
                 doc.StatusProcess = 1;
                 doc.Command = docProcess.Command == null ? "" : docProcess.Command;
                 await _context.DocProcesses.AddAsync(doc);

@@ -193,6 +193,13 @@
     function ChooseFeedbackParentId(selectedItems) {
         var data = selectedItems.selectedRowsData[0];
         document.getElementById("FeedbackId").value = data.DocFeedBackId;
+        $("#ListFileAttach tbody tr").remove();
+        if (data.FileSource != null) {
+            var markup = "<tr><td><a>" + data.FileSource + "</a></td><td><a href='#' onclick='ViewFileAttach(\"" + data.FileSource + "\")'><span class='fa fa-eye' aria-hidden='true'></span></a></td></tr>";
+            $("#ListFileAttach tbody").append(markup);
+        }
+        document.getElementById("Idea").value = data.Idea;
     }
+
 </script>
 

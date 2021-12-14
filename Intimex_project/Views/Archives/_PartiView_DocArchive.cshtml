@@ -202,6 +202,8 @@
             $("#List_file_attach tbody").append(markup);
         }
         axios.post("/Archives/Add_file_attach", formData);
+        $.notify("Thêm file thành công", "success");
+        $("#myModal").modal('toggle');
     }
     function ViewFileAttach(ex) {
         if (ex.endsWith(".png") || ex.endsWith(".jpeg") || ex.endsWith(".jpg")) {

@@ -21,6 +21,6 @@ namespace Data.Models.Trading_system
         public string UserSend { get; set; }
         public string BranchId { get; set; }
         public long DepartmentId { get; set; }
-
+        public string FileSource { get; set; }
     }
 }

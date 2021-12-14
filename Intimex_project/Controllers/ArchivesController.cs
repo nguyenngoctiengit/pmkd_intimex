@@ -417,7 +417,7 @@ namespace Intimex_project.Controllers
                 _context.SaveChanges();
             }
             archivesFbfileAttaches.Clear();
-            TempData["alertMessage"] = "Phản hồi công việc thành công";
+            TempData["alertMessage"] = "Phản hồi công việc thành công"; 
             return RedirectToAction("Archives");
         }
         public void DeleteFile_AttachFeedBack(string extensionFile)

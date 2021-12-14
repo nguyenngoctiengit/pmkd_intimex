@@ -15,7 +15,8 @@
                 <button type="button" class="btn btn-secondary btn-sm" onclick="OpenPopUp_Reciever()">Người nhận</button>
             </div>
             <div class="form-group col-md-6">
-                <button type="button" class="btn btn-secondary btn-sm" onclick="OpenPopUp_Participant()">File Attach</button>
+                <label for="Add_file_attach" class="btn btn-secondary btn-sm">File đính kèm</label>
+                <input type="file" id="Add_file_attach" onchange="uploadMultipleFile(event)" name="files" style="display:none">
             </div>
         </div>
     </div>
@@ -33,30 +34,35 @@
             </table>
         </div>
         <div class="form-group col-md-6">
-            <table class="table" id="aaaaa">
-                <tr>
-                    <th>
-                        Tệp
-                    </th>
-                    <th>
-                        Action
-                    </th>
-                </tr>
-                @{
-                    foreach (var item in ViewBag.ListFileAttach)
-                    {
-                        <tr>
-                            <td>
-                                <a data-toggle="modal" data-target="#exampleModal" data-imageid="@item.FileSource">
-                                    @item.FileSource
-                                </a>
-                            </td>
-                            <td>
-                                <a href='#' onclick='DeleteFile(this,"@item.FileSource")'><span class='glyphicon glyphicon-remove red'></span></a>
-                            </td>
-                        </tr>
+            <table class="table" id="ListFileAttach">
+                <thead>
+                    <tr>
+                        <th>
+                            Tệp
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var item in ViewBag.ListFileAttach)
+                        {
+                            <tr>
+                                <td>
+                                    <a data-toggle="modal" data-target="#exampleModal" data-imageid="@item.FileSource">
+                                        @item.FileSource
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href='#' onclick='DeleteFile(this,"@item.FileSource")'><span class='glyphicon glyphicon-remove red'></span></a>
+                                </td>
+                            </tr>
+                        }
                     }
-                }
+                </tbody>
             </table>
         </div>
     </div>
@@ -131,7 +137,7 @@
 
                                                         colunms.AddFor(m => m.Idea).Caption("Nội dung");
 
-                                                        colunms.AddFor(m => m.DateCreate).Caption("Ngày gửi");
+                                                        colunms.AddFor(m => m.DateCreate).Caption("Ngày gửi").Format("dd/MM/yyyy");
 
                                                         colunms.AddFor(m => m.UserReceive).Caption("Người nhận");
 
@@ -164,7 +170,19 @@
     <button type="button" class="btn btn-link" onclick="Close_myModal()">Thoát</button>
 </div>
 <script type="text/javascript">
-
+    function uploadMultipleFile(e) {
+        var FeedbackId = document.getElementById("FeedbackId").value;
+        var files = e.target.files;
+        var formData = new FormData();
+        for (var i = 0; i < files.length; i++) {
+            formData.append("files", files[i]);
+            formData.append("FeedbackId", FeedbackId);
+            var extensionFile = files[i].name;
+            var markup = "<tr><td><a>" + extensionFile + "</a></td><td><a href='#' onclick='ViewFileAttach(\"" + extensionFile + "\")'><span class='fa fa-eye' aria-hidden='true'></span></a></td></tr>";
+            $("#ListFileAttach tbody").append(markup);
+        }
+        axios.post("/DocProcess/Add_file_attach", formData);
+    }
     function OpenPopUp_Reciever() {
         $('#Popup_choose_receiver').modal('show');
     }
