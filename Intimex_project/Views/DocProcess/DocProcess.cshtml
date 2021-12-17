@@ -112,7 +112,7 @@
 
                                         columns.Add().AllowFiltering(false)
                                                 .AllowSorting(false).CellTemplate(@<text>
-                                                <button type="button" onclick="DocFeedBack(<%= data.DocId%>)">Xem VB</button>
+                                                <button type="button" onclick="ViewFileDocument(<%= data.DocId%>)">Xem VB</button>
                                         </text>);
 
                                         columns.Add().AllowFiltering(false)
@@ -168,6 +168,16 @@
     function Close_myModal() {
         $("#myModal").modal("hide");
     }
+    function ViewFileDocument(id) {
+        if (id) {
+            $.post('/DocProcess/ViewFileDocument', { 'id': id }, function (respone) {
+                $("#_PartiView_AddOrUpdate_Archive").html(respone);
+                document.getElementById("DocId").value = id;
+                $("#myModal").modal("show");
+
+            })
+        }
+    }
     function AddArchive(id) {
         if (id) {
             $.post('/doccome/addarchive', { 'id': id }, function (response) {
@@ -199,6 +209,24 @@
             $("#ListFileAttach tbody").append(markup);
         }
         document.getElementById("Idea").value = data.Idea;
+    }
+    function SelectedImageDisplay(data) {
+        var fileName = data.selectedItem;
+        if (fileName.endsWith(".pdf") == true) {
+            window.open("/FileUploads/Document/" + fileName);
+        } else if (fileName.endsWith(".png") == true || fileName.endsWith(".jpg") == true || fileName.endsWith(".jpeg") == true) {
+            document.getElementById('img_id').src = '/FileUploads/Document/' + data.selectedItem;
+            document.getElementById("text_Popup_img").style.display = "none";
+            $("#Popup_img").modal("show");
+        } else {
+            location.href = '/DocCome/DownloadDocument/' + fileName;
+            var EOffice = document.getElementById("EOffice");
+            var Reply = document.getElementById("Reply");
+            EOffice.setAttribute("onclick", "EOffice('" + fileName + "')");
+            Reply.setAttribute("onclick", "Reply('" + fileName + "')")
+            document.getElementById("modal-footer-tiff").style.display = "block";
+            $("#Popup_img").modal("show");
+        }
     }
 
 </script>

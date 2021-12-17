@@ -40,7 +40,7 @@ namespace Intimex_project.Controllers
         {
             var Sp = "exec [dbo].[sp_Document];12 @DocStyleId = '0',"+
                         "@DateFrom = '2012/01/01',"+
-                        "@DateTo = '"+ DateTime.Now.ToString("yyyy/MM/dd") +"',"+
+                        "@DateTo = '"+ DateTime.Today.AddDays(1).ToString("yyyy/MM/dd") +"',"+
                         "@DocTypeId = '0',"+
                         "@SignNumber = '',"+
                         "@StatusProcess = '2',"+
@@ -56,9 +56,7 @@ namespace Intimex_project.Controllers
             List<string> listArchive = new List<string>();
             foreach (string i in array)
             {
-
                 listArchive.Add(i);
-
             }
             for (var i = 0; i < listArchive.Count(); i++)
             {
@@ -170,7 +168,72 @@ namespace Intimex_project.Controllers
                 ListFileAttachFeedback.Add(new FeedBackFileAttach { FileAttach = newFileName + ext, FileSource = file.FileName });
             }
         }
-
-
+        [HttpPost]
+        public IActionResult ViewFileDocument(string id)
+        {
+            var Document = _context.Documents.Where(a => a.DocId == long.Parse(id)).FirstOrDefault();
+            var image = _context.DocFileAttaches.Where(a => a.DocId == long.Parse(id)).Select(a => a.FileAttach).ToList();
+            ViewBag.countImage = image.Count;
+            ViewBag.ListImage = image;
+            return PartialView("_PartiView_ViewFileDocument");
+        }
+        public void SendFileToUser(string fileName,string DocId,string UserReceive)
+        {
+            Random random = new Random();
+            var DocumentItem = _context.Documents.Where(a => a.DocId == long.Parse(DocId)).FirstOrDefault();
+            Document document = new Document();
+            document.DocStyleId = 2;
+            document.Contents = "Ý kiến BTGĐ - " + DocumentItem.Contents;
+            document.DateCreate = DateTime.Now;
+            document.DepId = _context.UserRights.Where(a => a.UserName1 == HttpContext.Session.GetString("UserName")).Select(a => a.Department).FirstOrDefault();
+            document.DocDate = DateTime.Now;
+            document.DocLever = 0;
+            document.DocPlaceId = 0;
+            document.IsPublic = 0;
+            document.DocTypeId = 12;
+            document.Macn = HttpContext.Session.GetString("UnitName");
+            document.Note = "";
+            document.NumberCome = "";
+            document.NumberOfPage = 1;
+            document.Singer = "";
+            document.NumberSign = random.Next(000000, 999999).ToString();
+            document.UserCreate = HttpContext.Session.GetString("UserName");
+            _context.Documents.Add(document);
+            _context.SaveChanges();
+            DocProcess docpro = new DocProcess()
+            {
+                UserSend = HttpContext.Session.GetString("UserName"),
+                DocId = document.DocId,
+                ObjectProcess = UserReceive,
+                DateLimit = DateTime.Now,
+                Command = "",
+                StatusProcess = 1,
+                DateReceive = DateTime.Now,
+                NoteProcessReady = ""
+            };
+            _context.DocProcesses.Add(docpro);
+            _context.SaveChanges();
+            DocFileAttach docfile = new DocFileAttach()
+            {
+                DocId = document.DocId,
+                FileSource = fileName,
+                FileAttach = fileName
+            };
+            _context.DocFileAttaches.Add(docfile);
+            _context.SaveChanges();
+        }
+        [HttpPost]
+        public IActionResult EOffice(string fileName,string DocId)
+        {
+            SendFileToUser(fileName, DocId, "VT-INX");
+            return Json("Chuyển văn thư thành công");
+        }
+        [HttpPost]
+        public IActionResult Reply(string fileName,string DocId)
+        {
+            var UserSend = (from a in _context.Documents join b in _context.DocProcesses on a.DocId equals b.DocId where a.DocId == long.Parse(DocId) select b.UserSend).FirstOrDefault();
+            SendFileToUser(fileName, DocId, UserSend);
+            return Json("Chuyển văn thư thành công");
+        }
     }
 }

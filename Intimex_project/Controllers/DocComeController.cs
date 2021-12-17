@@ -59,7 +59,7 @@ namespace Intimex_project.Controllers
 
         public void DeleteFile(string extensionFile)
         {
-            string file = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{extensionFile}";
+            string file = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\Document\\{extensionFile}";
             System.IO.File.Delete(file);
             docFiles.RemoveAll(x => x.FileSource == extensionFile);
         }
@@ -68,7 +68,7 @@ namespace Intimex_project.Controllers
         {
             if (extensionFile.StartsWith("F000"))
             {
-                string file = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{extensionFile}";
+                string file = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\Document\\{extensionFile}";
                 System.IO.File.Delete(file);
                 var delete_item = _context.DocFileAttaches.FirstOrDefault(a => a.FileAttach == extensionFile);
                 _context.DocFileAttaches.Remove(delete_item);
@@ -76,7 +76,7 @@ namespace Intimex_project.Controllers
             }
             else
             {
-                string file = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{extensionFile}";
+                string file = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\Document\\{extensionFile}";
                 System.IO.File.Delete(file);
                 docFilesEdit.RemoveAll(x => x.FileSource == extensionFile);
             }
@@ -87,7 +87,7 @@ namespace Intimex_project.Controllers
         {
             foreach (var file in files)
             {
-                string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{file.FileName}";
+                string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\Document\\{file.FileName}";
                 using (FileStream fileStream = System.IO.File.Create(fileName))
                 {
                     file.CopyTo(fileStream);
@@ -95,7 +95,7 @@ namespace Intimex_project.Controllers
                 }
                 string newFileName = AutoId.AutoIdFileStored("FileStored");
                 string ext = Path.GetExtension(file.FileName);
-                string newFile = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{newFileName}{ext}";
+                string newFile = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\Document\\{newFileName}{ext}";
                 using (FileStream fileStream = System.IO.File.Create(newFile))
                 {
                     file.CopyTo(fileStream);
@@ -129,7 +129,7 @@ namespace Intimex_project.Controllers
             var maxDocId = _context.Documents.Max(a => a.DocId);
             foreach(var item in docFiles)
             {
-                string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\DocCome\\{item.FileSource}";
+                string fileName = $"{_env.ContentRootPath}\\wwwroot\\FileUploads\\Document\\{item.FileSource}";
                 System.IO.File.Delete(fileName);
                 DocFileAttach docFileAttach = new DocFileAttach();
                 docFileAttach.DocId = maxDocId;
@@ -323,7 +323,7 @@ namespace Intimex_project.Controllers
 
             var path = Path.Combine(
                            Directory.GetCurrentDirectory(),
-                           "wwwroot/FileUploads/DocCome", filename);
+                           "wwwroot/FileUploads/Document", filename);
 
             var memory = new MemoryStream();
             using (var stream = new FileStream(path, FileMode.Open))

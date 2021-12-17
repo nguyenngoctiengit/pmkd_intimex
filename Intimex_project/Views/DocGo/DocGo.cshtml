@@ -228,7 +228,7 @@
             if (!regex.test(id.toLowerCase())) {
                 location.href = '/DocGo/DownloadDocument/' + id;
             } else {
-                document.getElementById('img_id').src = '/FileUploads/DocGo/' + data.value;
+                document.getElementById('img_id').src = '/FileUploads/Document/' + data.value;
                 $('#Popup_img').modal('show');
             }
         }
