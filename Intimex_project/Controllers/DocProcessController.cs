@@ -235,5 +235,14 @@ namespace Intimex_project.Controllers
             SendFileToUser(fileName, DocId, UserSend);
             return Json("Chuyển văn thư thành công");
         }
+        [HttpPost]
+        public IActionResult SendToReceiver(string fileName, string DocId, string[] array)
+        {
+            foreach(string i in array)
+            {
+                SendFileToUser(fileName, DocId, i);
+            }
+            return Json("aaaaa");
+        }
     }
 }

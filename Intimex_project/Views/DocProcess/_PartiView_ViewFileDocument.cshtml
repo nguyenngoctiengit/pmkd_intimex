@@ -13,9 +13,66 @@
                 <div id="modal-footer-tiff" style="display:none">
                     <button type="button" class="btn btn-secondary" id="EOffice">Văn thư</button>
                     <button type="button" class="btn btn-secondary" id="Reply">Phản hồi</button>
-                    <button type="button" class="btn btn-secondary" onclick="Close_Popup_img()">Người nhận</button>
+                    <button type="button" class="btn btn-secondary" id="Send">Người nhận</button>
                 </div>
                 <button type="button" class="btn btn-secondary" onclick="Close_Popup_img()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="choose_receiver" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="display:table">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Chọn nhân viên</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="fileName" hidden>
+                <div class="form-group row">
+                    <div class="form-group col-md-12">
+                        @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.UserRight>()
+                                                    .ID("dsnv")
+                                                    .DataSource(d => d.Mvc().LoadAction("GetUserRight")
+                                                                            .Controller("DocCome")
+                                                                            .Key("UserName1"))
+                                                    .RemoteOperations(true)
+                                                    .Columns(colunms => {
+
+                                                        colunms.AddFor(m => m.FullName1).Caption("Tên nhân viên").Fixed(true);
+
+                                                        colunms.Add().DataField("BranchId").Caption("Bộ phận");
+
+                                                        colunms.Add().DataField("NameV").Caption("Chi nhánh");
+
+                                                        colunms.AddFor(m => m.UserName1).Caption("Mã nhân viên").Fixed(true).Visible(false);
+
+                                                    })
+                                                    .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                    .Selection(s => s.Mode(SelectionMode.Multiple).Deferred(true))
+                                                    .HoverStateEnabled(true)
+                                                    .AllowColumnReordering(true)
+                                                    .AllowColumnResizing(true)
+                                                    .ColumnAutoWidth(true)
+                                                    .ColumnChooser(c => c.Enabled(true))
+                                                    .ColumnFixing(c => c.Enabled(true))
+                                                    .ShowBorders(true)
+                                                    .Grouping(group => group.AutoExpandAll(true))
+                                                    .GroupPanel(groupPanel => groupPanel.Visible(true))
+                                                    .Paging(paging => paging.PageSize(5))
+                                                    .Pager(paper =>
+                                                    {
+                                                        paper.ShowPageSizeSelector(true);
+                                                        paper.AllowedPageSizes(new[] { 5, 10, 20 });
+                                                        paper.ShowInfo(true);
+                                                    })
+                                                )
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="choose_receiver()">Chọn</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -31,14 +88,50 @@
         var DocId = document.getElementById("DocId").value;
         $.post('/DocProcess/EOffice', { 'fileName': fileName, 'DocId': DocId }, function (response) {
             $.notify(response, "success");
-            $("#Popup_img").modal("toggle");
+            $("#Popup_img").modal("hide");
         }) 
     }
     function Reply(fileName) {
         var DocId = document.getElementById("DocId").value;
         $.post('/DocProcess/Reply', { 'fileName': fileName, 'DocId': DocId }, function (response) {
             $.notify(response, "success");
-            $("#Popup_img").modal("toggle");
+            $("#Popup_img").modal("hide");
+        })
+    }
+    function Send(fileName) {
+        document.getElementById("fileName").value = fileName;
+        $("#choose_receiver").modal("show");
+    }
+    function getDataGridInstance1() {
+        return $("#dsnv").dxDataGrid("instance");
+    }
+    function choose_receiver() {
+        getDataGridInstance1().getSelectedRowsData().done(function (rowData) {
+            var array = []
+            var DocId = document.getElementById("DocId").value;
+            var fileName = document.getElementById("fileName").value
+            rowData.forEach(element => { array.push(element.UserName1) })
+            for (var i = 0; i < array.length; i++) {
+                if (array.length != 0) {
+                    $.ajax({
+                        traditional: true,
+                        dataType: 'json',
+                        type: 'POST',
+                        url: '/DocProcess/SendToReceiver',
+                        data: { fileName:fileName,DocId: DocId, array: array },
+                        success: function (data) {
+                            $.notify(data, "success");
+                        },
+                        error: function () {
+                            $.notify("Something went wrong", "error");
+                        }
+                    })
+                }
+                else if (array_ListReciever.length == 0) {
+                    $.notify("please choose reciever!", "error");
+                }
+            }
+            $('#choose_handler_participant').modal('toggle');
         })
     }
 </script>

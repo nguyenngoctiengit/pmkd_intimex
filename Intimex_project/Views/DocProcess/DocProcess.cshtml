@@ -222,8 +222,10 @@
             location.href = '/DocCome/DownloadDocument/' + fileName;
             var EOffice = document.getElementById("EOffice");
             var Reply = document.getElementById("Reply");
+            var Send = document.getElementById("Send");
             EOffice.setAttribute("onclick", "EOffice('" + fileName + "')");
-            Reply.setAttribute("onclick", "Reply('" + fileName + "')")
+            Reply.setAttribute("onclick", "Reply('" + fileName + "')");
+            Send.setAttribute("onclick", "Send('" + fileName + "')");
             document.getElementById("modal-footer-tiff").style.display = "block";
             $("#Popup_img").modal("show");
         }
