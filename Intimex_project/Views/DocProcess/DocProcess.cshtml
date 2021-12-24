@@ -107,17 +107,12 @@
 
                                         columns.Add().AllowFiltering(false).Width("100")
                                                  .AllowSorting(false).CellTemplate(@<text>
-                                                <button type="button" onclick="DocFeedBack(<%= data.DocId %>,<%= data.DocProcessId %>)">Chuyển tiếp</button>
+                                                <button type="button" onclick="DocFeedBack(<%= data.DocId %>,<%= data.DocProcessId %>,<%= data.FeedBackId %>)">Chuyển tiếp</button>
                                         </text>);
 
                                         columns.Add().AllowFiltering(false)
                                                 .AllowSorting(false).CellTemplate(@<text>
-                                                <button type="button" onclick="ViewFileDocument(<%= data.DocId%>)">Xem VB</button>
-                                        </text>);
-
-                                        columns.Add().AllowFiltering(false)
-                                                .AllowSorting(false).CellTemplate(@<text>
-                                                <button type="button" onclick="DetailArchives(<%= data.DocId%>)">Re-download</button>
+                                                <button type="button" onclick="ViewFileDocument(<%= data.DocId %>,<%= data.DocProcessId %>,<%= data.FeedBackId %>)">Xem VB</button>
                                         </text>);
 
                                     })
@@ -168,11 +163,11 @@
     function Close_myModal() {
         $("#myModal").modal("hide");
     }
-    function ViewFileDocument(id) {
-        if (id) {
-            $.post('/DocProcess/ViewFileDocument', { 'id': id }, function (respone) {
+    function ViewFileDocument(DocId, DocProcessId, FeedBackId) {
+        if (DocId) {
+            $.post('/DocProcess/ViewFileDocument', { 'DocId': DocId, 'DocProcessId': DocProcessId, 'FeedBackId': FeedBackId }, function (respone) {
                 $("#_PartiView_AddOrUpdate_Archive").html(respone);
-                document.getElementById("DocId").value = id;
+                document.getElementById("DocId").value = DocId;
                 $("#myModal").modal("show");
 
             })
@@ -190,9 +185,9 @@
             $.notify("please choose the document you want to save!", "error");
         }
     }
-    function DocFeedBack(DocId, DocProcessId) {
+    function DocFeedBack(DocId, DocProcessId, FeedBackId) {
         if (DocId) {
-            $.post('/DocProcess/DocFeedBack', { 'DocId': DocId, 'DocProcessId': DocProcessId }, function (response) {
+            $.post('/DocProcess/DocFeedBack', { 'DocId': DocId, 'DocProcessId': DocProcessId, 'FeedBackId': FeedBackId}, function (response) {
                 $("#_PartiView_AddOrUpdate_Archive").html(response);
                 $("#myModal").modal("show");
             })
@@ -223,10 +218,17 @@
             var EOffice = document.getElementById("EOffice");
             var Reply = document.getElementById("Reply");
             var Send = document.getElementById("Send");
+
             EOffice.setAttribute("onclick", "EOffice('" + fileName + "')");
             Reply.setAttribute("onclick", "Reply('" + fileName + "')");
             Send.setAttribute("onclick", "Send('" + fileName + "')");
-            document.getElementById("modal-footer-tiff").style.display = "block";
+            var ViewModalTiff = document.getElementById("ViewModalTiff").value;
+            if (ViewModalTiff == "true") {
+                document.getElementById("modal-footer-tiff").style.display = "block";
+            } else {
+                document.getElementById("modal-footer-tiff").style.display = "none";
+            }
+            
             $("#Popup_img").modal("show");
         }
     }

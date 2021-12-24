@@ -70,8 +70,9 @@ namespace Intimex_project.Controllers
             TempData["alertMessage"] = "Lưu văn bản đến thành công";
             return Json(Url.Action("DocProcess", "DocProcess"));
         }
-        public IActionResult DocFeedBack(string DocId,string DocProcessId)
+        public IActionResult DocFeedBack(string DocId,string DocProcessId,string FeedBackId)
         {
+            UpdateStatusView(DocProcessId, long.Parse(FeedBackId));
             ViewBag.ListFileAttach = _context.DocFileAttaches.Where(a => a.DocId == long.Parse(DocId)).ToList();
             ViewBag.DocProcessId = DocProcessId;
             ViewBag.Contents = _context.Documents.Where(a => a.DocId == long.Parse(DocId)).Select(a => a.Contents).FirstOrDefault();
@@ -169,12 +170,21 @@ namespace Intimex_project.Controllers
             }
         }
         [HttpPost]
-        public IActionResult ViewFileDocument(string id)
+        public IActionResult ViewFileDocument(string DocId, string DocProcessId, string FeedBackId)
         {
-            var Document = _context.Documents.Where(a => a.DocId == long.Parse(id)).FirstOrDefault();
-            var image = _context.DocFileAttaches.Where(a => a.DocId == long.Parse(id)).Select(a => a.FileAttach).ToList();
+            UpdateStatusView(DocProcessId, long.Parse(FeedBackId));
+            var Document = _context.Documents.Where(a => a.DocId == long.Parse(DocId)).FirstOrDefault();
+            var image = _context.DocFileAttaches.Where(a => a.DocId == long.Parse(DocId)).Select(a => a.FileAttach).ToList();
             ViewBag.countImage = image.Count;
             ViewBag.ListImage = image;
+            if (UserLoginParameter.IsDeparmentLeader == true || UserLoginParameter.IsUnitLeader == true)
+            {
+                ViewBag.IsViewFile = "true";
+            }
+            else
+            {
+                ViewBag.IsViewFile = "false";
+            }
             return PartialView("_PartiView_ViewFileDocument");
         }
         public void SendFileToUser(string fileName,string DocId,string UserReceive)
@@ -242,7 +252,33 @@ namespace Intimex_project.Controllers
             {
                 SendFileToUser(fileName, DocId, i);
             }
-            return Json("aaaaa");
+            return Json("Gửi văn thư thành công");
+        }
+        private bool UpdateStatusView(string Id, long IsFeedBack)
+        {
+            try
+            {
+                if (IsFeedBack == 0)
+                {
+                    var DocProcess = _context.DocProcesses.Where(a => a.DocProcessId == long.Parse(Id)).FirstOrDefault();
+                    DocProcess.StatusProcess = 2;
+                    _context.DocProcesses.Update(DocProcess);
+                    _context.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    var DocFeedBack = _context.DocFeedBacks.Where(a => a.DocFeedBackId == IsFeedBack).FirstOrDefault();
+                    DocFeedBack.ViewFeedBack = 1;
+                    _context.DocFeedBacks.Update(DocFeedBack);
+                    _context.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

@@ -40,6 +40,7 @@ namespace Intimex_project.Controllers
                 if (new AppService().login(aspNetUser,out userId) == true)
                 {
                     var user = _context.AspNetUsers.FirstOrDefault(a => a.UserName == aspNetUser.UserName);
+                    var userRight = _context.UserRights.FirstOrDefault(a => a.UserName1 == aspNetUser.UserName);
                     var userBranch = _context.UserBranches.Where(a => a.UserName == user.UserName).Count();
                     if (userBranch > 1)
                     {
@@ -55,6 +56,9 @@ namespace Intimex_project.Controllers
                         HttpContext.Session.SetString("UserName", user.UserName);
                         HttpContext.Session.SetString("fullName", user.NormalizedUserName);
                         HttpContext.Session.SetString("UnitName", user.UnitName);
+                        UserLoginParameter.Username1 = userRight.UserName1;
+                        UserLoginParameter.IsUnitLeader = userRight.IsUnitLeader;
+                        UserLoginParameter.IsDeparmentLeader = userRight.IsDepartmentLeader;
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -70,6 +74,7 @@ namespace Intimex_project.Controllers
         public IActionResult loginwithUserBranch(AspNetUser aspNetUser)
         {
             var user = _context.AspNetUsers.SingleOrDefault(m => m.Id == aspNetUser.Id && m.Status == true);
+            var userRight = _context.UserRights.FirstOrDefault(a => a.UserName1 == user.UserName);
             var userBranch = aspNetUser.UnitName;
             user.Online = true;
             _context.AspNetUsers.Update(user).Property(a => a.Id).IsModified = false;
@@ -78,6 +83,9 @@ namespace Intimex_project.Controllers
             HttpContext.Session.SetString("userId", user.Id);
             HttpContext.Session.SetString("UserName", user.UserName);
             HttpContext.Session.SetString("fullName", user.NormalizedUserName);
+            UserLoginParameter.Username1 = userRight.UserName1;
+            UserLoginParameter.IsUnitLeader = userRight.IsUnitLeader;
+            UserLoginParameter.IsDeparmentLeader = userRight.IsDepartmentLeader;
             if (userBranch == "INXBL")
             {
                 HttpContext.Session.SetString("UnitName", "INXBL");

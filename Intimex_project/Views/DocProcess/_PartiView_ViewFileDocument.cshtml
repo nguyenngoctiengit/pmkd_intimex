@@ -1,7 +1,11 @@
 ﻿<div class="modal-body">
     @(Html.DevExtreme().SelectBox().OnSelectionChanged("SelectedImageDisplay").DataSource(ViewBag.ListImage))
     <input type="text" id="DocId" hidden>
+    <input type="text" id="ViewModalTiff" value="@ViewBag.IsViewFile" hidden> 
 </div>
+
+@*----------------------------------------Modal image--------------------------------------------------------*@
+
 <div class="modal fade" id="Popup_img" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -20,6 +24,11 @@
         </div>
     </div>
 </div>
+
+@*---------------------------------------------------------------------------------------------------------------*@
+
+@*------------------------------------------------------Modal chọn nhân viên để gửi-------------------------------------------------------------------------*@
+
 <div class="modal fade" id="choose_receiver" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" style="display:table">
         <div class="modal-content">
@@ -77,6 +86,9 @@
         </div>
     </div>
 </div>
+
+@*--------------------------------------------------------------------------------------------------------------------------------------------------------------*@
+
 <div class="modal-footer">
 
 </div>
@@ -89,7 +101,7 @@
         $.post('/DocProcess/EOffice', { 'fileName': fileName, 'DocId': DocId }, function (response) {
             $.notify(response, "success");
             $("#Popup_img").modal("hide");
-        }) 
+        })
     }
     function Reply(fileName) {
         var DocId = document.getElementById("DocId").value;
@@ -118,8 +130,9 @@
                         dataType: 'json',
                         type: 'POST',
                         url: '/DocProcess/SendToReceiver',
-                        data: { fileName:fileName,DocId: DocId, array: array },
+                        data: { fileName: fileName, DocId: DocId, array: array },
                         success: function (data) {
+                            $("#choose_receiver").modal("hide");
                             $.notify(data, "success");
                         },
                         error: function () {
