@@ -734,3 +734,4 @@ C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Vie
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocProcess\_PartiView_DocFeedBack.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocProcess\_PartiView_ViewFileDocument.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocDetails\DocDetails.cshtml.g.cs
+C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocDetails\_PartiView_ViewFileDocument.cshtml.g.cs

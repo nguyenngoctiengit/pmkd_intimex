@@ -54,9 +54,9 @@
                     </div>
                     <div class="x_content">
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-9">
                                 <div class="card-box table-responsive">
-                                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Sp_GetDocDetails>()
+                                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Sp_GetDocDetails>().ID("Sp_GetDocDetails")
                                     .DataSource(ds => ds.Mvc()
                                         .Controller("DocDetails")
                                         .LoadAction("Get")
@@ -67,7 +67,7 @@
 
                                         columns.AddFor(a => a.StyleCode).Caption("Loại VB");
 
-                                        columns.AddFor(a => a.DocId).Caption("Loại VB");
+                                        columns.AddFor(a => a.StyleCode).Caption("Loại VB");
 
                                         columns.AddFor(a => a.TypeCode).Caption("Hình thức");
 
@@ -82,9 +82,11 @@
                                         columns.AddFor(a => a.NumDocProcessIsView).Caption("Đã xem");
 
                                     })
+                                    .OnToolbarPreparing("toolbar_Archives")
+                                    .OnSelectionChanged("DisplayNameReceive")
                                     .HoverStateEnabled(true)
                                     .ShowBorders(true)
-                                    .Selection(s => s.Mode(SelectionMode.Single).Deferred(true))
+                                    .Selection(s => s.Mode(SelectionMode.Single))
                                     .Export(e => e.Enabled(true))
                                     .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
                                     .HeaderFilter(hearder => hearder.Visible(true))
@@ -121,6 +123,24 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-sm-3">
+                                Danh sách người nhận
+                                <div id="ListUserReceive" style="border-style:double;height:90%">
+                                </div>
+                                <input type="text" id="DocId">
+                            </div>
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" onclick="Close_myModal()">&times;</button>
+                                        </div>
+                                        <div id="_PartiView_AddOrUpdate_Archive">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -131,95 +151,42 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="~/js/js_create/doccome.js"></script>
 <script type="text/javascript">
-
-
-
-
     @*-----------------------------------Archives--------------------------------*@
-    function AssignTask(e) {
-        $.post('/Archives/AssignTask', { 'id': e }, function (response) {
-            $("#_PartiView_AddOrUpdate_Archive").html(response);
-            $("#myModal").modal("show");
-
-        })
+    function DisplayNameReceive(selectedItems) {
+        var data = selectedItems.selectedRowsData[0];
+        if (data) {
+            $.post('/DocDetails/DisplayNameReceive', { 'DocId': data.DocId, 'IsFeedBack': data.IsFeedBack }, function (array) {
+                var parse = "";
+                for (var i = 0; i < array.length; i++) {
+                    parse += array[i].DepartmentCode + " - " + array[i].FullName1 + "<br>";
+                }
+                document.getElementById("ListUserReceive").innerHTML = parse;
+            })
+            document.getElementById("DocId").value = data.DocId;
+        }
     }
-
-    function DocArchive(e) {
-        $.post('/Archives/DocArchive', { 'id': e }, function (response) {
-            $("#_PartiView_AddOrUpdate_Archive").html(response);
-            $("#myModal").modal("show");
-
-        })
-    }
-
-    function DocFeedBack(e) {
-        $.post('/Archives/ArchiveFeedBack', { 'id': e }, function (response) {
-            $("#_PartiView_AddOrUpdate_Archive").html(response);
-            $("#myModal").modal("show");
-
-        })
-    }
-
-    function DetailArchives(e) {
-        $.post('/Archives/DetailArchives', { 'id': e }, function (response) {
-            $("#_PartiView_AddOrUpdate_Archive").html(response);
-            $("#myModal").modal("show");
-
-        })
-    }
-
-    function getDataGridInstance() {
-        return $("#gridContainer_Archive").dxDataGrid("instance");
-    }
+    
     function toolbar_Archives(e) {
         e.toolbarOptions.items.unshift({
             location: "after",
             widget: "dxButton",
             options: {
-                text: "Thêm",
+                text: "Xem VB",
                 onClick: function () {
-                    $('#myModal').modal('hide');
-                    $.ajax({
-                        url: '/Archives/AddArchive',
-                        data: {},
-                        type: 'POST',
-                        dataType: 'HTML',
-                        success: function (response) {
-                            $("#_PartiView_AddOrUpdate_Archive").html(response);
+                    var DocId = document.getElementById("DocId").value;
+                    $.post('/DocDetails/ViewImage', { 'DocId': DocId }, function (respone) {
+                        if (respone == "false") {
+                            $.notify("Bạn không có quyền xem văn bản này", "error");
+                        }
+                        else {
+                            $("#_PartiView_AddOrUpdate_Archive").html(respone);
                             $("#myModal").modal("show");
                         }
                     })
                 }
             }
         });
-        e.toolbarOptions.items.unshift({
-            location: "after",
-            widget: "dxButton",
-            options: {
-                text: "Sửa",
-                onClick: function () {
-                    getDataGridInstance().getSelectedRowsData().done(function (rowData) {
-                        for (var i = 0; i < rowData.length; i++) {
-                            var id = rowData[i].ArchivesId;
-                            if (id) {
-                                $.post('/Archives/EditArchive', { 'id': id }, function (response) {
-                                    $("#_PartiView_AddOrUpdate_Archive").html(response);
-                                    $("#myModal").modal("show");
-
-                                })
-                            }
-                            else {
-                                $.notify("please choose the document you want to edit", "error");
-                            }
-                        }
-
-                    })
-
-                }
-            }
-        });
     }
-
 </script>
 <!-- /page content -->
 <!-- /page content -->
