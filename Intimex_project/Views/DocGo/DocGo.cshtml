@@ -71,7 +71,8 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive">
-                                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Sp_GetDocCome>().ID("gridContainer")
+@*---------------------------------------------------------------Datagrid DocCome------------------------------------------------------------------------------*@ 
+                                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Sp_GetDocCome>().ID("Sp_GetDocCome")
                                     .DataSource(ds => ds.Mvc()
                                         .Controller("DocGo")
                                         .LoadAction("Get")
@@ -148,6 +149,8 @@
                                         paper.ShowInfo(true);
                                     })
                                 )
+@*------------------------------------------------------------------------------------------------------------------------------------------------------*@
+@*--------------------------------------------------------Master Details list image-------------------------------------------------------------------------*@
                                     @using (Html.DevExtreme().NamedTemplate("gridContainer-details"))
                                     {
                                         @(Html.DevExtreme().Form()
@@ -169,6 +172,8 @@
                                             })
                                     )
                                     }
+@*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
+@*-----------------------------------------------------------------------------Popup modal chức năng-------------------------------------------------------------------------------------------------------------------*@
                                     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
                                             <div class="modal-content">
@@ -181,6 +186,8 @@
                                             </div>
                                         </div>
                                     </div>
+@*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
+@*--------------------------------------------------------------Popup modal image-------------------------------------------------------------------------------------------------------------------*@
                                     <div class="modal fade" id="Popup_img" tabindex="-1" role="dialog">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -196,6 +203,7 @@
                                             </div>
                                         </div>
                                     </div>
+@*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
                                     <input type="text" id="DocId" hidden>
                                 </div>
                             </div>
@@ -218,7 +226,7 @@
         }
     }
     function getDataGridInstance() {
-        return $("#gridContainer").dxDataGrid("instance");
+        return $("#Sp_GetDocCome").dxDataGrid("instance");
     }
     function image(data) {
         var id = data.value;

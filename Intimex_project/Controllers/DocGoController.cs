@@ -19,9 +19,7 @@ namespace Intimex_project.Controllers
     {
         public tradingsystemContext _context = new tradingsystemContext(ConnectionParameter.connectionString);
         public static List<DocFileAttach> docFiles { get; set; } = new List<DocFileAttach>();
-
         public static List<DocFileAttach> docFilesEdit { get; set; } = new List<DocFileAttach>();
-
         public static List<string> ListReciever { get; set; } = new List<string>();
 
         private IHostEnvironment _env;
