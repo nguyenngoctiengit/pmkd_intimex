@@ -23,9 +23,7 @@ namespace Intimex_project.Controllers
     {
         public tradingsystemContext _context = new tradingsystemContext(ConnectionParameter.connectionString);
         public static List<DocFileAttach> docFiles { get; set; } = new List<DocFileAttach>();
-
         public static List<DocFileAttach> docFilesEdit { get; set; } = new List<DocFileAttach>();
-
         public static List<string> ListReciever { get; set; } = new List<string>();
 
         private IHostEnvironment _env;
@@ -159,15 +157,15 @@ namespace Intimex_project.Controllers
             return Ok();
         }
         [HttpPost]
-        public IActionResult EditDocCome(string id)
+        public IActionResult EditDocCome(string DocId)
         {
-            ViewBag.DocId = id;
-            ViewBag.listImage = _context.DocFileAttaches.Where(a => a.DocId == long.Parse(id)).ToList();
-            var model = _context.Documents.Where(a => a.DocId == long.Parse(id)).FirstOrDefault();
+            ViewBag.DocId = DocId;
+            ViewBag.listImage = _context.DocFileAttaches.Where(a => a.DocId == long.Parse(DocId)).ToList();
+            var model = _context.Documents.Where(a => a.DocId == long.Parse(DocId)).FirstOrDefault();
             return PartialView("_PartiView_EditDocCome", model);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit_DocCome(string id, Document document)
+        public async Task<IActionResult> Edit_DocCome(Document document, string id)
         {
             var _document = _context.Documents.FirstOrDefault(a => a.DocId == long.Parse(id));
             _document.DocLever = document.DocLever;
@@ -197,16 +195,16 @@ namespace Intimex_project.Controllers
             TempData["alertMessage"] = "Chỉnh sửa văn bản đến thành công";
             return RedirectToAction("DocCome");
         }
-        public IActionResult addarchive(long id)
+        public IActionResult addarchive(long DocId)
         {
-            ViewBag.DocId = id;
+            ViewBag.DocId = DocId;
             return PartialView("_PartiView_AddArchive");
         }
         [HttpGet]
-        public object GetArchive(string id, DataSourceLoadOptions loadOptions)
+        public object GetArchive(string DocId, DataSourceLoadOptions loadOptions)
         {
             var Sp = "exec sp_Document;18 @MaCN = '"+ HttpContext.Session.GetString("UnitName") + "',"+
-                        "@DocId = '"+ id +"',"+
+                        "@DocId = '"+ DocId + "',"+
                         "@Status = '2',"+
                         "@UserName = '" + HttpContext.Session.GetString("UserName") + "',"+
                         "@ArchivesType = '2'";
@@ -214,7 +212,7 @@ namespace Intimex_project.Controllers
             return DataSourceLoader.Load(item, loadOptions);
         }
         [HttpPost]
-        public ActionResult addarchive1(string[] array, long DocId)
+        public ActionResult addarchive1(string[] array, long id)
         {
             List<string> listArchive = new List<string>();
             foreach (string i in array)
@@ -226,7 +224,7 @@ namespace Intimex_project.Controllers
             for (var i = 0; i < listArchive.Count(); i++)
             {
                 DocArchive doc = new DocArchive();
-                doc.DocId = DocId;
+                doc.DocId = id;
                 doc.ArchivesId = long.Parse(listArchive[i]);
                 _context.DocArchives.Add(doc);
                 _context.SaveChanges();
@@ -236,14 +234,14 @@ namespace Intimex_project.Controllers
             return Json(Url.Action("DocCome", "Doccome"));
         }
         [HttpPost]
-        public IActionResult DocTransfer(long id)
+        public IActionResult DocTransfer(long DocId)
         {
-            var document = _context.Documents.Where(a => a.DocId == id).FirstOrDefault();
+            var document = _context.Documents.Where(a => a.DocId == DocId).FirstOrDefault();
             ViewBag.NumberSign = document.NumberSign;
             ViewBag.DocDate = document.DocDate;
             ViewBag.DocType = _context.DocTypes.Where(a => a.DocTypeId == document.DocTypeId).Select(a => a.TypeName).FirstOrDefault();
             ViewBag.Contents = document.Contents;
-            ViewBag.DocId = id;
+            ViewBag.DocId = DocId;
             return PartialView("_PartiView_DocTranfer");
         }
         [HttpGet]

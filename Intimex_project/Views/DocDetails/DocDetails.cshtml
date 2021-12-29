@@ -67,8 +67,6 @@
 
                                         columns.AddFor(a => a.StyleCode).Caption("Loại VB");
 
-                                        columns.AddFor(a => a.StyleCode).Caption("Loại VB");
-
                                         columns.AddFor(a => a.TypeCode).Caption("Hình thức");
 
                                         columns.AddFor(a => a.DocDate).Caption("Ngày VB");
@@ -127,7 +125,7 @@
                                 Danh sách người nhận
                                 <div id="ListUserReceive" style="border-style:double;height:90%">
                                 </div>
-                                <input type="text" id="DocId">
+                                <input type="text" id="DocId" hidden>
                             </div>
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
@@ -152,6 +150,19 @@
 <script src="~/js/js_create/doccome.js"></script>
 <script type="text/javascript">
     @*-----------------------------------Archives--------------------------------*@
+    function SelectedImageDisplay(data) {
+        var fileName = data.selectedItem;
+        if (fileName.endsWith(".pdf") == true) {
+            window.open("/FileUploads/Document/" + fileName);
+        } else if (fileName.endsWith(".png") == true || fileName.endsWith(".jpg") == true || fileName.endsWith(".jpeg") == true || fileName.endsWith(".JPEG") || fileName.endsWith(".JPG") || fileName.endsWith(".PNG")) {
+            document.getElementById('img_id').src = '/FileUploads/Document/' + data.selectedItem;
+            document.getElementById("text_Popup_img").style.display = "none";
+            $("#Popup_img").modal("show");
+        } else {
+            location.href = '/DocCome/DownloadDocument/' + fileName;
+            $("#Popup_img").modal("show");
+        }
+    }
     function DisplayNameReceive(selectedItems) {
         var data = selectedItems.selectedRowsData[0];
         if (data) {
@@ -174,15 +185,20 @@
                 text: "Xem VB",
                 onClick: function () {
                     var DocId = document.getElementById("DocId").value;
-                    $.post('/DocDetails/ViewImage', { 'DocId': DocId }, function (respone) {
-                        if (respone == "false") {
-                            $.notify("Bạn không có quyền xem văn bản này", "error");
-                        }
-                        else {
-                            $("#_PartiView_AddOrUpdate_Archive").html(respone);
-                            $("#myModal").modal("show");
-                        }
-                    })
+                    console.log(DocId);
+                    if (DocId == "") {
+                        $.notify("Vui lòng chọn văn bản cần xem", "error");
+                    } else {
+                        $.post('/DocDetails/ViewImage', { 'DocId': DocId }, function (respone) {
+                            if (respone == "false") {
+                                $.notify("Bạn không có quyền xem văn bản này", "error");
+                            }
+                            else {
+                                $("#_PartiView_AddOrUpdate_Archive").html(respone);
+                                $("#myModal").modal("show");
+                            }
+                        })
+                    }
                 }
             }
         });

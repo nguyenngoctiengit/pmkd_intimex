@@ -61,7 +61,7 @@ namespace Intimex_project.Controllers
 
             var path = Path.Combine(
                            Directory.GetCurrentDirectory(),
-                           "wwwroot/FileUploads/DocGo", filename);
+                           "wwwroot/FileUploads/Document", filename);
 
             var memory = new MemoryStream();
             using (var stream = new FileStream(path, FileMode.Open))
@@ -138,11 +138,11 @@ namespace Intimex_project.Controllers
             TempData["alertMessage"] = "Thêm văn bản đến thành công";
             return RedirectToAction("DocGo");
         }
-        public IActionResult EditDocGo(string id)
+        public IActionResult EditDocGo(string DocId)
         {
-            ViewBag.DocId = id;
-            ViewBag.listImage = _context.DocFileAttaches.Where(a => a.DocId == long.Parse(id)).ToList();
-            var model = _context.Documents.Where(a => a.DocId == long.Parse(id)).FirstOrDefault();
+            ViewBag.DocId = DocId;
+            ViewBag.listImage = _context.DocFileAttaches.Where(a => a.DocId == long.Parse(DocId)).ToList();
+            var model = _context.Documents.Where(a => a.DocId == long.Parse(DocId)).FirstOrDefault();
             return PartialView("_PartiView_EditDocGo", model);
         }
         [HttpPost]
@@ -208,19 +208,17 @@ namespace Intimex_project.Controllers
             return Ok();
         }
         [HttpPost]
-        public ActionResult addarchive1(string[] array, long DocId)
+        public ActionResult addarchive1(string[] array, long id)
         {
             List<string> listArchive = new List<string>();
             foreach (string i in array)
             {
-
                 listArchive.Add(i);
-
             }
             for (var i = 0; i < listArchive.Count(); i++)
             {
                 DocArchive doc = new DocArchive();
-                doc.DocId = DocId;
+                doc.DocId = id;
                 doc.ArchivesId = long.Parse(listArchive[i]);
                 _context.DocArchives.Add(doc);
                 _context.SaveChanges();

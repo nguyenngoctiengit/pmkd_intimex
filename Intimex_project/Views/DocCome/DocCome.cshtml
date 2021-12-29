@@ -73,7 +73,10 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive">
-                                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Sp_GetDocCome>().ID("grid_DocCome")
+
+@*--------------------------------------------------------------------DataGrid DocCome-----------------------------------------------------------------------*@
+
+                                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Sp_GetDocCome>().ID("Sp_GetDocCome")
                                     .DataSource(ds => ds.Mvc()
                                         .Controller("doccome")
                                         .LoadAction("Get")
@@ -151,6 +154,9 @@
                                         paper.ShowInfo(true);
                                     })
                                 )
+@*---------------------------------------------------------------------------------------------------------------------------------------------------------------*@
+
+@*-----------------------------------------------------------------Template MasterDetails image----------------------------------------------------------------------*@
                                     @using (Html.DevExtreme().NamedTemplate("gridContainer-details"))
                                     {
                                         @(Html.DevExtreme().Form()
@@ -172,6 +178,10 @@
                                             })
                                     )
                                     }
+@*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
+
+@*-----------------------------------------------------------------------------Modal popup chức năng-----------------------------------------------------------------------------------------------------------*@
+
                                     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
                                             <div class="modal-content">
@@ -184,6 +194,10 @@
                                             </div>
                                         </div>
                                     </div>
+
+@*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
+@*---------------------------------------------------------Popup modal image------------------------------------------------------------------------------------------------------------------------------*@
+
                                     <div class="modal fade" id="Popup_img" tabindex="-1" role="dialog">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -196,7 +210,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="text" id="DocIdSelected" hidden>
+@*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
+                                    <input type="text" id="DocId" hidden>
                                 </div>
                             </div>
                         </div>
@@ -211,18 +226,18 @@
     function Change_DocId(selectedItems) {
         var data = selectedItems.selectedRowsData[0];
         if (data) {
-            document.getElementById("DocIdSelected").value = data.DocId;
+            document.getElementById("DocId").value = data.DocId;
         }
     }
     function Close_myModal() {
         $("#myModal").modal("hide");
     }
     function getDataGridInstance() {
-        return $("#grid_DocCome").dxDataGrid("instance");
+        return $("#Sp_GetDocCome").dxDataGrid("instance");
     }
     function image(data) {
         var id = data.value;
-        var extensionFile = ["jpg", "jpeg", "png"];
+        var extensionFile = ["jpg", "jpeg", "png", "JPG", "JPEG", "PNG"];
         var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + extensionFile.join('|') + ")$");
         try {
             if (!regex.test(id.toLowerCase())) {
@@ -257,9 +272,9 @@
             options: {
                 icon: "edit",
                 onClick: function () {
-                    var id = document.getElementById("DocIdSelected").value;
-                    if (id) {
-                        $.post('/DocCome/EditDocCome', { 'id': id }, function (response) {
+                    var DocId = document.getElementById("DocId").value;
+                    if (DocId) {
+                        $.post('/DocCome/EditDocCome', { 'DocId': DocId }, function (response) {
                             $("#_PartiView_AddOrUpdate_Archive").html(response);
                             $("#myModal").modal("show");
                         })
@@ -277,10 +292,9 @@
             options: {
                 text: "Lưu hồ sơ",
                 onClick: function () {
-                    var id = document.getElementById("DocIdSelected").value;
-                    if (id) {
-                        $.post('/doccome/addarchive', { 'id': id }, function (response) {
-                            console.log(id);
+                    var DocId = document.getElementById("DocId").value;
+                    if (DocId) {
+                        $.post('/doccome/addarchive', { 'DocId': DocId }, function (response) {
                             $("#_PartiView_AddOrUpdate_Archive").html(response);
                             $("#myModal").modal("show");
                         })
@@ -299,12 +313,11 @@
             options: {
                 text: "Chuyển VB",
                 onClick: function () {
-                    var id = document.getElementById("DocIdSelected").value;
-                    if (id) {
-                        $.post('/doccome/DocTransfer', { 'id': id }, function (response) {
-                            console.log(id);
+                    var DocId = document.getElementById("DocId").value;
+                    if (DocId) {
+                        $.post('/doccome/DocTransfer', { 'DocId': DocId }, function (response) {
                             $("#_PartiView_AddOrUpdate_Archive").html(response);
-                            document.getElementById("Form_DocTranfer").action = "/DocCome/Doc_Transfer/" + id;
+                            document.getElementById("Form_DocTranfer").action = "/DocCome/Doc_Transfer/" + DocId;
                             $("#myModal").modal("show");
                         })
                     }

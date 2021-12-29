@@ -196,7 +196,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="text" id="DocIdSelected" hidden>
+                                    <input type="text" id="DocId" hidden>
                                 </div>
                             </div>
                         </div>
@@ -214,7 +214,7 @@
     function Change_DocId(selectedItems) {
         var data = selectedItems.selectedRowsData[0];
         if (data) {
-            document.getElementById("DocIdSelected").value = data.DocId;
+            document.getElementById("DocId").value = data.DocId;
         }
     }
     function getDataGridInstance() {
@@ -257,9 +257,9 @@
             options: {
                 icon: "edit",
                 onClick: function () {
-                    var id = document.getElementById("DocIdSelected").value;
-                    if (id) {
-                        $.post('/DocGo/EditDocGo', { 'id': id }, function (response) {
+                    var DocId = document.getElementById("DocId").value;
+                    if (DocId) {
+                        $.post('/DocGo/EditDocGo', { 'DocId': DocId }, function (response) {
                             $("#_PartiView_AddOrUpdate_Archive").html(response);
                             $("#myModal").modal("show");
                         })
@@ -276,9 +276,9 @@
             options: {
                 text: "Lưu hồ sơ",
                 onClick: function () {
-                    var id = document.getElementById("DocIdSelected").value;
-                    if (id) {
-                        $.post('/doccome/addarchive', { 'id': id }, function (response) {
+                    var DocId = document.getElementById("DocId").value;
+                    if (DocId) {
+                        $.post('/doccome/addarchive', { 'DocId': DocId }, function (response) {
                             $("#_PartiView_AddOrUpdate_Archive").html(response);
                             document.getElementById("btn_Save").onclick = SaveForDocGo;
                             $("#myModal").modal("show");
@@ -297,12 +297,11 @@
             options: {
                 text: "Gửi nội bộ",
                 onClick: function () {
-                    var id = document.getElementById("DocIdSelected").value;
-                    if (id) {
-                        $.post('/doccome/DocTransfer', { 'id': id }, function (response) {
-                            console.log(id);
+                    var DocId = document.getElementById("DocId").value;
+                    if (DocId) {
+                        $.post('/doccome/DocTransfer', { 'DocId': DocId }, function (response) {
                             $("#_PartiView_AddOrUpdate_Archive").html(response);
-                            document.getElementById("Form_DocTranfer").action = "/DocCome/Doc_Transfer/" + id;
+                            document.getElementById("Form_DocTranfer").action = "/DocCome/Doc_Transfer/" + DocId;
                             $("#myModal").modal("show");
                         })
                     }

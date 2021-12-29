@@ -68,7 +68,7 @@ namespace Intimex_project.Controllers
 
             if (DocDetail.CheckUserViewImage(DocId, HttpContext.Session.GetString("UserName")) == true)
             {
-                ViewBag.ListImage = _context.DocFileAttaches.Where(a => a.DocId == DocId).ToList();
+                ViewBag.ListImage = _context.DocFileAttaches.Where(a => a.DocId == DocId).Select(a => a.FileAttach).ToList();
                 return PartialView("_PartiView_ViewFileDocument");
             }
             else

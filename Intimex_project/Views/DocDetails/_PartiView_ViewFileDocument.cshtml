@@ -12,11 +12,6 @@
                 <div id="text_Popup_img">Đây là file Tif. Không thể xem. Hãy xem file trong thư mục Download.</div>
             </div>
             <div class="modal-footer">
-                <div id="modal-footer-tiff" style="display:none">
-                    <button type="button" class="btn btn-secondary" id="EOffice">Văn thư</button>
-                    <button type="button" class="btn btn-secondary" id="Reply">Phản hồi</button>
-                    <button type="button" class="btn btn-secondary" id="Send">Người nhận</button>
-                </div>
                 <button type="button" class="btn btn-secondary" onclick="Close_Popup_img()">Close</button>
             </div>
         </div>
@@ -24,68 +19,6 @@
 </div>
 
 @*---------------------------------------------------------------------------------------------------------------*@
-
-@*------------------------------------------------------Modal chọn nhân viên để gửi-------------------------------------------------------------------------*@
-
-<div class="modal fade" id="choose_receiver" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" style="display:table">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Chọn nhân viên</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body">
-                <input type="text" id="fileName" hidden>
-                <div class="form-group row">
-                    <div class="form-group col-md-12">
-                        @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.UserRight>()
-                                                    .ID("dsnv")
-                                                    .DataSource(d => d.Mvc().LoadAction("GetUserRight")
-                                                                            .Controller("DocCome")
-                                                                            .Key("UserName1"))
-                                                    .RemoteOperations(true)
-                                                    .Columns(colunms => {
-
-                                                        colunms.AddFor(m => m.FullName1).Caption("Tên nhân viên").Fixed(true);
-
-                                                        colunms.Add().DataField("BranchId").Caption("Bộ phận");
-
-                                                        colunms.Add().DataField("NameV").Caption("Chi nhánh");
-
-                                                        colunms.AddFor(m => m.UserName1).Caption("Mã nhân viên").Fixed(true).Visible(false);
-
-                                                    })
-                                                    .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
-                                                    .Selection(s => s.Mode(SelectionMode.Multiple).Deferred(true))
-                                                    .HoverStateEnabled(true)
-                                                    .AllowColumnReordering(true)
-                                                    .AllowColumnResizing(true)
-                                                    .ColumnAutoWidth(true)
-                                                    .ColumnChooser(c => c.Enabled(true))
-                                                    .ColumnFixing(c => c.Enabled(true))
-                                                    .ShowBorders(true)
-                                                    .Grouping(group => group.AutoExpandAll(true))
-                                                    .GroupPanel(groupPanel => groupPanel.Visible(true))
-                                                    .Paging(paging => paging.PageSize(5))
-                                                    .Pager(paper =>
-                                                    {
-                                                        paper.ShowPageSizeSelector(true);
-                                                        paper.AllowedPageSizes(new[] { 5, 10, 20 });
-                                                        paper.ShowInfo(true);
-                                                    })
-                                                )
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="choose_receiver()">Chọn</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-@*--------------------------------------------------------------------------------------------------------------------------------------------------------------*@
 
 <div class="modal-footer">
 

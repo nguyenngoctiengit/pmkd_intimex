@@ -221,7 +221,7 @@
     }
 
     $('#exampleModal').on('show.bs.modal', function (event) {
-        let bookId = $(event.relatedTarget).data('imageid')
+        let bookId = $(event.relatedTarget).data('imageid');
         $(this).find('.modal-body input').val(bookId)
         document.getElementById('myImg').src = "/FileUploads/Document/" + bookId;
     })
