@@ -13,5 +13,7 @@ namespace Data.Models.Trading_system
         [Key]
         public long ArchivesId { get; set; }
         public string ArchivesName { get; set; }
+        public string ArchivesTypeArchives { get; set; }
+        public string StatusArchives { get; set; }
     }
 }

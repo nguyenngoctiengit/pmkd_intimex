@@ -12,6 +12,10 @@
                                         columns.AddFor(a => a.ArchivesId).Visible(false);
 
                                         columns.AddFor(a => a.ArchivesName).Caption("Tên công việc");
+
+                                        columns.AddFor(a => a.ArchivesTypeArchives).Caption("Loại hồ sơ");
+
+                                        columns.AddFor(a => a.StatusArchives).Caption("Trạng thái");
                                     })
                                     .Selection(s => s.Mode(SelectionMode.Multiple).Deferred(true))
                                     .HoverStateEnabled(true)

@@ -3,6 +3,7 @@ using Application.DataLog;
 using Application.Eoffice;
 using Application.Parameter;
 using Data.Models.Trading_system;
+using Data.Public_class;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
 using DevExtreme.AspNet.Mvc.FileManagement;
@@ -287,6 +288,13 @@ namespace Intimex_project.Controllers
                 doc.Command = docProcess.Command == null ? "" : docProcess.Command;
                 await _context.DocProcesses.AddAsync(doc);
                 await _context.SaveChangesAsync();
+                Notification notification = new Notification();
+                notification.id = 1;
+                notification.FromUser = doc.UserSend;
+                notification.ToUser = doc.ObjectProcess;
+                notification.nguoiGui = _context.UserRights.Where(a => a.UserName1 == doc.UserSend).Select(a => a.FullName1).FirstOrDefault();
+                notification.Message1 = "Văn bản nhận được: " + id;
+                NotificationList.notifications.Add(notification);
             }
             ListReciever.Clear();
             var docStyle = _context.Documents.Where(a => a.DocId == id).Select(a => a.DocStyleId).FirstOrDefault();
