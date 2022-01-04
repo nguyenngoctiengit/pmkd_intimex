@@ -715,6 +715,7 @@
     </div>
 </div>
 <input type="text" value="@ViewBag.userId" id="userId" hidden>
+<input type="text" value="@ViewBag.UserName" id="UserName" hidden>
 <div class="type_msg" hidden>
     <div class="input_msg_write">
         <input type="text" class="write_msg" id="messageInput" placeholder="Type a message" disabled />
@@ -723,6 +724,26 @@
 </div>
 <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/chatLayout.js"></script>
+<script>
+    function updateNotification() {
+        $('#messageIncoming').empty();
+        $.ajax({
+            type: 'GET',
+            url: '/home/GetNotification',
+            success: function (respone) {
+                $.each(respone, function (index, value) {
+                    if (value.ToUser == document.getElementById('UserName').value) {
+                        createLi_message(value.id, value.FromUser, value.nguoiGui, value.Message1);
+                    }
+                })
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    }
+
+</script>
 
 
 

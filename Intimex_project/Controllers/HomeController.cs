@@ -37,6 +37,7 @@ namespace Intimex_project.Controllers
         {
             var id = HttpContext.Session.GetString("userId");
             ViewBag.userId = id;
+            ViewBag.UserName = HttpContext.Session.GetString("UserName");
             if (id != null)
             {
                 ViewBag.CountUserOnline = (from a in _context.AspNetUsers where a.Online == true select a.NormalizedUserName).Count();

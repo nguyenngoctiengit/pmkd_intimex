@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.AppServices;
 
 namespace Intimex_project.Controllers
 {
@@ -272,6 +273,22 @@ namespace Intimex_project.Controllers
             }
             return Json("Update success");
         }
+        public int FindMaxList(List<Notification> notifications)
+        {
+            if (notifications.Count == 0)
+            {
+                return 0;
+            }
+            int maxId = int.MinValue;
+            foreach (Notification notification in notifications)
+            {
+                if (notification.id > maxId)
+                {
+                    maxId = notification.id;
+                }
+            }
+            return maxId;
+        }
         [HttpPost]
         public async Task<IActionResult> Doc_Transfer(DocProcess docProcess,long id)
         {
@@ -288,13 +305,9 @@ namespace Intimex_project.Controllers
                 doc.Command = docProcess.Command == null ? "" : docProcess.Command;
                 await _context.DocProcesses.AddAsync(doc);
                 await _context.SaveChangesAsync();
-                Notification notification = new Notification();
-                notification.id = 1;
-                notification.FromUser = doc.UserSend;
-                notification.ToUser = doc.ObjectProcess;
-                notification.nguoiGui = _context.UserRights.Where(a => a.UserName1 == doc.UserSend).Select(a => a.FullName1).FirstOrDefault();
-                notification.Message1 = "Văn bản nhận được: " + id;
-                NotificationList.notifications.Add(notification);
+                var test = FindMaxList(NotificationList.notifications);
+                var nguoiGui = _context.UserRights.Where(a => a.UserName1 == doc.UserSend).Select(a => a.FullName1).FirstOrDefault();
+                UpdateListMessage.UpdateMessage(1, doc.UserSend, doc.ObjectProcess, nguoiGui, "Văn bản nhận được: " + id);
             }
             ListReciever.Clear();
             var docStyle = _context.Documents.Where(a => a.DocId == id).Select(a => a.DocStyleId).FirstOrDefault();

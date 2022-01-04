@@ -33,14 +33,17 @@ function createLi_message(id, sender, nguoiGui, message) {
     document.getElementById("messageIncoming").appendChild(a);
 }
 
-function updateNotification() {
+/*function updateNotification() {
     $('#messageIncoming').empty();
     $.ajax({
         type: 'GET',
         url: '/home/GetNotification',
         success: function (respone) {
             $.each(respone, function (index, value) {
-                createLi_message(value.id, value.FromUser, value.nguoiGui, value.Message1);
+                if (value.ToUser == document.getElementById('userId').value) {
+                    alert(1);
+                    createLi_message(value.id, value.FromUser, value.nguoiGui, value.Message1);
+                }
             })
         },
         error: function (error) {
@@ -48,7 +51,7 @@ function updateNotification() {
         }
     })
 }
-
+*/
 connection.on("ReceiveMessage", function (sender, reciever, message, nguoiGui) {
     var userId = document.getElementById('userId').value;
     if (reciever == userId) {
