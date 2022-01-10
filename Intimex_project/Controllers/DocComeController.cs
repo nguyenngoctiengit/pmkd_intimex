@@ -353,5 +353,18 @@ namespace Intimex_project.Controllers
             memory.Position = 0;
             return File(memory, "APPLICATION/octet-stream", Path.GetFileName(path));
         }
+        [HttpPost]
+        public IActionResult AddDocPlace1(string DocPlaceCode,string DocPlaceName, string Address, string Phone, string Email)
+        {
+            var DocPlace = new DocPlace();
+            DocPlace.DocPlaceCode = DocPlaceCode;
+            DocPlace.DocPlaceName = DocPlaceName;
+            DocPlace.Address = Address;
+            DocPlace.Phone = Phone;
+            DocPlace.Email = Email;
+            _context.DocPlaces.Add(DocPlace);
+            _context.SaveChanges();
+            return Json("Thêm nơi gửi thành công");
+        }
     }
 }

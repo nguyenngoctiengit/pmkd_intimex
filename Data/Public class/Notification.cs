@@ -12,7 +12,6 @@ namespace Data.Public_class
         public string FromUser { get; set; }
         public string ToUser { get; set; }
         public string Message1 { get; set; }
-
         public string nguoiGui { get; set; }
         public DateTime? Date { get; set; }
     }
