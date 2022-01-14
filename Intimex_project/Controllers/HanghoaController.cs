@@ -13,6 +13,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Data.Models.SignalR;
+using Application.AutoId;
 
 namespace Intimex_project.Controllers
 {
@@ -27,33 +28,23 @@ namespace Intimex_project.Controllers
             return View();
 
         }
-        //view thêm nhóm hàng hóa
-        [Route("hanghoa/danhmuc/themnhomhang")]
-        public IActionResult themnhomhang()
-        {
-            return View("themnhomhang");
-        }
         //hàm thêm nhóm hàng hóa
         [HttpPost]
-        public IActionResult themnhomhang1(Nhom_hang_hoa nhh)
+        public IActionResult themnhomhang(string MaNhom,string TenNhom)
         {
-            if (ModelState.IsValid)
+            if (_context.Nhom_hang_hoas.Any(x => x.Manhom == MaNhom))
             {
-                if (_context.Nhom_hang_hoas.Any(x => x.Manhom == nhh.Manhom))
-                {
-                    TempData["alertMessage1"] = "Mã nhóm hàng bị trùng, không thể thêm, mời nhập lại";
-                    return RedirectToAction("hanghoa");
-                }
-                else
-                {
-                    _context.Nhom_hang_hoas.Add(nhh);
-                    _context.SaveChanges();
-                    TempData["alertMessage"] = "Thêm nhóm hàng thành công";
-                    return RedirectToAction("hanghoa");
-                }
+                return Json("Mã nhóm hàng bị trùng, không thể thêm, mời nhập lại");
             }
             else
-                return View("hanghoa/themnhomhang");
+            {
+                var item = new Nhom_hang_hoa();
+                item.Manhom = MaNhom;
+                item.TenNhom = TenNhom;
+                _context.Nhom_hang_hoas.Add(item);
+                _context.SaveChanges();
+                return Json("Thêm nhóm hàng thành công");
+            }
 
         }
         [HttpGet]
@@ -81,63 +72,57 @@ namespace Intimex_project.Controllers
             });
             return Json(await DataSourceLoader.LoadAsync(hanghoas, loadOptions));
         }
-
         [HttpPost]
-        public async Task<IActionResult> Post(string values)
+        public IActionResult AddOrEditHangHoa(string Idhanghoa)
         {
-            var model = new Hanghoa();
-            var valuesDict = JsonConvert.DeserializeObject<IDictionary>(values);
-            PopulateModel(model, valuesDict);
-            var ran = new Random();
-            model.Idhanghoa = "HH" + ran.Next(0000, 9999);
-            if (_context.Hanghoas.Any(a => a.Idhanghoa == model.Idhanghoa) || _context.Hanghoas.Any(a => a.Mahang == model.Mahang))
+            if (Idhanghoa != "")
             {
-                return BadRequest("Mã hàng hóa hoặc ID hàng hóa bị trùng");
+                ViewBag.id = _context.Hanghoas.Where(a => a.Idhanghoa == Idhanghoa).Select(a => a.Idhanghoa).FirstOrDefault();
+                var HangHoa = _context.Hanghoas.Where(a => a.Idhanghoa == Idhanghoa).FirstOrDefault();
+                return PartialView("_PartiView_AddOrEdit_Hanghoa",HangHoa);
             }
-            if (!TryValidateModel(model))
-                return BadRequest(GetFullErrorMessage(ModelState));
-
-            var result = _context.Hanghoas.Add(model);
-            await _context.SaveChangesAsync();
-            return Ok();
+            else
+            {
+                return PartialView("_PartiView_AddOrEdit_Hanghoa");
+            }
         }
-
-        [HttpPut]
-        public async Task<IActionResult> Put(string key, string values)
+        [HttpPost]
+        public IActionResult AddOrEdit_HangHoa(string id, Hanghoa hanghoa)
         {
-            var keys = JsonConvert.DeserializeObject<IDictionary>(key);
-            var keyIdhanghoa = Convert.ToString(keys["Idhanghoa"]);
-            var keyMahang = Convert.ToString(keys["Mahang"]);
-            var model = await _context.Hanghoas.FirstOrDefaultAsync(item =>
-                            item.Idhanghoa == keyIdhanghoa &&
-                            item.Mahang == keyMahang);
-            if (model == null)
-                return StatusCode(409, "Object not found");
-
-            var valuesDict = JsonConvert.DeserializeObject<IDictionary>(values);
-            PopulateModel(model, valuesDict);
-            var flag = false;
-            var list_contac = _context.CtHdmbs.ToList();
+            if (id == "" || id == null)
             {
-                foreach (var a in list_contac)
+                if (_context.Hanghoas.Any(a => a.Mahang == hanghoa.Mahang))
                 {
-                    if (a.Mahang == model.Mahang)
-                    {
-                        flag = true;
-                    }
+                    TempData["alertMessage"] = "Mã hàng hóa bị trùng";
+                    return RedirectToAction("hanghoa");
                 }
-                if (flag == true)
+                else
                 {
-                    return BadRequest("Hàng hóa đang giao dịch, không được sửa");
+                    Hanghoa hh = new Hanghoa();
+                    hh.Idhanghoa = AutoId.AutoIdHangHoa("Hanghoa");
+                    hh.Mahang = hanghoa.Mahang;
+                    hh.Tenhang = hanghoa.Tenhang;
+                    hh.MaNhom = hanghoa.MaNhom;
+                    hh.Dvt = hanghoa.Dvt;
+                    hh.Vat = hanghoa.Vat;
+                    hh.Fullname = hanghoa.Fullname;
+                    hh.Quicach = hanghoa.Quicach;
+                    hh.Baobi = hanghoa.Baobi;
+                    hh.Kiemdinh = hanghoa.Kiemdinh;
+                    hh.Tenhangvat = hanghoa.Tenhangvat;
+                    hh.DoAm = 0;
+                    hh.HatDen = 0;
+                    hh.TapChat = 0;
+                    hh.HatVo = 0;
+                    _context.Hanghoas.Add(hh);
+                    _context.SaveChanges();
+                    TempData["alertMessage"] = "Thêm hàng hóa thành công";
+                    return RedirectToAction("hanghoa");
                 }
             }
-            if (!TryValidateModel(model))
-                return BadRequest(GetFullErrorMessage(ModelState));
-
-            await _context.SaveChangesAsync();
-            return Ok();
+            TempData["alertMessage"] = "Thêm hàng hóa thành công";
+            return RedirectToAction("hanghoa");
         }
-
         [HttpDelete]
         public async Task<IActionResult> Delete(string key)
         {
@@ -168,128 +153,5 @@ namespace Intimex_project.Controllers
         }
 
 
-        private void PopulateModel(Hanghoa model, IDictionary values)
-        {
-            string IDHANGHOA = nameof(Hanghoa.Idhanghoa);
-            string MAHANG = nameof(Hanghoa.Mahang);
-            string TENHANG = nameof(Hanghoa.Tenhang);
-            string TENHANGVAT = nameof(Hanghoa.Tenhangvat);
-            string MA_NHOM = nameof(Hanghoa.MaNhom);
-            string DVT = nameof(Hanghoa.Dvt);
-            string VAT = nameof(Hanghoa.Vat);
-            string SUDUNG = nameof(Hanghoa.Sudung);
-            string FULLNAME = nameof(Hanghoa.Fullname);
-            string QUICACH = nameof(Hanghoa.Quicach);
-            string BAOBI = nameof(Hanghoa.Baobi);
-            string KIEMDINH = nameof(Hanghoa.Kiemdinh);
-            string VISIBLE = nameof(Hanghoa.Visible);
-            string ORDER_NHOM = nameof(Hanghoa.OrderNhom);
-            string DO_AM = nameof(Hanghoa.DoAm);
-            string HAT_DEN = nameof(Hanghoa.HatDen);
-            string TAP_CHAT = nameof(Hanghoa.TapChat);
-            string HAT_VO = nameof(Hanghoa.HatVo);
-
-            if (values.Contains(IDHANGHOA))
-            {
-                model.Idhanghoa = Convert.ToString(values[IDHANGHOA]);
-            }
-
-            if (values.Contains(MAHANG))
-            {
-                model.Mahang = Convert.ToString(values[MAHANG]);
-            }
-
-            if (values.Contains(TENHANG))
-            {
-                model.Tenhang = Convert.ToString(values[TENHANG]);
-            }
-
-            if (values.Contains(TENHANGVAT))
-            {
-                model.Tenhangvat = Convert.ToString(values[TENHANGVAT]);
-            }
-
-            if (values.Contains(MA_NHOM))
-            {
-                model.MaNhom = Convert.ToString(values[MA_NHOM]);
-            }
-
-            if (values.Contains(DVT))
-            {
-                model.Dvt = Convert.ToString(values[DVT]);
-            }
-
-            if (values.Contains(VAT))
-            {
-                model.Vat = values[VAT] != null ? Convert.ToInt32(values[VAT]) : (int?)null;
-            }
-
-            if (values.Contains(SUDUNG))
-            {
-                model.Sudung = values[SUDUNG] != null ? Convert.ToInt16(values[SUDUNG]) : (short?)null;
-            }
-
-            if (values.Contains(FULLNAME))
-            {
-                model.Fullname = Convert.ToString(values[FULLNAME]);
-            }
-
-            if (values.Contains(QUICACH))
-            {
-                model.Quicach = Convert.ToString(values[QUICACH]);
-            }
-
-            if (values.Contains(BAOBI))
-            {
-                model.Baobi = Convert.ToString(values[BAOBI]);
-            }
-
-            if (values.Contains(KIEMDINH))
-            {
-                model.Kiemdinh = Convert.ToString(values[KIEMDINH]);
-            }
-
-            if (values.Contains(VISIBLE))
-            {
-                model.Visible = values[VISIBLE] != null ? Convert.ToBoolean(values[VISIBLE]) : (bool?)null;
-            }
-
-            if (values.Contains(ORDER_NHOM))
-            {
-                model.OrderNhom = values[ORDER_NHOM] != null ? Convert.ToInt16(values[ORDER_NHOM]) : (short?)null;
-            }
-
-            if (values.Contains(DO_AM))
-            {
-                model.DoAm = values[DO_AM] != null ? Convert.ToDecimal(values[DO_AM], CultureInfo.InvariantCulture) : (decimal?)null;
-            }
-
-            if (values.Contains(HAT_DEN))
-            {
-                model.HatDen = values[HAT_DEN] != null ? Convert.ToDecimal(values[HAT_DEN], CultureInfo.InvariantCulture) : (decimal?)null;
-            }
-
-            if (values.Contains(TAP_CHAT))
-            {
-                model.TapChat = values[TAP_CHAT] != null ? Convert.ToDecimal(values[TAP_CHAT], CultureInfo.InvariantCulture) : (decimal?)null;
-            }
-
-            if (values.Contains(HAT_VO))
-            {
-                model.HatVo = values[HAT_VO] != null ? Convert.ToDecimal(values[HAT_VO], CultureInfo.InvariantCulture) : (decimal?)null;
-            }
-        }
-        private string GetFullErrorMessage(ModelStateDictionary modelState)
-        {
-            var messages = new List<string>();
-
-            foreach (var entry in modelState)
-            {
-                foreach (var error in entry.Value.Errors)
-                    messages.Add(error.ErrorMessage);
-            }
-
-            return String.Join(" ", messages);
-        }
     }
 }

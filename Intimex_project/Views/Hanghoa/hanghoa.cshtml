@@ -3,6 +3,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model IEnumerable<Data.Models.Trading_system.Hanghoa>
+<style>
+    .modal-dialog {
+        overflow-y: initial !important
+    }
+
+    .modal-body {
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+    }
+</style>
 <div class="right_col" role="main" style="height: 500px">
     <div class="">
         <div class="page-title">
@@ -10,7 +20,7 @@
                 <h3>Thông tin hàng hóa</h3>
             </div>
             <div class="title_right">
-                <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                <div class="col-md-5 col-sm-5 form-group pull-right top_search">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search for...">
                         <span class="input-group-btn">
@@ -25,14 +35,6 @@
             {
                 <div style="color:red;font-size:30px">
                     @TempData["alertMessage"].ToString()
-                </div>
-            }
-        }
-        @{
-            if (TempData["alertMessage1"] != null)
-            {
-                <div style="color:red;font-size:30px">
-                    @TempData["alertMessage1"].ToString()
                 </div>
             }
         }
@@ -109,35 +111,11 @@
 
                                     })
                                     .Editing(e => e
-                                        .Mode(GridEditMode.Popup)
-                                        .Popup(p => p.Title("Hàng hóa").ShowTitle(true).Width(700).Height(500))
-                                        .AllowAdding(true)
-                                        .AllowUpdating(true)
                                         .AllowDeleting(true)
                                         .UseIcons(true)
-                                        .Form(f => f.Items(items => {
-                                            items.AddGroup()
-                                                    .ColCount(2)
-                                                    .ColSpan(2)
-                                                    .Items(groupItems =>
-                                                    {
-                                                        groupItems.AddSimpleFor(m => m.Mahang);
-                                                        groupItems.AddSimpleFor(m => m.Tenhang);
-                                                        groupItems.AddSimpleFor(m => m.Tenhangvat);
-                                                        groupItems.AddSimpleFor(m => m.Dvt);
-                                                        groupItems.AddSimpleFor(m => m.Vat);
-                                                        groupItems.AddSimpleFor(m => m.Sudung);
-                                                        groupItems.AddSimpleFor(m => m.Fullname).ColSpan(2);
-                                                        groupItems.AddSimpleFor(m => m.Quicach).ColSpan(2).Editor(e => e.TextArea().Height(70));
-                                                        groupItems.AddSimpleFor(m => m.Baobi).ColSpan(2).Editor(e => e.TextArea().Height(70));
-                                                        groupItems.AddSimpleFor(m => m.Kiemdinh).ColSpan(2).Editor(e => e.TextArea().Height(70));
-
-                                                    });
-
-
-                                        }))
                                     )
-
+                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                    .OnSelectionChanged("SelectedHangHoa")
                                     .OnToolbarPreparing("toolbarhanghoa")
                                     .Export(e => e.Enabled(true))
                                     .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
@@ -168,7 +146,113 @@
         </div>
     </div>
 </div>
-<script src="~/js/js_create/hanghoa.js"></script>
+<input type="text" id="Idhanghoa" hidden>
+<div class="modal fade" id="PopUpThemNhomHang" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form>
+                    <div class="form-group row">
+                        <div class="form-group col-md-12">
+                            <label class="col-form-label col-md-2 col-sm-2">Mã nhóm</label>
+                            <div class="col-md-10 col-sm-10">
+                                <input type="text" id="MaNhom" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="col-form-label col-md-2 col-sm-2">Tên nhóm</label>
+                            <div class="col-md-10 col-sm-10">
+                                <input type="text" id="TenNhom" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="Add()">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*---------------------------------------------------------------------------Modal chức năng-----------------------------------------------------------------------*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="Close_myModal()">&times;</button>
+            </div>
+            <div id="_Modal_body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
+<script type="text/javascript">
+    function toolbarhanghoa(e) {
+        e.toolbarOptions.items.unshift({
+            location: "after",
+            widget: "dxButton",
+            options: {
+                icon: "add",
+                onClick: function () {
+                    $.post('/HangHoa/AddOrEditHangHoa', function (response) {
+                        $("#_Modal_body").html(response);
+                        $("#myModal").modal("show");
+
+                    })
+                }
+            }
+        })
+        e.toolbarOptions.items.unshift({
+            location: "after",
+            widget: "dxButton",
+            options: {
+                icon: "edit",
+                onClick: function () {
+                    var Idhanghoa = document.getElementById("Idhanghoa").value
+                    $.post('/HangHoa/AddOrEditHangHoa', { 'Idhanghoa': Idhanghoa} ,function (response) {
+                        $("#_Modal_body").html(response);
+                        $("#myModal").modal("show");
+
+                    })
+                }
+            }
+        })
+        e.toolbarOptions.items.unshift({
+            location: "after",
+            widget: "dxButton",
+            options: {
+                text: "Thêm nhóm hàng",
+                width: 150,
+                onClick: function () {
+                    $("#PopUpThemNhomHang").modal("show");
+                }
+            }
+        })
+    }
+    function Add() {
+        var MaNhom = document.getElementById("MaNhom").value;
+        var TenNhom = document.getElementById("TenNhom").value;
+        $.post('/hanghoa/themnhomhang', { 'MaNhom': MaNhom, 'TenNhom': TenNhom }, function (respone) {
+            $("#PopUpThemNhomHang").modal("hide");
+            $.notify(respone, 'success');
+
+        })
+    }
+    function SelectedHangHoa(selectedItems) {
+        var data = selectedItems.selectedRowsData[0];
+        if (data) {
+            document.getElementById("Idhanghoa").value = data.Idhanghoa;
+        }
+    }
+
+    function Close_myModal() {
+        $("#myModal").modal("hide");
+    }
+</script>
 <!-- /page content -->
 <!-- /page content -->
 <!-- footer content -->

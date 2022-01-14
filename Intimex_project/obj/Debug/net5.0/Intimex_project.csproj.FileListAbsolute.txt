@@ -612,7 +612,6 @@ C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Vie
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Can\phieunhapkho.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Chungtu\Index.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Hanghoa\hanghoa.cshtml.g.cs
-C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Hanghoa\themnhomhang.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Home\chat.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Home\PartialViewChat.cshtml.g.cs
@@ -735,3 +734,4 @@ C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Vie
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocProcess\_PartiView_ViewFileDocument.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocDetails\DocDetails.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocDetails\_PartiView_ViewFileDocument.cshtml.g.cs
+C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Hanghoa\_PartiView_AddOrEdit_Hanghoa.cshtml.g.cs

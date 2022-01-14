@@ -30,16 +30,6 @@ var aprove_xeptai = [{
     "id": 2, "name": "Chờ xử lí"
 }
 ];
-var loaikhach = [{
-    "id": 0, "name": "MB lâu dài"
-}, {
-    "id": 1, "name": "MB theo từng PA"
-}, {
-    "id": 2, "name": "MB ủy thác"
-}, {
-    "id": 3, "name": "Khách lập bảng kê"
-}
-];
 var thanhtoanmua = [{
     "id": false, "name": "Không"
 }, {
@@ -102,16 +92,7 @@ var loaikhach = [{
     "id": 3, "name": "Khách lập bảng kê"
 }
 ];
-var loaikhach = [{
-    "id": 0, "name": "MB lâu dài"
-}, {
-    "id": 1, "name": "MB theo từng PA"
-}, {
-    "id": 2, "name": "MB theo ủy thác"
-}, {
-    "id": 3, "name": "Khách lập bảng kê"
-}
-];
+
 var loaixuatkhau = [{
     "id": 1, "name": "Nội địa"
 }, {
@@ -154,6 +135,30 @@ var IsProcessReady = [{
     "id": 0, "name": "Chưa hoàn thành"
 }, {
     "id": 1, "name": "Đã hoàn thành"
+}
+];
+var VAT = [{
+    "id": 0, "name": "0"
+}, {
+    "id": 5, "name": "5"
+}, {
+    "id": 10, "name": "10"
+}
+];
+
+var DVT = [{
+    "id": "TAN", "name": "TAN"
+}, {
+    "id": "KGS", "name": "KGS"
+}, {
+    "id": "CAI", "name": "CAI"
+}
+];
+
+var GIAODICH = [{
+    "id": 0, "name": "Ngừng giao dịch"
+}, {
+    "id": 1, "name": "Đang giao dịch"
 }
 ];
 

@@ -145,7 +145,6 @@
                                     .HeaderFilter(hearder => hearder.Visible(true))
                                     .AllowColumnResizing(true)
                                     .AllowColumnReordering(true)
-                                    .ColumnChooser(c => c.Enabled(true))
                                     .ColumnFixing(c => c.Enabled(true))
                                     .ColumnAutoWidth(true)
                                     .ColumnFixing(c => c.Enabled(true))
@@ -307,7 +306,7 @@
         var i = r.parentNode.parentNode.rowIndex;
         document.getElementById('List_handler').deleteRow(i);
         $.post("/Archives/DeleteList_handler", $.param({ id: id }, true));
-    } 
+    }
     function DeleteParticipant(r, id) {
         var i = r.parentNode.parentNode.rowIndex;
         document.getElementById('List_Participants').deleteRow(i);

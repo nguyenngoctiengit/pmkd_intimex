@@ -1,0 +1,136 @@
+﻿@model Data.Models.Trading_system.Hanghoa
+<style>
+    .custom-file-upload {
+        border: 1px solid #161515;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+        color: black;
+    }
+</style>
+<form method="post" asp-action="AddOrEdit_HangHoa" asp-controller="HangHoa" asp-route-id="@ViewBag.id" enctype="multipart/form-data">
+    <div class="modal-body">
+        <div class="form-group row">
+            <label class="col-form-label col-md-2 col-sm-2">Nhóm hàng</label>
+            <div class="col-md-4 col-sm-4">
+                @(Html.DevExtreme().SelectBoxFor(m => m.MaNhom).DataSource(d => d.Mvc().LoadAction("Getnhomhang")
+                                                                                           .Controller("Lookup"))
+                                                                                            .DisplayExpr("TenNhom")
+                                                                                            .ValueExpr("Manhom")
+                                                                                            .SearchEnabled(true))
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-md-2 col-sm-2">Mã hàng</label>
+            <div class="col-md-4 col-sm-4">
+                @Html.DevExtreme().TextBoxFor(m => m.Mahang)
+            </div>
+            <label class="col-form-label col-md-1 col-sm-1">Tên hàng</label>
+            <div class="col-md-5 col-sm-5">
+                @Html.DevExtreme().TextBoxFor(m => m.Tenhang)
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-md-2 col-sm-2">Tên hàng VAT</label>
+            <div class="col-md-10 col-sm-10">
+                @(Html.DevExtreme().TextBoxFor(m => m.Tenhangvat))
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-md-2 col-sm-2">Tên hàng theo niên vụ</label>
+            <div class="col-md-10 col-sm-10">
+                @(Html.DevExtreme().TextBoxFor(m => m.Fullname))
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-md-2 col-sm-2">VAT</label>
+            <div class="col-md-4 col-sm-4">
+                @Html.DevExtreme().SelectBoxFor(m => m.Vat).DataSource(new JS("VAT")).ValueExpr("id").DisplayExpr("id")
+            </div>
+            <label class="col-form-label col-md-1 col-sm-1">ĐVT</label>
+            <div class="col-md-5 col-sm-5">
+                @Html.DevExtreme().SelectBoxFor(m => m.Dvt).DataSource(new JS("DVT")).ValueExpr("id").DisplayExpr("id")
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-md-2 col-sm-2">Giao dịch</label>
+            <div class="col-md-4 col-sm-4">
+                @Html.DevExtreme().SelectBoxFor(m => m.Sudung).DataSource(new JS("GIAODICH")).ValueExpr("id").DisplayExpr("name")
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-md-2 col-sm-2">Bao bì</label>
+            <div class="col-md-10 col-sm-10">
+                @Html.DevExtreme().TextAreaFor(m => m.Baobi)
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-md-2 col-sm-2">Kiểm định</label>
+            <div class="col-md-10 col-sm-10">
+                @Html.DevExtreme().TextAreaFor(m => m.Baobi)
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-md-2 col-sm-2">Qui cách</label>
+            <div class="col-md-10 col-sm-10">
+                @Html.DevExtreme().TextAreaFor(m => m.Baobi)
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        @(Html.DevExtreme().Button()
+                                        .ID("button")
+                                        .Text("Submit")
+                                        .Type(ButtonType.Success)
+                                        .UseSubmitBehavior(true)
+                                    )
+    </div>
+</form>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+    /* event submit form upload*/
+    function uploadMultipleFile(e) {
+        var files = e.target.files;
+        var formData = new FormData();
+        for (var i = 0; i < files.length; i++) {
+            formData.append("files", files[i]);
+            var extensionFile = files[i].name;
+            var markup = "<tr><td><a data-toggle='modal' data-target='#exampleModal' data-imageid=" + extensionFile + ">" + extensionFile + "</a></td><td><a href='#' onclick='DeleteFile(this,\"" + extensionFile + "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>";
+            $("#ListofFiles tbody").append(markup);
+        }
+        axios.post("/DocCome/upLoadFiles", formData);
+    }
+
+    $('#exampleModal').on('show.bs.modal', function (event) {
+        let bookId = $(event.relatedTarget).data('imageid')
+        $(this).find('.modal-body input').val(bookId)
+        document.getElementById('myImg').src = "/FileUploads/Document/" + bookId;
+    })
+
+    function DeleteFile(r, extensionFile) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById('ListofFiles').deleteRow(i);
+        try {
+            $.post("/DocCome/DeleteFile", $.param({ extensionFile: extensionFile }, true));
+        }
+        catch {
+            $.notify("something wrong", "error");
+        }
+    }
+    function OpenPopupAddDocPlace() {
+        $("#OpenPopupAddDocPlace").modal("show");
+    }
+    function AddDocPlace() {
+        var DocPlaceCode = document.getElementById("DocPlaceCode").value;
+        var DocPlaceName = document.getElementById("DocPlaceName").value;
+        var Address = document.getElementById("Address").value;
+        var Phone = document.getElementById("Phone").value;
+        var Email = document.getElementById("Email").value;
+        $.post('/DocCome/AddDocPlace1', { 'DocPlaceCode': DocPlaceCode, 'DocPlaceName': DocPlaceName, 'Address': Address, 'Phone': Phone, 'Email': Email }, function (respone) {
+            $("#OpenPopupAddDocPlace").modal("hide");
+            $.notify(respone, 'success');
+        })
+    }
+
+</script>
+
