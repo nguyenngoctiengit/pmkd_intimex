@@ -49,7 +49,7 @@
             </div>
             <label class="col-form-label col-md-1 col-sm-1">ĐVT</label>
             <div class="col-md-5 col-sm-5">
-                @Html.DevExtreme().SelectBoxFor(m => m.Dvt).DataSource(new JS("DVT")).ValueExpr("id").DisplayExpr("id")
+                @Html.DevExtreme().SelectBoxFor(m => m.Dvt).DataSource(new[] { "KGS","TAN","CAI"})
             </div>
         </div>
         <div class="form-group row">

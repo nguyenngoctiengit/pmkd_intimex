@@ -146,19 +146,11 @@ var VAT = [{
 }
 ];
 
-var DVT = [{
-    "id": "TAN", "name": "TAN"
-}, {
-    "id": "KGS", "name": "KGS"
-}, {
-    "id": "CAI", "name": "CAI"
-}
-];
 
 var GIAODICH = [{
-    "id": 0, "name": "Ngừng giao dịch"
+    "id": "0", "name": "Ngừng giao dịch"
 }, {
-    "id": 1, "name": "Đang giao dịch"
+    "id": "1", "name": "Đang giao dịch"
 }
 ];
 
