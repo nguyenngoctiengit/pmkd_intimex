@@ -1,0 +1,48 @@
+﻿@model Data.Models.Trading_system.Dmtte
+<form method="post" asp-action="AddOrEdit_Currency" asp-controller="Currency" asp-route-id="@ViewBag.id" enctype="multipart/form-data">
+    <div class="modal-body">
+        <div class="form-group row">
+            <label class="col-form-label col-md-2 col-sm-2">Currency code</label>
+            <div class="col-md-10 col-sm-10">
+                @(Html.DevExtreme().SelectBoxFor(m => m.MaTte).DataSource(new[] { "USD","EUR","VND","AUD","CAD"}))
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-md-2 col-sm-2">Date of Exchange</label>
+            <div class="col-md-10 col-sm-10">
+                @Html.DevExtreme().DateBoxFor(m => m.NgayAd)
+            </div>
+            
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-md-2 col-sm-2">Tranfer rate</label>
+            <div class="col-md-10 col-sm-10">
+                @Html.DevExtreme().TextBoxFor(m => m.Tyle)
+            </div>
+            
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-md-2 col-sm-2">Buying rate</label>
+            <div class="col-md-10 col-sm-10">
+                @(Html.DevExtreme().TextBoxFor(m => m.Tyle1))
+            </div>
+
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-md-2 col-sm-2">Selling rate</label>
+            <div class="col-md-10 col-sm-10">
+                @(Html.DevExtreme().TextBoxFor(m => m.Tyle2))
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        @(Html.DevExtreme().Button()
+                                        .ID("button")
+                                        .Text("Submit")
+                                        .Type(ButtonType.Success)
+                                        .UseSubmitBehavior(true)
+                                    )
+    </div>
+</form>
+
+

@@ -59,6 +59,10 @@
               "target": "Package",
               "version": "[1.6.0, )"
             },
+            "DevExtreme.AspNet.Core": {
+              "target": "Package",
+              "version": "[21.1.6, )"
+            },
             "Microsoft.AspNetCore.SignalR": {
               "target": "Package",
               "version": "[1.1.0, )"

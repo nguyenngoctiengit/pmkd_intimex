@@ -120,8 +120,28 @@ namespace Intimex_project.Controllers
                     return RedirectToAction("hanghoa");
                 }
             }
-            TempData["alertMessage"] = "Thêm hàng hóa thành công";
-            return RedirectToAction("hanghoa");
+            else
+            {
+                var hh = _context.Hanghoas.Where(a => a.Idhanghoa == id).FirstOrDefault();
+                hh.Mahang = hanghoa.Mahang;
+                hh.Tenhang = hanghoa.Tenhang;
+                hh.MaNhom = hanghoa.MaNhom;
+                hh.Dvt = hanghoa.Dvt;
+                hh.Vat = hanghoa.Vat;
+                hh.Fullname = hanghoa.Fullname;
+                hh.Quicach = hanghoa.Quicach;
+                hh.Baobi = hanghoa.Baobi;
+                hh.Kiemdinh = hanghoa.Kiemdinh;
+                hh.Tenhangvat = hanghoa.Tenhangvat;
+                hh.DoAm = 0;
+                hh.HatDen = 0;
+                hh.TapChat = 0;
+                hh.HatVo = 0;
+                _context.Hanghoas.Update(hh);
+                _context.SaveChanges();
+                TempData["alertMessage"] = "Chỉnh sửa hàng hóa thành công";
+                return RedirectToAction("hanghoa");
+            }
         }
         [HttpDelete]
         public async Task<IActionResult> Delete(string key)

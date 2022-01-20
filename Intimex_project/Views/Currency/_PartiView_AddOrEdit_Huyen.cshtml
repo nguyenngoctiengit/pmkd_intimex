@@ -1,0 +1,28 @@
+﻿@model Data.Models.Trading_system.Huyen
+<form method="post" asp-action="AddOrEdit_Huyen" asp-controller="Currency" asp-route-id="@ViewBag.id" enctype="multipart/form-data">
+    <div class="modal-body">
+        <div class="form-group row">
+            <label class="col-form-label col-md-2 col-sm-2">Tỉnh</label>
+            <div class="col-md-10 col-sm-10">
+                @(Html.DevExtreme().SelectBoxFor(m => m.KhuVucId).DataSource(d => d.Mvc().LoadAction("GetKhuVuc").Controller("Currency")).DisplayExpr("TenKhuvuc").ValueExpr("Id"))
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-md-2 col-sm-2">Huyện</label>
+            <div class="col-md-10 col-sm-10">
+                @Html.DevExtreme().TextBoxFor(m => m.Ten)
+            </div>
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+        @(Html.DevExtreme().Button()
+                                        .ID("button")
+                                        .Text("Submit")
+                                        .Type(ButtonType.Success)
+                                        .UseSubmitBehavior(true)
+                                    )
+    </div>
+</form>
+
+

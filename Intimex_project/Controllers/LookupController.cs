@@ -126,11 +126,13 @@ namespace Intimex_project.Controllers
             });
             return Json(await DataSourceLoader.LoadAsync(item_return, loadOptions));
         }
-        public async Task<IActionResult> getkhuvuc(DataSourceLoadOptions loadOptions)
+        public async Task<IActionResult> GetKhuVuc(DataSourceLoadOptions loadOptions)
         {
             var item_return = _context.Khuvucs.Select(i => new
             {
+                i.Id,
                 i.MaKhuvuc,
+                i.Show4C,
                 i.TenKhuvuc
 
             });
