@@ -740,3 +740,4 @@ C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Vie
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Currency\Huyen.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Currency\_PartiView_AddOrEdit_Huyen.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Document\Document.cshtml.g.cs
+C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\Microsoft.WindowsAzure.Storage.dll

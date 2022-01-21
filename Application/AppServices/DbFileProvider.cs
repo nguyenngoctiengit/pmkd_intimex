@@ -1,15 +1,21 @@
 ﻿using DevExtreme.AspNet.Mvc.FileManagement;
+using Microsoft.AspNetCore.Http;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
 
 namespace Application.AppServices
 {
     public class DbFileProvider : IFileSystemItemEditor, IFileUploader, IFileContentProvider, IFileSystemItemLoader
     {
         PhysicalFileSystemProvider internalProvider;
+        private IHostEnvironment _env;
         public DbFileProvider(string path)
         {
             internalProvider = new PhysicalFileSystemProvider(path);
@@ -50,7 +56,15 @@ namespace Application.AppServices
 
         public void UploadFile(FileSystemUploadFileOptions options)
         {
+            
             var dir = options.DestinationDirectory;
+            string destinationKey = $"{_env.ContentRootPath}/{options.DestinationDirectory.Path}/{options.FileName}";
+            /*using (FileStream fileStream = System.IO.File.Create(destinationKey))
+            {
+                
+                file.CopyTo(fileStream);
+                fileStream.Flush();
+            }*/
         }
     }
 }
