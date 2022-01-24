@@ -741,3 +741,8 @@ C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Vie
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Currency\_PartiView_AddOrEdit_Huyen.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Document\Document.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\Microsoft.WindowsAzure.Storage.dll
+C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\GleamTech.Common.dll
+C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\GleamTech.DocumentUltimate.dll
+C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\GleamTech.FileUltimate.dll
+C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\GleamTech.ImageUltimate.dll
+C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\GleamTech.VideoUltimate.dll

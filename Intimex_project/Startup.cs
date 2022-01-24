@@ -16,7 +16,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.AppServices;
-
+using GleamTech.AspNet.Core;
+using GleamTech.AspNet;
+using GleamTech;
+using GleamTech.FileUltimate;
 
 namespace Intimex_project
 {
@@ -33,6 +36,7 @@ namespace Intimex_project
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("SignalRChatConnection");
+            services.AddGleamTech();
             services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(30));
             services.AddRazorPages().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
             services.AddDbContextPool<SignalRChatContext>(options =>
@@ -43,6 +47,7 @@ namespace Intimex_project
             services.AddScoped<SignalRChatContext, SignalRChatContext>();
             services.AddHttpClient();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +62,7 @@ namespace Intimex_project
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+            app.UseGleamTech();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();

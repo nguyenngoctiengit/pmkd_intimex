@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.AppServices;
 using Microsoft.Extensions.Logging;
+using GleamTech.FileUltimate.AspNet.UI;
 
 namespace Intimex_project.Controllers
 {
@@ -22,26 +23,19 @@ namespace Intimex_project.Controllers
         }
         public IActionResult Document()
         {
-            return View("Document");
-        }
-        [Route("api/file-manager-file-system", Name = "FileManagementFileSystemApi")]
-        public object FileSystem(FileSystemCommand command, string arguments)
-        {
-            var config = new FileSystemConfiguration
+            var fileManager = new FileManager
             {
-                Request = Request,
-                FileSystemProvider = new DbFileProvider(_hostingEnvironment.ContentRootPath + "/wwwroot"),
-                AllowCopy = true,
-                AllowCreate = true,
-                AllowMove = true,
-                AllowDelete = true,
-                AllowRename = true,
-                AllowUpload = true,
-                AllowDownload = true,
+                Width = 800,
+                Height = 600,
+                DisplayLanguage = "en"
             };
-            var processor = new FileSystemCommandProcessor(config);
-            var result = processor.Execute(command, arguments);
-            return result.GetClientCommandResult();
+            fileManager.RootFolders.Add(new FileManagerRootFolder
+            {
+                Name = "Root",
+                Location = "~/wwwroot/"
+            });
+            return View("Document",fileManager);
         }
+
     }
 }
