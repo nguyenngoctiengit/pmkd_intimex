@@ -1,31 +1,10 @@
 ﻿@using GleamTech.AspNet.Core
 @using GleamTech.FileUltimate.AspNet.UI
+@model FileManager
 @{
     ViewData["Title"] = "Document";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@{
-    var fileManager = new FileManager
-    {
-        Resizable = true
-    };
-
-    var rootFolder = new FileManagerRootFolder
-    {
-        Name = "A Root Folder",
-        Location = @"C:\Users\User\Desktop\project_intimex\Intimex_project\wwwroot"
-
-    };
-
-    rootFolder.AccessControls.Add(new FileManagerAccessControl
-    {
-        Path = @"\",
-        AllowedPermissions = FileManagerPermissions.Full
-    });
-
-    fileManager.RootFolders.Add(rootFolder);
-}
-@this.RenderBody(fileManager)
 <div class="right_col" role="main" style="height: 500px">
     <div class="">
         <div class="page-title">
@@ -78,7 +57,8 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive">
-
+                                    @this.RenderHead(Model)
+                                    @this.RenderBody(Model)
                                 </div>
                             </div>
                         </div>
