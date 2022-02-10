@@ -59,6 +59,7 @@ namespace Intimex_project.Controllers
                         UserLoginParameter.Username1 = userRight.UserName1;
                         UserLoginParameter.IsUnitLeader = userRight.IsUnitLeader;
                         UserLoginParameter.IsDeparmentLeader = userRight.IsDepartmentLeader;
+                        UpdateUserInfo.UserInfoUpdate(user.UserName);
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -86,19 +87,21 @@ namespace Intimex_project.Controllers
             UserLoginParameter.Username1 = userRight.UserName1;
             UserLoginParameter.IsUnitLeader = userRight.IsUnitLeader;
             UserLoginParameter.IsDeparmentLeader = userRight.IsDepartmentLeader;
+            
             if (userBranch == "INXBL")
             {
                 HttpContext.Session.SetString("UnitName", "INXBL");
                 ConnectionParameter.connectionString = "Server=.\\SQLEXPRESS;Database=tradingsystem_bl;Trusted_Connection=True;MultipleActiveResultSets=true";
+                UpdateUserInfo.UserInfoUpdate(user.UserName);
                 return RedirectToAction("Index", "Home");
             }
             else if (userBranch == "INX")
             {
                 HttpContext.Session.SetString("UnitName", "INX");
                 ConnectionParameter.connectionString = "Server=.\\SQLEXPRESS;Database=tradingsystem;Trusted_Connection=True;MultipleActiveResultSets=true";
+                UpdateUserInfo.UserInfoUpdate(user.UserName);
                 return RedirectToAction("Index", "Home");
             }
-            ConnectionParameter.connectionString = "Server=.\\SQLEXPRESS;Database=tradingsystem;Trusted_Connection=True;MultipleActiveResultSets=true";
             return RedirectToAction("Index", "Home");
 
         }

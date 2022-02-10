@@ -35,7 +35,7 @@ namespace Intimex_project.Controllers
         {
             var fileManager = new FileManager
             {
-                Width = 1000,
+                Width = CssLength.Percentage(100),
                 Height = 800,
                 DisplayLanguage = "en"
             };
@@ -134,14 +134,13 @@ namespace Intimex_project.Controllers
 
         public void FileManagerCreating(object sender, FileManagerCreatingEventArgs e)
         {
-            tradingsystemContext _context = new tradingsystemContext(ConnectionParameter.connectionString);
             var Documents = ListDocument.GetListDocument();
             var path = e.Folder.Path;
             foreach (var item in Documents)
             {
                 if (path.StartsWith(item.Name))
                 {
-                    if (item.Id == 1)
+                    if (item.Id == UserInfo.Department)
                     {
                         EventUtil.SaveEventInfo(new Dictionary<string, object>
                         {
@@ -244,7 +243,9 @@ namespace Intimex_project.Controllers
 
         private static void FileManagerDownloading(object sender, FileManagerDownloadingEventArgs e)
         {
-            EventUtil.SaveEventInfo(new Dictionary<string, object>
+            if (UserInfo.DownloadDoc == true)
+            {
+                EventUtil.SaveEventInfo(new Dictionary<string, object>
                 {
                     {"Event Name", "Downloading"},
                     {"Folder.FullPath", e.Folder.FullPath},
@@ -252,6 +253,12 @@ namespace Intimex_project.Controllers
                     {"DownloadFileName", e.DownloadFileName},
                     {"OpenInBrowser", e.OpenInBrowser}
                 });
+            }
+            else
+            {
+                e.Cancel("Bạn không có quyền download file này");
+            }
+            
         }
 
         private static void FileManagerPreviewing(object sender, FileManagerPreviewingEventArgs e)
