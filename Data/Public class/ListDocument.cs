@@ -37,6 +37,12 @@ namespace Data.Public_class
             Documents.Add(new Documents { Id = 1, Name = "\\4- Phòng Ban\\10- Ban Quản trị Rủi ro" });
             Documents.Add(new Documents { Id = 1, Name = "\\4- Phòng Ban\\11- Tổ chức - đoàn thể" });
             Documents.Add(new Documents { Id = 1, Name = "\\4- Phòng Ban" });
+            TextWriter tw = new StreamWriter("Documents.txt");
+            foreach (var item in Documents)
+            {
+                tw.WriteLine(item.Id+"||"+item.Name);
+            }
+            tw.Close();
             return Documents.ToList();  
         }
     }

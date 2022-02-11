@@ -15,6 +15,7 @@ namespace Application.AppServices
         {
             tradingsystemContext _context = new tradingsystemContext(ConnectionParameter.connectionString);
             var user = _context.UserRights.Where(a => a.UserName1 == UserName).FirstOrDefault();
+            UserInfo.UpdateDoc = user.UpdateDoc;
             UserInfo.UserId = user.UserId;
             UserInfo.UserName1 = user.UserName1;
             UserInfo.FullName1 = user.FullName1;

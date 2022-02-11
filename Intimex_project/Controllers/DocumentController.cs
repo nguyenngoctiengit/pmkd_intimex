@@ -14,6 +14,7 @@ using Data.Models.Trading_system;
 using Application.Parameter;
 using Microsoft.AspNetCore.Http;
 using Data.Public_class;
+using System.IO;
 
 namespace Intimex_project.Controllers
 {
@@ -44,7 +45,7 @@ namespace Intimex_project.Controllers
                 Name = "Root",
                 Location = @"C:\Users\User\Desktop\project_intimex\Intimex_project\wwwroot\Document"
             });
-            if (CheckUserUpdateDocs(HttpContext.Session.GetString("UserName")) == true)
+            if (UserInfo.UpdateDoc == true)
             {
                 fileManager.RootFolders[0].AccessControls.Add(new FileManagerAccessControl
                 {
@@ -99,18 +100,6 @@ namespace Intimex_project.Controllers
             return View("Document",fileManager);
         }
         #region  Example event handlers for before events
-        public bool CheckUserUpdateDocs(string UserName)
-        {
-            var UpdateDoc = _context.UserRights.Where(a => a.UserName1 == UserName).Select(a => a.UpdateDoc).FirstOrDefault();
-            if (UpdateDoc == true)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
         private void FileManagerExpanding(object sender, FileManagerExpandingEventArgs e)
         {
             EventUtil.SaveEventInfo(new Dictionary<string, object>
@@ -136,11 +125,15 @@ namespace Intimex_project.Controllers
         {
             var Documents = ListDocument.GetListDocument();
             var path = e.Folder.Path;
-            foreach (var item in Documents)
+            List<string> lines = System.IO.File.ReadLines("Documents.txt").ToList();
+            TextWriter tw = new StreamWriter("Documents.txt");
+            foreach (var item in lines)
             {
-                if (path.StartsWith(item.Name))
+                var Name = item.Substring(3);
+                var id = item.Substring(0, 1);
+                if (path.StartsWith(Name))
                 {
-                    if (item.Id == UserInfo.Department)
+                    if (long.Parse(id) == UserInfo.Department)
                     {
                         EventUtil.SaveEventInfo(new Dictionary<string, object>
                         {
@@ -154,18 +147,49 @@ namespace Intimex_project.Controllers
                         e.Cancel("Bạn không có quyền thêm thư mục vào thư mục này");
                     }
                 }
+                tw.WriteLine(item);
             }
-            
+            tw.WriteLine(1 + "||" + path);
+            tw.Close();
         }
 
         private void FileManagerDeleting(object sender, FileManagerDeletingEventArgs e)
         {
-            EventUtil.SaveEventInfo(new Dictionary<string, object>
+            var Documents = ListDocument.GetListDocument();
+            var path = e.Folder.Path;
+            foreach (var item in Documents)
+            {
+                if (path.StartsWith(item.Name))
                 {
-                    {"Event Name", "Deleting"},
-                    {"Folder.FullPath", e.Folder.FullPath},
-                    {"ItemNames", e.ItemNames}
-                });
+                    if (item.Id == UserInfo.Department)
+                    {
+                        EventUtil.SaveEventInfo(new Dictionary<string, object>
+                        {
+                            {"Event Name", "Deleting"},
+                            {"Folder.FullPath", e.Folder.FullPath},
+                            {"ItemNames", e.ItemNames}
+                        });
+                    }
+                    else if (UserInfo.DeleteDoc == false)
+                    {
+                        e.Cancel("Bạn không có quyền thêm thư mục vào thư mục này");
+                    }
+                    else
+                    {
+                        e.Cancel("Bạn không có quyền thêm thư mục vào thư mục này");
+                    }
+                }
+                else
+                {
+                    EventUtil.SaveEventInfo(new Dictionary<string, object>
+                        {
+                            {"Event Name", "Deleting"},
+                            {"Folder.FullPath", e.Folder.FullPath},
+                            {"ItemNames", e.ItemNames}
+                        });
+                }
+            }
+            
         }
 
         private static void FileManagerRenaming(object sender, FileManagerRenamingEventArgs e)
@@ -225,20 +249,53 @@ namespace Intimex_project.Controllers
 
         private static void FileManagerUploading(object sender, FileManagerUploadingEventArgs e)
         {
-            EventUtil.SaveEventInfo(new Dictionary<string, object>
+            var Documents = ListDocument.GetListDocument();
+            var path = e.Folder.Path;
+            foreach (var item in Documents)
+            {
+                if (path.StartsWith(item.Name))
                 {
-                    {"Event Name", "Uploading"},
-                    {"Folder.FullPath", e.Folder.FullPath},
-                    {"Queue.Method", e.Queue.Method},
-                    {"Items", e.Items.Select(item => new Dictionary<string, object>
+                    if (item.Id == UserInfo.Department)
+                    {
+                        EventUtil.SaveEventInfo(new Dictionary<string, object>
                         {
-                            {"Name", item.Name},
-                            {"ContentType", item.ContentType},
-                            {"SizeAsString", item.SizeAsString},
-                            {"DateModified", item.DateModified }
-                        })
+                            {"Event Name", "Uploading"},
+                            {"Folder.FullPath", e.Folder.FullPath},
+                            {"Queue.Method", e.Queue.Method},
+                            {"Items", e.Items.Select(item => new Dictionary<string, object>
+                                {
+                                    {"Name", item.Name},
+                                    {"ContentType", item.ContentType},
+                                    {"SizeAsString", item.SizeAsString},
+                                    {"DateModified", item.DateModified }
+                                })
+                            }
+                        });
                     }
-                });
+                    else
+                    {
+                        e.Cancel("Bạn không có quyền tải tệp trong thư mục này");
+                    }
+                }
+                else
+                {
+                    EventUtil.SaveEventInfo(new Dictionary<string, object>
+                        {
+                            {"Event Name", "Uploading"},
+                            {"Folder.FullPath", e.Folder.FullPath},
+                            {"Queue.Method", e.Queue.Method},
+                            {"Items", e.Items.Select(item => new Dictionary<string, object>
+                                {
+                                    {"Name", item.Name},
+                                    {"ContentType", item.ContentType},
+                                    {"SizeAsString", item.SizeAsString},
+                                    {"DateModified", item.DateModified }
+                                })
+                            }
+                        });
+                }
+            }
+            
         }
 
         private static void FileManagerDownloading(object sender, FileManagerDownloadingEventArgs e)
