@@ -141,6 +141,7 @@ namespace Intimex_project.Controllers
                             {"Folder.FullPath", e.Folder.FullPath},
                             {"ItemName", e.ItemName}
                         });
+                        tw.WriteLine(id + "||" + path);
                     }
                     else
                     {
@@ -149,7 +150,6 @@ namespace Intimex_project.Controllers
                 }
                 tw.WriteLine(item);
             }
-            tw.WriteLine(1 + "||" + path);
             tw.Close();
         }
 
@@ -170,7 +170,7 @@ namespace Intimex_project.Controllers
                             {"ItemNames", e.ItemNames}
                         });
                     }
-                    else if (UserInfo.DeleteDoc == false)
+                    else if (UserInfo.DeleteDoc == false)   
                     {
                         e.Cancel("Bạn không có quyền thêm thư mục vào thư mục này");
                     }

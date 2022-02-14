@@ -735,10 +735,6 @@ C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Vie
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocDetails\DocDetails.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\DocDetails\_PartiView_ViewFileDocument.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Hanghoa\_PartiView_AddOrEdit_Hanghoa.cshtml.g.cs
-C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Currency\Currency.cshtml.g.cs
-C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Currency\_PartiView_AddOrEdit_Currency.cshtml.g.cs
-C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Currency\Huyen.cshtml.g.cs
-C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Currency\_PartiView_AddOrEdit_Huyen.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Document\Document.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\Microsoft.WindowsAzure.Storage.dll
 C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\GleamTech.Common.dll
