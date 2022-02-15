@@ -49,10 +49,10 @@ namespace Intimex_project.Controllers
             {
                 fileManager.RootFolders[0].AccessControls.Add(new FileManagerAccessControl
                 {
-                    Path = @"\",    
-                    AllowedPermissions = FileManagerPermissions.Full
+                    Path = @"\",
+                    AllowedPermissions = FileManagerPermissions.Full,
                 });
-            }  
+            }
             else
             {
                 fileManager.RootFolders[0].AccessControls.Add(new FileManagerAccessControl
@@ -135,12 +135,6 @@ namespace Intimex_project.Controllers
                 {
                     if (long.Parse(id) == UserInfo.Department)
                     {
-                        EventUtil.SaveEventInfo(new Dictionary<string, object>
-                        {
-                            {"Event Name", "Creating"},
-                            {"Folder.FullPath", e.Folder.FullPath},
-                            {"ItemName", e.ItemName}
-                        });
                         tw.WriteLine(id + "||" + path);
                     }
                     else
@@ -155,41 +149,12 @@ namespace Intimex_project.Controllers
 
         private void FileManagerDeleting(object sender, FileManagerDeletingEventArgs e)
         {
-            var Documents = ListDocument.GetListDocument();
-            var path = e.Folder.Path;
-            foreach (var item in Documents)
+            EventUtil.SaveEventInfo(new Dictionary<string, object>
             {
-                if (path.StartsWith(item.Name))
-                {
-                    if (item.Id == UserInfo.Department)
-                    {
-                        EventUtil.SaveEventInfo(new Dictionary<string, object>
-                        {
-                            {"Event Name", "Deleting"},
-                            {"Folder.FullPath", e.Folder.FullPath},
-                            {"ItemNames", e.ItemNames}
-                        });
-                    }
-                    else if (UserInfo.DeleteDoc == false)   
-                    {
-                        e.Cancel("Bạn không có quyền thêm thư mục vào thư mục này");
-                    }
-                    else
-                    {
-                        e.Cancel("Bạn không có quyền thêm thư mục vào thư mục này");
-                    }
-                }
-                else
-                {
-                    EventUtil.SaveEventInfo(new Dictionary<string, object>
-                        {
-                            {"Event Name", "Deleting"},
-                            {"Folder.FullPath", e.Folder.FullPath},
-                            {"ItemNames", e.ItemNames}
-                        });
-                }
-            }
-            
+                {"Event Name", "Deleting"},
+                {"Folder.FullPath", e.Folder.FullPath},
+                {"ItemNames", e.ItemNames}
+            });
         }
 
         private static void FileManagerRenaming(object sender, FileManagerRenamingEventArgs e)

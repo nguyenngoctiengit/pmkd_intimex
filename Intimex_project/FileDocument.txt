@@ -1,0 +1,379 @@
+4||1||True||help
+4||1||True||Cong van xin gia nhap Hiep hoi 1-2013
+4||1||False||4C Membership Survey_2012_vn
+4||1||False||Cong van VICOFA 10-2012
+4||1||False||Cong van VICOFA 10-2012
+4||1||False||Phuong phap tinh toan xay dung ke hoach năm 2013
+4||1||True||Dự thảo qui định sử dụng thiết bị tin học tại Cty CP tập Đoàn Intimex
+4||1||False||Mau bien ban
+4||0||True||Mẫu đăng ký sửa chữa, yêu cầu dịch vụ
+27||1||True||F0000000000000004907
+27||1||True||2 OPTION
+29||1||True||Phu luc Hop Dong INTIMEX
+32||1||True||GIOI THIEU BAO HIEM CHAM SOC SUC KHOE
+35||1||False||5 NAM - BIEN BAN
+59||1||True||TC 11 - phieu dang ky lam them gio
+59||1||True||TC 12a- don xin nghi phep, Vr duoi 1 ngay cho nhan vien
+59||1||True||TC 12b- don xin nghi phep, Vr lanh dao
+59||1||True||TC 13- nghi phep 3 ngay or viec rieng tren 1 ngay cho nhan vien
+59||1||True||TC 19-phieu bao cong tac
+59||1||True||TC 20 - phieu quen lay dau van tay
+59||1||True||TC 22 - don xin nghi bu 
+59||1||True||TC 23- de ghi thanh toan luong lam them gio (tap the)
+59||1||True||TC 23- de ghi thanh toan luong lam them gio (ca nhan)
+59||0||True||TC 36 Phieu bau nhan vien xuat sac
+59||0||True||TC 37 to trinh nang bac theo ND 205
+59||0||True||TC 38 mau QD nang luong ND 205
+59||0||True||TC 39 mau To trinh nag bac luong  chuc danh cong viec
+59||0||True||TC 40 mau cong van thong bao luong
+44||1||True||TC 48 thong bao nghi ko huong luong
+44||1||True||CHUYEN KHOAN TAM UNG KY 1 2012
+44||1||False||TC 14- danh gia hieu qua lam viec nhan vien
+44||1||True||TC 15- danh gia hieu qua cong viec lanh dao 
+44||1||True||TC 24 - bang cham cong
+44||1||True||TC 35 Danh gia nhan vien 
+44||1||True||TC 53  BAO CAO GIAO BAN TIEN LUONG 
+44||1||True||TC 35 Danh gia nhan vien 
+59||1||True||TC 14- danh gia hieu qua lam viec nhan vien
+59||1||True||TC 15- danh gia hieu qua cong viec lanh dao 
+59||0||True||TC 24 - bang cham cong
+59||0||True||TC 35 Danh gia nhan vien 
+59||0||True||TC 53 bao cao giao ban cong tac tien luong
+81||1||True||01- QĐ ban hành Quy chế tiền lương Công ty (30-01-2011)
+81||1||True||02- Quy chế tiền lương Công ty (30-01-2011 và đã được điều chỉnh)
+81||1||False||03- Phụ lục 1 Bảng lương CDCV VP Công ty
+81||1||False||04- Phụ lục 1 Bảng lương CDCV CN BMT
+81||1||True||05- Phụ lục 1 Bảng lương CDCV CN TN năm 2013
+81||1||False||06- Phụ lục 1 Bảng lương CDCV CN TL năm 2013
+81||1||False||07- Phụ lục 2 Phụ cấp Công ty
+81||1||False||08- Phụ lục 3 Mức chi các ngày lễ, tết
+81||1||True||09- Phụ lục 4 Hướng dẫn thi hành Quy chế tiền lương Công ty
+46||1||False||10- QĐ điều chỉnh lương KTT, TLTGĐ, Phụ cấp kiêm nhiệm (03-01-2013)
+46||1||True||11- Hướng dẫn đơn vị thành viên điều chỉnh lương KTT & Phụ cấp kiêm nhiệm (09-01-2013)
+46||1||False||12- QĐ điều chỉnh lương CDCV CN TN & CNTL (18-01-2013)
+46||1||True||13- Hướng dẫn đơn vị trực thuộc thực hiện phụ cấp kiêm nhiệm (23-01-2013)
+46||1||False||14- Hướng dẫn CN Tây Ninh thực hiện LCDCV nam 2013
+46||1||True||15- Hướng dẫn Chi nhánh Thăng Long đánh giá hiệu quả công việc (31-012013)
+46||1||False||16- Điều chỉnh Phụ lục 3 mức chi các ngày lễ tết CN TN (18-4-13)
+46||1||True||TC 14- danh gia hieu qua lam viec nhan vien (CN)
+46||1||True||15- Hướng dẫn Chi nhánh Thăng Long đánh giá hiệu quả công việc (31-012013)
+46||1||True||16- Điều chỉnh Phụ lục 3 mức chi các ngày lễ tết CN TN (18-4-13)
+46||1||True||TC 14- danh gia hieu qua lam viec nhan vien
+46||1||True||TC 15- danh gia hieu qua cong viec lanh dao
+46||1||True||TC 35 Danh gia nhan vien 
+46||1||True||TC 36 Phieu bau nhan vien xuat sac
+81||1||True||10- QĐ ban hành bản đánh giá hiệu quả làm việc đối với nhân viên (31-5-2011)
+81||1||True||11- Hướng dẫn đánh giá hiệu quả làm việc đối với nhân viên (kèm theo QĐ ngày 31-5-2011)
+81||1||False||12- QĐ điều chỉnh lương KTT, TLTGĐ, Phụ cấp kiêm nhiệm (03-01-2013)
+81||1||True||13- Hướng dẫn đơn vị thành viên điều chỉnh lương KTT & Phụ cấp kiêm nhiệm (09-01-2013)
+81||1||True||14- QĐ điều chỉnh lương CDCV CN TN & CNTL (18-01-2013)
+81||1||True||15- Hướng dẫn đơn vị trực thuộc thực hiện phụ cấp kiêm nhiệm (23-01-2013)
+81||1||False||16- Hướng dẫn CN Tây Ninh thực hiện LCDCV nam 2013
+81||1||True||17- Hướng dẫn Chi nhánh Thăng Long đánh giá hiệu quả công việc (31-012013)
+81||1||False||18- Điều chỉnh Phụ lục 3 mức chi các ngày lễ tết CN TN (18-4-13)
+81||1||True||19- QĐ điều chỉnh lương đối với nhân viên thử việc (02-5-2013)
+81||1||True||TC 14- danh gia hieu qua lam viec nhan vien (CN)
+81||1||True||TC 14- danh gia hieu qua lam viec nhan vien
+81||1||True||TC 15- danh gia hieu qua cong viec lanh dao
+81||1||True||TC 35 Danh gia nhan vien 
+81||0||True||TC 36 Phieu bau nhan vien xuat sac
+82||1||True||01- QĐ ban hành Quy chế tiền lương TTTM BMT
+82||1||True||02- Quy chế tiền lương TTTM BMT (3- 2011và đã điều chỉnh)
+82||1||False||03- Phụ lục 1 Bảng lương CDCV TTTM BMT năm 2013
+82||1||False||04- Phụ lục 2 phụ cấp TTTM BMT
+82||1||False||05- Phụ lục 3 Mức chi các ngày lễ, tết TTM BMT
+47||1||False||05- Phụ lục 3 Mức chi các ngày lễ, tết TTM BMT
+82||1||True||06- Phụ lục 4 hướng dẫn thực hiện quy chế tiền lương TTTM BMT
+47||1||True||07- Hướng dẫn TTTM BMT đánh giá hiệu quả công việc  (31-01-13)
+82||1||True||07- QĐ ban hành bản đánh giá hiệu quả làm việc đối với nhân viên (31-5-2011)
+82||1||True||08- Hướng dẫn đánh giá hiệu quả làm việc đối với nhân viên (kèm theo QĐ ngày 31-5-2011)
+82||1||True||09- Hướng dẫn TTTM BMT đánh giá hiệu quả công việc  (31-01-13)
+82||1||True||10- Điều chỉnh tạm thời phụ lục 3 mức chi các ngày lễ, tết TTTM BMT (18-4-2013)
+82||1||True||11- QĐ điều chỉnh lương đối với nhân viên thử việc (02-5-2013)
+82||1||True||TC 14- danh gia hieu qua lam viec nhan vien TTTM
+82||1||True||TC 15- danh gia hieu qua cong viec lanh dao TTTM
+82||1||True||TC 35 - Danh gia nhan vien xuat sac TTTM
+82||1||True||TC 36 Phieu bau nhan vien xuat sac
+81||1||True||TC 14- danh gia hieu qua lam viec nhan vien
+81||1||True||TC 15- danh gia hieu qua cong viec lanh dao 
+81||0||True||TC 35 Danh gia nhan vien 
+82||1||True||TC 14- danh gia hieu qua lam viec nhan vien (TTTM BMT)
+82||1||True||TC 15- danh gia hieu qua cong viec lanh dao (TTTM BMT
+82||0||True||TC 35 Danh gia nhan vien 
+82||0||True||TC 36 Phieu bau nhan vien xuat sac
+79||1||True||1- QD ban hanh QC tuyen dung
+79||1||True||2- Quy che tuyen dung 
+79||1||True||3- TC 02  BCao thuyet minh tang giam LD
+79||1||True||1- QD ban hanh QC tuyen dung
+79||1||True||2- Quy che tuyen dung 
+79||0||True||3- TC 02  BCao thuyet minh tang giam LD
+79||0||True||4- TC 03 KH Ldong va Tdung nhan su
+79||0||True||5- TC 05 Dang ky nhu cau LD
+79||0||True||6- TC 06a- Bang tieu chuan danh gia
+79||0||True||6- TC 06b- Bang Kqua Pvan
+79||0||True||6- TC 06c- Bang tong hop ket qua Pvan
+79||0||True||7- TC 07 Dgia ket qua thu viec
+79||1||True||12-2012 BB hop HDQT
+79||0||True||2-Thong_Tin_Ung_Vien
+79||1||False||1- QD ban hanh QC tuyen dung
+79||1||False||2- Quy che tuyen dung 
+51||1||True||01- Quyet dinh ban hanh TULDTT
+51||1||True||02- Thoa uoc lao dong tap the
+51||0||True||01- QĐ ban hành TƯLĐTT
+51||1||True||02- Thỏa ước lao động tập thể 
+50||1||True||1-Noi_quy_lao_dong 2013
+50||1||True||4-Bieu mau kem theo noi quy lao dong
+50||1||True||5-Bieu mau ve KLLD kem NQLD
+50||1||True||Bang xu ly hanh vi vi pham ky luat 2013
+50||1||True||Noi_quy_lao_dong 2013
+50||1||True||Phu Luc - Bang xu ly hanh vi vi pham ky luat 2013
+50||1||True||Bieu mau kem theo noi quy lao dong
+50||1||True||Bieu mau ve KLLD kem NQLD
+50||1||True||1a-Noi_quy_lao_dong 2013
+50||1||True||1b-Phu Luc - Bang xu ly hanh vi vi pham ky luat 2013
+50||1||True||1c-Bieu mau kem theo noi quy lao dong
+50||1||True||1d-Bieu mau ve KLLD kem NQLD
+50||1||True||Nội Qui Công ty
+50||0||True||Nội qui Công ty
+70||0||True||Qui định in danh thiếp và sử dụng Logo Cty
+67||1||True||QĐ soạn thảo, ban hành, lưu trữ VB
+71||1||True||Quyết định, qui định tài sản, Quyết định thành lập HĐ thanh lý TS
+71||1||True||Mẫu nội dung theo dõi tài sản
+71||0||True||Cac bieu mau tai san
+71||0||True||QĐ quản lý, sử dụng, bảo quản xe ô tô
+50||1||True||1a-Noi_quy_lao_dong 2013
+50||1||True||1b-Phu Luc - Bang xu ly hanh vi vi pham ky luat 2013
+50||1||True||1c-Bieu mau kem theo noi quy lao dong
+50||0||True||1d-Bieu mau ve KLLD kem NQLD
+79||0||True||HDLD
+79||0||True||PLHDLD
+79||0||True||HDLD THU VIEC
+79||0||True||HDLD vu viec, khoan
+67||1||True||QĐ soạn thảo, ban hành, lưu trữ VB
+85||1||True||1. QD ban hanh quy dinh quan ly su dung va khai thac van phong dien tu
+85||1||True||2. Quy dinh quan ly va su dung van phong dien tu 2013
+62||1||True||Huong dan the thuc van ban
+62||1||True||Mau VB kem theo Huong dan 146
+64||1||True||Quy trinh nghi viec-8-2010
+88||1||True||08-2012 QĐ vv ban hanh QC hoat dong tam thoi Ban KSRR
+88||1||True||08-2012 Quy che hoat dong BKS rui ro 
+88||1||True||08-2012 QD thanh lap Ban kiem soat rui ro-TGD
+88||1||True||08-2012 QD cu CB tham gia Ban KSRR
+88||0||True||1. QĐ vv ban hanh QC hoat dong tam thoi Ban KSRR
+88||0||False||2. Quy che hoat dong BKS rui ro 
+88||0||True||3. QD thanh lap Ban kiem soat rui ro-TGD
+88||0||True||4. QD cu CB tham gia Ban KSRR
+56||0||True||TC 40 mau cong van luong
+56||0||True||TC 41 to trinh tuyen dung va ky HDLD
+56||0||True||TC 42 QD tuyen dung va ky HDLD
+56||0||True||TC 43 to trinh cham dut HDLD
+56||0||True||TC 44 QD cham dut HDLD
+56||1||True||TC 45 to trinh ky tiep HDLD
+56||0||True||TC 46 to trinh dieu dong, giao nhiem vu nhan vien
+56||0||True||TC 47 QD dieu dong, giao nhiem vu
+56||0||True||HDLD THU VIEC
+56||0||True||HDLD vu viec, khoan
+56||0||True||HDLD
+56||0||True||PLHDLD
+62||1||True||Mau VB kem theo Huong dan 146
+51||0||True||02- Thoa uoc lao dong tap the
+56||1||True||TC 34- danh gia ky lai HDLD
+56||1||True||TC 33- Giay xac nhan ban giao cv de cham dut HDLD
+63||0||True||CV hướng dẫn chấm dứt HĐLĐ
+63||0||True||HUONG DAN THUC HIEN CONG VIEC UY QUYEN
+56||1||True||TC 33 Giay xac nhan ban giao cv de cham dut HDLD
+56||1||True||TC 34 danh gia ky lai HDLD
+59||1||True||TC 14- danh gia hieu qua lam viec nhan vien
+59||0||True||TC 15- danh gia hieu qua cong viec lanh dao 
+81||1||True||TC 14- danh gia hieu qua lam viec nhan vien
+81||0||True||TC 15- danh gia hieu qua cong viec lanh dao 
+82||1||True||TC 14- danh gia hieu qua lam viec nhan vien (TTTM BMT)
+82||0||True||TC 15- danh gia hieu qua cong viec lanh dao (TTTM BMT
+71||1||True||Quyết định, qui định tài sản, Quyết định thành lập HĐ thanh lý TS
+71||1||True||Quyết định, qui định tài sản, Quyết định thành lập HĐ thanh lý TS
+71||1||True||Quyết định, qui định tài sản, Quyết định thành lập HĐ thanh lý TS 2013
+71||1||True||Quyết định, qui định tài sản, Quyết định thành lập
+71||0||True||Quyết định, qui định tài sản, Quyết định thành lập HĐ thanh lý TS 2013
+59||1||True||TC 12a- don xin nghi phep, Vr duoi 1 ngay cho nhan vien
+59||1||True||TC 12b- don xin nghi phep, Vr lanh dao
+59||1||True||TC 13- nghi phep 3 ngay or viec rieng tren 1 ngay cho nhan vien
+50||0||True||1c-Bieu mau kem theo noi quy lao dong
+59||1||True||TC 11- phieu dang ky lam them gio
+59||1||True||TC 12a- don xin nghi phep, Vr duoi 1 ngay cho nhan vien
+59||1||True||TC 12b- don xin nghi phep, Vr lanh dao
+59||1||True||TC 13- nghi viec rieng tren 1 ngay cho nhan vien
+59||1||True||TC 22- don xin nghi bu
+59||1||True||TC 23- de ghi thanh toan luong lam them gio
+81||1||False||20-khoan luong DL ban si
+81||1||False||20-khoan luong bp ban si CN TN
+81||1||False||21-khoan luong bp gian tiep xuong dieu CN TN
+2||0||False||DPS_ehronline
+60||1||True||TC 25- phieu bao cong tac (1 ngay tro len)
+60||1||True||TC 26- phieu dang ky su dung phong tiep khach
+60||1||True||TC 27- phieu dang ky su dung xe oto
+60||1||True||TC 28- phieu de nghi tam ung
+60||1||True||TC 29- Phieu bao khong an trua
+60||1||True||TC 30- de nghi trang cap trang thiet bi cho cbcnv moi
+59||1||True||TC 22 - don xin nghi bu (Cong ty)
+59||1||True||TC 22 - don xin nghi bu
+59||1||True||TC 11 - phieu dang ky lam them gio
+59||1||True||TC 22 - don xin nghi bu
+59||1||True||TC 22 - don xin nghi bu
+59||0||True||TC 14- danh gia hieu qua lam viec nhan vien
+81||0||True||TC 14- danh gia hieu qua lam viec nhan vien
+82||0||True||TC 14- danh gia hieu qua lam viec nhan vien (TTTM BMT)
+90||1||False||QUY CHẾ THI ĐUA KHEN THƯỞNG 2013
+90||0||True||Biểu mẫu TĐKT 02
+91||1||False||QUY CHẾ ĐÀO TẠO 2013
+91||0||True||ĐT01b MẪU PHIẾU ĐĂNG KÍ ĐÀO TẠO
+91||0||True||ĐT02b MẪU KẾ HOẠCH ĐÀO TẠO
+91||0||True||ĐT03a Mẫu tờ trình
+91||0||True||ĐT03b Mẫu tờ trình
+91||0||True||ĐT05 Mẫu phiếu đánh giá khóa học
+91||0||True||ĐT06 Mẫu Báo cáo sau đào tạo
+90||0||True||Biểu mẫu TĐKT 01
+90||0||True||Biểu mẫu TĐKT 03
+90||0||True||Biểu mẫu TĐKT 04
+91||0||True||ĐT04 Mẫu cam kết
+91||0||True||ĐT01a MẪU PHIẾU ĐĂNG KÍ ĐÀO TẠO
+91||0||True||ĐT02a MẪU KẾ HOẠCH ĐÀO TẠO
+59||1||True||TC 19- Phieu bao cong tac
+81||1||True||9a-QĐ điều chỉnh phụ lục 4 QC TL ( 7-3-2011)
+81||1||True||09a-QĐ điều chỉnh phụ lục 4 QC TL ( 7-3-2011)
+60||1||True||TC 25- phieu bao cong tac (1 ngay tro len)
+60||1||True||TC 26- Phieu dang ky su dung phong tiep khach
+60||1||True||TC 25- Phieu bao cong tac (1 ngay tro len)
+60||1||True||TC 27-Phieu dang ky su dung xe oto
+60||1||True||TC 28- Phieu de nghi tam ung
+60||1||True||TC 29- Phieu bao khong an trua
+60||1||True||TC 30- de nghi trang cap trang thiet bi cho cbcnv moi
+78||1||False||09-06-2010 Quy che quan ly to chuc va nhan su
+56||0||True||TC 45 to trinh ky tiep HDLD
+67||1||True||Quy định soan thao, ban hanh va luu tru van ban
+2||1||True||qui dinh dung email - usb
+92||0||True||Qui dinh dung email - usb số: 98/INX-KTTH
+67||1||True||QĐ soạn thảo, ban hành, lưu trữ VB
+67||0||True||Quy định soan thao, ban hanh va luu tru van ban
+62||0||True||Hướng dẫn thể thức và kỹ thuật trình bày văn bản 623
+62||0||True||Mau VB kem theo Huong dan 623
+81||1||True||14- QĐ điều chỉnh lương CDCV và thời gian nâng bậc lương theo NĐ 205 (01-01-2014)
+81||1||False||03-Phụ lục 1 Bảng lương CDCV VP Cty
+82||1||True||03-Phụ lục 1 Bảng lương CDCV TTTM BMT
+81||1||False||04-Phụ lục 1A Bảng lương CDCV CN TL
+81||1||False||05-Phụ lục 1B Bảng lương CDCV CN BMT
+81||1||False||06-Phụ lục 1C Bảng lương CDCV CN TN
+81||1||True||20-Phuong an khoan luong BP gian tiep Xuong dieu va BP Dai ly ban si tai CN TN 2014
+71||0||True||Mẫu nội dung theo dõi tài sản
+4||0||True||Dự thảo qui định sử dụng máy móc - thiết bị tin học - hệ thống mạng - An ninh mạng máy tinh
+90||0||True||Thi dua khen thuong
+81||1||False||21-Phu luc 5 canh chi tra luong tam thoi doi voi Ban Quan he quoc te
+81||1||False||21-Phụ lục 5 cách chi trả lương tạm thời đối với Ban quan hệ quốc tế
+94||0||True||CV_445_INX_PCTH_QD su dung email cong ty
+95||0||True||Ban hanh Quy che dan chu o co so tai noi lam viec
+51||0||True||Thỏa ước lao động tập thể
+90||0||True||Quy che Thi dua Khen thuong sua doi, bo sung
+85||0||True||Quy dinh quan ly, su dung va khai thac van phong dien tu
+79||0||False||1- Quy che Tuyen dung
+78||0||True||Quy che thuc hien cong tac to chuc va nhan su
+50||0||True||1a-Noi quy Cong ty CP Tap doan Intimex
+50||0||True||1b-Bang xu ly ky luat lao dong
+91||0||True||Quy che Dao tao
+81||0||True||01-QĐ ban hành Quy chế tiền lương Công ty (30-01-2011)
+81||0||True||02- Quy chế tiền lương Cty (30-01-2011và đã được sửa đổi bổ sung)
+81||1||False||06-Phụ lục 1C Bảng lương CDCV CN TN
+81||0||True||07-Phụ lục 2 Phụ cấp Công ty
+81||0||True||08-Phụ lục 3 Mức chi các ngày Lễ, Tết
+81||0||True||09-Phụ lục 4 Hướng dẫn thi hành QC TL Công ty
+81||0||True||10-QĐ điều chỉnh phụ lục 4 QC TL ( 7-3-2011)
+81||0||True||11- QĐ ban hành và hướng dẫn Đánh giá hiệu quả làm việc đối với nhân viên (31-5-2011) 
+81||0||False||12-QĐ điều chỉnh lương KTT, TLTGĐ, Phụ cấp kiêm nhiệm (03-01-2013)
+81||0||False||13- Hướng dẫn đơn vị thành viên điều chỉnh lương KTT& Phụ cấp kiêm nhiệm
+81||0||True||14- QĐ điều chỉnh lương đối với nhân viên thử việc (0-5-2013)
+81||0||True||15- Điều chỉnh Phụ lục 3 mức chi các ngày Lễ, Tết đv CN TN (18-4-2013)
+81||0||True||16- QĐ điều chỉnh lương CDCV và thời gian nâng bậc lương theo NĐ 205 (01-01-2014)
+81||0||False||17-PA khoan luong BP gian tiep Xuong dieu va BP Dai ly ban si tai CN TN 2014
+81||0||False||18-Phụ lục 5 Quy định cách trả lương tạm thời đối với Ban QHQT (4-2014)
+82||1||True||01-QĐ ban hành Quy chế tiền lương Công ty (30-01-2011)
+82||1||True||02- Quy chế tiền lương Cty (30-01-2011và đã được sửa đổi bổ sung)
+82||0||True||01-QD ban hành Quy chế tiền lương TTTM BMT
+82||0||True||02- Quy chế tiền lương TTTM BMT (3- 2011và đã điều chỉnh)
+82||0||True||04-Phụ lục 2 Phụ cấp TTTM BMT
+82||0||True||05-Phụ lục 3 Mức chi các ngày lễ, tết TTTM BMT
+82||0||True||06- Phụ lục 4 hướng dẫn thực hiện QC TL TTTM BMT
+82||0||True||07- QĐ ban hành và hướng dẫn Đánh giá hiệu quả làm việc đối với nhân viên (31-5-2011) 
+82||0||True||08-QĐ sửa đổi QC TL TTTM BMT (23-4-2012)
+82||0||True||09-Quy chế tiền lương đối với CBCNV tại TTTM ĐakMil (17-7-2012)
+82||0||True||10-Điều chỉnh tạm thời Phụ lục 3 QC TL TTTM BMT (18-4-2013)
+82||0||True||11-QĐ điều chỉnh lương đối với NV thử việc tại TTTM BMT (02-5-2013)
+82||0||True||12- QĐ điều chỉnh lương CDCV và thời gian nâng bậc lương theo NĐ 205 (01-01-2014)
+96||0||True||Mau bien ban ban giao TBTH
+97||0||True||Quy che Tài chính 19.09.2014
+81||0||False||03-Phụ lục 1 Bảng lương CDCV VP VCty (9-2014)
+81||0||False||04-Phụ lục 1A  Bảng lương CDCV CNTL (9-2014)
+81||0||False||06-Phụ lục 1C Bảng lương CDCV CN TN (9-2014)
+81||0||True||19- QĐ điều chỉnh lương CDCV NV Lái xe (9-2014)
+82||0||False||03-Phụ lục 1C Bảng lương CDCV TTTM BMT (9-2014)
+82||0||True||13- QĐ điều chỉnh lương CDCV NV Lái xe (9-2014)
+81||0||True||05-Phụ lục 1B Bảng lương CDCV CN BMT (9-2014)
+98||0||True||Quy dinh ATVSLD-PCCN
+99||1||True||01.Quyết định ban hành thang bảng lương theo NĐ49
+99||1||True||02.Bảng tiêu chuẩn chức danh công việc
+99||1||True||03.Thang bảng lương VP Công ty
+99||1||False||04.Thang bảng lương theo NĐ49 của CNTL
+99||1||False||05.Thang bảng lương theo NĐ 49 của CN BMT
+99||1||False||06.Thang bảng lương theo NĐ49 của CN TN
+99||1||False||07.Thang bảng lương theo NĐ 49 của TTTM BMT
+62||0||True||Thay doi mau tieu de VB hanh chinh
+59||1||True||TC 19- Phieu bao cong tac
+59||1||True||TC 20 - phieu quen lay dau van tay
+59||0||True||TC 11 - phieu dang ky lam them gio
+59||0||True||TC 12a- don xin nghi phep, Vr duoi 1 ngay cho nhan vien 
+59||0||True||TC 12b- don xin nghi phep, Vr lanh dao
+59||0||True||TC 13- nghi phép 3 ngày trở lên hoặc việc riêng trên 1 ngày (nhân viên)
+59||1||True||TC 22 - don xin nghi bu
+59||0||True||TC 23- de ghi thanh toan luong lam them gio (ca nhan)
+59||0||True||TC 23- de ghi thanh toan luong lam them gio (tap the)
+59||0||True||TC 22 - don xin nghi bu
+82||1||False||QĐ ban hanh bang luong CN DakMil
+82||1||False||14-QĐ ban hành bảng lương CN DakMil
+82||1||False||15-Phụ lục bảng lương CN Đak Mil
+100||1||False||ban kiem diem dang vien
+99||0||True||1-QĐ điều chỉnh thang bảng lương theo NĐ 49 ( 01-01-2015)
+99||0||False||2-Thang bảng lương theo NĐ 49 tại VP Cong ty (01-01-2015)
+99||0||False||3-Thang bảng lương theo NĐ 49 tại CN Thăng Long (01-01-2015)
+99||0||False||4-Thang bảng lương theo NĐ 49 tại Tây Ninh (01-01-2015)
+99||0||False||5-Thang bảng lương theo NĐ 49 tại CN BMT (01-01-2015)
+99||0||False||6-Thang bảng lương theo NĐ 49 tại TTTM BMT (01-01-2015)
+99||1||False||7-Bảng tiêu chuẩn CDCV và nguyên tắc nâng lương theo NĐ 49
+99||0||True||7-Bảng tiêu chuẩn CDCV và nguyên tắc nâng lương theo NĐ 49
+99||0||True||8-UBND quận 1 xác nhận thang bảng lương Cty (01-01-2015)
+81||0||True||20-QĐ bổ sung QC tiền lương CN Đak Mil (2-2015)
+81||0||False||21-Phụ lục 1D Bảng lương CDCV CN Đak Mil (2-2015)
+81||0||False||22-Mức chi các ngày Lễ, Tết CN ĐakMil (2-2015)
+82||1||True||9- Thang bảng lươong theo NĐ 49 của CN ĐakMil (2-2015)
+82||0||False||14-QĐ điều chỉnh lương của phòng Kinh doanh nông sản TTTM BMT
+99||0||False||9- Thang bảng lươong theo NĐ 49 của CN ĐakMil (2-2015)
+56||0||True||TC 34 danh gia ky lai HDLD
+56||0||True||TC 07 - Dgia ket qua thu viec
+56||0||True||TC 33 Giay xac nhan ban giao cv de cham dut HDLD
+60||0||True||TC 25-Phieu bao cong tac (01 ngay tro len)
+60||1||True||TC 26-Phieu dang ky su dung phong tiep khach
+60||1||True||TC 27-Phieu dang ky su dung xe oto
+60||1||True||TC 28-Phieu de nghi tam ung
+60||1||True||TC 29-Phieu bao khong an trua
+60||1||True||TC 30-Phieu de nghi cấp trang thiet bi cho CBNV moi
+59||0||True||TC 19-phieu bao cong tac 
+59||1||True||TC 20 - phieu quen lay dau van tay
+60||0||True||TC 30-Phieu de nghi cấp trang thiet bi cho CBNV moi
+60||0||True||TC 29-Phieu bao khong an trua
+60||0||True||TC 28-Phieu de nghi tam ung
+60||0||True||TC 27-Phieu dang ky su dung xe oto
+60||0||True||TC 26-Phieu dang ky su dung phong tiep khach
+59||0||True||TC 20 - phieu quen lay dau van tay
+101||0||True||Ban Quan hệ quốc tế
+101||0||True||Phòng Tài chính kế toán
+101||0||True||Phòng Tổ chức hành chính
+101||0||True||Phòng Xuất nhập khẩu
+101||0||True||Trung tâm thương mại Văn phòng
+101||0||True||Ban Quản trị rủi ro
+101||0||True||Phòng Pháp chế tổng hợp
