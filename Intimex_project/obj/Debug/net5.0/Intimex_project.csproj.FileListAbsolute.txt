@@ -610,7 +610,6 @@ C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Vie
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\BaoCaoGiaoBan\Index.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Can\can.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Can\phieunhapkho.cshtml.g.cs
-C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Chungtu\Index.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Hanghoa\hanghoa.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Home\chat.cshtml.g.cs
 C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
@@ -742,3 +741,4 @@ C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\GleamTech
 C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\GleamTech.FileUltimate.dll
 C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\GleamTech.ImageUltimate.dll
 C:\Users\User\Desktop\project_intimex\Intimex_project\bin\Debug\net5.0\GleamTech.VideoUltimate.dll
+C:\Users\User\Desktop\project_intimex\Intimex_project\obj\Debug\net5.0\Razor\Views\Chungtu\AddVoucher.cshtml.g.cs

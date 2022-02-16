@@ -22,6 +22,4 @@
 1||\4- Phòng Ban\09- Phòng KTTH
 1||\4- Phòng Ban\10- Ban Quản trị Rủi ro
 1||\4- Phòng Ban\11- Tổ chức - đoàn thể
-1||\4- Phòng Ban\11- Tổ chức - đoàn thể
-1||\4- Phòng Ban\11- Tổ chức - đoàn thể
 1||\4- Phòng Ban
