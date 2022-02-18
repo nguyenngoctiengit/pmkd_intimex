@@ -24,26 +24,28 @@ namespace Intimex_project.Controllers
         public HopdongController()
         {
         }
-        public void listUser()
-        {
-            using (SignalRChatContext _context = new SignalRChatContext())
-            {
-                ViewBag.ListUser = (from a in _context.AspNetUsers select new Data.Models.SignalR.AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online, Id = a.Id }).OrderByDescending(a => a.Online).ToList();
-            }
-
-        }
         //Index
         public IActionResult Index()
         {
-            listUser();
             return View();
         }
         //View HDMB
+        [HttpGet]
+        public object GetHopdong(DataSourceLoadOptions loadOptions)
+        {
+            var item = (from a in _context.Hdmbs
+                       select new
+                       {
+                           a.Systemref,
+                           a.Ngaylam,
+                           a.Sohd,
+                           Trangthai = a.Trangthai == 2 ? "Hủy" : a.Trangthai == 1 ? "TH" : "TL",
+                           a.MuaBan
+                       }).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
+        }
         public IActionResult hdmb()
         {
-            listUser();
-            ViewBag.signer = _context.Signers.ToList();
-            ViewBag.hdmb = _context.Hdmbs.Select(i => i.IntKy);
             return View("hdmb");
         }
         [Route("hopdong/hopdong/themhopdong")]
@@ -59,7 +61,6 @@ namespace Intimex_project.Controllers
             ViewBag.diadiemgiaohang = _context.HdmbGiaohangs.ToList();
             ViewBag.hdchomuon = _context.Hdmbs.Where(a => a.MuaBan == "CMUON").ToList();
             ViewBag.client = _context.Signers.ToList();
-            listUser();
             return View("themhopdong");
         }
         // function thêm hợp đồng 
@@ -368,7 +369,7 @@ namespace Intimex_project.Controllers
                 return StatusCode(409, "Object not found");
 
             var valuesDict = JsonConvert.DeserializeObject<IDictionary>(values);
-            PopulateModel(model, valuesDict);
+
 
             if (!TryValidateModel(model))
                 return BadRequest(GetFullErrorMessage(ModelState));
@@ -435,225 +436,7 @@ namespace Intimex_project.Controllers
         }
 
 
-        private void PopulateModel(Hdmb model, IDictionary values)
-        {
-            string MACN = nameof(Hdmb.Macn);
-            string SYSTEMREF = nameof(Hdmb.Systemref);
-            string REF = nameof(Hdmb.Ref);
-            string SOHD = nameof(Hdmb.Sohd);
-            string TRANGTHAI = nameof(Hdmb.Trangthai);
-            string MUA_BAN = nameof(Hdmb.MuaBan);
-            string MAKHACH = nameof(Hdmb.Makhach);
-            string NGAYKY = nameof(Hdmb.Ngayky);
-            string NGAYGIAO = nameof(Hdmb.Ngaygiao);
-            string NGAYHL = nameof(Hdmb.Ngayhl);
-            string NGAYTL = nameof(Hdmb.Ngaytl);
-            string NGUOITL = nameof(Hdmb.Nguoitl);
-            string NGUOILAM = nameof(Hdmb.Nguoilam);
-            string GHICHU = nameof(Hdmb.Ghichu);
-            string PAKD = nameof(Hdmb.Pakd);
-            string SO_PAKD = nameof(Hdmb.SoPakd);
-            string IS_FIX = nameof(Hdmb.IsFix);
-            string TIENTE = nameof(Hdmb.Tiente);
-            string THANHTOAN_ID = nameof(Hdmb.ThanhtoanId);
-            string THANHTOAN = nameof(Hdmb.Thanhtoan);
-            string NGAYLAM = nameof(Hdmb.Ngaylam);
-            string INT_KY = nameof(Hdmb.IntKy);
-            string CLIENT_KY = nameof(Hdmb.ClientKy);
-            string DOCSTATUS = nameof(Hdmb.Docstatus);
-            string TRANGTHAI_GHEP = nameof(Hdmb.TrangthaiGhep);
-            string TIEN_UNG_HD = nameof(Hdmb.TienUngHd);
-            string TIEN_UNG_TT = nameof(Hdmb.TienUngTt);
-            string HDCMUON_ID = nameof(Hdmb.HdcmuonId);
-            string SO_HDCMUON = nameof(Hdmb.SoHdcmuon);
-            string DIA_DIEM_GIAO_HANG = nameof(Hdmb.DiaDiemGiaoHang);
-            string IS_NO_KHO_DOI = nameof(Hdmb.IsNoKhoDoi);
-            string TYPE_KD = nameof(Hdmb.TypeKd);
-            string VAN_CHUYEN = nameof(Hdmb.VanChuyen);
-            string NGAY_TRA_PHAITRA = nameof(Hdmb.NgayTraPhaitra);
-            string DICHVU = nameof(Hdmb.Dichvu);
-            string TENFULL = nameof(Hdmb.Tenfull);
 
-            if (values.Contains(MACN))
-            {
-                model.Macn = Convert.ToString(values[MACN]);
-            }
-
-            if (values.Contains(SYSTEMREF))
-            {
-                model.Systemref = Convert.ToString(values[SYSTEMREF]);
-            }
-
-            if (values.Contains(REF))
-            {
-                model.Ref = Convert.ToString(values[REF]);
-            }
-
-            if (values.Contains(SOHD))
-            {
-                model.Sohd = Convert.ToString(values[SOHD]);
-            }
-
-            if (values.Contains(TRANGTHAI))
-            {
-                model.Trangthai = values[TRANGTHAI] != null ? Convert.ToInt32(values[TRANGTHAI]) : (int?)null;
-            }
-
-            if (values.Contains(MUA_BAN))
-            {
-                model.MuaBan = Convert.ToString(values[MUA_BAN]);
-            }
-
-            if (values.Contains(MAKHACH))
-            {
-                model.Makhach = Convert.ToString(values[MAKHACH]);
-            }
-
-            if (values.Contains(NGAYKY))
-            {
-                model.Ngayky = values[NGAYKY] != null ? Convert.ToDateTime(values[NGAYKY]) : (DateTime?)null;
-            }
-
-            if (values.Contains(NGAYGIAO))
-            {
-                model.Ngaygiao = values[NGAYGIAO] != null ? Convert.ToDateTime(values[NGAYGIAO]) : (DateTime?)null;
-            }
-
-            if (values.Contains(NGAYHL))
-            {
-                model.Ngayhl = values[NGAYHL] != null ? Convert.ToDateTime(values[NGAYHL]) : (DateTime?)null;
-            }
-
-            if (values.Contains(NGAYTL))
-            {
-                model.Ngaytl = values[NGAYTL] != null ? Convert.ToDateTime(values[NGAYTL]) : (DateTime?)null;
-            }
-
-            if (values.Contains(NGUOITL))
-            {
-                model.Nguoitl = Convert.ToString(values[NGUOITL]);
-            }
-
-            if (values.Contains(NGUOILAM))
-            {
-                model.Nguoilam = Convert.ToString(values[NGUOILAM]);
-            }
-
-            if (values.Contains(GHICHU))
-            {
-                model.Ghichu = Convert.ToString(values[GHICHU]);
-            }
-
-            if (values.Contains(PAKD))
-            {
-                model.Pakd = values[PAKD] != null ? Convert.ToBoolean(values[PAKD]) : (bool?)null;
-            }
-
-            if (values.Contains(SO_PAKD))
-            {
-                model.SoPakd = Convert.ToString(values[SO_PAKD]);
-            }
-
-            if (values.Contains(IS_FIX))
-            {
-                model.IsFix = values[IS_FIX] != null ? Convert.ToBoolean(values[IS_FIX]) : (bool?)null;
-            }
-
-            if (values.Contains(TIENTE))
-            {
-                model.Tiente = Convert.ToString(values[TIENTE]);
-            }
-
-            if (values.Contains(THANHTOAN_ID))
-            {
-                model.ThanhtoanId = values[THANHTOAN_ID] != null ? Convert.ToInt64(values[THANHTOAN_ID]) : (long?)null;
-            }
-
-            if (values.Contains(THANHTOAN))
-            {
-                model.Thanhtoan = Convert.ToString(values[THANHTOAN]);
-            }
-
-            if (values.Contains(NGAYLAM))
-            {
-                model.Ngaylam = values[NGAYLAM] != null ? Convert.ToDateTime(values[NGAYLAM]) : (DateTime?)null;
-            }
-
-            if (values.Contains(INT_KY))
-            {
-                model.IntKy = Convert.ToString(values[INT_KY]);
-            }
-
-            if (values.Contains(CLIENT_KY))
-            {
-                model.ClientKy = Convert.ToString(values[CLIENT_KY]);
-            }
-
-            if (values.Contains(DOCSTATUS))
-            {
-                model.Docstatus = values[DOCSTATUS] != null ? Convert.ToBoolean(values[DOCSTATUS]) : (bool?)null;
-            }
-
-            if (values.Contains(TRANGTHAI_GHEP))
-            {
-                model.TrangthaiGhep = values[TRANGTHAI_GHEP] != null ? Convert.ToBoolean(values[TRANGTHAI_GHEP]) : (bool?)null;
-            }
-
-            if (values.Contains(TIEN_UNG_HD))
-            {
-                model.TienUngHd = Convert.ToDecimal(values[TIEN_UNG_HD], CultureInfo.InvariantCulture);
-            }
-
-            if (values.Contains(TIEN_UNG_TT))
-            {
-                model.TienUngTt = Convert.ToDecimal(values[TIEN_UNG_TT], CultureInfo.InvariantCulture);
-            }
-
-            if (values.Contains(HDCMUON_ID))
-            {
-                model.HdcmuonId = Convert.ToString(values[HDCMUON_ID]);
-            }
-
-            if (values.Contains(SO_HDCMUON))
-            {
-                model.SoHdcmuon = Convert.ToString(values[SO_HDCMUON]);
-            }
-
-            if (values.Contains(DIA_DIEM_GIAO_HANG))
-            {
-                model.DiaDiemGiaoHang = Convert.ToString(values[DIA_DIEM_GIAO_HANG]);
-            }
-
-            if (values.Contains(IS_NO_KHO_DOI))
-            {
-                model.IsNoKhoDoi = Convert.ToBoolean(values[IS_NO_KHO_DOI]);
-            }
-
-            if (values.Contains(TYPE_KD))
-            {
-                model.TypeKd = Convert.ToInt32(values[TYPE_KD]);
-            }
-
-            if (values.Contains(VAN_CHUYEN))
-            {
-                model.VanChuyen = Convert.ToString(values[VAN_CHUYEN]);
-            }
-
-            if (values.Contains(NGAY_TRA_PHAITRA))
-            {
-                model.NgayTraPhaitra = values[NGAY_TRA_PHAITRA] != null ? Convert.ToDateTime(values[NGAY_TRA_PHAITRA]) : (DateTime?)null;
-            }
-
-            if (values.Contains(DICHVU))
-            {
-                model.Dichvu = values[DICHVU] != null ? Convert.ToBoolean(values[DICHVU]) : (bool?)null;
-            }
-
-            if (values.Contains(TENFULL))
-            {
-                model.Tenfull = Convert.ToString(values[TENFULL]);
-            }
-        }
 
         private string GetFullErrorMessage(ModelStateDictionary modelState)
         {

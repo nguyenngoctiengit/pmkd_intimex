@@ -154,5 +154,20 @@ var GIAODICH = [{
 }
 ];
 
+var LOAIHD = [{
+    "id": "MUA", "name": "Mua"
+}, {
+    "id": "BAN", "name": "Bán"
+}, {
+    "id": "GUIKHO", "name": "Gửi kho"
+}, {
+    "id": "VAYMUON", "name": "Vay mượn"
+}, {
+    "id": "KTRA", "name": "Khách trả"
+}, {
+    "id": "ALL", "name": "All"
+}
+];
+
 
 
