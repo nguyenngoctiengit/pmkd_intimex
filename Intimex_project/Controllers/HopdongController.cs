@@ -44,6 +44,35 @@ namespace Intimex_project.Controllers
                        }).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
+        [HttpGet]
+        public object GetCt_HDMB(DataSourceLoadOptions loadOptions)
+        {
+            var item = (from a in _context.CtHdmbs join b in _context.Hanghoas on a.Mahang equals b.Mahang where a.Systemref == "HD00037387"
+                        select new
+                        {
+                            a.IdRow,
+                            a.Systemref,
+                            a.Mahang,
+                            Tenhang = b.Tenhang,
+                            a.Soluong,
+                            a.Trongluong,
+                            a.Dvt,
+                            a.Vat,
+                            a.Giact,
+                            a.Giatt,
+                            a.Solot,
+                            a.Giathang,
+                            a.Gianam,
+                            a.Sig,
+                            a.Diff,
+                            a.FNgayfix,
+                            a.Stoploss,
+                            MaNhom = b.MaNhom,
+                            a.Giathitruong,
+                            a.Mucthuong
+                        }).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
+        }
         public IActionResult hdmb()
         {
             return View("hdmb");
