@@ -45,9 +45,9 @@ namespace Intimex_project.Controllers
             return DataSourceLoader.Load(item, loadOptions);
         }
         [HttpGet]
-        public object GetCt_HDMB(DataSourceLoadOptions loadOptions)
+        public object GetCt_HDMB(string id,DataSourceLoadOptions loadOptions)
         {
-            var item = (from a in _context.CtHdmbs join b in _context.Hanghoas on a.Mahang equals b.Mahang where a.Systemref == "HD00037387"
+            var item = (from a in _context.CtHdmbs join b in _context.Hanghoas on a.Mahang equals b.Mahang where a.Systemref == id
                         select new
                         {
                             a.IdRow,
@@ -76,6 +76,42 @@ namespace Intimex_project.Controllers
         public IActionResult hdmb()
         {
             return View("hdmb");
+        }
+        [HttpPost]
+        public IActionResult Fill_Form_HDMB(string Systemref)
+        {
+            var data = (from a in _context.Hdmbs
+                        where a.Systemref == Systemref
+                        select new
+                        {
+                            Systemref = a.Systemref,
+                            Ref = a.Ref,
+                            Makhach = a.Makhach,
+                            Sohd = a.Sohd,
+                            Tiente = a.Tiente,
+                            IntKy = a.IntKy,
+                            ClientKy = a.ClientKy,
+                            Thanhtoan = a.Thanhtoan,
+                            Tenfull = a.Tenfull,
+                            DiaDiemGiaoHang = a.DiaDiemGiaoHang,
+                            Ghichu = a.Ghichu,
+                            Ngayky = a.Ngayky,
+                            Ngaygiao = a.Ngaygiao,
+                            Ngayhl = a.Ngayhl,
+                            NgayTraPhaitra = a.NgayTraPhaitra,
+                            TienUngHd = Convert.ToDecimal(a.TienUngHd),
+                            TienUngTt = a.TienUngTt,
+                            Nguoilam = a.Nguoilam,
+                            Ngaylam = a.Ngaylam,
+                            Macn = a.Macn,
+                            VanChuyen = a.VanChuyen,
+                            HdcmuonId = a.HdcmuonId,
+                            SoHdcmuon = a.SoHdcmuon,
+                            Money = _context.Money.Where(m => m.Ma == a.Tiente).Select(m => m.Ten).FirstOrDefault(),
+                            TenTT = _context.PortfolioPayments.Where(m => m.Id == a.ThanhtoanId).Select(a => a.TenTt).FirstOrDefault(),
+                            Mucung = _context.PortfolioPayments.Where(m => m.Id == a.ThanhtoanId).Select(a => a.Mucung).FirstOrDefault() + "%",
+                        }).FirstOrDefault();
+            return Json(data);
         }
         [Route("hopdong/hopdong/themhopdong")]
         //view thêm hợp đồng

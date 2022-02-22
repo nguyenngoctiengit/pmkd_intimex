@@ -25,7 +25,7 @@
         }
         <div class="clearfix"></div>
         <div class="row">
-            <div class="col-md-12 col-sm-12">
+            <div class="col-md-12 col-sm-12" style="height:auto">
                 <div class="col-md-3 col-sm-3" id="leftdiv" style="height:auto">
 
                     @{
@@ -78,6 +78,7 @@
                                                 .Offset(0, 10)
                                         )
                                     )
+                                    .OnSelectionChanged("Hdmb_Selection")
                                     .Selection(s => s.Mode(SelectionMode.Single))
                                     .HoverStateEnabled(true)
                                     .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
@@ -86,7 +87,7 @@
                                     .AllowColumnReordering(true)
                                     .ShowBorders(true)
                                     .Grouping(group => group.AutoExpandAll(true))
-                                    .Paging(paging => paging.PageSize(16))
+                                    .Paging(paging => paging.PageSize(15))
                                 )
 
                 </div>
@@ -94,9 +95,9 @@
                     <div class="form-group row" style="margin-bottom:0px">
                         <div class="col-md-8 col-sm-8" style="border: 1px solid; border-color: black;text-align:center">
                             <label class="col-form-label col-md-2 col-sm-2">Mã ĐV</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb">
+                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="Macn">
                             <label class="col-form-label col-md-2 col-sm-2">Người tạo</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb">
+                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="Nguoilam">
                         </div>
                         <div class="col-md-4 col-sm-4" style="border: 1px solid; border-color: black;text-align:center">
                             <input type="radio" style="display: inline-block; margin: 5px 10px 5px 10px" name="t" checked><label for="y">Trực tiếp</label>
@@ -112,88 +113,89 @@
                             <input type="radio" style="display: inline-block; margin: 5px 10px 5px 10px " name="x"><label for="y">Khách trả</label>
                         </div>
                         <div class="col-md-4 col-sm-4" style="border: 1px solid; border-color: black;text-align:center">
-                            <input type="radio" style="display: inline-block; margin: 5px 10px 5px 10px" name="t" checked><label for="y">Giá outright</label>
-                            <input type="radio" style="display: inline-block; margin: 5px 10px 5px 10px" name="t"><label for="y">Giá trừ lùi</label>
+                            <input type="radio" style="display: inline-block; margin: 5px 10px 5px 10px" name="a" checked><label for="y">Giá outright</label>
+                            <input type="radio" style="display: inline-block; margin: 5px 10px 5px 10px" name="a"><label for="y">Giá trừ lùi</label>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-md-2 col-sm-2">System ID</label>
-                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
-                        <div class="col-md-7 col-sm-7" style="text-align:left">
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Systemref">
+                        <div class="col-md-8 col-sm-8" style="text-align:left">
                             <input type="checkbox" style="margin-right:10px;margin-left:10px"><label class="col-form-label">Hợp đồng bắt buộc có PAKD</label>
                             <input type="checkbox" style="margin-right: 10px; margin-left: 10px"><label class="col-form-label">Hợp đồng nợ khó đòi</label>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-md-2 col-sm-2">Ref</label>
-                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Ref">
                         <label class="col-form-label col-md-2 col-sm-2">Số hợp đồng</label>
-                        <input type="text" class="form-control col-md-5 col-sm-5 text-box-hdmb">
+                        <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb" id="Sohd">
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-md-2 col-sm-2">Tiền tệ</label>
-                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
-                        <input type="text" class="form-control col-md-7 col-sm-7 text-box-hdmb">
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Tiente">
+                        <input type="text" class="form-control col-md-8 col-sm-8 text-box-hdmb" id="Money">
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-md-2 col-sm-2">Khách hàng</label>
-                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
-                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb">
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Makhach">
+                        <input type="text" class="form-control col-md-5 col-sm-5 text-box-hdmb" id="Tenfull">
                         <label class="col-form-label col-md-1 col-sm-1">V.chuyển</label>
-                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="VanChuyen">
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row" style="display:none">
                         <label class="col-form-label col-md-2 col-sm-2">HĐ cho mượn</label>
-                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
-                        <input type="text" class="form-control col-md-7 col-sm-7 text-box-hdmb">
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="SoHdcmuon">
+                        <input type="text" class="form-control col-md-8 col-sm-8 text-box-hdmb" id="HdcmuonId">
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-md-2 col-sm-2">INT Ký</label>
-                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
-                        <input type="text" class="form-control col-md-7 col-sm-7 text-box-hdmb">
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="IntKy">
+                        <input type="text" class="form-control col-md-8 col-sm-8 text-box-hdmb">
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-md-2 col-sm-2">Khách ký</label>
-                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
-                        <input type="text" class="form-control col-md-7 col-sm-7 text-box-hdmb">
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="ClientKy">
+                        <input type="text" class="form-control col-md-8 col-sm-8 text-box-hdmb">
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-md-2 col-sm-2">Thanh toán</label>
-                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
-                        <input type="text" class="form-control col-md-7 col-sm-7 text-box-hdmb">
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Thanhtoan">
+                        <input type="text" class="form-control col-md-8 col-sm-8 text-box-hdmb" id="TenTT">
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-md-2 col-sm-2">Địa điểm giao hàng</label>
-                        <input type="text" class="form-control col-md-10 col-sm-10 text-box-hdmb">
+                        <input type="text" class="form-control col-md-10 col-sm-10 text-box-hdmb" id="DiaDiemGiaoHang">
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-md-1 col-sm-1">Mức ứng</label>
-                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Mucung">
                         <label class="col-form-label col-md-auto col-sm-auto">Tạm ứng theo HĐ(FOB)</label>
-                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
+                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" id="TienUngHd">
                         <label class="col-form-label col-md-auto col-sm-auto">Tạm ứng thực tế</label>
-                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="TienUngTt">
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-md-1 col-sm-1">Ngày hđ</label>
-                        <input type="text" class="form-control text-box-hdmb col-md-2 col-sm-2">
+                        <input type="date" class="form-control text-box-hdmb col-md-2 col-sm-2" id="Ngayky" asp-format="{0:yyyy-MM-dd}">
                         <label class="col-form-label col-md-1 col-sm-1" style="padding-left:0px;padding-right:0px">Ngày g.hàng</label>
-                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                        <input type="date" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Ngaygiao">
                         <label class="col-form-label col-md-1 col-sm-1" style="padding-left:0px;padding-right:0px">Ngày h.lực</label>
-                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                        <input type="date" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Ngayhl">
                         <label class="col-form-label col-md-1 col-sm-1" style="padding-left:0px;padding-right:0px">Ngày trả</label>
-                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                        <input type="date" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="NgayTraPhaitra">
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-md-1 col-sm-1">Ghi chú</label>
-                        <textarea type="text" class="form-control col-md-11 col-sm-11 text-box-hdmb"></textarea>
+                        <textarea type="text" class="form-control col-md-11 col-sm-11 text-box-hdmb" id="Ghichu"></textarea>
                     </div>
-                    <div>
+                    <div class="col-md-12 col-sm-12">
                         @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.CtHdmb>().ID("DataGrid_Ct_HDMB")
                                     .DataSource(ds => ds.Mvc()
                                         .Controller("Hopdong")
                                         .LoadAction("GetCt_HDMB")
                                         .Key("IdRow")
+                                        .LoadParams(new { id = new JS("GetSystemRef") })
                                     )
                                     .RemoteOperations(true)
                                     .Columns(columns => {
@@ -247,6 +249,7 @@
                                     .Grouping(group => group.AutoExpandAll(true))
                                     .Paging(paging => paging.PageSize(24))
                                 )
+                        <input type="text" id="Systemref" hidden>
                     </div>
                 </div>
             </div>
@@ -256,11 +259,53 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var height = Math.max($("#leftdiv").height(), $("#rightdiv").height());
-        console.log($("#leftdiv").height());
-        console.log($("#rightdiv").height());
         $("#leftdiv").height(height);
         $("#rightdiv").height(height);
     });
+    function Hdmb_Selection(selectedItems) {
+        var data = selectedItems.selectedRowsData[0];
+        if (data) {
+            $.post('/Hopdong/Fill_Form_HDMB', { 'Systemref': data.Systemref }, function (array) {
+                document.getElementById("Systemref").value = array.Systemref;
+                document.getElementById("Ref").value = array.Ref;
+                document.getElementById("Makhach").value = array.Makhach;
+                document.getElementById("Sohd").value = array.Sohd;
+                document.getElementById("Tiente").value = array.Tiente;
+                document.getElementById("IntKy").value = array.IntKy;
+                document.getElementById("ClientKy").value = array.ClientKy;
+                document.getElementById("Thanhtoan").value = array.Thanhtoan;
+                document.getElementById("Tenfull").value = array.Tenfull;
+                document.getElementById("DiaDiemGiaoHang").value = array.DiaDiemGiaoHang;
+                document.getElementById("Ghichu").value = array.Ghichu;
+                document.getElementById("Ngayky").value = new Date(array.Ngayky).toString("yyyy-MM-dd");
+                document.getElementById("Ngaygiao").value = new Date(array.Ngaygiao).toString("yyyy-MM-dd");
+                document.getElementById("Ngayhl").value = new Date(array.Ngayhl).toString("yyyy-MM-dd");
+                document.getElementById("NgayTraPhaitra").value = new Date(array.NgayTraPhaitra).toString("yyyy-MM-dd");
+                document.getElementById("TienUngHd").value = array.TienUngHd.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');;
+                document.getElementById("TienUngTt").value = array.TienUngTt;
+                document.getElementById("Nguoilam").value = array.Nguoilam;
+                document.getElementById("Macn").value = array.Macn;
+                document.getElementById("VanChuyen").value = array.VanChuyen;
+                document.getElementById("SoHdcmuon").value = array.SoHdcmuon;
+                document.getElementById("HdcmuonId").value = array.HdcmuonId;
+                document.getElementById("Mucung").value = array.Mucung;
+                document.getElementById("Money").value = array.Money;
+                document.getElementById("TenTT").value = array.TenTT;
+            })
+            document.getElementById("Systemref").value = data.Systemref;
+            $("#DataGrid_Ct_HDMB").dxDataGrid("refresh");
+        }
+        
+    }
+    function GetSystemRef() {
+        var data = document.getElementById("Systemref").value;
+        if (data == null || data == 0) {
+            return 0;
+        } else {
+            return data;
+        }
+        
+    }
 </script>
 
 <!-- /page content -->
