@@ -80,6 +80,26 @@ namespace Intimex_project.Controllers
         [HttpPost]
         public IActionResult Fill_Form_HDMB(string Systemref)
         {
+            var Name_IntKy = "";
+            var IntKy = _context.Hdmbs.Where(a => a.Systemref == Systemref).Select(a => a.IntKy).FirstOrDefault().Trim();
+            var Client_Ky = _context.Hdmbs.Where(a => a.Systemref == Systemref).Select(a => a.ClientKy).FirstOrDefault().Trim();
+            var Name_ClientKy = "";
+            if (IntKy == null || IntKy == "")
+            {
+                Name_IntKy = "";
+            }
+            else
+            {
+                Name_IntKy = (from a in _context.Signers where a.MaKhach == IntKy.Substring(0, IntKy.Length - 1) && a.Stt == int.Parse(IntKy.Substring(IntKy.Length - 1)) select a.Nguoiky).FirstOrDefault().Trim() + " chức vụ " + (from a in _context.Signers where a.MaKhach == IntKy.Substring(0, IntKy.Length - 1) && a.Stt == int.Parse(IntKy.Substring(IntKy.Length - 1)) select a.Chucvu).FirstOrDefault();
+            }
+            if (Client_Ky == null || Client_Ky == "")
+            {
+                Name_ClientKy = "";
+            }
+            else
+            {
+                Name_ClientKy = (from a in _context.Signers where a.MaKhach == Client_Ky.Substring(0, Client_Ky.Length - 1) && a.Stt == int.Parse(Client_Ky.Substring(Client_Ky.Length - 1)) select a.Nguoiky).FirstOrDefault().Trim() + " chức vụ " + (from a in _context.Signers where a.MaKhach == Client_Ky.Substring(0, Client_Ky.Length - 1) && a.Stt == int.Parse(Client_Ky.Substring(Client_Ky.Length - 1)) select a.Chucvu).FirstOrDefault();
+            }
             var data = (from a in _context.Hdmbs
                         where a.Systemref == Systemref
                         select new
@@ -110,6 +130,11 @@ namespace Intimex_project.Controllers
                             Money = _context.Money.Where(m => m.Ma == a.Tiente).Select(m => m.Ten).FirstOrDefault(),
                             TenTT = _context.PortfolioPayments.Where(m => m.Id == a.ThanhtoanId).Select(a => a.TenTt).FirstOrDefault(),
                             Mucung = _context.PortfolioPayments.Where(m => m.Id == a.ThanhtoanId).Select(a => a.Mucung).FirstOrDefault() + "%",
+                            Name_IntKy = Name_IntKy,
+                            Name_ClientKy = Name_ClientKy,
+                            MuaBan = a.MuaBan,
+                            IsFix = a.IsFix,
+                            TypeKd = a.TypeKd
                         }).FirstOrDefault();
             return Json(data);
         }

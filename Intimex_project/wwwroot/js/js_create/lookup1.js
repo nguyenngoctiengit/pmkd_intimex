@@ -159,9 +159,9 @@ var LOAIHD = [{
 }, {
     "id": "BAN", "name": "Bán"
 }, {
-    "id": "GUIKHO", "name": "Gửi kho"
+    "id": "MUON", "name": "Mượn"
 }, {
-    "id": "VAYMUON", "name": "Vay mượn"
+    "id": "CMUON", "name": "C Mượn"
 }, {
     "id": "KTRA", "name": "Khách trả"
 }, {
