@@ -134,9 +134,17 @@ namespace Intimex_project.Controllers
                             Name_ClientKy = Name_ClientKy,
                             MuaBan = a.MuaBan,
                             IsFix = a.IsFix,
-                            TypeKd = a.TypeKd
+                            TypeKd = a.TypeKd,
+                            Pakd = a.Pakd,
+                            IsNoKhoDoi = a.IsNoKhoDoi
+                            
                         }).FirstOrDefault();
             return Json(data);
+        }
+        [HttpPost]
+        public IActionResult AddHopDong(Hdmb hdmb)
+        {
+            return RedirectToAction("hdmb");
         }
         [Route("hopdong/hopdong/themhopdong")]
         //view thêm hợp đồng
