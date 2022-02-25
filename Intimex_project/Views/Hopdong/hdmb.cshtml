@@ -142,12 +142,54 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Tiền tệ</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Tiente" asp-for="Tiente" disabled>
+                            @(Html.DevExtreme().SelectBoxFor(a => a.Tiente).DataSource(d => d.Mvc().Controller("Hopdong")
+                                                                            .LoadAction("GetTienTe").LoadMode(DataSourceLoadMode.Raw))
+                                                                        .DisplayExpr("Ma").ValueExpr("Ma").ElementAttr("class", "form-control col-md-2 col-sm-2 text-box-hdmb").OnValueChanged("Changed_TienTe").ID("Tiente").Disabled(true))
                             <input type="text" class="form-control col-md-8 col-sm-8 text-box-hdmb" id="Money" disabled>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Khách hàng</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Makhach" asp-for="Makhach" disabled>
+                            @(Html.DevExtreme().DropDownBox()
+                                                    .Value(3)
+                                                    .ValueExpr("ID")
+                                                    .DisplayExpr(new JS("gridBox_displayExpr"))
+                                                    .DataSource(d => d.Mvc()
+                                                        .Controller("DataGridCustomers")
+                                                        .LoadAction("Get")
+                                                        .LoadMode(DataSourceLoadMode.Raw)
+                                                        .Key("ID")
+                                                    )
+                                                    .Placeholder("Select a value...")
+                                                    .ShowClearButton(true)
+                                                    .OnValueChanged("gridBox_valueChanged")
+                                                    .ContentTemplate(new TemplateName("EmbeddedDataGridSingle"))
+                                                )
+                            @using (Html.DevExtreme().NamedTemplate("EmbeddedDataGridSingle"))
+                            {
+                                @(Html.DevExtreme().DataGrid()
+                                                        .ID("embedded-datagrid")
+                                                        .DataSource(new JS(@"component.getDataSource()"))
+                                                        .Columns(columns => {
+                                                            columns.Add().DataField("CompanyName");
+                                                            columns.Add().DataField("City");
+                                                            columns.Add().DataField("Phone");
+                                                        })
+                                                        .HoverStateEnabled(true)
+                                                        .Paging(p => p.PageSize(10))
+                                                        .FilterRow(f => f.Visible(true))
+                                                        .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+                                                        .Height(345)
+                                                        .Selection(s => s.Mode(SelectionMode.Single))
+                                                        .SelectedRowKeys(new JS(@"component.option(""value"") ? [component.option(""value"")] : []"))
+                                                        .OnSelectionChanged(@<text>
+                                                            function(selectedItems) {
+                                                                var keys = selectedItems.selectedRowKeys;
+                                                                component.option("value", keys);
+                                                                component.close();
+                                                            }
+                                                        </text>)
+                                                    )
+                            }
                             <input type="text" class="form-control col-md-5 col-sm-5 text-box-hdmb" id="Tenfull" asp-for="Tenfull" disabled>
                             <label class="col-form-label col-md-1 col-sm-1">V.chuyển</label>
                             <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="VanChuyen" asp-for="VanChuyen" disabled>
@@ -283,6 +325,13 @@
     </div>
 </div>
 <script type="text/javascript">
+    function Changed_TienTe(data) {
+        if (data.value.replace(/\s/g, '') == "VND") {
+            document.getElementById("Money").value = 'Việt Nam Đồng';
+        } else if (data.value.replace(/\s/g, '') == "USD") {
+            document.getElementById("Money").value = 'Đô la mỹ';
+        }
+    }
     function Hdmb_Selection(selectedItems) {
         var data = selectedItems.selectedRowsData[0];
         if (data) {
@@ -291,7 +340,7 @@
                 document.getElementById("Ref").value = array.Ref;
                 document.getElementById("Makhach").value = array.Makhach;
                 document.getElementById("Sohd").value = array.Sohd;
-                document.getElementById("Tiente").value = array.Tiente;
+                $("#Tiente").dxSelectBox("instance").option("value", array.Tiente);
                 document.getElementById("IntKy").value = array.IntKy;
                 document.getElementById("ClientKy").value = array.ClientKy;
                 document.getElementById("Thanhtoan").value = array.Thanhtoan;
@@ -390,7 +439,7 @@
         document.getElementById("Ref").disabled = false;
         document.getElementById("Makhach").disabled = false;
         document.getElementById("Sohd").disabled = false;
-        document.getElementById("Tiente").disabled = false;
+        $("#Tiente").dxSelectBox("instance").option("disabled", false);
         document.getElementById("IntKy").disabled = false;
         document.getElementById("ClientKy").disabled = false;
         document.getElementById("Thanhtoan").disabled = false;
@@ -434,7 +483,7 @@
         document.getElementById("Ref").disabled = true;
         document.getElementById("Makhach").disabled = true;
         document.getElementById("Sohd").disabled = true;
-        document.getElementById("Tiente").disabled = true;
+        $("#Tiente").dxSelectBox("instance").option("disabled", true);
         document.getElementById("IntKy").disabled = true;
         document.getElementById("ClientKy").disabled = true;
         document.getElementById("Thanhtoan").disabled = true;
