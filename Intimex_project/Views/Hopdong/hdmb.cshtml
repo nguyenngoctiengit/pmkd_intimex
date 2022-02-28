@@ -95,6 +95,37 @@
 
 
                 </div>
+                @*----------------------------------------------------Bootrap popup choose khách hàng-------------------------------------------------------------------------------------------------------------------------------*@
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="selected_KH">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            @(Html.DevExtreme().DataGrid()
+                                                        .ID("embedded-datagrid")
+                                                        .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("GetKH").Key("MaKhach"))
+                                                        .Columns(columns => {
+                                                            columns.Add().DataField("MaKhach").Caption("Mã khách");
+                                                            columns.Add().DataField("TenKhach").Caption("Tên khách");
+                                                            columns.Add().DataField("checkitem").CellTemplate(@<text>@(Html.DevExtreme().CheckBox()
+                                                                                                                    .Value(new JS("data.checkitem"))
+                                                                                                                )</text>).Caption("Check Item");
+                                                            columns.Add().DataField("ValueNorm").Caption("Value norm");
+                                                            columns.Add().DataField("Vanchuyen").Caption("Vận chuyển");
+                                                            columns.Add().DataField("MaHd").Caption("Mã HD");
+                                                        })
+                                                        .OnSelectionChanged("Selected_Change_KH")
+                                                        .HoverStateEnabled(true)
+                                                        .Paging(p => p.PageSize(10))
+                                                        .FilterRow(f => f.Visible(true))
+                                                        .Selection(s => s.Mode(SelectionMode.Single))
+                                                    )
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" onclick="close_Popup_KH()">Selected</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
+                @*----------------------------------------------------Bootrap popup choose Int ký-------------------------------------------------------------------------------------------------------------------------------*@
                 <div class="col-md-9 col-sm-9" id="rightdiv" style="height:auto;min-height:auto">
                     <form id="Form_Hdmb" method="post">
                         <div class="form-group row" style="margin-bottom:0px">
@@ -149,47 +180,7 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Khách hàng</label>
-                            @(Html.DevExtreme().DropDownBox()
-                                                    .Value(3)
-                                                    .ValueExpr("ID")
-                                                    .DisplayExpr(new JS("gridBox_displayExpr"))
-                                                    .DataSource(d => d.Mvc()
-                                                        .Controller("DataGridCustomers")
-                                                        .LoadAction("Get")
-                                                        .LoadMode(DataSourceLoadMode.Raw)
-                                                        .Key("ID")
-                                                    )
-                                                    .Placeholder("Select a value...")
-                                                    .ShowClearButton(true)
-                                                    .OnValueChanged("gridBox_valueChanged")
-                                                    .ContentTemplate(new TemplateName("EmbeddedDataGridSingle"))
-                                                )
-                            @using (Html.DevExtreme().NamedTemplate("EmbeddedDataGridSingle"))
-                            {
-                                @(Html.DevExtreme().DataGrid()
-                                                        .ID("embedded-datagrid")
-                                                        .DataSource(new JS(@"component.getDataSource()"))
-                                                        .Columns(columns => {
-                                                            columns.Add().DataField("CompanyName");
-                                                            columns.Add().DataField("City");
-                                                            columns.Add().DataField("Phone");
-                                                        })
-                                                        .HoverStateEnabled(true)
-                                                        .Paging(p => p.PageSize(10))
-                                                        .FilterRow(f => f.Visible(true))
-                                                        .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
-                                                        .Height(345)
-                                                        .Selection(s => s.Mode(SelectionMode.Single))
-                                                        .SelectedRowKeys(new JS(@"component.option(""value"") ? [component.option(""value"")] : []"))
-                                                        .OnSelectionChanged(@<text>
-                                                            function(selectedItems) {
-                                                                var keys = selectedItems.selectedRowKeys;
-                                                                component.option("value", keys);
-                                                                component.close();
-                                                            }
-                                                        </text>)
-                                                    )
-                            }
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Makhach" asp-for="Makhach" disabled>
                             <input type="text" class="form-control col-md-5 col-sm-5 text-box-hdmb" id="Tenfull" asp-for="Tenfull" disabled>
                             <label class="col-form-label col-md-1 col-sm-1">V.chuyển</label>
                             <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="VanChuyen" asp-for="VanChuyen" disabled>
@@ -230,7 +221,7 @@
                             <label class="col-form-label col-md-1 col-sm-1">Ngày hđ</label>
                             <input type="date" class="form-control text-box-hdmb col-md-2 col-sm-2" id="Ngayky" asp-for="Ngayky" disabled>
                             <label class="col-form-label col-md-1 col-sm-1" style="padding-left:0px;padding-right:0px">Ngày g.hàng</label>
-                            <input type="date" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Ngaygiao"  asp-for="Ngaygiao" disabled>
+                            <input type="date" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Ngaygiao" asp-for="Ngaygiao" disabled>
                             <label class="col-form-label col-md-1 col-sm-1" style="padding-left:0px;padding-right:0px">Ngày h.lực</label>
                             <input type="date" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Ngayhl" asp-for="Ngayhl" disabled>
                             <label class="col-form-label col-md-1 col-sm-1" style="padding-left:0px;padding-right:0px;display:none" id="label_ngaytra">Ngày trả</label>
@@ -561,6 +552,28 @@
             document.getElementById("Form_Hdmb").submit();
         }
 
+    }
+    function gridBox_valueChanged(e) {
+        var $dataGrid = $("#embedded-datagrid");
+        if ($dataGrid.length) {
+            var dataGrid = $dataGrid.dxDataGrid("instance");
+            dataGrid.selectRows(e.value, false);
+        }
+    }
+    $("#Makhach").keyup(function (event) {
+        if (event.keyCode === 13) {
+            $("#selected_KH").modal('show');
+        }
+    });
+    function Selected_Change_KH(selectedItems) {
+        var data = selectedItems.selectedRowsData[0];
+        if (data) {
+            document.getElementById("Makhach").value = data.MaKhach;
+            document.getElementById("Tenfull").value = data.TenKhach;
+        }
+    }
+    function close_Popup_KH() {
+        $("#selected_KH").modal('hide');
     }
 </script>
 
