@@ -100,7 +100,6 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             @(Html.DevExtreme().DataGrid()
-                                                        .ID("embedded-datagrid")
                                                         .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("GetKH").Key("MaKhach"))
                                                         .Columns(columns => {
                                                             columns.Add().DataField("MaKhach").Caption("Mã khách");
@@ -126,6 +125,79 @@
                 </div>
                 @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
                 @*----------------------------------------------------Bootrap popup choose Int ký-------------------------------------------------------------------------------------------------------------------------------*@
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="selected_IntKy">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            @(Html.DevExtreme().DataGrid()
+                                                        .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("getIntKy").Key("Makhach"))
+                                                        .Columns(columns => {
+                                                            columns.Add().DataField("Makhach").Caption("Mã người kí");
+                                                            columns.Add().DataField("Nguoiky").Caption("Tên người kí");
+                                                        })
+                                                        .OnSelectionChanged("Selected_Change_IntKy")
+                                                        .HoverStateEnabled(true)
+                                                        .Paging(p => p.PageSize(10))
+                                                        .FilterRow(f => f.Visible(true))
+                                                        .Selection(s => s.Mode(SelectionMode.Single))
+                                                    )
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" onclick="close_Popup_IntKy()">Selected</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
+                @*----------------------------------------------------Bootrap popup choose client ký-------------------------------------------------------------------------------------------------------------------------------*@
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="selected_ClientKy">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            @(Html.DevExtreme().DataGrid()
+                            .ID("DataGrid_ClientKy")
+                                                        .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("getClientKy").Key("Makhach").LoadParams(new { id = new JS("ReturnMaKhach")}))
+                                                        .Columns(columns => {
+                                                            columns.Add().DataField("Makhach").Caption("Mã người kí");
+                                                            columns.Add().DataField("Nguoiky").Caption("Tên người kí");
+                                                        })
+                                                        .OnSelectionChanged("Selected_Change_ClientKy")
+                                                        .HoverStateEnabled(true)
+                                                        .Paging(p => p.PageSize(10))
+                                                        .FilterRow(f => f.Visible(true))
+                                                        .Selection(s => s.Mode(SelectionMode.Single))
+                                                    )
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" onclick="close_Popup_ClientKy()">Selected</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
+                @*----------------------------------------------------Bootrap popup choose THANH TOÁN-------------------------------------------------------------------------------------------------------------------------------*@
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="selected_TT">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            @(Html.DevExtreme().DataGrid()
+                            .ID("DataGrid_TT")
+                                                        .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("getThanhToan").Key("Matt").LoadParams(new { id = new JS("Param_DatagridTT")}))
+                                                        .Columns(columns => {
+                                                            columns.Add().DataField("Matt").Caption("Mã thanh toán");
+                                                            columns.Add().DataField("TenTt").Caption("Tên thanh toán");
+                                                            columns.Add().DataField("Mucung").Caption("Mức ứng");
+                                                            columns.Add().DataField("ReportName").Caption("Report Name");
+                                                            columns.Add().DataField("Id").Caption("Id");
+                                                        })
+                                                        .OnSelectionChanged("Selected_Change_ClientKy")
+                                                        .HoverStateEnabled(true)
+                                                        .Paging(p => p.PageSize(10))
+                                                        .FilterRow(f => f.Visible(true))
+                                                        .Selection(s => s.Mode(SelectionMode.Single))
+                                                    )
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" onclick="close_Popup_ClientKy()">Selected</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
                 <div class="col-md-9 col-sm-9" id="rightdiv" style="height:auto;min-height:auto">
                     <form id="Form_Hdmb" method="post">
                         <div class="form-group row" style="margin-bottom:0px">
@@ -552,17 +624,27 @@
             document.getElementById("Form_Hdmb").submit();
         }
 
-    }
-    function gridBox_valueChanged(e) {
-        var $dataGrid = $("#embedded-datagrid");
-        if ($dataGrid.length) {
-            var dataGrid = $dataGrid.dxDataGrid("instance");
-            dataGrid.selectRows(e.value, false);
-        }
-    }
+    } 
     $("#Makhach").keyup(function (event) {
         if (event.keyCode === 13) {
             $("#selected_KH").modal('show');
+        }
+    }); 
+    $("#IntKy").keyup(function (event) {
+        if (event.keyCode === 13) {
+            $("#selected_IntKy").modal('show');
+        }
+    });
+    $("#ClientKy").keyup(function (event) {
+        if (event.keyCode === 13) {
+            $("#DataGrid_ClientKy").dxDataGrid("refresh");
+            $("#selected_ClientKy").modal('show');
+        }
+    });
+    $("#Thanhtoan").keyup(function (event) {
+        if (event.keyCode === 13) {
+            $("#DataGrid_TT").dxDataGrid("refresh");
+            $("#selected_TT").modal('show');
         }
     });
     function Selected_Change_KH(selectedItems) {
@@ -570,10 +652,42 @@
         if (data) {
             document.getElementById("Makhach").value = data.MaKhach;
             document.getElementById("Tenfull").value = data.TenKhach;
+            document.getElementById("VanChuyen").value = data.Vanchuyen;
         }
+    } 
+    function Selected_Change_IntKy(selectedItems) {
+        var data = selectedItems.selectedRowsData[0];
+        if (data) {
+            document.getElementById("IntKy").value = data.Makhach;
+            document.getElementById("Name_IntKy").value = data.Nguoiky;
+        } 
+    }
+    function Selected_Change_ClientKy(selectedItems) {
+        var data = selectedItems.selectedRowsData[0];
+        if (data) {
+            document.getElementById("ClientKy").value = data.Makhach;
+            document.getElementById("Name_ClientKy").value = data.Nguoiky;
+        }
+    }
+    function Param_DatagridTT() {
+        var MuaBan = $('input[name="MuaBan"]:checked').val();
+        var IsFix = $('input[name="IsFix"]:checked').val();
+        console.log(MuaBan);
+        console.log(IsFix);
+        console.log(JSON.stringify({ MuaBan: MuaBan, IsFix: IsFix }));
+        return { 'MuaBan': MuaBan, 'IsFix': IsFix };
     }
     function close_Popup_KH() {
         $("#selected_KH").modal('hide');
+    }
+    function close_Popup_IntKy() {
+        $("#selected_IntKy").modal('hide');
+    }
+    function close_Popup_ClientKy() {
+        $("#selected_ClientKy").modal('hide');
+    }
+    function ReturnMaKhach() {
+        return document.getElementById("Makhach").value;
     }
 </script>
 

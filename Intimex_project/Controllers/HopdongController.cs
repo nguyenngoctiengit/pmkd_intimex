@@ -222,7 +222,71 @@ namespace Intimex_project.Controllers
 
             }
         }
-
+        [HttpGet]
+        public object getIntKy(DataSourceLoadOptions loadOptions)
+        {
+            var item = (from a in _context.Signers
+                        where a.MaKhach == HttpContext.Session.GetString("UnitName")
+                        select new
+                        {
+                            Makhach = a.MaKhach + a.Stt,
+                            Nguoiky = a.Nguoiky.Trim() + " chức vụ " + a.Chucvu,
+                        }).ToList();
+            return DataSourceLoader.Load(item, loadOptions); 
+        }
+        
+       [HttpGet]
+        public object getClientKy(string id,DataSourceLoadOptions loadOptions)
+        {
+            var item = (from a in _context.Signers
+                        where a.MaKhach == id
+                        select new
+                        {
+                            Makhach = a.MaKhach + a.Stt,
+                            Nguoiky = a.Nguoiky.Trim() + " chức vụ " + a.Chucvu,
+                        }).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
+        }
+        public class ThanhToan
+        {
+            public string? MuaBan { get; set; }
+            public int IsFix { get; set; }
+        }
+        [HttpGet]
+        public object getThanhToan(string id, DataSourceLoadOptions loadOptions)
+        {
+            string MuaBan = "";
+            int IsFix = 0;
+            var muaban = "";
+            var isfix = 0;
+            if (MuaBan == "MUA" || MuaBan == "MUON" || MuaBan == "KTRA")
+            {
+                muaban = "MUA";
+            }
+            else
+            {
+                muaban = "BAN";
+            }
+            if (IsFix == 0)
+            {
+                isfix = 0;
+            }
+            else
+            {
+                isfix = 1;
+            }
+            var item = (from a in _context.PortfolioPayments
+                        where a.LoaiHd == muaban && a.HinhThucGia == isfix
+                        select new
+                        {
+                            a.Matt,
+                            a.TenTt,
+                            a.Mucung,
+                            a.ReportName,
+                            a.Id
+                        }).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
+        }
     }
 }
 
