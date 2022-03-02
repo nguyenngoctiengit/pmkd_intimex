@@ -185,14 +185,43 @@
                                                             columns.Add().DataField("ReportName").Caption("Report Name");
                                                             columns.Add().DataField("Id").Caption("Id");
                                                         })
-                                                        .OnSelectionChanged("Selected_Change_ClientKy")
+                                                        .OnSelectionChanged("Selected_Change_TT")
                                                         .HoverStateEnabled(true)
                                                         .Paging(p => p.PageSize(10))
                                                         .FilterRow(f => f.Visible(true))
                                                         .Selection(s => s.Mode(SelectionMode.Single))
                                                     )
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" onclick="close_Popup_ClientKy()">Selected</button>
+                                <button type="button" class="btn btn-secondary" onclick="close_Popup_TT()">Selected</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
+                @*----------------------------------------------------Bootrap popup choose THANH TOÁN-------------------------------------------------------------------------------------------------------------------------------*@
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="selected_HDCmuon">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            @(Html.DevExtreme().DataGrid()
+                            .ID("DataGrid_HDCmuon")
+                                                        .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("getHDCmuon").Key("Systemref"))
+                                                        .Columns(columns => {
+                                                            columns.Add().DataField("Systemref").Caption("System Ref");
+                                                            columns.Add().DataField("Ref").Caption("Ref");
+                                                            columns.Add().DataField("Sohd").Caption("Số HĐ");
+                                                            columns.Add().DataField("Makhach").Caption("Mã khách");
+                                                            columns.Add().DataField("Ngayky").Caption("Ngày ký");
+                                                            columns.Add().DataField("Ngaygiao").Caption("Ngày giao");
+                                                            columns.Add().DataField("Ghichu").Caption("Ghi chú");
+                                                        })
+                                                        .OnSelectionChanged("Selected_Change_HDCmuon")
+                                                        .HoverStateEnabled(true)
+                                                        .Paging(p => p.PageSize(10))
+                                                        .FilterRow(f => f.Visible(true))
+                                                        .Selection(s => s.Mode(SelectionMode.Single))
+                                                    )
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" onclick="close_Popup_HDCmuon()">Selected</button>
                             </div>
                         </div>
                     </div>
@@ -386,6 +415,7 @@
 
         </div>
     </div>
+    <input type="text" id="macn" value="@ViewBag.macn" hidden>
 </div>
 <script type="text/javascript">
     function Changed_TienTe(data) {
@@ -634,7 +664,7 @@
         if (event.keyCode === 13) {
             $("#selected_IntKy").modal('show');
         }
-    });
+    }); 
     $("#ClientKy").keyup(function (event) {
         if (event.keyCode === 13) {
             $("#DataGrid_ClientKy").dxDataGrid("refresh");
@@ -646,13 +676,40 @@
             $("#DataGrid_TT").dxDataGrid("refresh");
             $("#selected_TT").modal('show');
         }
+    }); 
+    $("#SoHdcmuon").keyup(function (event) {
+        if (event.keyCode === 13) {
+            $("#selected_HDCmuon").modal('show');
+        }
     });
-    function Selected_Change_KH(selectedItems) {
+    function Selected_Change_HDCmuon(selectedItems) {
         var data = selectedItems.selectedRowsData[0];
         if (data) {
-            document.getElementById("Makhach").value = data.MaKhach;
-            document.getElementById("Tenfull").value = data.TenKhach;
-            document.getElementById("VanChuyen").value = data.Vanchuyen;
+            document.getElementById("SoHdcmuon").value = data.Sohd;
+            document.getElementById("HdcmuonId").value = data.Systemref;
+        }
+    }
+    function Selected_Change_KH(selectedItems) {
+        var data = selectedItems.selectedRowsData[0];
+        var strDate = new Date(); // By default Date empty constructor give you Date.now
+        var shortYear = strDate.getFullYear();
+        // Add this line
+        var twoDigitYear = shortYear.toString().substr(-2);
+        if (data) {
+            if (data.checkitem == true && data.ValueNorm == 0 && $('input[name="MuaBan"]:checked').val() == "MUA") {
+                $.notify("Chưa đăng ký trọng lượng giao dịch cho khách hàng này", "error");
+            } else if ($('input[name="MuaBan"]:checked').val() == "MUA") {
+                document.getElementById("Makhach").value = data.MaKhach;
+                document.getElementById("Tenfull").value = data.TenKhach;
+                document.getElementById("VanChuyen").value = data.Vanchuyen;
+                document.getElementById("Sohd").value = document.getElementById("Ref").value + "/" + document.getElementById("macn").value + "-" + document.getElementById("Makhach").value + "/" + twoDigitYear;
+            }
+            else
+            {
+                document.getElementById("Makhach").value = data.MaKhach;
+                document.getElementById("Tenfull").value = data.TenKhach;
+                document.getElementById("VanChuyen").value = data.Vanchuyen;
+            }
         }
     } 
     function Selected_Change_IntKy(selectedItems) {
@@ -669,26 +726,58 @@
             document.getElementById("Name_ClientKy").value = data.Nguoiky;
         }
     }
+    function Selected_Change_TT(selectedItems) {
+        var data = selectedItems.selectedRowsData[0];
+        if (data) {
+            document.getElementById("Thanhtoan").value = data.Matt;
+            document.getElementById("TenTT").value = data.TenTt;
+            document.getElementById("Mucung").value = data.Mucung;
+        }
+    }
     function Param_DatagridTT() {
         var MuaBan = $('input[name="MuaBan"]:checked').val();
         var IsFix = $('input[name="IsFix"]:checked').val();
-        console.log(MuaBan);
-        console.log(IsFix);
-        console.log(JSON.stringify({ MuaBan: MuaBan, IsFix: IsFix }));
-        return { 'MuaBan': MuaBan, 'IsFix': IsFix };
+        var LoaiHD = "";
+        if (MuaBan == "MUA" || MuaBan == "MUON" || MuaBan == "KTRA") {
+            LoaiHD = "MUA";
+        } else {
+            LoaiHD = "BAN"
+        }
+        return LoaiHD + IsFix;
     }
     function close_Popup_KH() {
         $("#selected_KH").modal('hide');
     }
     function close_Popup_IntKy() {
         $("#selected_IntKy").modal('hide');
-    }
+    } 
     function close_Popup_ClientKy() {
         $("#selected_ClientKy").modal('hide');
+    } 
+    function close_Popup_TT() {
+        $("#selected_TT").modal('hide');
+    }
+    function close_Popup_HDCmuon() {
+        $("#selected_HDCmuon").modal('hide');
     }
     function ReturnMaKhach() {
         return document.getElementById("Makhach").value;
     }
+    $('input[name="MuaBan"]').click(function () {
+        if ($(this).attr("value") == "KTRA") {
+            $("#hdmb_chomuon").show('slow');
+            $("#NgayTraPhaitra").hide('slow'); 
+            $("#label_ngaytra").hide('slow');
+        } else if ($(this).attr("value") == "MUON") {
+            $("#NgayTraPhaitra").show('slow');
+            $("#label_ngaytra").show('slow');
+            $("#hdmb_chomuon").hide('slow');
+        } else {
+            $("#NgayTraPhaitra").hide('slow');
+            $("#hdmb_chomuon").hide('slow');
+            $("#label_ngaytra").hide('slow');
+        }
+    });
 </script>
 
 <!-- /page content -->

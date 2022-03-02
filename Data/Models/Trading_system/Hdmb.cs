@@ -52,7 +52,6 @@ namespace Data.Models.Trading_system
         public int TypeKd { get; set; }
         public string VanChuyen { get; set; }
         public DateTime? NgayTraPhaitra { get; set; }
-        public bool? Dichvu { get; set; }
         public string Tenfull { get; set; }
     }
 }

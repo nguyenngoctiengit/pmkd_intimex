@@ -89,6 +89,7 @@ namespace Intimex_project.Controllers
         }
         public IActionResult hdmb()
         {
+            ViewBag.macn = HttpContext.Session.GetString("UnitName");
             return View("hdmb");
         }
         [HttpPost]
@@ -188,6 +189,10 @@ namespace Intimex_project.Controllers
             }
             else
             {
+                item.TienUngHd = hdmb.TienUngHd;
+                item.TienUngTt = hdmb.TienUngTt;
+                item.Tenfull = hdmb.Tenfull;
+                item.Ngaylam = DateTime.Now;
                 item.Macn = HttpContext.Session.GetString("UnitName");
                 item.Systemref = AutoId.AutoIdFileStored("hdmb");
                 item.Ref = hdmb.Ref.Trim() + "/" + hdmb.Ngayky.Value.ToString("yy");
@@ -207,7 +212,7 @@ namespace Intimex_project.Controllers
                 item.Docstatus = false;
                 item.Tiente = hdmb.Tiente;
                 item.IsFix = hdmb.IsFix;
-                item.NgayTraPhaitra = hdmb.NgayTraPhaitra;
+                item.NgayTraPhaitra = hdmb.NgayTraPhaitra == null ? DateTime.Now : hdmb.NgayTraPhaitra;
                 item.SoHdcmuon = hdmb.SoHdcmuon == null ? "" : hdmb.SoHdcmuon;
                 item.HdcmuonId = hdmb.HdcmuonId == null ? "" : hdmb.HdcmuonId;
                 item.DiaDiemGiaoHang = hdmb.DiaDiemGiaoHang;
@@ -247,36 +252,22 @@ namespace Intimex_project.Controllers
                         }).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
-        public class ThanhToan
-        {
-            public string? MuaBan { get; set; }
-            public int IsFix { get; set; }
-        }
-        [HttpGet]
+       [HttpGet]
         public object getThanhToan(string id, DataSourceLoadOptions loadOptions)
         {
-            string MuaBan = "";
-            int IsFix = 0;
-            var muaban = "";
-            var isfix = 0;
-            if (MuaBan == "MUA" || MuaBan == "MUON" || MuaBan == "KTRA")
+            var muaban = id.Substring(0, 3);
+            var isfix = id.Substring(3);
+            var hinhthucgia = 0;
+            if (isfix == "true")
             {
-                muaban = "MUA";
+                hinhthucgia = 1;
             }
             else
             {
-                muaban = "BAN";
-            }
-            if (IsFix == 0)
-            {
-                isfix = 0;
-            }
-            else
-            {
-                isfix = 1;
+                hinhthucgia = 0;
             }
             var item = (from a in _context.PortfolioPayments
-                        where a.LoaiHd == muaban && a.HinhThucGia == isfix
+                        where a.LoaiHd == muaban && a.HinhThucGia == hinhthucgia
                         select new
                         {
                             a.Matt,
@@ -284,6 +275,23 @@ namespace Intimex_project.Controllers
                             a.Mucung,
                             a.ReportName,
                             a.Id
+                        }).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
+        }
+        [HttpGet]
+        public object getHDCmuon(DataSourceLoadOptions loadOptions)
+        {
+            var item = (from a in _context.Hdmbs
+                        where a.Macn == HttpContext.Session.GetString("UnitName") && a.MuaBan == "CMUON" && a.Trangthai != 2
+                        select new
+                        {
+                            a.Systemref,
+                            a.Ref,
+                            a.Sohd,
+                            a.Makhach,
+                            a.Ngayky,
+                            a.Ngaygiao,
+                            a.Ghichu
                         }).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
