@@ -173,59 +173,115 @@ namespace Intimex_project.Controllers
             return DataSourceLoader.Load(khachhang, loadOptions);
         }
         [HttpPost]
-        public IActionResult AddHopDong(Hdmb hdmb)
+        public IActionResult AddHopDong(string id,Hdmb hdmb)
         {
-            Hdmb item = new Hdmb();
-            var datetime = DateTime.Now;
-            if (_context.Hdmbs.Any(a => a.Ref == hdmb.Ref + "/" + datetime.ToString("yy")))
+            if (id == "" || id == null)
             {
-                TempData["alertMessage"] = "Số Ref này đã tồn tại!";
-                return RedirectToAction("hdmb");
-            }
-            else if (hdmb.Ngaygiao.Value.Date < hdmb.Ngayky.Value.Date || hdmb.Ngayhl.Value.Date < hdmb.Ngayky.Value.Date || hdmb.Ngayhl.Value.Date < hdmb.Ngaygiao.Value.Date)
-            {
-                TempData["alertMessage"] = "Chọn ngày Hợp đồng, ngày giao hàng, ngày hiệu lực chưa đúng!\n Ngày hợp đồng <= ngày giao hàng <= ngày hiệu lực";
-                return RedirectToAction("hdmb");
+                Hdmb item = new Hdmb();
+                var datetime = DateTime.Now;
+                if (_context.Hdmbs.Any(a => a.Ref == hdmb.Ref + "/" + datetime.ToString("yy")))
+                {
+                    TempData["alertMessage"] = "Số Ref này đã tồn tại!";
+                    return RedirectToAction("hdmb");
+                }
+                else if (hdmb.Ngaygiao.Value.Date < hdmb.Ngayky.Value.Date || hdmb.Ngayhl.Value.Date < hdmb.Ngayky.Value.Date || hdmb.Ngayhl.Value.Date < hdmb.Ngaygiao.Value.Date)
+                {
+                    TempData["alertMessage"] = "Chọn ngày Hợp đồng, ngày giao hàng, ngày hiệu lực chưa đúng!\n Ngày hợp đồng <= ngày giao hàng <= ngày hiệu lực";
+                    return RedirectToAction("hdmb");
+                }
+                else
+                {
+                    item.TienUngHd = hdmb.TienUngHd;
+                    item.TienUngTt = hdmb.TienUngTt;
+                    item.Tenfull = hdmb.Tenfull;
+                    item.Ngaylam = DateTime.Now;
+                    item.Macn = HttpContext.Session.GetString("UnitName");
+                    item.Systemref = AutoId.AutoIdFileStored("hdmb");
+                    item.Ref = hdmb.Ref.Trim() + "/" + hdmb.Ngayky.Value.ToString("yy");
+                    item.Sohd = hdmb.Sohd.Trim();
+                    item.Trangthai = 1;
+                    item.MuaBan = hdmb.MuaBan;
+                    item.Makhach = hdmb.Makhach;
+                    item.Ngayky = hdmb.Ngayky;
+                    item.Ngaygiao = hdmb.Ngaygiao;
+                    item.Ngayhl = hdmb.Ngayhl;
+                    item.Nguoilam = HttpContext.Session.GetString("UserName");
+                    item.Ghichu = hdmb.Ghichu;
+                    item.Pakd = hdmb.Pakd;
+                    item.Thanhtoan = hdmb.Thanhtoan;
+                    item.IntKy = hdmb.IntKy;
+                    item.ClientKy = hdmb.ClientKy;
+                    item.Docstatus = false;
+                    item.Tiente = hdmb.Tiente;
+                    item.IsFix = hdmb.IsFix;
+                    item.NgayTraPhaitra = hdmb.NgayTraPhaitra == null ? DateTime.Now : hdmb.NgayTraPhaitra;
+                    item.SoHdcmuon = hdmb.SoHdcmuon == null ? "" : hdmb.SoHdcmuon;
+                    item.HdcmuonId = hdmb.HdcmuonId == null ? "" : hdmb.HdcmuonId;
+                    item.DiaDiemGiaoHang = hdmb.DiaDiemGiaoHang;
+                    item.ThanhtoanId = _context.PortfolioPayments.Where(a => a.Matt == hdmb.Thanhtoan).Select(a => a.Id).FirstOrDefault();
+                    item.IsNoKhoDoi = hdmb.IsNoKhoDoi;
+                    item.TypeKd = hdmb.TypeKd;
+                    item.VanChuyen = hdmb.VanChuyen;
+                    _context.Hdmbs.Add(item);
+                    _context.SaveChanges();
+                    var test = _context.ChangeTracker.DebugView.LongView;
+                    TempData["alertMessage"] = "Thêm hợp đồng thành công";
+                    return RedirectToAction("hdmb");
+
+                }
             }
             else
             {
-                item.TienUngHd = hdmb.TienUngHd;
-                item.TienUngTt = hdmb.TienUngTt;
-                item.Tenfull = hdmb.Tenfull;
-                item.Ngaylam = DateTime.Now;
-                item.Macn = HttpContext.Session.GetString("UnitName");
-                item.Systemref = AutoId.AutoIdFileStored("hdmb");
-                item.Ref = hdmb.Ref.Trim() + "/" + hdmb.Ngayky.Value.ToString("yy");
-                item.Sohd = hdmb.Sohd.Trim();
-                item.Trangthai = 1;
-                item.MuaBan = hdmb.MuaBan;
-                item.Makhach = hdmb.Makhach;
-                item.Ngayky = hdmb.Ngayky;
-                item.Ngaygiao = hdmb.Ngaygiao;
-                item.Ngayhl = hdmb.Ngayhl;
-                item.Nguoilam = HttpContext.Session.GetString("UserName");
-                item.Ghichu = hdmb.Ghichu;
-                item.Pakd = hdmb.Pakd;
-                item.Thanhtoan = hdmb.Thanhtoan;
-                item.IntKy = hdmb.IntKy;
-                item.ClientKy = hdmb.ClientKy;
-                item.Docstatus = false;
-                item.Tiente = hdmb.Tiente;
-                item.IsFix = hdmb.IsFix;
-                item.NgayTraPhaitra = hdmb.NgayTraPhaitra == null ? DateTime.Now : hdmb.NgayTraPhaitra;
-                item.SoHdcmuon = hdmb.SoHdcmuon == null ? "" : hdmb.SoHdcmuon;
-                item.HdcmuonId = hdmb.HdcmuonId == null ? "" : hdmb.HdcmuonId;
-                item.DiaDiemGiaoHang = hdmb.DiaDiemGiaoHang;
-                item.ThanhtoanId = _context.PortfolioPayments.Where(a => a.Matt == hdmb.Thanhtoan).Select(a => a.Id).FirstOrDefault();
-                item.IsNoKhoDoi = hdmb.IsNoKhoDoi;
-                item.TypeKd = hdmb.TypeKd;
-                item.VanChuyen = hdmb.VanChuyen;
-                _context.Hdmbs.Add(item);
-                _context.SaveChanges();
-                TempData["alertMessage"] = "Thêm hợp đồng thành công";
-                return RedirectToAction("hdmb");
+                Hdmb item = _context.Hdmbs.Where(a => a.Systemref == id).FirstOrDefault();
+                var datetime = DateTime.Now;
+                if (_context.Hdmbs.Any(a => a.Ref == hdmb.Ref + "/" + datetime.ToString("yy")))
+                {
+                    TempData["alertMessage"] = "Số Ref này đã tồn tại!";
+                    return RedirectToAction("hdmb");
+                }
+                else if (hdmb.Ngaygiao.Value.Date < hdmb.Ngayky.Value.Date || hdmb.Ngayhl.Value.Date < hdmb.Ngayky.Value.Date || hdmb.Ngayhl.Value.Date < hdmb.Ngaygiao.Value.Date)
+                {
+                    TempData["alertMessage"] = "Chọn ngày Hợp đồng, ngày giao hàng, ngày hiệu lực chưa đúng!\n Ngày hợp đồng <= ngày giao hàng <= ngày hiệu lực";
+                    return RedirectToAction("hdmb");
+                }
+                else
+                {
+                    item.TienUngHd = hdmb.TienUngHd;
+                    item.TienUngTt = hdmb.TienUngTt;
+                    item.Tenfull = hdmb.Tenfull;
+                    item.Ref = hdmb.Ref.Trim() + "/" + hdmb.Ngayky.Value.ToString("yy");
+                    item.Sohd = hdmb.Sohd.Trim();
+                    item.Trangthai = 1;
+                    item.MuaBan = hdmb.MuaBan;
+                    item.Makhach = hdmb.Makhach;
+                    item.Ngayky = hdmb.Ngayky;
+                    item.Ngaygiao = hdmb.Ngaygiao;
+                    item.Ngayhl = hdmb.Ngayhl;
+                    item.Ghichu = hdmb.Ghichu;
+                    item.Pakd = hdmb.Pakd;
+                    item.Thanhtoan = hdmb.Thanhtoan;
+                    item.IntKy = hdmb.IntKy;
+                    item.ClientKy = hdmb.ClientKy;
+                    item.Docstatus = false;
+                    item.Tiente = hdmb.Tiente;
+                    item.IsFix = hdmb.IsFix;
+                    item.NgayTraPhaitra = hdmb.NgayTraPhaitra;
+                    item.SoHdcmuon = hdmb.SoHdcmuon == null ? "" : hdmb.SoHdcmuon;
+                    item.HdcmuonId = hdmb.HdcmuonId == null ? "" : hdmb.HdcmuonId;
+                    item.DiaDiemGiaoHang = hdmb.DiaDiemGiaoHang;
+                    item.ThanhtoanId = _context.PortfolioPayments.Where(a => a.Matt == hdmb.Thanhtoan).Select(a => a.Id).FirstOrDefault();
+                    item.IsNoKhoDoi = hdmb.IsNoKhoDoi;
+                    item.TypeKd = hdmb.TypeKd;
+                    item.VanChuyen = hdmb.VanChuyen;
+                    _context.Hdmbs.Update(item);
+                    _context.SaveChanges();
+                    TempData["alertMessage"] = "Chỉnh sửa hợp đồng thành công";
+                    return RedirectToAction("hdmb");
 
+                }
             }
+            
+            
         }
         [HttpGet]
         public object getIntKy(DataSourceLoadOptions loadOptions)
@@ -294,6 +350,31 @@ namespace Intimex_project.Controllers
                             a.Ghichu
                         }).ToList();
             return DataSourceLoader.Load(item, loadOptions);
+        }
+        public IActionResult CancelContract(string id)
+        {
+            var item = _context.Hdmbs.Where(a => a.Systemref == id).FirstOrDefault();
+            if (_context.InputStocks.Any(a => a.ContractId == item.Systemref && a.StatusDestroy == false) || _context.OutputStocks.Any(a => a.ContractId == item.Systemref && a.StatusDestroy == false))
+            {
+                TempData["alertMessage"] = "Hợp đồng đã giao hàng không hủy được";
+                return RedirectToAction("hdmb");
+            }else
+            if (_context.Fixgia.Any(a => a.Systemref == item.Systemref))
+            {
+                TempData["alertMessage"] = "Hợp đồng đã fix giá không hủy được";
+                return RedirectToAction("hdmb");
+            }
+            else
+            {
+                item.Trangthai = 2;
+                item.Ngaytl = DateTime.Now;
+                item.Nguoilam = HttpContext.Session.GetString("UserName");
+                _context.Hdmbs.Update(item);
+                _context.SaveChanges();
+                TempData["alertMessage"] = "Hủy hợp đồng thành công";
+                return RedirectToAction("hdmb");
+            }
+
         }
     }
 }
