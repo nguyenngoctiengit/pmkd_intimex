@@ -2677,10 +2677,6 @@ namespace Data.Models.Trading_system
                     .HasColumnName("giact")
                     .HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.GiactSauCl)
-                    .HasColumnType("decimal(18, 6)")
-                    .HasColumnName("giact_sau_cl");
-
                 entity.Property(e => e.Giacuoi)
                     .HasColumnType("decimal(18, 6)")
                     .HasColumnName("giacuoi")

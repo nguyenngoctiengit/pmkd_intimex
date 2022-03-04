@@ -237,47 +237,50 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="col-md-12 col-sm-12" id="leftdiv">
-                                <div class="form-group row">
-                                    <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" disabled>
-                                    <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" disabled>
-                                    <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb" disabled>
+                            <form id="Form_CTHD_OutRight" method="post">
+                                <div class="col-md-12 col-sm-12" id="leftdiv">
+                                    <div class="form-group row">
+                                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" id="idRow_CTHD_OutRight" disabled>
+                                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="SystemId_CTHD_OutRight" disabled>
+                                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Ref_CTHD_OutRight" disabled>
+                                        <input type="text" class="form-control col-md-5 col-sm-5 text-box-hdmb" id="SoHD_CTHD_OutRight" disabled>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2">Mã hàng</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="MaHang_CTHD_OutRight" name="MaHang_CTHD_OutRight">
+                                        <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb" id="TenHang_CTHD_OutRight">
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2">ĐVT theo HĐ</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="DVT_CTHD_OutRight" name="DVT_CTHD_OutRight">
+                                        <label class="col-form-label col-md-2 col-sm-2">Thuế VAT</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="VAT_CTHD_OutRight" name="VAT_CTHD_OutRight">
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2">Số lượng</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="SoLuong_CTHD_OutRight" name="SoLuong_CTHD_OutRight">
+                                        <label class="col-form-label col-md-2 col-sm-2">Trọng lượng</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="TrongLuong_CTHD_OutRight" name="TrongLuong_CTHD_OutRight">
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2" style="font-size:small">Giá OutRight theo HĐ</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="OutRight_TheoHD_CTHD_OutRight" name="OutRight_TheoHD_CTHD_OutRight">
+                                        <label class="col-form-label col-md-2 col-sm-2">Giá OutRight</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="OutRight_CTHD_OutRight" name="OutRight_CTHD_OutRight">
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2">Giá thị trường</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="GiaThiTruong_CTHD_OutRight" name="GiaThiTruong_CTHD_OutRight">
+                                        <label class="col-form-label col-md-2 col-sm-2">Mức thưởng</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="MucThuong_CTHD_OutRight" name="MucThuong_CTHD_OutRight">
+                                    </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-form-label col-md-2 col-sm-2">Mã hàng</label>
-                                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" disabled>
-                                    <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb" disabled>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" onclick="Submit_form_CTHDOutRight()">Save</button>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-form-label col-md-2 col-sm-2">ĐVT theo HĐ</label>
-                                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" disabled>
-                                    <label class="col-form-label col-md-2 col-sm-2">Thuế VAT</label>
-                                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" disabled>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-form-label col-md-2 col-sm-2">Số lượng</label>
-                                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" disabled>
-                                    <label class="col-form-label col-md-2 col-sm-2">Trọng lượng</label>
-                                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" disabled>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-form-label col-md-2 col-sm-2" style="font-size:small">Giá OutRight theo HĐ</label>
-                                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" disabled>
-                                    <label class="col-form-label col-md-2 col-sm-2">Giá OutRight</label>
-                                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" disabled>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-form-label col-md-2 col-sm-2">Giá thị trường</label>
-                                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" disabled>
-                                    <label class="col-form-label col-md-2 col-sm-2">Mức thưởng</label>
-                                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" disabled>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" onclick="close_Popup_HDCmuon()">Save</button>
-                            </div>
+                            </form>
                         </div>
-                        </div>
+                    </div>
                 </div>
                 @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
                 <div class="col-md-9 col-sm-9" id="rightdiv" style="height:auto;min-height:auto">
@@ -460,7 +463,7 @@
                     <button type="button" class="btn btn-secondary" style="font-size:small">Deli Detail</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small">Add Annex</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small">Add plan</button>
-                    <button type="button" class="btn btn-secondary" style="font-size:small" onclick="$('#Form_ThemCTHD_OutRight').modal('show')">Add Detail</button>
+                    <button type="button" class="btn btn-secondary" style="font-size:small" onclick="AddDetail()">Add Detail</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small">Edit Detail</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small">Delete Detail</button>
                 </div>
@@ -482,6 +485,7 @@
         var data = selectedItems.selectedRowsData[0];
         if (data) {
             $.post('/Hopdong/Fill_Form_HDMB', { 'Systemref': data.Systemref }, function (array) {
+                SetValue_Form_CTHDOutRight(array.Systemref, array.Ref, array.Sohd);
                 document.getElementById("Systemref").value = array.Systemref;
                 document.getElementById("Ref").value = array.Ref;
                 document.getElementById("Makhach").value = array.Makhach;
@@ -846,6 +850,18 @@
             $("#label_ngaytra").hide('slow');
         }
     });
+    function SetValue_Form_CTHDOutRight(SystemId_CTHD_OutRight, Ref_CTHD_OutRight, SoHD_CTHD_OutRight) {
+        document.getElementById("SystemId_CTHD_OutRight").value = SystemId_CTHD_OutRight;
+        document.getElementById("Ref_CTHD_OutRight").value = Ref_CTHD_OutRight;
+        document.getElementById("SoHD_CTHD_OutRight").value = SoHD_CTHD_OutRight;
+    }
+    function AddDetail() {
+        $('#Form_ThemCTHD_OutRight').modal('show');
+    }
+    function Submit_form_CTHDOutRight() {
+        document.getElementById("Form_CTHD_OutRight").action = "/Hopdong/Add_CTHD_OutRight/" + document.getElementById("SystemId_CTHD_OutRight").value;
+        document.getElementById("Form_CTHD_OutRight").submit();
+    }
 </script>
 
 <!-- /page content -->

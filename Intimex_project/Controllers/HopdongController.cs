@@ -376,6 +376,39 @@ namespace Intimex_project.Controllers
             }
 
         }
+        [HttpPost]
+        public IActionResult Add_CTHD_OutRight(string id,string MaHang_CTHD_OutRight, string DVT_CTHD_OutRight, int VAT_CTHD_OutRight,
+            int SoLuong_CTHD_OutRight,int TrongLuong_CTHD_OutRight,string OutRight_TheoHD_CTHD_OutRight,int OutRight_CTHD_OutRight,int GiaThiTruong_CTHD_OutRight,int MucThuong_CTHD_OutRight)
+        {
+            CtHdmb ctHdmb = new CtHdmb();
+            _context.Database.EnsureCreated();
+            _context.Database.EnsureDeleted();
+            ctHdmb.IdRow = AutoId.AutoIdFileStored("ct_hdmb");
+            ctHdmb.Systemref = id;
+            ctHdmb.Ref = _context.Hdmbs.Where(a => a.Systemref == id).Select(a => a.Ref).FirstOrDefault().Trim();
+            ctHdmb.Soluong = SoLuong_CTHD_OutRight;
+            ctHdmb.Giatt = 0;
+            ctHdmb.Giathang = "";
+            ctHdmb.Gianam = "";
+            ctHdmb.Sig = "";
+            ctHdmb.Diff = 0;
+            ctHdmb.Stoploss = 0;
+            ctHdmb.Solot = 0;
+            ctHdmb.FNgayfix = new DateTime(1900,01,01);
+            ctHdmb.Status = false;
+            ctHdmb.Trongluong = TrongLuong_CTHD_OutRight;
+            ctHdmb.Mahang = MaHang_CTHD_OutRight;
+            ctHdmb.Dvt = "KGS";
+            ctHdmb.Giact = OutRight_CTHD_OutRight;
+            ctHdmb.Vat = VAT_CTHD_OutRight;
+            ctHdmb.DvtTheoHd = DVT_CTHD_OutRight;
+            ctHdmb.Giatt = GiaThiTruong_CTHD_OutRight;
+            ctHdmb.Mucthuong = MucThuong_CTHD_OutRight;
+            _context.CtHdmbs.Add(ctHdmb);
+            _context.SaveChanges();
+            TempData["alertMessage"] = "Thêm chi tiết hợp đồng OutRight thành công";
+            return RedirectToAction("hdmb");
+        }
     }
 }
 

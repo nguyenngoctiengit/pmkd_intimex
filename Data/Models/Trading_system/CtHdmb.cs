@@ -35,7 +35,6 @@ namespace Data.Models.Trading_system
         public decimal? Mucthuong { get; set; }
         public bool? ChuyenThang { get; set; }
         public long Id { get; set; }
-        public decimal GiactSauCl { get; set; }
         public string MathangOld { get; set; }
         public string LoaiBao { get; set; }
         public string LoaiBaoOld { get; set; }
