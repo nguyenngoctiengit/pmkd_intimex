@@ -251,10 +251,14 @@
                                         <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb" id="TenHang_CTHD_OutRight">
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-form-label col-md-2 col-sm-2">ĐVT theo HĐ</label>
-                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="DVT_CTHD_OutRight" name="DVT_CTHD_OutRight">
+                                        <label class="col-form-label col-md-2 col-sm-2">ĐVT theo HĐ</label> 
+                                        <select class="form-select form-control col-md-4 col-sm-4 text-box-hdmb" id="DVT_CTHD_OutRight" name="DVT_CTHD_OutRight" aria-label="Default select example">
+                                            <option value="KGS">KGS</option>
+                                            <option value="MTS">MTS</option>
+                                            <option value="LBS">LBS</option>
+                                        </select>
                                         <label class="col-form-label col-md-2 col-sm-2">Thuế VAT</label>
-                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="VAT_CTHD_OutRight" name="VAT_CTHD_OutRight">
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="VAT_CTHD_OutRight" name="VAT_CTHD_OutRight" disabled>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-form-label col-md-2 col-sm-2">Số lượng</label>
@@ -279,6 +283,36 @@
                                     <button type="button" class="btn btn-secondary" onclick="Submit_form_CTHDOutRight()">Save</button>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                </div>
+                @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
+                @*----------------------------------------------------Bootrap popup choose hàng hóa-------------------------------------------------------------------------------------------------------------------------------*@
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="selected_HangHoa">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            @(Html.DevExtreme().DataGrid()
+                                                        .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("GetHangHoa").Key("mahang").LoadParams(new { id = new JS("ReturnMaKhach")}))
+                                                        .ID("dataGrid_HangHoa")
+                                                        .Columns(columns => {
+                                                        columns.Add().DataField("mahang").Caption("Mã hàng");
+                                                        columns.Add().DataField("tenhang").Caption("Tên hàng");
+                                                        columns.Add().DataField("IsCheck").CellTemplate(@<text>@(Html.DevExtreme().CheckBox()
+                                                                                                                    .Value(new JS("data.IsCheck"))
+                                                                                                                )</text>).Caption("Check Item");
+                                                            columns.Add().DataField("dvt").Caption("ĐVT");
+                                                            columns.Add().DataField("vat").Caption("VAT");
+                                                            columns.Add().DataField("TLGD").Caption("TLGD");
+                                                        })
+                                                        .OnSelectionChanged("Selected_Change_HangHoa")
+                                                        .HoverStateEnabled(true)
+                                                        .Paging(p => p.PageSize(10))
+                                                        .FilterRow(f => f.Visible(true))    
+                                                        .Selection(s => s.Mode(SelectionMode.Single))
+                                                    )
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" onclick="close_Popup_HangHoa()">Selected</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -711,7 +745,7 @@
             document.getElementById("Form_Hdmb").submit();
         }
 
-    }
+    } 
     function Button_Cancel() {
         location.href = '/Hopdong/CancelContract/' + document.getElementById("Systemref").value;
     }
@@ -754,6 +788,11 @@
             $("#selected_HDCmuon").modal('show');
         }
     });
+    $("#MaHang_CTHD_OutRight").keyup(function (event) {
+        if (event.keyCode === 13) {
+            $("#selected_HangHoa").modal('show');
+        }
+    }); 
     function Selected_Change_HDCmuon(selectedItems) {
         var data = selectedItems.selectedRowsData[0];
         if (data) {
@@ -805,6 +844,19 @@
             document.getElementById("TenTT").value = data.TenTt;
             document.getElementById("Mucung").value = data.Mucung;
         }
+    }
+    function Selected_Change_HangHoa(selectedItems) {
+        var data = selectedItems.selectedRowsData[0];
+        if (data) {
+            $("#dataGrid_HangHoa").dxDataGrid("refresh");
+            document.getElementById("MaHang_CTHD_OutRight").value = data.mahang;
+            document.getElementById("TenHang_CTHD_OutRight").value = data.tenhang;
+            $('select[name=DVT_CTHD_OutRight]').val(data.dvt.trim());
+            document.getElementById("VAT_CTHD_OutRight").value = data.vat;
+        }
+    }
+    function ReturnMaKhach() {
+        return document.getElementById("Makhach").value;
     }
     function Param_DatagridTT() {
         var MuaBan = $('input[name="MuaBan"]:checked').val();

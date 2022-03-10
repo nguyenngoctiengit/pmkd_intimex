@@ -97,7 +97,6 @@ namespace Intimex_project.Controllers
         {
             var Name_IntKy = "";
             var IntKy = _context.Hdmbs.Where(a => a.Systemref == Systemref).Select(a => a.IntKy).FirstOrDefault().Trim();
-            var Client_Ky = _context.Hdmbs.Where(a => a.Systemref == Systemref).Select(a => a.ClientKy).FirstOrDefault().Trim();
             var Name_ClientKy = "";
             if (IntKy == null || IntKy == "")
             {
@@ -107,12 +106,13 @@ namespace Intimex_project.Controllers
             {
                 Name_IntKy = (from a in _context.Signers where a.MaKhach == IntKy.Substring(0, IntKy.Length - 1) && a.Stt == int.Parse(IntKy.Substring(IntKy.Length - 1)) select a.Nguoiky).FirstOrDefault().Trim() + " chức vụ " + (from a in _context.Signers where a.MaKhach == IntKy.Substring(0, IntKy.Length - 1) && a.Stt == int.Parse(IntKy.Substring(IntKy.Length - 1)) select a.Chucvu).FirstOrDefault();
             }
-            if (Client_Ky == null || Client_Ky == "")
+            if (_context.Hdmbs.Where(a => a.Systemref == Systemref).Select(a => a.ClientKy).FirstOrDefault().Trim() == "")
             {
                 Name_ClientKy = "";
             }
             else
             {
+                var Client_Ky = _context.Hdmbs.Where(a => a.Systemref == Systemref).Select(a => a.ClientKy).FirstOrDefault().Trim();
                 Name_ClientKy = (from a in _context.Signers where a.MaKhach == Client_Ky.Substring(0, Client_Ky.Length - 1) && a.Stt == int.Parse(Client_Ky.Substring(Client_Ky.Length - 1)) select a.Nguoiky).FirstOrDefault().Trim() + " chức vụ " + (from a in _context.Signers where a.MaKhach == Client_Ky.Substring(0, Client_Ky.Length - 1) && a.Stt == int.Parse(Client_Ky.Substring(Client_Ky.Length - 1)) select a.Chucvu).FirstOrDefault();
             }
             var data = (from a in _context.Hdmbs
@@ -209,8 +209,8 @@ namespace Intimex_project.Controllers
                     item.Ghichu = hdmb.Ghichu;
                     item.Pakd = hdmb.Pakd;
                     item.Thanhtoan = hdmb.Thanhtoan;
-                    item.IntKy = hdmb.IntKy;
-                    item.ClientKy = hdmb.ClientKy;
+                    item.IntKy = hdmb.IntKy == null ? "" : hdmb.IntKy;
+                    item.ClientKy = hdmb.ClientKy == null ? "" : hdmb.ClientKy;
                     item.Docstatus = false;
                     item.Tiente = hdmb.Tiente;
                     item.IsFix = hdmb.IsFix;
@@ -224,7 +224,6 @@ namespace Intimex_project.Controllers
                     item.VanChuyen = hdmb.VanChuyen;
                     _context.Hdmbs.Add(item);
                     _context.SaveChanges();
-                    var test = _context.ChangeTracker.DebugView.LongView;
                     TempData["alertMessage"] = "Thêm hợp đồng thành công";
                     return RedirectToAction("hdmb");
 
@@ -381,8 +380,6 @@ namespace Intimex_project.Controllers
             int SoLuong_CTHD_OutRight,int TrongLuong_CTHD_OutRight,string OutRight_TheoHD_CTHD_OutRight,int OutRight_CTHD_OutRight,int GiaThiTruong_CTHD_OutRight,int MucThuong_CTHD_OutRight)
         {
             CtHdmb ctHdmb = new CtHdmb();
-            _context.Database.EnsureCreated();
-            _context.Database.EnsureDeleted();
             ctHdmb.IdRow = AutoId.AutoIdFileStored("ct_hdmb");
             ctHdmb.Systemref = id;
             ctHdmb.Ref = _context.Hdmbs.Where(a => a.Systemref == id).Select(a => a.Ref).FirstOrDefault().Trim();
@@ -394,7 +391,7 @@ namespace Intimex_project.Controllers
             ctHdmb.Diff = 0;
             ctHdmb.Stoploss = 0;
             ctHdmb.Solot = 0;
-            ctHdmb.FNgayfix = new DateTime(1900,01,01);
+            ctHdmb.FNgayfix = new DateTime(1900, 01, 01);
             ctHdmb.Status = false;
             ctHdmb.Trongluong = TrongLuong_CTHD_OutRight;
             ctHdmb.Mahang = MaHang_CTHD_OutRight;
@@ -404,10 +401,20 @@ namespace Intimex_project.Controllers
             ctHdmb.DvtTheoHd = DVT_CTHD_OutRight;
             ctHdmb.Giatt = GiaThiTruong_CTHD_OutRight;
             ctHdmb.Mucthuong = MucThuong_CTHD_OutRight;
+            _context.Entry(ctHdmb).State = EntityState.Added;
             _context.CtHdmbs.Add(ctHdmb);
             _context.SaveChanges();
             TempData["alertMessage"] = "Thêm chi tiết hợp đồng OutRight thành công";
             return RedirectToAction("hdmb");
+        }
+        [HttpGet]
+        public object GetHangHoa(string id,DataSourceLoadOptions loadOptions)
+        {
+            var Sp = "exec [Sp_hanghoa];6 @mahang = ''," +
+                        "@makhach = '" + id + "'," +
+                        "@macn = '"+ HttpContext.Session.GetString("UnitName") + "'";
+            var item = _context.Sp_GetHangHoa_CtHDmbs.FromSqlRaw(Sp).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
         }
     }
 }

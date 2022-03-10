@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -7,6 +9,8 @@ namespace Data.Models.Trading_system
 {
     public partial class CtHdmb
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Key]
         public string IdRow { get; set; }
         public string Systemref { get; set; }
         public string Ref { get; set; }

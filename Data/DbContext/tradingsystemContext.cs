@@ -302,7 +302,6 @@ namespace Data.Models.Trading_system
         public virtual DbSet<XuatKho> XuatKhos { get; set; }
         public virtual DbSet<XuatKhoChiTiet> XuatKhoChiTiets { get; set; }
         public virtual DbSet<Nhom_hang_hoa> Nhom_hang_hoas { get; set; }
-
         public virtual DbSet<SP_GetArchives> SP_GetArchives { get; set; }
         public virtual DbSet<Sp_GetDocument_Archive> Sp_GetDocument_Archives { get; set; }
         public virtual DbSet<Sp_GetArchivesFeedBack> Sp_GetArchivesFeedBacks { get; set; }
@@ -311,6 +310,7 @@ namespace Data.Models.Trading_system
         public virtual DbSet<Sp_GetDocFeedback> Sp_GetDocFeedbacks { get; set; }
         public virtual DbSet<Sp_GetArchivesForAdd> Sp_GetArchivesForAdds { get; set; }
         public virtual DbSet<Sp_GetDocDetails> Sp_GetDocDetails { get; set; }
+        public virtual DbSet<Sp_GetHangHoa_CtHDmb> Sp_GetHangHoa_CtHDmbs { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
