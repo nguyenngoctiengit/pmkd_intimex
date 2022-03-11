@@ -14,7 +14,7 @@ namespace Data.Models.Trading_system
         public string tenhang { get; set; }
         public string dvt { get; set; }
         public int vat { get; set; }
-        public bool IsCheck { get; set; }
-        public int TLGD { get; set; }
+        public bool? IsCheck { get; set; }
+        public double TLGD { get; set; }
     }
 }

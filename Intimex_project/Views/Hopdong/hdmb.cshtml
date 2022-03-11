@@ -790,6 +790,7 @@
     });
     $("#MaHang_CTHD_OutRight").keyup(function (event) {
         if (event.keyCode === 13) {
+            $("#dataGrid_HangHoa").dxDataGrid("refresh");
             $("#selected_HangHoa").modal('show');
         }
     }); 
@@ -848,12 +849,12 @@
     function Selected_Change_HangHoa(selectedItems) {
         var data = selectedItems.selectedRowsData[0];
         if (data) {
-            $("#dataGrid_HangHoa").dxDataGrid("refresh");
+            
             document.getElementById("MaHang_CTHD_OutRight").value = data.mahang;
             document.getElementById("TenHang_CTHD_OutRight").value = data.tenhang;
             $('select[name=DVT_CTHD_OutRight]').val(data.dvt.trim());
             document.getElementById("VAT_CTHD_OutRight").value = data.vat;
-        }
+        } 
     }
     function ReturnMaKhach() {
         return document.getElementById("Makhach").value;
@@ -874,7 +875,7 @@
     }
     function close_Popup_IntKy() {
         $("#selected_IntKy").modal('hide');
-    } 
+    }
     function close_Popup_ClientKy() {
         $("#selected_ClientKy").modal('hide');
     } 
@@ -883,6 +884,9 @@
     }
     function close_Popup_HDCmuon() {
         $("#selected_HDCmuon").modal('hide');
+    }
+    function close_Popup_HangHoa() {
+        $("#selected_HangHoa").modal('hide');
     }
     function ReturnMaKhach() {
         return document.getElementById("Makhach").value;
@@ -908,7 +912,12 @@
         document.getElementById("SoHD_CTHD_OutRight").value = SoHD_CTHD_OutRight;
     }
     function AddDetail() {
-        $('#Form_ThemCTHD_OutRight').modal('show');
+        if (document.getElementById("OutRight").checked) {
+            $('#Form_ThemCTHD_OutRight').modal('show');
+        } else {
+            $('#Form_ThemCTHD_TruLui').modal('show');
+        }
+        
     }
     function Submit_form_CTHDOutRight() {
         document.getElementById("Form_CTHD_OutRight").action = "/Hopdong/Add_CTHD_OutRight/" + document.getElementById("SystemId_CTHD_OutRight").value;
