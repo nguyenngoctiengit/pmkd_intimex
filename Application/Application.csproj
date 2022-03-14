@@ -6,12 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
-    <PackageReference Include="DevExtreme.AspNet.Core" Version="21.1.6" />
+    <PackageReference Include="DevExpress.AspNetCore.Core" Version="21.2.6" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
     <PackageReference Include="System.Security.SecureString" Version="4.3.0" />
-    <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
   </ItemGroup>
 
   <ItemGroup>

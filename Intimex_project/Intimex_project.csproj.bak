@@ -3,11 +3,18 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DevExpress.AspNetCore.Core" Version="21.1.5" />
-    <PackageReference Include="DevExpress.AspNetCore.Spreadsheet" Version="21.1.5" />
-    <PackageReference Include="DevExpress.Data" Version="21.1.5" />
-    <PackageReference Include="DevExpress.Document.Processor" Version="21.1.5" />
-    <PackageReference Include="DevExpress.Web.Mvc" Version="21.1.5" />
+    <Compile Remove="FileUploads\**" />
+    <Content Remove="FileUploads\**" />
+    <EmbeddedResource Remove="FileUploads\**" />
+    <None Remove="FileUploads\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DevExpress.AspNetCore.Core" Version="21.1.6" />
+    <PackageReference Include="DevExpress.AspNetCore.Spreadsheet" Version="21.1.6" />
+    <PackageReference Include="DevExpress.Data" Version="21.1.6" />
+    <PackageReference Include="DevExpress.Document.Processor" Version="21.1.6" />
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="GleamTech.FileUltimate" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -17,12 +24,30 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Data\Data.csproj" />
     <ProjectReference Include="..\ViewModel\ViewModel.csproj" />
-    <PackageReference Include="DevExtreme.AspNet.Core" Version="21.1.6" />
+    <PackageReference Include="DevExtreme.AspNet.Core" Version="21.2.6" />
     <PackageReference Include="DevExtreme.AspNet.Data" Version="2.8.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="GleamTech.Common">
+      <HintPath>bin\Debug\net5.0\GleamTech.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="GleamTech.DocumentUltimate">
+      <HintPath>bin\Debug\net5.0\GleamTech.DocumentUltimate.dll</HintPath>
+    </Reference>
+    <Reference Include="GleamTech.FileUltimate">
+      <HintPath>bin\Debug\net5.0\GleamTech.FileUltimate.dll</HintPath>
+    </Reference>
+    <Reference Include="GleamTech.ImageUltimate">
+      <HintPath>bin\Debug\net5.0\GleamTech.ImageUltimate.dll</HintPath>
+    </Reference>
+    <Reference Include="GleamTech.VideoUltimate">
+      <HintPath>bin\Debug\net5.0\GleamTech.VideoUltimate.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

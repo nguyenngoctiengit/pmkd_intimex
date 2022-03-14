@@ -1,25 +1,17 @@
 using Application.Hubs;
 using Data.Models.SignalR;
+using GleamTech.AspNet.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using Application.AppServices;
-using GleamTech.AspNet.Core;
-using GleamTech.AspNet;
-using GleamTech;
-using GleamTech.FileUltimate;
 
 namespace Intimex_project
 {
@@ -47,7 +39,7 @@ namespace Intimex_project
             services.AddScoped<SignalRChatContext, SignalRChatContext>();
             services.AddHttpClient();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

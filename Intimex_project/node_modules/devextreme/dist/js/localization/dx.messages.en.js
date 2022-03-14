@@ -1,9 +1,9 @@
 /*!
 * DevExtreme (dx.messages.en.js)
-* Version: 21.1.6
-* Build date: Mon Sep 27 2021
+* Version: 21.2.6
+* Build date: Tue Mar 01 2022
 *
-* Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
+* Copyright (c) 2012 - 2022 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
 */
 "use strict";
@@ -320,6 +320,7 @@
             "dxHtmlEditor-redo": "Redo",
             "dxHtmlEditor-clear": "Clear Formatting",
             "dxHtmlEditor-insertTable": "Insert Table",
+            "dxHtmlEditor-insertHeaderRow": "Insert Header Row",
             "dxHtmlEditor-insertRowAbove": "Insert Row Above",
             "dxHtmlEditor-insertRowBelow": "Insert Row Below",
             "dxHtmlEditor-insertColumnLeft": "Insert Column Left",
@@ -327,6 +328,23 @@
             "dxHtmlEditor-deleteColumn": "Delete Column",
             "dxHtmlEditor-deleteRow": "Delete Row",
             "dxHtmlEditor-deleteTable": "Delete Table",
+            "dxHtmlEditor-cellProperties": "Cell Properties",
+            "dxHtmlEditor-tableProperties": "Table Properties",
+            "dxHtmlEditor-insert": "Insert",
+            "dxHtmlEditor-delete": "Delete",
+            "dxHtmlEditor-border": "Border",
+            "dxHtmlEditor-style": "Style",
+            "dxHtmlEditor-width": "Width",
+            "dxHtmlEditor-height": "Height",
+            "dxHtmlEditor-borderColor": "Color",
+            "dxHtmlEditor-tableBackground": "Background",
+            "dxHtmlEditor-dimensions": "Dimensions",
+            "dxHtmlEditor-alignment": "Alignment",
+            "dxHtmlEditor-horizontal": "Horizontal",
+            "dxHtmlEditor-vertical": "Vertical",
+            "dxHtmlEditor-paddingVertical": "Vertical Padding",
+            "dxHtmlEditor-paddingHorizontal": "Horizontal Padding",
+            "dxHtmlEditor-pixels": "Pixels",
             "dxHtmlEditor-list": "List",
             "dxHtmlEditor-ordered": "Ordered",
             "dxHtmlEditor-bullet": "Bullet",

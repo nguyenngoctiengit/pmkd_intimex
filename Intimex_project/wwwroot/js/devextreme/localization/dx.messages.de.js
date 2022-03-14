@@ -1,9 +1,9 @@
 /*!
 * DevExtreme (dx.messages.de.js)
-* Version: 21.1.6
-* Build date: Mon Sep 27 2021
+* Version: 21.2.6
+* Build date: Tue Mar 01 2022
 *
-* Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
+* Copyright (c) 2012 - 2022 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
 */
 "use strict";
@@ -320,6 +320,7 @@
             "dxHtmlEditor-redo": "Wiederholen",
             "dxHtmlEditor-clear": "Formate l\xf6schen",
             "dxHtmlEditor-insertTable": "Tabelle einf\xfcgen",
+            "dxHtmlEditor-insertHeaderRow": "Kopfzeile einf\xfcgen",
             "dxHtmlEditor-insertRowAbove": "Spalte oberhalb einf\xfcgen",
             "dxHtmlEditor-insertRowBelow": "Spalte unterhalb einf\xfcgen",
             "dxHtmlEditor-insertColumnLeft": "Spalte links einf\xfcgen",
@@ -327,6 +328,23 @@
             "dxHtmlEditor-deleteColumn": "Spalte l\xf6schen",
             "dxHtmlEditor-deleteRow": "Zeile l\xf6schen",
             "dxHtmlEditor-deleteTable": "Tabelle l\xf6schen",
+            "dxHtmlEditor-cellProperties": "Zelleneigenschaften",
+            "dxHtmlEditor-tableProperties": "Tabelleneigenschaften",
+            "dxHtmlEditor-insert": "Einf\xfcgen",
+            "dxHtmlEditor-delete": "L\xf6schen",
+            "dxHtmlEditor-border": "Rahmen",
+            "dxHtmlEditor-style": "Stil",
+            "dxHtmlEditor-width": "Breite",
+            "dxHtmlEditor-height": "H\xf6he",
+            "dxHtmlEditor-borderColor": "Farbe",
+            "dxHtmlEditor-tableBackground": "Hintergrund",
+            "dxHtmlEditor-dimensions": "Abmessungen",
+            "dxHtmlEditor-alignment": "Ausrichtung",
+            "dxHtmlEditor-horizontal": "Horizontal",
+            "dxHtmlEditor-vertical": "Vertikal",
+            "dxHtmlEditor-paddingVertical": "Vertikaler Abstand",
+            "dxHtmlEditor-paddingHorizontal": "Horizontaler Abstand",
+            "dxHtmlEditor-pixels": "Pixel",
             "dxHtmlEditor-list": "Liste",
             "dxHtmlEditor-ordered": "Sortiert",
             "dxHtmlEditor-bullet": "Aufz\xe4hlung",
