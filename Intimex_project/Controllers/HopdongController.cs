@@ -1,20 +1,14 @@
-﻿using Application.Parameter;
-using Data.Models.SignalR;
+﻿using Application.AutoId;
+using Application.Parameter;
 using Data.Models.Trading_system;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
-using Application.AutoId;
 
 namespace Intimex_project.Controllers
 {
@@ -173,7 +167,7 @@ namespace Intimex_project.Controllers
             return DataSourceLoader.Load(khachhang, loadOptions);
         }
         [HttpPost]
-        public IActionResult AddHopDong(string id,Hdmb hdmb)
+        public IActionResult AddHopDong(string id, Hdmb hdmb)
         {
             if (id == "" || id == null)
             {
@@ -279,8 +273,8 @@ namespace Intimex_project.Controllers
 
                 }
             }
-            
-            
+
+
         }
         [HttpGet]
         public object getIntKy(DataSourceLoadOptions loadOptions)
@@ -292,11 +286,11 @@ namespace Intimex_project.Controllers
                             Makhach = a.MaKhach + a.Stt,
                             Nguoiky = a.Nguoiky.Trim() + " chức vụ " + a.Chucvu,
                         }).ToList();
-            return DataSourceLoader.Load(item, loadOptions); 
+            return DataSourceLoader.Load(item, loadOptions);
         }
-        
-       [HttpGet]
-        public object getClientKy(string id,DataSourceLoadOptions loadOptions)
+
+        [HttpGet]
+        public object getClientKy(string id, DataSourceLoadOptions loadOptions)
         {
             var item = (from a in _context.Signers
                         where a.MaKhach == id
@@ -307,7 +301,7 @@ namespace Intimex_project.Controllers
                         }).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
-       [HttpGet]
+        [HttpGet]
         public object getThanhToan(string id, DataSourceLoadOptions loadOptions)
         {
             var muaban = id.Substring(0, 3);
@@ -357,7 +351,8 @@ namespace Intimex_project.Controllers
             {
                 TempData["alertMessage"] = "Hợp đồng đã giao hàng không hủy được";
                 return RedirectToAction("hdmb");
-            }else
+            }
+            else
             if (_context.Fixgia.Any(a => a.Systemref == item.Systemref))
             {
                 TempData["alertMessage"] = "Hợp đồng đã fix giá không hủy được";
@@ -376,8 +371,8 @@ namespace Intimex_project.Controllers
 
         }
         [HttpPost]
-        public IActionResult Add_CTHD_OutRight(string id,string MaHang_CTHD_OutRight, string DVT_CTHD_OutRight, int VAT_CTHD_OutRight,
-            int SoLuong_CTHD_OutRight,int TrongLuong_CTHD_OutRight,string OutRight_TheoHD_CTHD_OutRight,int OutRight_CTHD_OutRight,int GiaThiTruong_CTHD_OutRight,int MucThuong_CTHD_OutRight)
+        public IActionResult Add_CTHD_OutRight(string id, string MaHang_CTHD_OutRight, string DVT_CTHD_OutRight, int VAT_CTHD_OutRight,
+            int SoLuong_CTHD_OutRight, int TrongLuong_CTHD_OutRight, string OutRight_TheoHD_CTHD_OutRight, int OutRight_CTHD_OutRight, int GiaThiTruong_CTHD_OutRight, int MucThuong_CTHD_OutRight)
         {
             CtHdmb ctHdmb = new CtHdmb();
             ctHdmb.IdRow = AutoId.AutoIdFileStored("ct_hdmb");
@@ -408,15 +403,14 @@ namespace Intimex_project.Controllers
             return RedirectToAction("hdmb");
         }
         [HttpGet]
-        public object GetHangHoa(string id,DataSourceLoadOptions loadOptions)
+        public object GetHangHoa(string id, DataSourceLoadOptions loadOptions)
         {
             var Sp = "exec [Sp_hanghoa];6 @mahang = ''," +
                         "@makhach = '" + id + "'," +
-                        "@macn = '"+ HttpContext.Session.GetString("UnitName") + "'";
+                        "@macn = '" + HttpContext.Session.GetString("UnitName") + "'";
             var item = _context.Sp_GetHangHoa_CtHDmbs.FromSqlRaw(Sp).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
     }
 }
 
-        

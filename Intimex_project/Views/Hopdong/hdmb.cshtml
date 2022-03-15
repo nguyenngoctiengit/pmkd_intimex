@@ -251,7 +251,7 @@
                                         <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb" id="TenHang_CTHD_OutRight">
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-form-label col-md-2 col-sm-2">ĐVT theo HĐ</label> 
+                                        <label class="col-form-label col-md-2 col-sm-2">ĐVT theo HĐ</label>
                                         <select class="form-select form-control col-md-4 col-sm-4 text-box-hdmb" id="DVT_CTHD_OutRight" name="DVT_CTHD_OutRight" aria-label="Default select example">
                                             <option value="KGS">KGS</option>
                                             <option value="MTS">MTS</option>
@@ -287,6 +287,84 @@
                     </div>
                 </div>
                 @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
+                @*----------------------------------------------------Bootrap popup save chi tiết hợp đồng outright-------------------------------------------------------------------------------------------------------------------------------*@
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="Form_ThemCTHD_TruLui">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Thêm chi tiết hợp đồng</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form id="Form_CTHD_OutRight" method="post">
+                                <div class="col-md-12 col-sm-12" id="leftdiv">
+                                    <div class="form-group row">
+                                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" id="idRow_CTHD" disabled>
+                                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="SystemId_CTHD" disabled>
+                                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Ref_CTHD" disabled>
+                                        <input type="text" class="form-control col-md-5 col-sm-5 text-box-hdmb" id="SoHD_CTHD" disabled>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2">Mã hàng</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="MaHang_CTHD" name="MaHang_CTHD_OutRight">
+                                        <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb" id="TenHang_CTHD">
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2">ĐVT theo HĐ</label>
+                                        <select class="form-select form-control col-md-4 col-sm-4 text-box-hdmb" id="DVT_CTHD" name="DVT_CTHD" aria-label="Default select example">
+                                            <option value="KGS">KGS</option>
+                                            <option value="MTS">MTS</option>
+                                            <option value="LBS">LBS</option>
+                                        </select>
+                                        <label class="col-form-label col-md-2 col-sm-2">Giá TT</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="GiaTT_CTHD" name="VAT_CTHD_OutRight" disabled>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2">Số lượng</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="SoLuong_CTHD" name="SoLuong_CTHD_OutRight">
+                                        <label class="col-form-label col-md-2 col-sm-2">Thuế VAT</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="ThueVAT_CTHD" name="TrongLuong_CTHD_OutRight">
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2">Trọng lượng</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="TrongLuong_CTHD" name="TrongLuong_CTHD">
+                                        <label class="col-form-label col-md-2 col-sm-2">Sig</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="Sig_CTHD" name="Sig_CTHD">
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2">Số lót</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="SoLot_CTHD" name="SoLot_CTHD">
+                                        <label class="col-form-label col-md-2 col-sm-2">Mức trừ hoặc cộng</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="Muctru_CTHD" name="Muctru_CTHD">
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2">Giá tháng</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="GiaThang_CTHD" name="GiaThang_CTHD">
+                                        <label class="col-form-label col-md-2 col-sm-2">Ngày chốt cuối</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="NgayChot_CTHD" name="NgayChot_CTHD">
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2">Giá năm</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="GiaNam_CTHD" name="GiaNam_CTHD">
+                                        <label class="col-form-label col-md-2 col-sm-2">Mức stoploss</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="MucStopLoss_CTHD" name="MucStopLoss_CTHD">
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2">Giá thị trường</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="SoLuong_CTHD_OutRight" name="SoLuong_CTHD_OutRight">
+                                        <label class="col-form-label col-md-2 col-sm-2">Mức thưởng</label>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="TrongLuong_CTHD_OutRight" name="TrongLuong_CTHD_OutRight">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" onclick="Submit_form_CTHD()">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
                 @*----------------------------------------------------Bootrap popup choose hàng hóa-------------------------------------------------------------------------------------------------------------------------------*@
                 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="selected_HangHoa">
                     <div class="modal-dialog modal-lg">
@@ -307,7 +385,7 @@
                                                         .OnSelectionChanged("Selected_Change_HangHoa")
                                                         .HoverStateEnabled(true)
                                                         .Paging(p => p.PageSize(10))
-                                                        .FilterRow(f => f.Visible(true))    
+                                                        .FilterRow(f => f.Visible(true))
                                                         .Selection(s => s.Mode(SelectionMode.Single))
                                                     )
                             <div class="modal-footer">
