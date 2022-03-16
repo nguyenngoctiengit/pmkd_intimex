@@ -23,7 +23,7 @@ namespace Intimex_project.Controllers
         public IActionResult Index()
         {
             return View();
-        }
+        }   
         [HttpGet]
         public object GetTienTe(DataSourceLoadOptions options)
         {
@@ -147,6 +147,41 @@ namespace Intimex_project.Controllers
                             Pakd = a.Pakd,
                             IsNoKhoDoi = a.IsNoKhoDoi
 
+                        }).FirstOrDefault();
+            return Json(data);
+        }
+        [HttpPost]
+        public IActionResult Fill_Form_CTHD(string IdRow)
+        {
+            var data = (from a in _context.CtHdmbs
+                        where a.IdRow == IdRow
+                        select new
+                        {
+                            a.GiaTheoHd,
+                            a.IdRow,
+                            a.Systemref,
+                            a.Ref,
+                            a.Soluong,
+                            a.Trongluong,
+                            a.Mahang,
+                            a.Dvt,
+                            a.Giact,
+                            a.Giatt,
+                            a.Vat,
+                            a.Sig,
+                            a.Diff,
+                            a.Stoploss,
+                            a.Giacuoi,
+                            a.Solot,
+                            a.FNgayfix,
+                            a.Giathang,
+                            a.Gianam,
+                            a.DvtTheoHd,
+                            a.Mucthuong,
+                            a.ChuyenThang,
+                            a.Giathitruong,
+                            SoHD = _context.Hdmbs.Where(b => b.Systemref == a.Systemref).Select(a => a.Sohd).FirstOrDefault(),
+                            TenhangHoa = _context.Hanghoas.Where(b => b.Mahang == a.Mahang).Select(a => a.Tenhang).FirstOrDefault()
                         }).FirstOrDefault();
             return Json(data);
         }
@@ -344,6 +379,15 @@ namespace Intimex_project.Controllers
                         }).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
+        [HttpGet]
+        public object GetHangHoa(string id, DataSourceLoadOptions loadOptions)
+        {
+            var Sp = "exec [Sp_hanghoa];6 @mahang = ''," +
+                        "@makhach = '" + id + "'," +
+                        "@macn = '" + HttpContext.Session.GetString("UnitName") + "'";
+            var item = _context.Sp_GetHangHoa_CtHDmbs.FromSqlRaw(Sp).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
+        }
         public IActionResult CancelContract(string id)
         {
             var item = _context.Hdmbs.Where(a => a.Systemref == id).FirstOrDefault();
@@ -372,7 +416,7 @@ namespace Intimex_project.Controllers
         }
         [HttpPost]
         public IActionResult Add_CTHD_OutRight(string id, string MaHang_CTHD_OutRight, string DVT_CTHD_OutRight, int VAT_CTHD_OutRight,
-            int SoLuong_CTHD_OutRight, int TrongLuong_CTHD_OutRight, string OutRight_TheoHD_CTHD_OutRight, int OutRight_CTHD_OutRight, int GiaThiTruong_CTHD_OutRight, int MucThuong_CTHD_OutRight)
+            int SoLuong_CTHD_OutRight, int TrongLuong_CTHD_OutRight, decimal OutRight_TheoHD_CTHD_OutRight, int OutRight_CTHD_OutRight, int GiaThiTruong_CTHD_OutRight, int MucThuong_CTHD_OutRight)
         {
             CtHdmb ctHdmb = new CtHdmb();
             ctHdmb.IdRow = AutoId.AutoIdFileStored("ct_hdmb");
@@ -381,7 +425,7 @@ namespace Intimex_project.Controllers
             ctHdmb.Soluong = SoLuong_CTHD_OutRight;
             ctHdmb.Giatt = 0;
             ctHdmb.Giathang = "";
-            ctHdmb.Gianam = "";
+            ctHdmb.Gianam = ""; 
             ctHdmb.Sig = "";
             ctHdmb.Diff = 0;
             ctHdmb.Stoploss = 0;
@@ -394,23 +438,74 @@ namespace Intimex_project.Controllers
             ctHdmb.Giact = OutRight_CTHD_OutRight;
             ctHdmb.Vat = VAT_CTHD_OutRight;
             ctHdmb.DvtTheoHd = DVT_CTHD_OutRight;
-            ctHdmb.Giatt = GiaThiTruong_CTHD_OutRight;
+            ctHdmb.Giathitruong = GiaThiTruong_CTHD_OutRight;
             ctHdmb.Mucthuong = MucThuong_CTHD_OutRight;
+            ctHdmb.GiaTheoHd = OutRight_TheoHD_CTHD_OutRight;
             _context.Entry(ctHdmb).State = EntityState.Added;
             _context.CtHdmbs.Add(ctHdmb);
             _context.SaveChanges();
             TempData["alertMessage"] = "Thêm chi tiết hợp đồng OutRight thành công";
             return RedirectToAction("hdmb");
         }
-        [HttpGet]
-        public object GetHangHoa(string id, DataSourceLoadOptions loadOptions)
+        [HttpPost]
+        public IActionResult Add_CTHD(string id,string MaHang_CTHD, string DVT_CTHD, decimal GiaTT_CTHD, int SoLuong_CTHD, int ThueVAT_CTHD
+            , int TrongLuong_CTHD, string Sig_CTHD, decimal SoLot_CTHD, decimal Muctru_CTHD, string GiaThang_CTHD, string NgayChot_CTHD
+            , string GiaNam_CTHD, string MucStopLoss_CTHD, decimal GiaThiTruong_CTHD, decimal MucThuong_CTHD,int ChuyenThang_CTHD)
         {
-            var Sp = "exec [Sp_hanghoa];6 @mahang = ''," +
-                        "@makhach = '" + id + "'," +
-                        "@macn = '" + HttpContext.Session.GetString("UnitName") + "'";
-            var item = _context.Sp_GetHangHoa_CtHDmbs.FromSqlRaw(Sp).ToList();
-            return DataSourceLoader.Load(item, loadOptions);
+            int t = 0;
+            DateTime ngayky = (DateTime) _context.Hdmbs.Where(a => a.Systemref == id).Select(a => a.Ngayky).FirstOrDefault();
+            if (int.TryParse(MucStopLoss_CTHD, out t) == false && t < 0)
+            {
+                TempData["alertMessage"] = "Stoploss nhập không đúng!";
+                return RedirectToAction("hdmb");
+            }
+            if (GiaThang_CTHD != "1" || GiaThang_CTHD != "3" || GiaThang_CTHD != "5" || GiaThang_CTHD != "7"
+                || GiaThang_CTHD != "9" || GiaThang_CTHD != "11" || GiaThang_CTHD != "12")
+            {
+                TempData["alertMessage"] = "Giá tháng nhập không đúng!";
+                return RedirectToAction("hdmb");
+            }
+            if (int.TryParse(GiaNam_CTHD, out t) == false && t < ngayky.Year)
+            {
+                TempData["alertMessage"] = "Giá năm nhập không đúng!";
+                return RedirectToAction("hdmb");
+            }
+            if (DateTime.Parse(NgayChot_CTHD).Year > t || (DateTime.Parse(NgayChot_CTHD).Month > int.Parse(GiaThang_CTHD) && DateTime.Parse(NgayChot_CTHD).Year == t))
+            {
+                TempData["alertMessage"] = "Ngày chốt cuối nhập không đúng!";
+                return RedirectToAction("hdmb");
+            }
+            CtHdmb ctHdmb = new CtHdmb();
+            ctHdmb.IdRow = AutoId.AutoIdFileStored("ct_hdmb");
+            ctHdmb.Systemref = id;
+            ctHdmb.Ref = _context.Hdmbs.Where(a => a.Systemref == id).Select(a => a.Ref).FirstOrDefault();
+            ctHdmb.Soluong = SoLuong_CTHD;
+            ctHdmb.Trongluong = TrongLuong_CTHD;
+            ctHdmb.Mahang = MaHang_CTHD;
+            ctHdmb.Dvt = DVT_CTHD;
+            ctHdmb.Giact = 0;
+            ctHdmb.Giatt = GiaTT_CTHD;
+            ctHdmb.Vat = ThueVAT_CTHD;
+            ctHdmb.Giathang = GiaThang_CTHD;
+            ctHdmb.Gianam = GiaNam_CTHD;
+            ctHdmb.Sig = Sig_CTHD;
+            ctHdmb.Diff = Muctru_CTHD;
+            ctHdmb.Stoploss = decimal.Parse(MucStopLoss_CTHD);
+            ctHdmb.Solot = SoLot_CTHD;
+            ctHdmb.Status = false;
+            ctHdmb.FNgayfix = DateTime.Parse(NgayChot_CTHD);
+            ctHdmb.DvtTheoHd = DVT_CTHD;
+            ctHdmb.GiaTheoHd = 0;
+            ctHdmb.Giathitruong = GiaThiTruong_CTHD;
+            ctHdmb.Mucthuong = MucThuong_CTHD;
+            ctHdmb.ChuyenThang = ChuyenThang_CTHD == 1 ? true : false;
+            _context.CtHdmbs.Add(ctHdmb);
+            _context.SaveChanges();
+            TempData["alertMessage"] = "Thêm chi tiết hợp đồng thành công";
+            return RedirectToAction("hdmb");
         }
+
+
     }
 }
 

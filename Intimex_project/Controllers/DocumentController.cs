@@ -43,7 +43,7 @@ namespace Intimex_project.Controllers
             fileManager.RootFolders.Add(new FileManagerRootFolder
             {
                 Name = "Root",
-                Location = @"C:\Users\User\Desktop\project_intimex\Intimex_project\wwwroot\Document"
+                Location = @"C:\Users\Sterben\Desktop\pmkd_intimex\Intimex_project\wwwroot\Document"
             });
             if (UserInfo.UpdateDoc && UserInfo.DeleteDoc && UserInfo.DownloadDoc)
             {

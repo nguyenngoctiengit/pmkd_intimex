@@ -253,6 +253,7 @@
                                     <div class="form-group row">
                                         <label class="col-form-label col-md-2 col-sm-2">ĐVT theo HĐ</label>
                                         <select class="form-select form-control col-md-4 col-sm-4 text-box-hdmb" id="DVT_CTHD_OutRight" name="DVT_CTHD_OutRight" aria-label="Default select example">
+                                            <option value="" selected></option>
                                             <option value="KGS">KGS</option>
                                             <option value="MTS">MTS</option>
                                             <option value="LBS">LBS</option>
@@ -287,17 +288,17 @@
                     </div>
                 </div>
                 @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
-                @*----------------------------------------------------Bootrap popup save chi tiết hợp đồng outright-------------------------------------------------------------------------------------------------------------------------------*@
+                @*----------------------------------------------------Bootrap popup save chi tiết hợp đồng-------------------------------------------------------------------------------------------------------------------------------*@
                 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="Form_ThemCTHD_TruLui">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Thêm chi tiết hợp đồng</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Thêm chi tiết hợp đồng Fix giá</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form id="Form_CTHD_OutRight" method="post">
+                            <form id="Form_CTHD" method="post">
                                 <div class="col-md-12 col-sm-12" id="leftdiv">
                                     <div class="form-group row">
                                         <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" id="idRow_CTHD" disabled>
@@ -307,30 +308,35 @@
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-form-label col-md-2 col-sm-2">Mã hàng</label>
-                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="MaHang_CTHD" name="MaHang_CTHD_OutRight">
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="MaHang_CTHD" name="MaHang_CTHD">
                                         <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb" id="TenHang_CTHD">
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-form-label col-md-2 col-sm-2">ĐVT theo HĐ</label>
                                         <select class="form-select form-control col-md-4 col-sm-4 text-box-hdmb" id="DVT_CTHD" name="DVT_CTHD" aria-label="Default select example">
+                                            <option value="" selected></option>
                                             <option value="KGS">KGS</option>
                                             <option value="MTS">MTS</option>
                                             <option value="LBS">LBS</option>
                                         </select>
                                         <label class="col-form-label col-md-2 col-sm-2">Giá TT</label>
-                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="GiaTT_CTHD" name="VAT_CTHD_OutRight" disabled>
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="GiaTT_CTHD" name="GiaTT_CTHD">
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-form-label col-md-2 col-sm-2">Số lượng</label>
-                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="SoLuong_CTHD" name="SoLuong_CTHD_OutRight">
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="SoLuong_CTHD" name="SoLuong_CTHD">
                                         <label class="col-form-label col-md-2 col-sm-2">Thuế VAT</label>
-                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="ThueVAT_CTHD" name="TrongLuong_CTHD_OutRight">
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="ThueVAT_CTHD" name="ThueVAT_CTHD">
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-form-label col-md-2 col-sm-2">Trọng lượng</label>
                                         <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="TrongLuong_CTHD" name="TrongLuong_CTHD">
                                         <label class="col-form-label col-md-2 col-sm-2">Sig</label>
-                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="Sig_CTHD" name="Sig_CTHD">
+                                        <select class="form-select form-control col-md-4 col-sm-4 text-box-hdmb" id="Sig_CTHD" name="Sig_CTHD" aria-label="Default select example">
+                                            <option value="" selected></option>
+                                            <option value="+"> + </option>
+                                            <option value="-"> - </option>
+                                        </select>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-form-label col-md-2 col-sm-2">Số lót</label>
@@ -342,7 +348,7 @@
                                         <label class="col-form-label col-md-2 col-sm-2">Giá tháng</label>
                                         <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="GiaThang_CTHD" name="GiaThang_CTHD">
                                         <label class="col-form-label col-md-2 col-sm-2">Ngày chốt cuối</label>
-                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="NgayChot_CTHD" name="NgayChot_CTHD">
+                                        <input type="date" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="NgayChot_CTHD" name="NgayChot_CTHD">
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-form-label col-md-2 col-sm-2">Giá năm</label>
@@ -352,9 +358,14 @@
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-form-label col-md-2 col-sm-2">Giá thị trường</label>
-                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="SoLuong_CTHD_OutRight" name="SoLuong_CTHD_OutRight">
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="GiaThiTruong_CTHD" name="GiaThiTruong_CTHD">
                                         <label class="col-form-label col-md-2 col-sm-2">Mức thưởng</label>
-                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="TrongLuong_CTHD_OutRight" name="TrongLuong_CTHD_OutRight">
+                                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="MucThuong_CTHD" name="MucThuong_CTHD">
+                                    </div>
+                                    <div class="form-group row">
+                                        <input type="checkbox" style="margin-right:10px;margin-left:10px;margin-top:7px" name="ChuyenThang_CTHD" value="1" id="ChuyenThang_CTHD">
+                                        <input type="hidden" name="ChuyenThang_CTHD" value="0" hidden>
+                                        <label class="col-form-label">Chuyển tháng</label>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -510,6 +521,7 @@
                                     )
                                     .RemoteOperations(true)
                                     .Columns(columns => {
+                                        columns.AddFor(m => m.IdRow).Visible(false);
 
                                         columns.AddFor(m => m.Systemref).Caption("Systemref");
 
@@ -549,6 +561,7 @@
 
                                         columns.AddFor(m => m.Mucthuong).Caption("Mức thưởng");
                                     })
+                                    .OnSelectionChanged("Selected_CTHD")
                                     .ColumnAutoWidth(true)
                                     .Selection(s => s.Mode(SelectionMode.Single))
                                     .HoverStateEnabled(true)
@@ -576,7 +589,7 @@
                     <button type="button" class="btn btn-secondary" style="font-size:small">Add Annex</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small">Add plan</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="AddDetail()">Add Detail</button>
-                    <button type="button" class="btn btn-secondary" style="font-size:small">Edit Detail</button>
+                    <button type="button" class="btn btn-secondary" style="font-size:small" onclick="EditDetail()">Edit Detail</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small">Delete Detail</button>
                 </div>
             </div>
@@ -584,6 +597,7 @@
         </div>
     </div>
     <input type="text" id="macn" value="@ViewBag.macn" hidden>
+    <input type="text" id="IdRow_CTHD" hidden>
 </div>
 <script type="text/javascript">
     function Changed_TienTe(data) {
@@ -597,6 +611,7 @@
         var data = selectedItems.selectedRowsData[0];
         if (data) {
             $.post('/Hopdong/Fill_Form_HDMB', { 'Systemref': data.Systemref }, function (array) {
+                SetValue_Form_CTHD(array.Systemref, array.Ref, array.Sohd);
                 SetValue_Form_CTHDOutRight(array.Systemref, array.Ref, array.Sohd);
                 document.getElementById("Systemref").value = array.Systemref;
                 document.getElementById("Ref").value = array.Ref;
@@ -871,7 +886,13 @@
             $("#dataGrid_HangHoa").dxDataGrid("refresh");
             $("#selected_HangHoa").modal('show');
         }
-    }); 
+    });
+    $("#MaHang_CTHD").keyup(function (event) {
+        if (event.keyCode === 13) {
+            $("#dataGrid_HangHoa").dxDataGrid("refresh");
+            $("#selected_HangHoa").modal('show');
+        }
+    });
     function Selected_Change_HDCmuon(selectedItems) {
         var data = selectedItems.selectedRowsData[0];
         if (data) {
@@ -927,12 +948,25 @@
     function Selected_Change_HangHoa(selectedItems) {
         var data = selectedItems.selectedRowsData[0];
         if (data) {
+            if ($('#Form_ThemCTHD_OutRight').hasClass('in')) {
+                document.getElementById("MaHang_CTHD_OutRight").value = data.mahang;
+                document.getElementById("TenHang_CTHD_OutRight").value = data.tenhang;
+                $('select[name=DVT_CTHD_OutRight]').val(data.dvt.trim());
+                document.getElementById("VAT_CTHD_OutRight").value = data.vat;
+            } else {
+                document.getElementById("MaHang_CTHD").value = data.mahang;
+                document.getElementById("TenHang_CTHD").value = data.tenhang;
+                $('select[name=DVT_CTHD]').val(data.dvt.trim());
+                document.getElementById("ThueVAT_CTHD").value = data.vat;
+            }
             
-            document.getElementById("MaHang_CTHD_OutRight").value = data.mahang;
-            document.getElementById("TenHang_CTHD_OutRight").value = data.tenhang;
-            $('select[name=DVT_CTHD_OutRight]').val(data.dvt.trim());
-            document.getElementById("VAT_CTHD_OutRight").value = data.vat;
         } 
+    }
+    function Selected_CTHD(selectedItems) {
+        var data = selectedItems.selectedRowsData[0];
+        if (data) {
+            document.getElementById("IdRow_CTHD").value = data.IdRow;
+        }
     }
     function ReturnMaKhach() {
         return document.getElementById("Makhach").value;
@@ -989,6 +1023,11 @@
         document.getElementById("Ref_CTHD_OutRight").value = Ref_CTHD_OutRight;
         document.getElementById("SoHD_CTHD_OutRight").value = SoHD_CTHD_OutRight;
     }
+    function SetValue_Form_CTHD(SystemId_CTHD_OutRight, Ref_CTHD_OutRight, SoHD_CTHD_OutRight) {
+        document.getElementById("SystemId_CTHD").value = SystemId_CTHD_OutRight;
+        document.getElementById("Ref_CTHD").value = Ref_CTHD_OutRight;
+        document.getElementById("SoHD_CTHD").value = SoHD_CTHD_OutRight;
+    }
     function AddDetail() {
         if (document.getElementById("OutRight").checked) {
             $('#Form_ThemCTHD_OutRight').modal('show');
@@ -997,9 +1036,42 @@
         }
         
     }
+    function EditDetail() {
+        var IdRow = document.getElementById("IdRow_CTHD").value;
+        if (IdRow == null || IdRow == "") {
+            $.notify("Vui lòng chọn chi tiết hợp đồng muốn chỉnh sửa!", "error");
+        } else {
+            if (document.getElementById("OutRight").checked) {
+                $.post("/Hopdong/Fill_Form_CTHD", { 'IdRow': IdRow }, function (array) {
+                    console.log(array.Dvt.trim());
+                    document.getElementById("idRow_CTHD_OutRight").value = array.IdRow;
+                    document.getElementById("SystemId_CTHD_OutRight").value = array.Systemref;
+                    document.getElementById("Ref_CTHD_OutRight").value = array.Ref;
+                    document.getElementById("SoHD_CTHD_OutRight").value = array.SoHD;
+                    document.getElementById("MaHang_CTHD_OutRight").value = array.Mahang;
+                    document.getElementById("TenHang_CTHD_OutRight").value = array.TenhangHoa;
+                    $('select[name=DVT_CTHD_OutRight]').val(array.Dvt.trim());
+                    document.getElementById("VAT_CTHD_OutRight").value = array.Vat;
+                    document.getElementById("SoLuong_CTHD_OutRight").value = array.Soluong;
+                    document.getElementById("TrongLuong_CTHD_OutRight").value = array.Trongluong;
+                    document.getElementById("OutRight_TheoHD_CTHD_OutRight").value = array.GiaTheoHd;
+                    document.getElementById("OutRight_CTHD_OutRight").value = array.Giact;
+                    document.getElementById("GiaThiTruong_CTHD_OutRight").value = array.Giathitruong;
+                    document.getElementById("MucThuong_CTHD_OutRight").value = array.Mucthuong;
+                })
+                $('#Form_ThemCTHD_OutRight').modal('show');
+            } else {
+                $('#Form_ThemCTHD_TruLui').modal('show');
+            }
+        }
+    }
     function Submit_form_CTHDOutRight() {
         document.getElementById("Form_CTHD_OutRight").action = "/Hopdong/Add_CTHD_OutRight/" + document.getElementById("SystemId_CTHD_OutRight").value;
         document.getElementById("Form_CTHD_OutRight").submit();
+    }
+    function Submit_form_CTHD() {
+        document.getElementById("Form_CTHD").action = "/Hopdong/Add_CTHD/" + document.getElementById("SystemId_CTHD").value;
+        document.getElementById("Form_CTHD").submit();
     }
 </script>
 
