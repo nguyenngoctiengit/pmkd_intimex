@@ -240,6 +240,7 @@
                             <form id="Form_CTHD_OutRight" method="post">
                                 <div class="col-md-12 col-sm-12" id="leftdiv">
                                     <div class="form-group row">
+                                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="SystemId_CTHD_OutRight_hidden" name="SystemId_CTHD_OutRight_hidden" hidden>
                                         <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" id="idRow_CTHD_OutRight" disabled>
                                         <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="SystemId_CTHD_OutRight" disabled>
                                         <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Ref_CTHD_OutRight" disabled>
@@ -593,7 +594,6 @@
                     <button type="button" class="btn btn-secondary" style="font-size:small">Delete Detail</button>
                 </div>
             </div>
-
         </div>
     </div>
     <input type="text" id="macn" value="@ViewBag.macn" hidden>
@@ -948,12 +948,14 @@
     function Selected_Change_HangHoa(selectedItems) {
         var data = selectedItems.selectedRowsData[0];
         if (data) {
-            if ($('#Form_ThemCTHD_OutRight').hasClass('in')) {
+            if ($('#Form_ThemCTHD_OutRight').hasClass('show')) {
+                console.log(1);
                 document.getElementById("MaHang_CTHD_OutRight").value = data.mahang;
                 document.getElementById("TenHang_CTHD_OutRight").value = data.tenhang;
                 $('select[name=DVT_CTHD_OutRight]').val(data.dvt.trim());
                 document.getElementById("VAT_CTHD_OutRight").value = data.vat;
             } else {
+                console.log(0);
                 document.getElementById("MaHang_CTHD").value = data.mahang;
                 document.getElementById("TenHang_CTHD").value = data.tenhang;
                 $('select[name=DVT_CTHD]').val(data.dvt.trim());
@@ -1043,7 +1045,7 @@
         } else {
             if (document.getElementById("OutRight").checked) {
                 $.post("/Hopdong/Fill_Form_CTHD", { 'IdRow': IdRow }, function (array) {
-                    console.log(array.Dvt.trim());
+                    document.getElementById("SystemId_CTHD_OutRight_hidden").value = array.Systemref;
                     document.getElementById("idRow_CTHD_OutRight").value = array.IdRow;
                     document.getElementById("SystemId_CTHD_OutRight").value = array.Systemref;
                     document.getElementById("Ref_CTHD_OutRight").value = array.Ref;
@@ -1061,17 +1063,57 @@
                 })
                 $('#Form_ThemCTHD_OutRight').modal('show');
             } else {
+                $.post("/Hopdong/Fill_Form_CTHD", { 'IdRow': IdRow }, function (array) {
+                    document.getElementById("idRow_CTHD").value = array.IdRow;
+                    document.getElementById("SystemId_CTHD").value = array.Systemref;
+                    document.getElementById("Ref_CTHD").value = array.Ref;
+                    document.getElementById("SoHD_CTHD").value = array.SoHD;
+                    document.getElementById("MaHang_CTHD").value = array.Mahang;
+                    document.getElementById("TenHang_CTHD").value = array.TenhangHoa;
+                    $('select[name=DVT_CTHD]').val(array.Dvt.trim());
+                    document.getElementById("GiaTT_CTHD").value = array.Giatt;
+                    document.getElementById("SoLuong_CTHD").value = array.Soluong;
+                    document.getElementById("ThueVAT_CTHD").value = array.Vat;
+                    document.getElementById("TrongLuong_CTHD").value = array.Trongluong;
+                    document.getElementById("Sig_CTHD").value = array.Sig;
+                    document.getElementById("SoLot_CTHD").value = array.Solot;
+                    document.getElementById("Muctru_CTHD").value = array.Diff;
+                    document.getElementById("GiaThang_CTHD").value = array.Giathang;
+                    document.getElementById("NgayChot_CTHD").value = new Date(array.FNgayfix);
+                    document.getElementById("GiaNam_CTHD").value = array.Gianam;
+                    document.getElementById("MucStopLoss_CTHD").value = array.Stoploss;
+                    document.getElementById("GiaThiTruong_CTHD").value = array.Giathitruong;
+                    document.getElementById("MucThuong_CTHD").value = array.Mucthuong;
+                    if (array.ChuyenThang == true) {
+                        document.getElementById("ChuyenThang_CTHD").checked = true;
+                    } else {
+                        document.getElementById("ChuyenThang_CTHD").checked = false;
+                    }
+                    console.log(array.FNgayfix);
+                })
                 $('#Form_ThemCTHD_TruLui').modal('show');
             }
         }
     }
     function Submit_form_CTHDOutRight() {
-        document.getElementById("Form_CTHD_OutRight").action = "/Hopdong/Add_CTHD_OutRight/" + document.getElementById("SystemId_CTHD_OutRight").value;
-        document.getElementById("Form_CTHD_OutRight").submit();
+        if (document.getElementById("idRow_CTHD_OutRight").value != "" || document.getElementById("idRow_CTHD_OutRight").value != null) {
+            document.getElementById("Form_CTHD_OutRight").action = "/Hopdong/Edit_CTHD_OutRight/" + document.getElementById("idRow_CTHD_OutRight").value;
+            document.getElementById("Form_CTHD_OutRight").submit();
+        }
+        else {
+            document.getElementById("Form_CTHD_OutRight").action = "/Hopdong/Add_CTHD_OutRight/" + document.getElementById("SystemId_CTHD_OutRight").value;
+            document.getElementById("Form_CTHD_OutRight").submit();
+        }
     }
     function Submit_form_CTHD() {
-        document.getElementById("Form_CTHD").action = "/Hopdong/Add_CTHD/" + document.getElementById("SystemId_CTHD").value;
-        document.getElementById("Form_CTHD").submit();
+        if (document.getElementById("idRow_CTHD").value != "" || document.getElementById("idRow_CTHD").value != null) {
+            document.getElementById("Form_CTHD").action = "/Hopdong/Edit_CTHD/" + document.getElementById("idRow_CTHD").value;
+            document.getElementById("Form_CTHD").submit();
+        } else {
+            document.getElementById("Form_CTHD").action = "/Hopdong/Add_CTHD/" + document.getElementById("SystemId_CTHD").value;
+            document.getElementById("Form_CTHD").submit();
+
+        }
     }
 </script>
 

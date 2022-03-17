@@ -448,6 +448,35 @@ namespace Intimex_project.Controllers
             return RedirectToAction("hdmb");
         }
         [HttpPost]
+        public IActionResult Edit_CTHD_OutRight(string id, string SystemId_CTHD_OutRight_hidden, string MaHang_CTHD_OutRight, string DVT_CTHD_OutRight, int VAT_CTHD_OutRight,
+            int SoLuong_CTHD_OutRight, int TrongLuong_CTHD_OutRight, decimal OutRight_TheoHD_CTHD_OutRight, int OutRight_CTHD_OutRight, int GiaThiTruong_CTHD_OutRight, int MucThuong_CTHD_OutRight)
+        {
+            var Sp = "exec [UdscCt_hdmb];2 @idrow = '" + id + "',@systemref = '" + SystemId_CTHD_OutRight_hidden + "'," +
+                                                "@ref = '" + _context.Hdmbs.Where(a => a.Systemref == SystemId_CTHD_OutRight_hidden).Select(a => a.Ref).FirstOrDefault().Trim() + "'," +
+                                                "@soluong = '" + SoLuong_CTHD_OutRight + "'," +
+                                                "@trongluong = '" + TrongLuong_CTHD_OutRight + "'," +
+                                                "@mahang = '" + MaHang_CTHD_OutRight + "'," +
+                                                "@dvt = '" + "KGS" + "'," +
+                                                "@giact = '" + OutRight_CTHD_OutRight + "'," +
+                                                "@giatt = '" + 0 + "'," +
+                                                "@vat = '" + VAT_CTHD_OutRight + "'," +
+                                                "@giathang = '" + "" + "'," +
+                                                "@gianam = '" + "" + "'," +
+                                                "@sig = '" + "" + "'," +
+                                                "@diff = '" + 0 + "'," +
+                                                "@stoploss = '" + 0 + "'," +
+                                                "@solot = '" + 0 + "'," +
+                                                "@status = '" + false + "'," +
+                                                "@f_ngayfix = '" + new DateTime(1900, 01, 01) + "'," +
+                                                "@DVTTheoHD = '" + DVT_CTHD_OutRight + "'," +
+                                                "@GiaTheoHD = '" + OutRight_TheoHD_CTHD_OutRight + "'," +
+                                                "@GiaThiTruong = '" + GiaThiTruong_CTHD_OutRight + "'," +
+                                                "@MucThuong = '" + MucThuong_CTHD_OutRight + "'";
+            _context.Database.ExecuteSqlRaw(Sp);
+            TempData["alertMessage"] = "Cập nhật chi tiết hợp đồng OutRight thành công";
+            return RedirectToAction("hdmb");
+        }
+        [HttpPost]
         public IActionResult Add_CTHD(string id,string MaHang_CTHD, string DVT_CTHD, decimal GiaTT_CTHD, int SoLuong_CTHD, int ThueVAT_CTHD
             , int TrongLuong_CTHD, string Sig_CTHD, decimal SoLot_CTHD, decimal Muctru_CTHD, string GiaThang_CTHD, string NgayChot_CTHD
             , string GiaNam_CTHD, string MucStopLoss_CTHD, decimal GiaThiTruong_CTHD, decimal MucThuong_CTHD,int ChuyenThang_CTHD)
