@@ -488,8 +488,8 @@ namespace Intimex_project.Controllers
                 TempData["alertMessage"] = "Stoploss nhập không đúng!";
                 return RedirectToAction("hdmb");
             }
-            if (GiaThang_CTHD != "1" || GiaThang_CTHD != "3" || GiaThang_CTHD != "5" || GiaThang_CTHD != "7"
-                || GiaThang_CTHD != "9" || GiaThang_CTHD != "11" || GiaThang_CTHD != "12")
+            if (GiaThang_CTHD != "1" && GiaThang_CTHD != "3" && GiaThang_CTHD != "5" && GiaThang_CTHD != "7"
+                && GiaThang_CTHD != "9" && GiaThang_CTHD != "11" && GiaThang_CTHD != "12")
             {
                 TempData["alertMessage"] = "Giá tháng nhập không đúng!";
                 return RedirectToAction("hdmb");
@@ -533,7 +533,78 @@ namespace Intimex_project.Controllers
             TempData["alertMessage"] = "Thêm chi tiết hợp đồng thành công";
             return RedirectToAction("hdmb");
         }
-
+        [HttpPost]
+        public IActionResult Edit_CTHD(string id,string SystemId_CTHD_hidden, string MaHang_CTHD, string DVT_CTHD, decimal GiaTT_CTHD, int SoLuong_CTHD, int ThueVAT_CTHD
+            , int TrongLuong_CTHD, string Sig_CTHD, decimal SoLot_CTHD, decimal Muctru_CTHD, string GiaThang_CTHD, string NgayChot_CTHD
+            , string GiaNam_CTHD, string MucStopLoss_CTHD, decimal GiaThiTruong_CTHD, decimal MucThuong_CTHD, int ChuyenThang_CTHD)
+        {
+            int t = 0;
+            DateTime ngayky = (DateTime)_context.Hdmbs.Where(a => a.Systemref == SystemId_CTHD_hidden).Select(a => a.Ngayky).FirstOrDefault();
+            if (int.TryParse(MucStopLoss_CTHD, out t) == false && t < 0)
+            {
+                TempData["alertMessage"] = "Stoploss nhập không đúng!";
+                return RedirectToAction("hdmb");
+            }
+            if (GiaThang_CTHD != "1" && GiaThang_CTHD != "3" && GiaThang_CTHD != "5" && GiaThang_CTHD != "7"
+                && GiaThang_CTHD != "9" && GiaThang_CTHD != "11" && GiaThang_CTHD != "12")
+            {
+                TempData["alertMessage"] = "Giá tháng nhập không đúng!";
+                return RedirectToAction("hdmb");
+            }
+            if (int.TryParse(GiaNam_CTHD, out t) == false && t < ngayky.Year)
+            {
+                TempData["alertMessage"] = "Giá năm nhập không đúng!";
+                return RedirectToAction("hdmb");
+            }
+            if (DateTime.Parse(NgayChot_CTHD).Year > t || (DateTime.Parse(NgayChot_CTHD).Month > int.Parse(GiaThang_CTHD) && DateTime.Parse(NgayChot_CTHD).Year == t))
+            {
+                TempData["alertMessage"] = "Ngày chốt cuối nhập không đúng!";
+                return RedirectToAction("hdmb");
+            }
+            var chuyenthang = ChuyenThang_CTHD == 1 ? true : false;
+            var Sp = "exec [UdscCt_hdmb];2 @idrow = '" + id + "',@systemref = '" + SystemId_CTHD_hidden + "'," +
+                                               "@ref = '" + _context.Hdmbs.Where(a => a.Systemref == SystemId_CTHD_hidden).Select(a => a.Ref).FirstOrDefault().Trim() + "'," +
+                                               "@soluong = '" + SoLuong_CTHD + "'," +
+                                               "@trongluong = '" + TrongLuong_CTHD + "'," +
+                                               "@mahang = '" + MaHang_CTHD + "'," +
+                                               "@dvt = '" + "KGS" + "'," +
+                                               "@giact = '" + 0 + "'," +
+                                               "@giatt = '" + GiaTT_CTHD + "'," +
+                                               "@vat = '" + ThueVAT_CTHD + "'," +
+                                               "@giathang = '" + GiaThang_CTHD + "'," +
+                                               "@gianam = '" + GiaNam_CTHD + "'," +
+                                               "@sig = '" + Sig_CTHD + "'," +
+                                               "@diff = '" + Muctru_CTHD + "'," +
+                                               "@stoploss = '" + MucStopLoss_CTHD + "'," +
+                                               "@solot = '" + SoLot_CTHD + "'," +
+                                               "@status = '" + false + "'," +
+                                               "@f_ngayfix = '" + DateTime.Parse(NgayChot_CTHD) + "'," +
+                                               "@DVTTheoHD = '" + DVT_CTHD + "'," +
+                                               "@GiaTheoHD = '" + 0 + "'," +
+                                               "@GiaThiTruong = '" + GiaThiTruong_CTHD + "'," +
+                                               "@MucThuong = '" + MucThuong_CTHD + "'," +
+                                               "@ChuyenThang = '"+ chuyenthang + "'";
+            _context.Database.ExecuteSqlRaw(Sp);
+            TempData["alertMessage"] = "Cập nhật chi tiết hợp đồng OutRight thành công";
+            return RedirectToAction("hdmb");
+        }
+        public IActionResult Delete_CTHD(string id)
+        {
+            var systemRef = _context.CtHdmbs.Where(a => a.IdRow == id).Select(a => a.Systemref).FirstOrDefault();
+            if (_context.Fixgia.Where(a => a.Systemref == systemRef).Count() > 0)
+            {
+                TempData["alertMessage"] = "Hợp đồng đã fix giá, không xóa được";
+                return RedirectToAction("hdmb");
+            }
+            else
+            {
+                CtHdmb ctHdmb = _context.CtHdmbs.Where(a => a.IdRow == id).FirstOrDefault();
+                _context.CtHdmbs.Remove(ctHdmb);
+                _context.SaveChanges();
+                TempData["alertMessage"] = "Xóa chi tiết hợp đồng mua bán thành công";
+                return RedirectToAction("hdmb");
+            }
+        }
 
     }
 }

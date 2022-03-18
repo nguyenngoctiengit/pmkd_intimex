@@ -302,6 +302,7 @@
                             <form id="Form_CTHD" method="post">
                                 <div class="col-md-12 col-sm-12" id="leftdiv">
                                     <div class="form-group row">
+                                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" id="SystemId_CTHD_hidden" name="SystemId_CTHD_hidden" hidden>
                                         <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" id="idRow_CTHD" disabled>
                                         <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="SystemId_CTHD" disabled>
                                         <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Ref_CTHD" disabled>
@@ -591,7 +592,7 @@
                     <button type="button" class="btn btn-secondary" style="font-size:small">Add plan</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="AddDetail()">Add Detail</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="EditDetail()">Edit Detail</button>
-                    <button type="button" class="btn btn-secondary" style="font-size:small">Delete Detail</button>
+                    <button type="button" class="btn btn-secondary" style="font-size:small" onclick="DeleteDetail()" id="DeleteButton">Delete Detail</button>
                 </div>
             </div>
         </div>
@@ -1064,6 +1065,7 @@
                 $('#Form_ThemCTHD_OutRight').modal('show');
             } else {
                 $.post("/Hopdong/Fill_Form_CTHD", { 'IdRow': IdRow }, function (array) {
+                    document.getElementById("SystemId_CTHD_hidden").value = array.Systemref;
                     document.getElementById("idRow_CTHD").value = array.IdRow;
                     document.getElementById("SystemId_CTHD").value = array.Systemref;
                     document.getElementById("Ref_CTHD").value = array.Ref;
@@ -1079,7 +1081,7 @@
                     document.getElementById("SoLot_CTHD").value = array.Solot;
                     document.getElementById("Muctru_CTHD").value = array.Diff;
                     document.getElementById("GiaThang_CTHD").value = array.Giathang;
-                    document.getElementById("NgayChot_CTHD").value = new Date(array.FNgayfix);
+                    document.getElementById("NgayChot_CTHD").value = new Date(array.FNgayfix).toString("yyyy-MM-dd");
                     document.getElementById("GiaNam_CTHD").value = array.Gianam;
                     document.getElementById("MucStopLoss_CTHD").value = array.Stoploss;
                     document.getElementById("GiaThiTruong_CTHD").value = array.Giathitruong;
@@ -1089,7 +1091,6 @@
                     } else {
                         document.getElementById("ChuyenThang_CTHD").checked = false;
                     }
-                    console.log(array.FNgayfix.toString("dd/MM/yyyy"));
                 })
                 $('#Form_ThemCTHD_TruLui').modal('show');
             }
@@ -1114,6 +1115,17 @@
             document.getElementById("Form_CTHD").submit();
 
         }
+    }
+    function DeleteDetail() {
+        var a = document.getElementById("DeleteButton");
+        var IdRow_CTHD = document.getElementById("IdRow_CTHD").value;
+        if (IdRow_CTHD == null || IdRow_CTHD == "") {
+            $.notify("Vui lòng chọn chi tiết hợp đồng muốn xóa", "error");
+        }
+        else {
+            location.href = "/Hopdong/Delete_CTHD/" + IdRow_CTHD;
+        }
+        
     }
 </script>
 
