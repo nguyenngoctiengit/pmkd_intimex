@@ -45,6 +45,7 @@ namespace Intimex_project
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NTk5NjE2QDMxMzkyZTM0MmUzMEpaU1BJWjZTenNqSTRXVVdvcWpVaFZCbWJVa3F4VXRJS1g5L3BvWng2Mk09");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

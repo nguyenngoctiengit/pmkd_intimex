@@ -369,7 +369,7 @@
                                         <input type="hidden" name="ChuyenThang_CTHD" value="0" hidden>
                                         <label class="col-form-label">Chuyển tháng</label>
                                     </div>
-                                </div>
+                                </div>  
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" onclick="Submit_form_CTHD()">Save</button>
                                 </div>
@@ -585,10 +585,10 @@
                     <button type="button" class="btn btn-secondary" id="Button_Cancel" style="font-size:small" onclick="Button_Cancel()">Cancel</button>
                 </div>
                 <div class="col-md-9 col-sm-9" style="text-align:center">
-                    <button type="button" class="btn btn-secondary" style="font-size:small">Export word</button>
+                    <button type="button" class="btn btn-secondary" style="font-size:small" onclick="ExportWord()">Export word</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small">E Document</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small">Deli Detail</button>
-                    <button type="button" class="btn btn-secondary" style="font-size:small">Add Annex</button>
+                    <button type="button" class="btn btn-secondary" style="font-size:small" onclick="AddAnnex()">Add Annex</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small">Add plan</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="AddDetail()">Add Detail</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="EditDetail()">Edit Detail</button>
@@ -598,7 +598,6 @@
         </div>
     </div>
     <input type="text" id="macn" value="@ViewBag.macn" hidden>
-    <input type="text" id="IdRow_CTHD" hidden>
 </div>
 <script type="text/javascript">
     function Changed_TienTe(data) {
@@ -1097,7 +1096,7 @@
         }
     }
     function Submit_form_CTHDOutRight() {
-        if (document.getElementById("idRow_CTHD_OutRight").value != "" || document.getElementById("idRow_CTHD_OutRight").value != null) {
+        if (document.getElementById("idRow_CTHD_OutRight").value != "") {
             document.getElementById("Form_CTHD_OutRight").action = "/Hopdong/Edit_CTHD_OutRight/" + document.getElementById("idRow_CTHD_OutRight").value;
             document.getElementById("Form_CTHD_OutRight").submit();
         }
@@ -1107,13 +1106,13 @@
         }
     }
     function Submit_form_CTHD() {
-        if (document.getElementById("idRow_CTHD").value != "" || document.getElementById("idRow_CTHD").value != null) {
+        if (document.getElementById("idRow_CTHD").value != "") {
             document.getElementById("Form_CTHD").action = "/Hopdong/Edit_CTHD/" + document.getElementById("idRow_CTHD").value;
             document.getElementById("Form_CTHD").submit();
         } else {
             document.getElementById("Form_CTHD").action = "/Hopdong/Add_CTHD/" + document.getElementById("SystemId_CTHD").value;
             document.getElementById("Form_CTHD").submit();
-
+            console.log(document.getElementById("SystemId_CTHD_hidden").value);
         }
     }
     function DeleteDetail() {
@@ -1126,6 +1125,9 @@
             location.href = "/Hopdong/Delete_CTHD/" + IdRow_CTHD;
         }
         
+    }
+    function ExportWord() {
+        location.href = '/Hopdong/ExportWord/' + document.getElementById("Systemref").value;
     }
 </script>
 

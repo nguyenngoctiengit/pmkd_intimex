@@ -6,9 +6,15 @@ using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Syncfusion.DocIO;
+using Syncfusion.DocIO.DLS;
+using Syncfusion.DocIORenderer;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace Intimex_project.Controllers
 {
@@ -605,6 +611,407 @@ namespace Intimex_project.Controllers
                 return RedirectToAction("hdmb");
             }
         }
+        public IActionResult ExportWord(string id)
+        {
+            decimal TongCong = 0;
+            var Sp = "exec [re_hdmb];5 @systemref = '"+ id +"'," +
+                        "@macn = '" + HttpContext.Session.GetString("UnitName") + "'";
+            var re_hdmb = _context.Sp_Report_HDMBs.FromSqlRaw(Sp).ToList();
+            
+            var hdmb = _context.Hdmbs.Where(a => a.Systemref == id).FirstOrDefault();
+            Syncfusion.DocIO.DLS.WordDocument wordDocument = new WordDocument();
+            WSection wSection = wordDocument.AddSection() as WSection;
+            wSection.PageSetup.Margins.All = 72;
+            wSection.PageSetup.PageSize = new Syncfusion.Drawing.SizeF(612, 792);
+            WParagraphStyle style = wordDocument.AddParagraphStyle("Normal") as WParagraphStyle;
+            style.CharacterFormat.FontName = "Calibri";
+            style.CharacterFormat.FontSize = 11f;
+            style.ParagraphFormat.BeforeSpacing = 0;
+            style.ParagraphFormat.AfterSpacing = 8;
+            style.ParagraphFormat.LineSpacing = 13.8f;
+
+            style = wordDocument.AddParagraphStyle("Heading 1") as WParagraphStyle;
+            style.ApplyBaseStyle("Normal");
+            style.CharacterFormat.FontName = "Calibri Light";
+            style.CharacterFormat.FontSize = 16f;
+            style.CharacterFormat.TextColor = Syncfusion.Drawing.Color.FromArgb(46, 116, 181);
+            style.ParagraphFormat.BeforeSpacing = 12;
+            style.ParagraphFormat.AfterSpacing = 0;
+            style.ParagraphFormat.Keep = true;
+            style.ParagraphFormat.KeepFollow = true;
+            style.ParagraphFormat.OutlineLevel = OutlineLevel.Level1;
+
+            //Appends paragraph.
+
+            IWParagraph paragraph = wSection.AddParagraph();
+            paragraph.ApplyStyle("Heading 1");
+            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
+            WTextRange textRange = paragraph.AppendText("CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.TextColor = Syncfusion.Drawing.Color.Black;
+            textRange.CharacterFormat.Bold = true;
+
+            ////Appends paragraph.
+            ///
+            paragraph = wSection.AddParagraph();
+            textRange = paragraph.AppendText("Độc lập - Tự do - Hạnh phúc") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.TextColor = Syncfusion.Drawing.Color.Black;
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.UnderlineStyle = Syncfusion.Drawing.UnderlineStyle.Single;
+            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
+
+            ////Appends paragraph.
+            ///
+            paragraph = wSection.AddParagraph();
+            textRange = paragraph.AppendText("HỢP ĐỒNG KINH TẾ") as WTextRange;
+            textRange.CharacterFormat.FontSize = 16f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.TextColor = Syncfusion.Drawing.Color.Black;
+            textRange.CharacterFormat.Bold = true;
+            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
+            ////Appends paragraph
+            ///
+            paragraph = wSection.AddParagraph();
+            textRange = paragraph.AppendText("Số " + hdmb.Sohd) as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.TextColor = Syncfusion.Drawing.Color.Black;
+            textRange.CharacterFormat.Bold = true;
+            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
+            ////Appends paragraph
+            ///
+            paragraph = wSection.AddParagraph();
+            textRange = paragraph.AppendText("-Căn cứ Bộ luật dân sự nước CHXHCN Việt Nam số 91/2015-QH13 ban hành ngày 24/11/2015") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.TextColor = Syncfusion.Drawing.Color.Black;
+            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Left;
+            ////Appends paragraph
+            ///
+            paragraph = wSection.AddParagraph();
+            textRange = paragraph.AppendText("-Căn cứ  Luật Thương Mại nước CHXHCN Việt Nam số 36/2005-QH11 ban hành ngày 14/06/2005.") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.TextColor = Syncfusion.Drawing.Color.Black;
+            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Left;
+            ////Appends paragraph
+            ///
+            paragraph = wSection.AddParagraph();
+            textRange = paragraph.AppendText("-Căn cứ vào các chế định pháp lý của nước CHXHCNVN về hợp đồng mua bán.") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.TextColor = Syncfusion.Drawing.Color.Black;
+            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Left;
+            ////Appends paragraph
+            ///
+            paragraph = wSection.AddParagraph();
+            textRange = paragraph.AppendText("-Căn cứ chức năng nhiệm vụ và khả năng hàng hóa của hai bên") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.TextColor = Syncfusion.Drawing.Color.Black;
+            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Left;
+            ////Appends paragraph
+            ///
+            paragraph = wSection.AddParagraph();
+            textRange = paragraph.AppendText("Hôm nay ngày " + DateTime.Now.Day + " tháng " + DateTime.Now.Month + " năm " + DateTime.Now.Year) as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.TextColor = Syncfusion.Drawing.Color.Black;
+            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Left;
+            ////Khai báo table ...
+            ///
+            ////Khai bao table chi tiết người đại diện
+            IWTable table_signer = wSection.AddTable();
+            table_signer.ResetCells(2, 2);
+            table_signer.TableFormat.Borders.BorderType = BorderStyle.None;
+            table_signer.TableFormat.IsAutoResized = true;
+            /// Khai báo cell table
+            /// 
+            /// 
+            CultureInfo ci = new CultureInfo("en-us");
+            WTableCell wTableCell_signer = table_signer.Rows[0].Cells[0];
+            ///Append table 
+            wTableCell_signer.Width = 80;
+            //Appends paragraph.
+            paragraph = wTableCell_signer.AddParagraph();
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+            paragraph.ParagraphFormat.LineSpacing = 12f;
+            paragraph.BreakCharacterFormat.FontSize = 13f;
+
+            paragraph.BreakCharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText("BÊN A\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange = paragraph.AppendText("Địa chỉ\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText("Điện thoại\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText("Tài khoản\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText("Mã số thuế\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText("Đại diện\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            //Appends paragraph.
+            //Appends paragraph.
+            wTableCell_signer = table_signer.Rows[0].Cells[1];
+            paragraph = wTableCell_signer.AddParagraph();
+            paragraph.ParagraphFormat.LineSpacing = 13f;
+            wTableCell_signer.Width = 500;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+            paragraph.ParagraphFormat.LineSpacing = 12f;
+            paragraph.BreakCharacterFormat.FontSize = 13f;
+            paragraph.BreakCharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText(re_hdmb[0].TenA + "\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange = paragraph.AppendText(":" + re_hdmb[0].DiachiA + "\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText(":" + re_hdmb[0].DienthoaiA + "          FAX:" + re_hdmb[0].FaxA + "\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText(re_hdmb[0].TaikhoanA + " - " + re_hdmb[0].NganhangA + "\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText(": " + re_hdmb[0].MasothueA + "\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText(":" + re_hdmb[0].nguoikyA + "               Chức vụ:" + re_hdmb[0].chucvuA + "\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            ////Append paragraph
+            ///
+            wTableCell_signer = table_signer.Rows[1].Cells[0];
+            wTableCell_signer.Width = 80;
+            //Appends paragraph.
+            paragraph = wTableCell_signer.AddParagraph();
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+            paragraph.ParagraphFormat.LineSpacing = 12f;
+            paragraph.BreakCharacterFormat.FontSize = 13f;
+            paragraph.BreakCharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText("BÊN B\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange = paragraph.AppendText("Địa chỉ\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText("Điện thoại\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText("Tài khoản\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText("Mã số thuế\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText("Đại diện\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            //Appends paragraph.
+            wTableCell_signer = table_signer.Rows[1].Cells[1];
+            paragraph = wTableCell_signer.AddParagraph();
+            paragraph.ParagraphFormat.LineSpacing = 13f;
+            wTableCell_signer.Width = 500;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+            paragraph.ParagraphFormat.LineSpacing = 12f;
+            paragraph.BreakCharacterFormat.FontSize = 13f;
+            paragraph.BreakCharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText(re_hdmb[0].TenB + "\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange = paragraph.AppendText(":" + re_hdmb[0].DiachiB + "\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText(":" + re_hdmb[0].DienthoaiB + "          FAX:" + re_hdmb[0].FaxB + "\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText(re_hdmb[0].TaikhoanB + " - " + re_hdmb[0].NganhangB + "\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText(": " + re_hdmb[0].MasothueB + "\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText(":" + re_hdmb[0].nguoikyB + "               Chức vụ:" + re_hdmb[0].chucvuB + "\r") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            ////Append paragraph
+            ///           
+            /// ////Appends paragraph
+            ///
+            paragraph = wSection.AddParagraph();
+            textRange = paragraph.AppendText("Sau khi bàn bạc, bên A đồng ý mua, bên B đồng ý bán và thống nhất ký hợp đồng với các điều khoản sau đây:") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.TextColor = Syncfusion.Drawing.Color.Black;
+            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Left;
+            /// ////Appends paragraph
+            ///
+            paragraph = wSection.AddParagraph();
+            textRange = paragraph.AppendText("ĐIỀU I	ĐƠN GIÁ - GIÁ TRỊ HỢP ĐỒNG:") as WTextRange;
+            textRange.CharacterFormat.FontSize = 13f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.TextColor = Syncfusion.Drawing.Color.Black;
+            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Left;
+            textRange.CharacterFormat.Bold = true;
+            /// ////Appends paragraph
+            ///
+            //khai báo table giá trị hợp đồng
+            ///Khai báo table chi tiết giá trị hợp đồng
+            IWTable table_price = wSection.AddTable();
+            table_price = wSection.AddTable();
+            table_price.ResetCells(re_hdmb.Count + 2, 5);
+            table_price.TableFormat.Borders.BorderType = BorderStyle.Single;
+            table_price.TableFormat.IsAutoResized = true;
+            //khai báo cột 0 dòng 0 table giá trị hợp đồng
+            WTableCell wTableCell_price = table_price.Rows[0].Cells[0];
+            paragraph = wTableCell_price.AddParagraph();
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+            paragraph.ParagraphFormat.LineSpacing = 12f;
+            paragraph.BreakCharacterFormat.FontSize = 13f;
+            paragraph.BreakCharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText("TÊN HÀNG") as WTextRange;
+            textRange.CharacterFormat.Bold = true;
+            //khai báo cột 1 dòng 0 table giá trị hợp đồng
+            wTableCell_price = table_price.Rows[0].Cells[1];
+            paragraph = wTableCell_price.AddParagraph();
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+            paragraph.ParagraphFormat.LineSpacing = 12f;
+            paragraph.BreakCharacterFormat.FontSize = 13f;
+            paragraph.BreakCharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText("SỐ LƯỢNG") as WTextRange;
+            textRange.CharacterFormat.Bold = true;
+            //khai báo cột 2 dòng 0 table giá trị hợp đồng
+            wTableCell_price = table_price.Rows[0].Cells[2];
+            paragraph = wTableCell_price.AddParagraph();
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+            paragraph.ParagraphFormat.LineSpacing = 12f;
+            paragraph.BreakCharacterFormat.FontSize = 13f;
+            paragraph.BreakCharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText("ĐVT") as WTextRange;
+            textRange.CharacterFormat.Bold = true;
+            //khai báo cột 3 dòng 0 table giá trị hợp đồng
+            wTableCell_price = table_price.Rows[0].Cells[3];
+            paragraph = wTableCell_price.AddParagraph();
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+            paragraph.ParagraphFormat.LineSpacing = 12f;
+            paragraph.BreakCharacterFormat.FontSize = 13f;
+            paragraph.BreakCharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText("ĐƠN GIÁ (VNĐ)") as WTextRange;
+            textRange.CharacterFormat.Bold = true;
+            //khai báo cột 4 dòng 0 table giá trị hợp đồng
+            wTableCell_price = table_price.Rows[0].Cells[4];
+            paragraph = wTableCell_price.AddParagraph();
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+            paragraph.ParagraphFormat.LineSpacing = 12f;
+            paragraph.BreakCharacterFormat.FontSize = 13f;
+            paragraph.BreakCharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText("THÀNH TIỀN (VNĐ)") as WTextRange;
+            textRange.CharacterFormat.Bold = true;
+            ////
+            //////
+            wTableCell_price = table_price.Rows[re_hdmb.Count + 1].Cells[0];
+            paragraph = wTableCell_price.AddParagraph();
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+            paragraph.ParagraphFormat.LineSpacing = 12f;
+            paragraph.BreakCharacterFormat.FontSize = 13f;
+            paragraph.BreakCharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText("Tổng cộng") as WTextRange;
+            textRange.CharacterFormat.Bold = true;
+            for (int i = 0; i < re_hdmb.Count; i++)
+            {
+                ////KHÁI BÁO DÒNG 2 TABLE GIÁ TRỊ HỢP ĐỒNG
+                //khai báo cột 0 dòng 1 table giá trị hợp đồng
+                wTableCell_price = table_price.Rows[i + 1].Cells[0];
+                paragraph = wTableCell_price.AddParagraph();
+                paragraph.ParagraphFormat.AfterSpacing = 0;
+                paragraph.ParagraphFormat.LineSpacing = 12f;
+                paragraph.BreakCharacterFormat.FontSize = 13f;
+                paragraph.BreakCharacterFormat.FontName = "Times New Roman";
+                textRange = paragraph.AppendText(re_hdmb[i].tenhang) as WTextRange;
+                textRange.CharacterFormat.Bold = true;
+                //khai báo cột 1 dòng 1 table giá trị hợp đồng
+                wTableCell_price = table_price.Rows[i + 1].Cells[1];
+                paragraph = wTableCell_price.AddParagraph();
+                paragraph.ParagraphFormat.AfterSpacing = 0;
+                paragraph.ParagraphFormat.LineSpacing = 12f;
+                paragraph.BreakCharacterFormat.FontSize = 13f;
+                paragraph.BreakCharacterFormat.FontName = "Times New Roman";
+                textRange = paragraph.AppendText(re_hdmb[i].trongluong.ToString()) as WTextRange;
+                textRange.CharacterFormat.Bold = true;
+                //khai báo cột 2 dòng 1 table giá trị hợp đồng
+                wTableCell_price = table_price.Rows[i + 1].Cells[2];
+                paragraph = wTableCell_price.AddParagraph();
+                paragraph.ParagraphFormat.AfterSpacing = 0;
+                paragraph.ParagraphFormat.LineSpacing = 12f;
+                paragraph.BreakCharacterFormat.FontSize = 13f;
+                paragraph.BreakCharacterFormat.FontName = "Times New Roman";
+                textRange = paragraph.AppendText(re_hdmb[i].dvt) as WTextRange;
+                textRange.CharacterFormat.Bold = true;
+                //khai báo cột 3 dòng 1 table giá trị hợp đồng
+                wTableCell_price = table_price.Rows[i + 1].Cells[3];
+                paragraph = wTableCell_price.AddParagraph();
+                paragraph.ParagraphFormat.AfterSpacing = 0;
+                paragraph.ParagraphFormat.LineSpacing = 12f;
+                paragraph.BreakCharacterFormat.FontSize = 13f;
+                paragraph.BreakCharacterFormat.FontName = "Times New Roman";
+                textRange = paragraph.AppendText(re_hdmb[i].giact.ToString()) as WTextRange;
+                textRange.CharacterFormat.Bold = true;
+                //khai báo cột 4 dòng 1 table giá trị hợp đồng
+                wTableCell_price = table_price.Rows[i + 1].Cells[4];
+                paragraph = wTableCell_price.AddParagraph();
+                paragraph.ParagraphFormat.AfterSpacing = 0;
+                paragraph.ParagraphFormat.LineSpacing = 12f;
+                paragraph.BreakCharacterFormat.FontSize = 13f;
+                paragraph.BreakCharacterFormat.FontName = "Times New Roman";
+                textRange = paragraph.AppendText(re_hdmb[i].thanhtien.ToString("N1", ci)) as WTextRange;
+                textRange.CharacterFormat.Bold = true;
+                ///
+                //
+                ///Tổng giá trị hợp đồng
+                
+                TongCong = TongCong + re_hdmb[i].thanhtien;
+                
+            }
+            wTableCell_price = table_price.Rows[re_hdmb.Count + 1].Cells[4];
+            paragraph = wTableCell_price.AddParagraph();
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+            paragraph.ParagraphFormat.LineSpacing = 12f;
+            paragraph.BreakCharacterFormat.FontSize = 13f;
+            paragraph.BreakCharacterFormat.FontName = "Times New Roman";
+            textRange = paragraph.AppendText(TongCong.ToString("N1", ci)) as WTextRange;
+            textRange.CharacterFormat.Bold = true;
+            ////Tổng cộng giá trị hợp đồng (Table)
+            ///
+            ///
+            ///
+
+
+            wSection.AddParagraph();
+            MemoryStream stream = new MemoryStream();
+            wordDocument.Save(stream, FormatType.Docx);
+            stream.Position = 0;
+
+            //Download Word document in the browser
+            return File(stream, "application/msword", hdmb.Sohd + ".docx");
+        }
+
 
     }
 }

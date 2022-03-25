@@ -1,4 +1,6 @@
 ﻿using Application.Parameter;
+using Data.Models.SignalR;
+using Data.Models.Trading_system;
 using DevExpress.AspNetCore.Spreadsheet;
 using DevExpress.Spreadsheet;
 using DevExtreme.AspNet.Data;
@@ -8,10 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using Data.Models.Trading_system;
 using ViewModel;
-using Data.Models.SignalR;
 
 namespace Intimex_project.Controllers
 {
@@ -28,7 +27,7 @@ namespace Intimex_project.Controllers
             {
                 ViewBag.ListUser = (from a in _context.AspNetUsers select new Data.Models.SignalR.AspNetUser { NormalizedUserName = a.NormalizedUserName, Online = a.Online, Id = a.Id }).OrderByDescending(a => a.Online).ToList();
             }
-                
+
         }
         public IActionResult bangtinh()
         {
@@ -42,7 +41,8 @@ namespace Intimex_project.Controllers
         [HttpGet]
         public object getBangTinh(DataSourceLoadOptions loadOptions)
         {
-            var item = _context.PobangTinhs.Select(i => new {
+            var item = _context.PobangTinhs.Select(i => new
+            {
                 i.Idbt,
                 i.SoXe,
                 i.NgayP,
