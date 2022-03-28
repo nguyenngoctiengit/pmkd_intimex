@@ -22,12 +22,12 @@ namespace Intimex_project.Controllers
     {
         private const string EventLogSessionKey = "EventLog.CS";
 
-        IHostingEnvironment _hostingEnvironment;
+        IWebHostEnvironment _hostingEnvironment;
 
         public tradingsystemContext _context = new tradingsystemContext(ConnectionParameter.connectionString);
 
         private readonly ILogger<DocumentController> _logger;
-        public DocumentController(ILogger<DocumentController> logger, IHostingEnvironment hostingEnvironment)
+        public DocumentController(ILogger<DocumentController> logger, IWebHostEnvironment hostingEnvironment)
         {
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;

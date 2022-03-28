@@ -60,5 +60,6 @@ namespace Data.Models.Trading_system
         public decimal mucthuong { get; set; }
         public bool isFix { get; set; }
         public int Thanh_Toan { get; set; }
+        public string TongTien { get; set; }
     }
 }
