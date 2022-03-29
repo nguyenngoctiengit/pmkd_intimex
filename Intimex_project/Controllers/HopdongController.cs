@@ -155,10 +155,17 @@ namespace Intimex_project.Controllers
                             IsFix = a.IsFix,
                             TypeKd = a.TypeKd,
                             Pakd = a.Pakd,
-                            IsNoKhoDoi = a.IsNoKhoDoi
-
+                            IsNoKhoDoi = a.IsNoKhoDoi,
                         }).FirstOrDefault();
             return Json(data);
+        }
+        [HttpPost]
+        public JsonResult GetList_Annex(string Systemref)
+        {
+            var MaHang_CtHDMB = _context.CtHdmbs.Where(a => a.Systemref == Systemref).Select(a => a.Mahang).FirstOrDefault();
+            var MaNhom_Hanghoa = _context.Hanghoas.Where(a => a.Mahang == MaHang_CtHDMB).Select(a => a.MaNhom).FirstOrDefault();
+            var listAnnex = _context.Annices.Where(a => a.MaNhom == MaNhom_Hanghoa).Select(a => a.NoiDung).ToList();
+            return Json(listAnnex);
         }
         [HttpPost]
         public IActionResult Fill_Form_CTHD(string IdRow)
@@ -396,6 +403,20 @@ namespace Intimex_project.Controllers
                         "@makhach = '" + id + "'," +
                         "@macn = '" + HttpContext.Session.GetString("UnitName") + "'";
             var item = _context.Sp_GetHangHoa_CtHDmbs.FromSqlRaw(Sp).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
+        }
+        [HttpGet]
+        public object GetAnnex_HDMB(string id, DataSourceLoadOptions loadOptions)
+        {
+            var item = (from a in _context.HdmbAnnices
+                        where a.Systemref == id
+                        select new
+                        {
+                            a.Number,
+                            a.NoiDung,
+                            a.NgayTao,
+                            a.Path,
+                        }).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
         public IActionResult CancelContract(string id)
@@ -706,6 +727,11 @@ namespace Intimex_project.Controllers
                 stream.Position = 0;
                 return File(stream, "application/msword", hdmb.Sohd + ".docx");
             }
+        }
+        public IActionResult ExportWord_Annex_HDMB(string id,string SoPhuKien_Annex_HDMB,string[] CheckBox_AnnexHDMB)
+        {
+            TempData["alertMessage"] = "Thêm hợp đồng thành công";
+            return RedirectToAction("hdmb");
         }
     }
 }

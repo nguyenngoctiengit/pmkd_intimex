@@ -369,7 +369,7 @@
                                         <input type="hidden" name="ChuyenThang_CTHD" value="0" hidden>
                                         <label class="col-form-label">Chuyển tháng</label>
                                     </div>
-                                </div>  
+                                </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" onclick="Submit_form_CTHD()">Save</button>
                                 </div>
@@ -404,6 +404,68 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" onclick="close_Popup_HangHoa()">Selected</button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
+                @*----------------------------------------------------Bootrap popup save phụ kiện hợp đồng-------------------------------------------------------------------------------------------------------------------------------*@
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="Annex_HDMB">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Phụ kiện hợp đồng</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form id="Form_Annex_HDMB" method="post">
+                                <div class="col-md-12 col-sm-12" id="leftdiv">
+                                    @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.HdmbAnnex>().ID("DataGrid_Annex_HDMB")
+                                    .DataSource(ds => ds.Mvc()
+                                        .Controller("Hopdong")
+                                        .LoadAction("GetAnnex_HDMB")
+                                        .Key("IdRow")
+                                        .LoadParams(new { id = new JS("GetSystemRef") })
+                                    )
+                                    .RemoteOperations(true)
+                                    .Columns(columns => {
+                                        columns.AddFor(m => m.Number).Caption("Number");
+
+                                        columns.AddFor(m => m.NoiDung).Caption("Nội dung");
+
+                                        columns.AddFor(m => m.NgayTao).Caption("Ngày tạo");
+
+                                        columns.AddFor(m => m.Path).Caption("Path");
+
+                                    })
+                                    .ColumnAutoWidth(true)
+                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                    .HoverStateEnabled(true)
+                                    .HeaderFilter(hearder => hearder.Visible(true))
+                                    .AllowColumnResizing(true)
+                                    .AllowColumnReordering(true)
+                                    .ShowBorders(true)
+                                    .Grouping(group => group.AutoExpandAll(true))
+                                    .Paging(paging => paging.PageSize(24))
+                                )
+                                    <div class="form-group row" style="margin-top:10px">
+                                        <label class="col-form-label col-md-2 col-sm-2">Số phụ kiện</label>
+                                        <input type="text" class="form-control col-md-10 col-sm-10 text-box-hdmb" id="SoPhuKien_Annex_HDMB" name="SoPhuKien_Annex_HDMB">
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-12 col-sm-12">Nội dung chỉnh sửa</label>
+                                    </div>
+                                    <div class="form-group row" style="border-width:1px;border:solid;height:180px">
+                                        <div class="CheckBox_Annex" id="CheckBox_Annex">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" onclick="Submit_form_CTHDOutRight()">View</button>
+                                    <button type="button" class="btn btn-secondary" onclick="Submit_form_Annex_HDMB()">Export word</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -610,6 +672,14 @@
     function Hdmb_Selection(selectedItems) {
         var data = selectedItems.selectedRowsData[0];
         if (data) {
+            $.post('/Hopdong/GetList_Annex', { 'Systemref': data.Systemref }, function (data) {
+                var list = data;
+                for (var i = 0; i < data.length; i++) {
+                    var item = data[i];
+                    document.getElementById('CheckBox_Annex').innerHTML = document.getElementById('CheckBox_Annex').innerHTML + "<input type='checkbox' name='CheckBox_AnnexHDMB' value=\"" + data[i] + "\">" +
+                        "<label style='margin-left:10px'>" + data[i] + "</label><br>";
+                }
+            })
             $.post('/Hopdong/Fill_Form_HDMB', { 'Systemref': data.Systemref }, function (array) {
                 SetValue_Form_CTHD(array.Systemref, array.Ref, array.Sohd);
                 SetValue_Form_CTHDOutRight(array.Systemref, array.Ref, array.Sohd);
@@ -697,6 +767,7 @@
             })
             document.getElementById("Systemref").value = data.Systemref;
             $("#DataGrid_Ct_HDMB").dxDataGrid("refresh");
+            $("#DataGrid_Annex_HDMB").dxDataGrid("refresh");
             Disable_form();
             document.getElementById("Button_New").innerHTML = 'New';
         }
@@ -1128,6 +1199,13 @@
     }
     function ExportWord() {
         location.href = '/Hopdong/ExportWord/' + document.getElementById("Systemref").value;
+    }
+    function AddAnnex() {
+        $("#Annex_HDMB").modal('show');
+    }
+    function Submit_form_Annex_HDMB() {
+        document.getElementById("Form_Annex_HDMB").action = "/Hopdong/ExportWord_Annex_HDMB/" + document.getElementById("Systemref").value;
+        document.getElementById("Form_Annex_HDMB").submit();
     }
 </script>
 
