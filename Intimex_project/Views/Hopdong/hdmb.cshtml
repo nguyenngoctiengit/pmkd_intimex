@@ -424,7 +424,7 @@
                                     .DataSource(ds => ds.Mvc()
                                         .Controller("Hopdong")
                                         .LoadAction("GetAnnex_HDMB")
-                                        .Key("IdRow")
+                                        .Key("Id")
                                         .LoadParams(new { id = new JS("GetSystemRef") })
                                     )
                                     .RemoteOperations(true)
@@ -462,7 +462,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" onclick="Submit_form_CTHDOutRight()">View</button>
+                                    <button type="button" class="btn btn-secondary" onclick="ExportWord_Annex()">View</button>
                                     <button type="button" class="btn btn-secondary" onclick="Submit_form_Annex_HDMB()">Export word</button>
                                 </div>
                             </form>
@@ -1198,6 +1198,9 @@
         
     }
     function ExportWord() {
+        location.href = '/Hopdong/ExportWord/' + document.getElementById("Systemref").value;
+    }
+    function ExportWord_Annex() {
         location.href = '/Hopdong/ExportWord/' + document.getElementById("Systemref").value;
     }
     function AddAnnex() {

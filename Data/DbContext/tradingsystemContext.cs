@@ -4853,18 +4853,6 @@ namespace Data.Models.Trading_system
             {
                 entity.ToTable("hdmb_annex");
 
-                entity.Property(e => e.ClientKy)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("client_ky")
-                    .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.IntKy)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("int_ky")
-                    .HasDefaultValueSql("('')");
-
                 entity.Property(e => e.NgayTao).HasColumnType("datetime");
 
                 entity.Property(e => e.NoiDung).IsRequired();

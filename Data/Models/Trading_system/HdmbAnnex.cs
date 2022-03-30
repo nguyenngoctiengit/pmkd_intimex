@@ -13,7 +13,5 @@ namespace Data.Models.Trading_system
         public string NoiDung { get; set; }
         public DateTime NgayTao { get; set; }
         public string Path { get; set; }
-        public string IntKy { get; set; }
-        public string ClientKy { get; set; }
     }
 }
