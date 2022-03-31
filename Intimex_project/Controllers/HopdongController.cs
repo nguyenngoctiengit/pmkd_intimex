@@ -729,47 +729,19 @@ namespace Intimex_project.Controllers
                 return File(stream, "application/msword", hdmb.Sohd + ".docx");
             }
         }
-        public IActionResult ExportWord_Annex(string id)
+        public void ExportWord_Annex(string id,string fileName)
         {
-            Syncfusion.DocIO.DLS.WordDocument wordDocument = new WordDocument();
-            WSection wSection = wordDocument.AddSection() as WSection;
-            wSection.PageSetup.Margins.All = 72;
-            wSection.PageSetup.PageSize = new Syncfusion.Drawing.SizeF(612, 792);
-            WParagraphStyle style = wordDocument.AddParagraphStyle("Normal") as WParagraphStyle;
-            style.CharacterFormat.FontName = "Calibri";
-            style.CharacterFormat.FontSize = 11f;
-            style.ParagraphFormat.BeforeSpacing = 0;
-            style.ParagraphFormat.AfterSpacing = 8;
-            style.ParagraphFormat.LineSpacing = 13.8f;
-            //Appends paragraph.
-
-            IWParagraph paragraph = wSection.AddParagraph();
-            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
-            WTextRange textRange = paragraph.AppendText("CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM") as WTextRange;
-            textRange.CharacterFormat.FontSize = 13f;
-            textRange.CharacterFormat.FontName = "Times New Roman";
-            textRange.CharacterFormat.TextColor = Syncfusion.Drawing.Color.Black;
-            textRange.CharacterFormat.Bold = true;
-
-            ////Appends paragraph.
-            ///
-            paragraph = wSection.AddParagraph();
-            textRange = paragraph.AppendText("Độc lập - Tự do - Hạnh phúc") as WTextRange;
-            textRange.CharacterFormat.FontSize = 13f;
-            textRange.CharacterFormat.FontName = "Times New Roman";
-            textRange.CharacterFormat.TextColor = Syncfusion.Drawing.Color.Black;
-            textRange.CharacterFormat.Bold = true;
-            textRange.CharacterFormat.UnderlineStyle = Syncfusion.Drawing.UnderlineStyle.Single;
-            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
-            ////End paragraph
-            ///
-            wSection.AddParagraph();
-            MemoryStream stream = new MemoryStream();
-            wordDocument.Save(stream, FormatType.Docx);
-            stream.Position = 0;
-
-            //Download Word document in the browser
-            return File(stream, "application/msword", "aaaa.docx");
+            var hdmb = _context.Hdmbs.Where(a => a.Systemref == id).FirstOrDefault();
+            using (WordDocument document = new WordDocument())
+            {
+                Stream docStream = System.IO.File.OpenRead(Path.GetFullPath(@"../../../MauPKHD_MUA.docx"));
+                document.Open(docStream, FormatType.Docx);
+                docStream.Dispose();
+                document.Replace("«sophukien»", "01", true, true);
+                docStream = System.IO.File.Create(Path.GetFullPath(@"Result.docx"));
+                document.Save(docStream, FormatType.Docx);
+                docStream.Dispose();
+            }
         }
         public IActionResult ExportWord_Annex_HDMB(string id,string SoPhuKien_Annex_HDMB,string[] CheckBox_AnnexHDMB)
         {
@@ -807,7 +779,8 @@ namespace Intimex_project.Controllers
                 _context.HdmbAnnices.Add(hdmbAnnex);
                 _context.SaveChanges();
             }
-            TempData["alertMessage"] = "Thêm phụ kiện hợp đồng cho hợp đồng "+ hdmb.Sohd +" thành công";
+            ExportWord_Annex(id, hdmb.Sohd + "_PK" + SoPhuKien_Annex_HDMB + ".doc");
+            TempData["alertMessage"] = "Thêm chi tiết hợp đồng thành công";
             return RedirectToAction("hdmb");
         }
     }
