@@ -429,6 +429,9 @@
                                     )
                                     .RemoteOperations(true)
                                     .Columns(columns => {
+
+                                        columns.AddFor(m => m.Id).Visible(false);
+
                                         columns.AddFor(m => m.Number).Caption("Number");
 
                                         columns.AddFor(m => m.NoiDung).Caption("Nội dung");
@@ -438,6 +441,7 @@
                                         columns.AddFor(m => m.Path).Caption("Path");
 
                                     })
+                                    .OnSelectionChanged("Selected_Annex")
                                     .ColumnAutoWidth(true)
                                     .Selection(s => s.Mode(SelectionMode.Single))
                                     .HoverStateEnabled(true)
@@ -460,10 +464,11 @@
 
                                         </div>
                                     </div>
+                                    <input type="text" id="IdAnnex" hidden>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" onclick="ExportWord_Annex()">View</button>
-                                    <button type="button" class="btn btn-secondary" onclick="Submit_form_Annex_HDMB()">Export word</button>
+                                    <button type="button" class="btn btn-secondary" onclick="ExportWord_Annex()">Export word</button>
+                                    <button type="button" class="btn btn-secondary" onclick="Submit_form_Annex_HDMB()">Save</button>
                                 </div>
                             </form>
                         </div>
@@ -963,7 +968,7 @@
             $("#dataGrid_HangHoa").dxDataGrid("refresh");
             $("#selected_HangHoa").modal('show');
         }
-    });
+    }); 
     function Selected_Change_HDCmuon(selectedItems) {
         var data = selectedItems.selectedRowsData[0];
         if (data) {
@@ -1039,6 +1044,12 @@
         var data = selectedItems.selectedRowsData[0];
         if (data) {
             document.getElementById("IdRow_CTHD").value = data.IdRow;
+        }
+    }
+    function Selected_Annex(selectedItems) {
+        var data = selectedItems.selectedRowsData[0];
+        if (data) {
+            document.getElementById("IdAnnex").value = data.Id;
         }
     }
     function ReturnMaKhach() {
@@ -1201,15 +1212,25 @@
         location.href = '/Hopdong/ExportWord/' + document.getElementById("Systemref").value;
     }
     function ExportWord_Annex() {
-        location.href = '/Hopdong/ExportWord/' + document.getElementById("Systemref").value;
+        if (document.getElementById("IdAnnex").value == "") {
+            $.notify("Vui lòng chọn phụ kiện muốn export", "error");
+        } else {
+            location.href = '/Hopdong/ExportWord_Annex_HDMB/' + document.getElementById("IdAnnex").value;
+        }
+        
     }
     function AddAnnex() {
         $("#Annex_HDMB").modal('show');
     }
     function Submit_form_Annex_HDMB() {
-        document.getElementById("Form_Annex_HDMB").action = "/Hopdong/ExportWord_Annex_HDMB/" + document.getElementById("Systemref").value;
-        document.getElementById("Form_Annex_HDMB").submit();
+        if (document.getElementById("SoPhuKien_Annex_HDMB").value == "") {
+            $.notify("Vui lòng nhập số phụ kiện hợp đồng", "error");
+        } else {
+            document.getElementById("Form_Annex_HDMB").action = "/Hopdong/Save_Annex_HDMB/" + document.getElementById("Systemref").value;
+            document.getElementById("Form_Annex_HDMB").submit();
+        }
     }
+    
 </script>
 
 <!-- /page content -->

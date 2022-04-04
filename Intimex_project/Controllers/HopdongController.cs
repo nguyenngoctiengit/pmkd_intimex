@@ -665,7 +665,7 @@ namespace Intimex_project.Controllers
             var hdmb = _context.Hdmbs.Where(a => a.Systemref == id).FirstOrDefault();
             var ReportNameId = (from a in _context.Hdmbs join b in _context.PortfolioPayments on a.ThanhtoanId equals b.Id where a.Systemref == id select b.ReportName).FirstOrDefault();
             var ReportName = (from a in _context.ReportHdmbs where a.Id == ReportNameId select a.ReportName).FirstOrDefault();
-            CurrentPath = _hostingEnvironment.WebRootPath + "\\Template\\" + ReportName + ".doc";
+            CurrentPath = _hostingEnvironment.WebRootPath + "\\Template\\Hopdong\\" + ReportName + ".doc";
             Stream docStream = new FileStream(CurrentPath, FileMode.Open);
             using (WordDocument wordDocument = new WordDocument())
             {
@@ -729,24 +729,193 @@ namespace Intimex_project.Controllers
                 return File(stream, "application/msword", hdmb.Sohd + ".docx");
             }
         }
-        public void ExportWord_Annex(string id,string fileName)
+        public void ExportWord_Annex(string id,string fileName,string TypeKD,string Number,List<int> Annex)
         {
+            CultureInfo ci = new CultureInfo("en-us");
+            var Sp = "";
+            if (TypeKD == "MUA")
+            {
+                Sp = "exec sp_hdmb_annex;2 @Systemref = '" + id + "'," +
+                        "@SoPK = '" + Number + "'";
+            }
+            else
+            {
+                Sp = "exec sp_hdmb_annex;4 @systemref = '" + id + "'," +
+                        "@SoPK = '" + Number + "'";
+            }
+            var Annex_HDMB = _context.Sp_HDMB_Annices.FromSqlRaw(Sp).ToList();
             var hdmb = _context.Hdmbs.Where(a => a.Systemref == id).FirstOrDefault();
             using (WordDocument document = new WordDocument())
             {
-                Stream docStream = System.IO.File.OpenRead(Path.GetFullPath(@"../../../MauPKHD_MUA.docx"));
+                Stream docStream = System.IO.File.OpenRead(_hostingEnvironment.WebRootPath + "\\Template\\PhuKienHopDong\\MauPKHD_MUA.docx");
                 document.Open(docStream, FormatType.Docx);
                 docStream.Dispose();
-                document.Replace("«sophukien»", "01", true, true);
-                docStream = System.IO.File.Create(Path.GetFullPath(@"Result.docx"));
-                document.Save(docStream, FormatType.Docx);
-                docStream.Dispose();
+                document.Replace("«sophukien»", Number, true, true);
+                document.Replace("«Ngay»", DateTime.Now.Day.ToString(), true, true);
+                document.Replace("«Thang»", DateTime.Now.Month.ToString(), true, true);
+                document.Replace("«Nam»", DateTime.Now.Year.ToString(), true, true);
+                document.Replace("«sohd»", Annex_HDMB[0].sohd, true, true);
+                document.Replace("«ngayky»", Annex_HDMB[0].ngayky, true, true);
+                document.Replace("«TenA»", Annex_HDMB[0].TenA, true, true);
+                document.Replace("«DiachiA»", Annex_HDMB[0].DiachiA, true, true);
+                document.Replace("«DienthoaiA»", Annex_HDMB[0].DienthoaiA, true, true);
+                document.Replace("«FaxA»", Annex_HDMB[0].FaxA, true, true);
+                document.Replace("«TaikhoanA»", Annex_HDMB[0].TaikhoanA, true, true);
+                document.Replace("«NganhangA»", Annex_HDMB[0].NganhangA, true, true);
+                document.Replace("«MasothueA»", Annex_HDMB[0].MasothueA, true, true);
+                document.Replace("«nguoikyA»", Annex_HDMB[0].nguoikyA, true, true);
+                document.Replace("«chucvuA»", Annex_HDMB[0].chucvuA, true, true);
+                document.Replace("«TenB»", Annex_HDMB[0].TenB, true, true);
+                document.Replace("«DiachiB»", Annex_HDMB[0].DiachiB, true, true);
+                document.Replace("«DienthoaiB»", Annex_HDMB[0].DienthoaiB, true, true);
+                document.Replace("«FaxB»", Annex_HDMB[0].FaxB, true, true);
+                document.Replace("«TaikhoanB»", Annex_HDMB[0].TaikhoanB, true, true);
+                document.Replace("«NganhangB»", Annex_HDMB[0].NganhangB, true, true);
+                document.Replace("«Masothueb»", Annex_HDMB[0].MasothueB, true, true);
+                document.Replace("«nguoikyB»", Annex_HDMB[0].nguoikyB, true, true);
+                document.Replace("«chucvuB»", Annex_HDMB[0].chucvuB, true, true);
+                foreach(var item in Annex)
+                {
+                    if (item == 0)
+                    {
+                        document.Replace("«DieuKhoan1»", "ĐIỀU I CỦA HỢP ĐỒNG ĐƯỢC THAY ĐỔI NHƯ SAU:", true, true);
+                    }
+                    
+                    if (item == 1)
+                    {
+                        document.Replace("«DieuKhoan2»", "ĐIỀU II CỦA HỢP ĐỒNG ĐƯỢC THAY ĐỔI NHƯ SAU:", true, true);
+                        document.Replace("«quycach»", "1. Quy cách phẩm chất:", true, true);
+                        document.Replace("«noidungquycach»", Annex_HDMB[0].quycach, true, true);
+                        document.Replace("«BaoBi»", "2. Bao bì: ", true, true);
+                        document.Replace("«noidungbaobi»", Annex_HDMB[0].BaoBi, true, true);
+                        document.Replace("«KiemDinh»", "3. Kiểm định: ", true, true);
+                        document.Replace("«noidungkiemdinh»", Annex_HDMB[0].KiemDinh, true, true);
+                    }
+                    if (item == 2)
+                    {
+                        document.Replace("«DieuKhoan3»", "ĐIỀU III CỦA HỢP ĐỒNG ĐƯỢC THAY ĐỔI NHƯ SAU:", true, true);
+                        document.Replace("«noidungdieukhoan3»", "Bên A ứng cho bên B tối đa giá trị tạm tính lô hàng trong vòng " +
+                            Annex_HDMB[0].MucUng +"trị giá tạm tính lô hàng trong vòng 07 ngày giao hàng, với lãi xuất tính theo lãi suất ngân hàng. " +
+                            "Số tiền còn lại thanh toán sau khi bên B hoàn tất nghĩa vụ giao hàng và chốt giá xong.", true, true);
+                    }
+                    if (item == 3)
+                    {
+                        document.Replace("«DieuKhoan4»", "ĐIỀU IV CỦA HỢP ĐỒNG ĐƯỢC THAY ĐỔI NHƯ SAU:", true, true);
+                        document.Replace("«DiaDiemGiaoHang»", "Địa điểm giao hàng: " + Annex_HDMB[0].DiaDiemGiaoHang, true, true);
+                        document.Replace("«ThoiGianGiaoHang»", "Thời gian giao hàng : chậm nhất " + Annex_HDMB[0].ngaygiaohang +
+                            "(Ngày giao hàng chính thức theo hướng dẫn giao hàng cụ thể của bên A qua Fax).", true, true);
+                        document.Replace("«phivanchuyen»", "Phí Vận chuyển: " + Annex_HDMB[0].phivanchuyen, true, true);
+                        document.Replace("«phibocxep»", "Phí bốc xếp: " + Annex_HDMB[0].phibocxep, true, true);
+                    }
+                    if (item == 4)
+                    {
+                        document.Replace("«DieuKhoan5»", "ĐIỀU V CỦA HỢP ĐỒNG ĐƯỢC THAY ĐỔI NHƯ SAU:", true, true);
+                        document.Replace("«DieuKhoanPhat»", "Điều khoản phạt: ", true, true);
+                        document.Replace("«NoiDungDieuKhoanPhat»", "Hai bên cam kết thực hiện đầy đủ các điều khoản đã " +
+                            "ghi trong hợp đồng. Nếu bên nào vi phạm hợp đồng, bên đó phải chịu phạt 10% trên trị " +
+                            "giá hợp đồng và hoàn toàn chịu trách nhiệm bồi thường toàn bộ giá trị thiệt hại thực tế phát " +
+                            "sinh gây ra cho bên kia. Không được đơn phương hủy bỏ hợp đồng, nếu có khó khăn trở ngại các " +
+                            "bên phải báo trước 07 (bảy) ngày để hai bên bàn bạc cùng nhau giải quyết. Bên A có quyền cấn trừ" +
+                            " bất cứ các khoản nợ nào mà bên B còn thiếu vào thời điểm thanh toán.", true, true);
+                        document.Replace("«DieuKhoanTrongTai»", "Điều khoản trọng tài: ", true, true);
+                        document.Replace("«NoiDungDieuKhoanTrongTai»", "Nếu có tranh chấp  xảy ra thì phán quyết của Tòa Kinh tế tại " + Annex_HDMB[0].ToaKinhTe + 
+                            "có hiệu lực cuối cùng buộc hai bên thi hành.", true, true);
+                        document.Replace("«DieuKhoanHieuLucHopDong»", "Điều khoản hiệu lực hợp đồng: ", true, true);
+                        document.Replace("«NoiDungDieuKhoanHieuLucHopDong»", "Hợp đồng có giá trị từ ngày ký đến ngày"+ Annex_HDMB[0].ngaygiaohang +
+                            " .Sau khi đã thực hiện xong hợp đồng, hai bên có nghĩa vụ chiếu thanh lý hợp đồng, chậm nhất là " +
+                            "15 ngày kể từ ngày 2 bên hoàn tất thực hiện hợp đồng. Quá thời hạn hiệu lực hợp đồng mà hai bên " +
+                            "không còn nợ nần hoặc không có tranh chấp gì thì hợp đồng này mặc nhiên được thanh lý.", true, true);
+                    }
+                    
+                }
+                foreach (var item1 in Annex)
+                {
+                    if (item1 != 0)
+                    {
+                        document.Replace("«DieuKhoan1»", "", false, true);
+                        document.Replace("«[TABLE_PRICE]»", "", false, true);
+                    }
+                    if (item1 != 1)
+                    {
+                        document.Replace("«DieuKhoan2»", "", false, true);
+                        document.Replace("«quycach»", "", false, true);
+                        document.Replace("«noidungquycach»", "", false, true);
+                        document.Replace("«BaoBi»", "", false, true);
+                        document.Replace("«noidungbaobi»", "", false, true);
+                        document.Replace("«KiemDinh»", "", false, true);
+                        document.Replace("«noidungkiemdinh»", "", false, true);
+                    }
+                    if (item1 != 2)
+                    {
+                        document.Replace("«DieuKhoan3»", "", false, true);
+                        document.Replace("«noidungdieukhoan3»", "", false, true);
+                    }
+                    if (item1 != 3)
+                    {
+                        document.Replace("«DieuKhoan4»", "", false, true);
+                        document.Replace("«DiaDiemGiaoHang»", "", false, true);
+                        document.Replace("«ThoiGianGiaoHang»", "", false, true);
+                        document.Replace("«phivanchuyen»", "", false, true);
+                        document.Replace("«phibocxep»", "", false, true);
+                    }
+                    if (item1 != 4)
+                    {
+                        document.Replace("«DieuKhoan5»", "", false, true);
+                        document.Replace("«DieuKhoanPhat»", "", false, true);
+                        document.Replace("«NoiDungDieuKhoanPhat»", "", false, true);
+                        document.Replace("«DieuKhoanTrongTai»", "", false, true);
+                        document.Replace("«NoiDungDieuKhoanTrongTai»", "", false, true);
+                        document.Replace("«DieuKhoanHieuLucHopDong»", "", false, true);
+                        document.Replace("«NoiDungDieuKhoanHieuLucHopDong»", "", false, true);
+                    }
+                }
+                WTable wTable = new WTable(document);
+                wTable.ResetCells(3, 5);
+                wTable.TableFormat.Borders.BorderType = BorderStyle.Single;
+                wTable.TableFormat.IsAutoResized = true;
+                wTable[0, 0].AddParagraph().AppendText("TÊN HÀNG");
+                wTable[0, 0].Width = 200;
+                wTable[0, 1].AddParagraph().AppendText("SỐ LƯỢNG");
+                wTable[0, 2].AddParagraph().AppendText("ĐVT");
+                wTable[0, 3].AddParagraph().AppendText("ĐƠN GIÁ (VNĐ)");
+                wTable[0, 4].AddParagraph().AppendText("THÀNH TIỀN (VNĐ)");
+                wTable[2, 0].AddParagraph().AppendText("Tổng cộng");
+                wTable[2, 0].Width = 200;
+                wTable[1, 0].AddParagraph().AppendText(Annex_HDMB[0].tenhang);
+                wTable[1, 0].Width = 200;
+                wTable[1, 1].AddParagraph().AppendText(Annex_HDMB[0].trongluong.ToString("N1", ci));
+                wTable[1, 2].AddParagraph().AppendText(Annex_HDMB[0].dvt);
+                wTable[1, 3].AddParagraph().AppendText(Annex_HDMB[0].giact.ToString("N1", ci));
+                wTable[1, 4].AddParagraph().AppendText(Annex_HDMB[0].thanhtien.ToString("N1", ci));
+                wTable[2, 4].AddParagraph().AppendText(Annex_HDMB[0].thanhtien.ToString("N1", ci));
+                TextBodyPart textBody = new TextBodyPart(document);
+                textBody.BodyItems.Add(wTable);
+                document.Replace("[TABLE_PRICE]", textBody, true, true, true);
+                if (Directory.Exists(_hostingEnvironment.WebRootPath + "\\Export\\PhuKienHopDong\\" + id))
+                {
+                    docStream = System.IO.File.Create(_hostingEnvironment.WebRootPath + "\\Export\\PhuKienHopDong\\" + id + "\\PK" + Number + ".doc");
+                    document.Save(docStream, FormatType.Docx);
+                    docStream.Dispose();
+                }
+                else
+                {
+                    string pathString = _hostingEnvironment.WebRootPath + "\\Export\\PhuKienHopDong\\" + id;
+                    System.IO.Directory.CreateDirectory(pathString);
+                    docStream = System.IO.File.Create(_hostingEnvironment.WebRootPath + "\\Export\\PhuKienHopDong\\" + id + "\\PK" + Number + ".doc");
+                    document.Save(docStream, FormatType.Docx);
+                    docStream.Dispose();
+                }
+                
             }
         }
-        public IActionResult ExportWord_Annex_HDMB(string id,string SoPhuKien_Annex_HDMB,string[] CheckBox_AnnexHDMB)
+        public IActionResult Save_Annex_HDMB(string id,string SoPhuKien_Annex_HDMB,string[] CheckBox_AnnexHDMB)
         {
+            var MaHang_CtHDMB = _context.CtHdmbs.Where(a => a.Systemref == id).Select(a => a.Mahang).FirstOrDefault();
+            var MaNhom_Hanghoa = _context.Hanghoas.Where(a => a.Mahang == MaHang_CtHDMB).Select(a => a.MaNhom).FirstOrDefault();
+            var listAnnex = _context.Annices.Where(a => a.MaNhom == MaNhom_Hanghoa).Select(a => a.NoiDung).ToList();
             var hdmb = _context.Hdmbs.Where(a => a.Systemref == id).FirstOrDefault();
             var content = "";
+            List<int> Annex = new List<int>();
             for(var i = 0;i< CheckBox_AnnexHDMB.Length; i++)
             {
                 if (CheckBox_AnnexHDMB.Length == 1)
@@ -757,7 +926,13 @@ namespace Intimex_project.Controllers
                 {
                     content = content + " - " + CheckBox_AnnexHDMB[i];
                 }
-
+                for(var j = 0;j < listAnnex.Count; j++)
+                {
+                    if (CheckBox_AnnexHDMB[i] == listAnnex[j])
+                    {
+                        Annex.Add(j);
+                    }
+                }
             }
             if (_context.HdmbAnnices.Any(a => a.Systemref == id && a.Number == SoPhuKien_Annex_HDMB))
             {
@@ -779,10 +954,28 @@ namespace Intimex_project.Controllers
                 _context.HdmbAnnices.Add(hdmbAnnex);
                 _context.SaveChanges();
             }
-            ExportWord_Annex(id, hdmb.Sohd + "_PK" + SoPhuKien_Annex_HDMB + ".doc");
+            ExportWord_Annex(id, hdmb.Sohd + "_PK" + SoPhuKien_Annex_HDMB + ".doc",hdmb.MuaBan, SoPhuKien_Annex_HDMB, Annex);
             TempData["alertMessage"] = "Thêm chi tiết hợp đồng thành công";
             return RedirectToAction("hdmb");
         }
+        public IActionResult ExportWord_Annex_HDMB(int id)
+        {
+            var Annex = _context.HdmbAnnices.Where(a => a.Id == id).FirstOrDefault();
+            var PathAnnex = _hostingEnvironment.WebRootPath + "\\Export\\PhuKienHopDong\\" + Annex.Systemref + "\\PK" + Annex.Number + ".doc";
+            if (System.IO.File.Exists(PathAnnex))
+            {
+                var filePath = _hostingEnvironment.WebRootPath + "\\Export\\PhuKienHopDong\\" + Annex.Systemref;
+                var path = Path.Combine(filePath, "PK" + Annex.Number + ".doc");
+                var fs = new FileStream(path, FileMode.Open);
+                return File(fs, "application/force-download", Annex.Path);
+            }
+            else
+            {
+                TempData["alertMessage"] = "File không tồn tại";
+                return RedirectToAction("hdmb");
+            }
+        }
+        
     }
 }
 
