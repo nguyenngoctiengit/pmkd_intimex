@@ -475,6 +475,14 @@
                     </div>
                 </div>
                 @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
+                @*----------------------------------------------------Bootrap popup save phụ kiện hợp đồng-------------------------------------------------------------------------------------------------------------------------------*@
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="Plans_HDMB">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                        </div>
+                    </div>
+                </div>
+                @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
                 <div class="col-md-9 col-sm-9" id="rightdiv" style="height:auto;min-height:auto">
                     <form id="Form_Hdmb" method="post">
                         <div class="form-group row" style="margin-bottom:0px">
@@ -656,7 +664,7 @@
                     <button type="button" class="btn btn-secondary" style="font-size:small">E Document</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small">Deli Detail</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="AddAnnex()">Add Annex</button>
-                    <button type="button" class="btn btn-secondary" style="font-size:small">Add plan</button>
+                    <button type="button" class="btn btn-secondary" style="font-size:small" onclick="AddPlans()">Add plan</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="AddDetail()">Add Detail</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="EditDetail()">Edit Detail</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="DeleteDetail()" id="DeleteButton">Delete Detail</button>
@@ -1229,6 +1237,17 @@
             document.getElementById("Form_Annex_HDMB").action = "/Hopdong/Save_Annex_HDMB/" + document.getElementById("Systemref").value;
             document.getElementById("Form_Annex_HDMB").submit();
         }
+    }
+    function AddPlans() {
+        if (GetSystemRef() != 0) {
+
+            $("#Plans_HDMB").modal('show').find('.modal-content').load('/Plans/AddPlans_Bootstrap/' + '1');
+@*            location.href = '/Plans/AddPlans/' + GetSystemRef();*@
+        }
+        else {
+            $.notify("Vui lòng chọn hợp đồng để thêm phương án", "error");
+        }
+        
     }
     
 </script>
