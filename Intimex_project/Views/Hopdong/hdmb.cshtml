@@ -475,39 +475,6 @@
                     </div>
                 </div>
                 @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
-                @*----------------------------------------------------Bootrap popup save phụ kiện hợp đồng-------------------------------------------------------------------------------------------------------------------------------*@
-                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="Plans_HDMB">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Ghép PA kinh doanh</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-content">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="Annex_HDMB">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Phụ kiện hợp đồng</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <form id="Form_Annex_HDMB" method="post">
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" onclick="ExportWord_Annex()">Export word</button>
-                                    <button type="button" class="btn btn-secondary" onclick="Submit_form_Annex_HDMB()">Save</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
                 <div class="col-md-9 col-sm-9" id="rightdiv" style="height:auto;min-height:auto">
                     <form id="Form_Hdmb" method="post">
                         <div class="form-group row" style="margin-bottom:0px">
@@ -1265,7 +1232,7 @@
     }
     function AddPlans() {
         if (GetSystemRef() != 0) {
-            $("#Plans_HDMB").modal('show').find('.modal-content').load('/Plans/AddPlans_Bootstrap/' + GetSystemRef());
+            location.href = '/Plans/AddPlans/' + GetSystemRef();
         }
         else {
             $.notify("Vui lòng chọn hợp đồng để thêm phương án", "error");

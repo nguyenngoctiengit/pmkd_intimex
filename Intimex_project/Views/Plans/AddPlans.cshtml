@@ -31,7 +31,7 @@
                     <label class="col-form-label col-md-2 col-sm-2">Số PA</label>
                     <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb">
                     <label class="col-form-label col-md-2 col-sm-2">ID PAKD</label>
-                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" />
+                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="PlansId"/>
                 </div>
                 <div class="form-group row" style="margin-bottom:0px">
                     <label class="col-form-label col-md-2 col-sm-2">Trọng lượng PA</label>
@@ -90,8 +90,114 @@
                     <input type="hidden" value="false" hidden>
                     <label class="col-form-label">HĐ hoàn thành ghép</label>
                 </div>
+                @(Html.DevExtreme().DataGrid().ID("Systemref")
+                                    .DataSource(ds => ds.Mvc()
+                                        .Controller("Plans")
+                                        .LoadAction("getPlans")
+                                        .Key("Systemref")
+                                        .LoadParams(new { id = new JS("GetPlansId") })
+                                    )
+                                    .RemoteOperations(true)
+                                    .Columns(columns => {
+
+                                        columns.Add().DataField("PlansId").Caption("Plans Id");
+
+                                        columns.Add().DataField("ContracId").Caption("Contrac Id");
+
+                                        columns.Add().DataField("SystemId").Caption("System Id");
+
+                                        columns.Add().DataField("Trongluong").Caption("Trọng lượng");
+
+                                        columns.Add().DataField("Macn").Caption("Mã Cn");
+
+                                        columns.Add().DataField("Systemref").Caption("Systemref");
+
+                                        columns.Add().DataField("Ref").Caption("Ref");
+
+                                        columns.Add().DataField("Sohd").Caption("Số HĐ");
+
+                                        columns.Add().DataField("Trangthai").Caption("Trạng thái");
+
+                                        columns.Add().DataField("MuaBan").Caption("Mua bán");
+
+                                        columns.Add().DataField("Makhach").Caption("Mã khách");
+
+                                        columns.Add().DataField("Ngayky").Caption("Ngày ký");
+
+                                        columns.Add().DataField("Ngaygiao").Caption("Ngày giao");
+
+                                        columns.Add().DataField("Ngayhl").Caption("Ngày hiệu lực");
+
+                                        columns.Add().DataField("Ngaytl").Caption("Ngày tl");
+
+                                        columns.Add().DataField("Nguoitl").Caption("Người tl");
+
+                                        columns.Add().DataField("Nguoilam").Caption("Người làm");
+
+                                        columns.Add().DataField("Ghichu").Caption("Ghi chú");
+
+                                        columns.Add().DataField("Pakd").Caption("PAKD");
+
+                                        columns.Add().DataField("SoPakd").Caption("Số PAKD");
+
+                                        columns.Add().DataField("IsFix").Caption("IsFix");
+
+                                        columns.Add().DataField("Tiente").Caption("Tiền tệ");
+
+                                        columns.Add().DataField("ThanhtoanId").Caption("Thanh toán Id");
+
+                                        columns.Add().DataField("Thanhtoan").Caption("Thanh toán");
+
+                                        columns.Add().DataField("Ngaylam").Caption("Ngày làm");
+
+                                        columns.Add().DataField("IntKy").Caption("Int ký");
+
+                                        columns.Add().DataField("ClientKy").Caption("Client ký");
+
+                                        columns.Add().DataField("Docstatus").Caption("Doc status");
+
+                                        columns.Add().DataField("TrangthaiGhep").Caption("Trạng thái ghép");
+
+                                        columns.Add().DataField("TienUngHd").Caption("Tiền ứng HĐ");
+
+                                        columns.Add().DataField("TienUngTt").Caption("Tiền ứng TT");
+
+                                        columns.Add().DataField("HdcmuonId").Caption("Id HĐ cho mượn");
+
+                                        columns.Add().DataField("SoHdcmuon").Caption("Số HĐ cho mượn");
+
+                                        columns.Add().DataField("DiaDiemGiaoHang").Caption("Địa điểm giao hàng");
+
+                                        columns.Add().DataField("IsNoKhoDoi").Caption("Is nợ khó đòi");
+
+                                        columns.Add().DataField("TypeKd").Caption("Type KD");
+
+                                        columns.Add().DataField("VanChuyen").Caption("Vận chuyển");
+
+                                        columns.Add().DataField("NgayTraPhaitra").Caption("Ngày trả phải trả");
+
+                                        columns.Add().DataField("Tenfull").Caption("Tên full");
+
+                                    })
+                                    .ColumnAutoWidth(true)
+                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                    .HoverStateEnabled(true)
+                                    .HeaderFilter(hearder => hearder.Visible(true))
+                                    .AllowColumnResizing(true)
+                                    .AllowColumnReordering(true)
+                                    .ShowBorders(true)
+                                    .Grouping(group => group.AutoExpandAll(true))
+                                    .Paging(paging => paging.PageSize(24))
+                                )
             </div>
         </div>
     </div>
 </div>
+<script>
+    function GetPlansId() {
+        return document.getElementById("PlansId").value;
+    }
+
+
+</script>
 
