@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using Data.Models.Models_StoredProcedure;
 
 #nullable disable
 
@@ -312,6 +313,7 @@ namespace Data.Models.Trading_system
         public virtual DbSet<Sp_GetHangHoa_CtHDmb> Sp_GetHangHoa_CtHDmbs { get; set; }
         public virtual DbSet<Sp_Report_HDMB> Sp_Report_HDMBs { get; set; }
         public virtual DbSet<Sp_HDMB_Annex> Sp_HDMB_Annices { get; set; }
+        public virtual DbSet<Sp_GetPlans> Sp_GetPlans { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

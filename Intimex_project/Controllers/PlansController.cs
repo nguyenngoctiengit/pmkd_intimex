@@ -2,7 +2,9 @@
 using Data.Models.Trading_system;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +22,14 @@ namespace Intimex_project.Controllers
         public IActionResult AddPlans(string id)
         {
             return View("AddPlans");
+        }
+        [HttpGet]
+        public object GetPlansToAddContract(string id, DataSourceLoadOptions loadOptions)
+        {
+            
+            var Sp = "exec [dbo].[UdscGhepPAKD] @SoPA = '',@macn = '"+ HttpContext.Session.GetString("UnitName") + "'";
+            var item = _context.Sp_GetPlans.FromSqlRaw(Sp).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
         }
         [HttpGet]
         public object getPlans(string id,DataSourceLoadOptions loadOptions)

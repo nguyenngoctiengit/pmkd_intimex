@@ -340,7 +340,6 @@ namespace Intimex_project.Controllers
                         }).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
-
         [HttpGet]
         public object getClientKy(string id, DataSourceLoadOptions loadOptions)
         {

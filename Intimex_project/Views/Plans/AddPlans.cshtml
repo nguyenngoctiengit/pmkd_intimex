@@ -29,9 +29,9 @@
             <div class="col-md-12 col-sm-12" style="height:auto">
                 <div class="form-group row" style="margin-bottom:0px">
                     <label class="col-form-label col-md-2 col-sm-2">Số PA</label>
-                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb">
+                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="SoPa">
                     <label class="col-form-label col-md-2 col-sm-2">ID PAKD</label>
-                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="PlansId"/>
+                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="PlansId" />
                 </div>
                 <div class="form-group row" style="margin-bottom:0px">
                     <label class="col-form-label col-md-2 col-sm-2">Trọng lượng PA</label>
@@ -193,11 +193,40 @@
         </div>
     </div>
 </div>
+@*----------------------------------------------------Bootrap popup choose khách hàng-------------------------------------------------------------------------------------------------------------------------------*@
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="selected_Plans">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            @(Html.DevExtreme().DataGrid()
+                                    .DataSource(d => d.Mvc().Controller("Plans").LoadAction("GetPlansToAddContract").Key("SystemId"))
+                                    .Columns(columns => {
+                                        columns.Add().DataField("SystemId").Caption("System Id");
+                                        columns.Add().DataField("soPA").Caption("Số PA");
+                                        columns.Add().DataField("Trongluong").Caption("Trọng lượng");
+                                        columns.Add().DataField("TLCanGhep").Caption("Trọng lượng cần ghép");
+                                        columns.Add().DataField("dvt").Caption("Đơn vị tính");
+                                    })
+                                    .HoverStateEnabled(true)
+                                    .Paging(p => p.PageSize(10))
+                                    .FilterRow(f => f.Visible(true))
+                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                )
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="close_Popup_KH()">Selected</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
 <script>
     function GetPlansId() {
         return document.getElementById("PlansId").value;
     }
-
+    $("#SoPa").keyup(function (event) {
+        if (event.keyCode === 13) {
+            $("#selected_Plans").modal('show');
+        }
+    });
 
 </script>
 
