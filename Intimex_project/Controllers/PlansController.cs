@@ -21,7 +21,43 @@ namespace Intimex_project.Controllers
         }
         public IActionResult AddPlans(string id)
         {
+            if (checkHDHasPA(id) == 1)
+            {
+                TempData["alertMessage"] = "Hợp đồng bán này đã có phương án, không thể thực hiện ghép phương án";
+                return RedirectToAction("hdmb", "Hopdong");
+            }
+            else if (checkHDHasPA(id) == 2)
+            {
+                TempData["alertMessage"] = "Hợp đồng mua này đã ghép hết trọng lượng, không thể thực hiện ghép phương án";
+                return RedirectToAction("hdmb", "Hopdong");
+            }
+            else if (checkHDHasPA(id) == 0)
+            {
+                TempData["alertMessage"] = "Error somewhere";
+                return RedirectToAction("hdmb", "Hopdong");
+            }
+
             return View("AddPlans");
+            
+        }
+        public int checkHDHasPA(string id)
+        {
+            var itemCheck = _context.Hdmbs.Where(a => a.Systemref == id).FirstOrDefault();
+            if (itemCheck.MuaBan == "BAN")
+            {
+                if (_context.PairedPlans.Any(a => a.ContracId == id))
+                {
+                    return 1;
+                }
+            }
+            else if (itemCheck.MuaBan == "MUA")
+            {
+                if (_context.PairedPlans.Any(a => a.ContracId == id) && (_context.CtHdmbs.Where(a => a.Systemref == id).Sum(a => a.Trongluong) <= (decimal)(_context.PairedPlans.Where(a => a.ContracId == id).Sum(a => a.Trongluong))))
+                {
+                    return 2;
+                }
+            }
+            return 0;
         }
         [HttpGet]
         public object GetPlansToAddContract(string id, DataSourceLoadOptions loadOptions)

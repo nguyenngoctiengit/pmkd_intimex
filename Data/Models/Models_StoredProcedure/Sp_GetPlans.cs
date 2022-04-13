@@ -12,8 +12,8 @@ namespace Data.Models.Models_StoredProcedure
         [Key]
         public string SystemId { get; set; }
         public string soPA { get; set; }
-        public float Trongluong { get; set; }
-        public float TLCanGhep { get; set; }
+        public decimal Trongluong { get; set; }
+        public double TLCanGhep { get; set; }
         public string? dvt { get; set; }
     }
 }
