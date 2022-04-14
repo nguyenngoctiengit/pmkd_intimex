@@ -21,6 +21,7 @@ namespace Intimex_project.Controllers
         }
         public IActionResult AddPlans(string id)
         {
+            var hdmb = _context.Hdmbs.Where(a => a.Systemref == id).FirstOrDefault();
             if (checkHDHasPA(id) == 1)
             {
                 TempData["alertMessage"] = "Hợp đồng bán này đã có phương án, không thể thực hiện ghép phương án";
@@ -31,33 +32,51 @@ namespace Intimex_project.Controllers
                 TempData["alertMessage"] = "Hợp đồng mua này đã ghép hết trọng lượng, không thể thực hiện ghép phương án";
                 return RedirectToAction("hdmb", "Hopdong");
             }
-            else if (checkHDHasPA(id) == 0)
+            if (hdmb.MuaBan == "MUA")
             {
-                TempData["alertMessage"] = "Error somewhere";
-                return RedirectToAction("hdmb", "Hopdong");
+                ViewBag.checkMuaBan = "MUA";
             }
-
+            else
+            {
+                ViewBag.checkMuaBan = "BAN";
+            }
+            var TrongLuongHD = _context.CtHdmbs.Where(a => a.Systemref == hdmb.Systemref).Sum(a => a.Trongluong) == 0 ? 0 : _context.CtHdmbs.Where(a => a.Systemref == hdmb.Systemref).Sum(a => a.Trongluong);
+            ViewBag.SystemRef = hdmb.Systemref;
+            ViewBag.Sohd = hdmb.Sohd;
+            ViewBag.MaKhach = hdmb.Makhach;
+            ViewBag.TrongLuong = TrongLuongHD;
+            ViewBag.MuaBan = hdmb.MuaBan;
+            ViewBag.TrongLuongDuocGhep = TrongLuongHD - (decimal)_context.PairedPlans.Where(a => a.ContracId == id).Sum(a => a.Trongluong) != 0 ? (decimal)_context.PairedPlans.Where(a => a.ContracId == id).Sum(a => a.Trongluong) : 0;
             return View("AddPlans");
             
         }
         public int checkHDHasPA(string id)
         {
+            int check = 0;
             var itemCheck = _context.Hdmbs.Where(a => a.Systemref == id).FirstOrDefault();
             if (itemCheck.MuaBan == "BAN")
             {
                 if (_context.PairedPlans.Any(a => a.ContracId == id))
                 {
-                    return 1;
+                    check = 1;
+                }
+                else
+                {
+                    check = 0;
                 }
             }
             else if (itemCheck.MuaBan == "MUA")
             {
                 if (_context.PairedPlans.Any(a => a.ContracId == id) && (_context.CtHdmbs.Where(a => a.Systemref == id).Sum(a => a.Trongluong) <= (decimal)(_context.PairedPlans.Where(a => a.ContracId == id).Sum(a => a.Trongluong))))
                 {
-                    return 2;
+                    check = 2;
+                }
+                else
+                {
+                    check = 0;
                 }
             }
-            return 0;
+            return check;
         }
         [HttpGet]
         public object GetPlansToAddContract(string id, DataSourceLoadOptions loadOptions)
