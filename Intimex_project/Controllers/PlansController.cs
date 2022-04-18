@@ -136,6 +136,42 @@ namespace Intimex_project.Controllers
                         }).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
+        public bool CheckPAHasHDBan(string id)
+        {
+            var item_check = (from a in _context.Hdmbs join b in _context.PairedPlans on a.Systemref equals b.ContracId where a.MuaBan == "BAN" && b.PlansId == id select a).ToList();
+            if (item_check.Count() > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        [HttpPost]
+        public IActionResult Fill_data_plans(string SystemId,string Id_HDMB)
+        {
+            var HDMB = _context.Hdmbs.Where(a => a.Systemref == Id_HDMB).FirstOrDefault();
+            if (HDMB.MuaBan == "BAN" && CheckPAHasHDBan(SystemId) == true)
+            {
+                return Json(1);
+            }
+            else
+            {
+                var TrongLuongPairedPlans = _context.PairedPlans.Where(a => a.PlansId == SystemId).Sum(a => a.Trongluong);
+                var data = (from a in _context.Plans
+                            where a.Macn == HttpContext.Session.GetString("UnitName") && a.SystemId == SystemId && a.TrangthaiGhep == true && a.Trangthai == 0
+                            select new
+                            {
+                                a.SystemId,
+                                a.SoPa,
+                                a.Trongluong,
+                                TLCanGhep = a.Trongluong - ((decimal)TrongLuongPairedPlans == 0 ? 0 : (decimal)TrongLuongPairedPlans),
+                                a.Dvt
+                            }).FirstOrDefault();
+                return Json(data);
+            }
+        }
 
     }
 }

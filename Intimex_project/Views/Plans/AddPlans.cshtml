@@ -24,6 +24,7 @@
                 </div>
             }
         }
+        <input type="text" value="@ViewBag.SystemRef" id="Id_HDMB" hidden>
         <div class="clearfix"></div>
         <div class="row" id="row">
             <div class="col-md-12 col-sm-12" style="height:auto">
@@ -35,9 +36,9 @@
                 </div>
                 <div class="form-group row" style="margin-bottom:0px">
                     <label class="col-form-label col-md-2 col-sm-2">Trọng lượng PA</label>
-                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb">
+                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="Trongluong">
                     <label class="col-form-label col-md-2 col-sm-2">Trọng lượng cần ghép</label>
-                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" />
+                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="TLCanGhep"/>
                 </div>
                 <div class="form-group row" style="margin-bottom:0px">
                     <input type="checkbox" style="margin:10px 10px 0px 10px" value="true" id="Pakd" disabled>
@@ -145,7 +146,7 @@
                     }
                 }
 
-                @(Html.DevExtreme().DataGrid().ID("Systemref")
+                @(Html.DevExtreme().DataGrid().ID("DataGrid_Plans")
                                     .DataSource(ds => ds.Mvc()
                                         .Controller("Plans")
                                         .LoadAction("getPlans")
@@ -234,7 +235,6 @@
                                         columns.Add().DataField("Tenfull").Caption("Tên full");
 
                                     })
-                                    .OnSelectionChanged("Selected_Plans")
                                     .ColumnAutoWidth(true)
                                     .Selection(s => s.Mode(SelectionMode.Single))
                                     .HoverStateEnabled(true)
@@ -262,13 +262,14 @@
                                         columns.Add().DataField("TLCanGhep").Caption("Trọng lượng cần ghép");
                                         columns.Add().DataField("dvt").Caption("Đơn vị tính");
                                     })
+                                    .OnSelectionChanged("Selected_Plans")
                                     .HoverStateEnabled(true)
                                     .Paging(p => p.PageSize(10))
                                     .FilterRow(f => f.Visible(true))
                                     .Selection(s => s.Mode(SelectionMode.Single))
                                 )
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="close_Popup_KH()">Selected</button>
+                <button type="button" class="btn btn-secondary" onclick="close_Popup_Plans()">Selected</button>
             </div>
         </div>
     </div>
@@ -285,9 +286,26 @@
     });
     function Selected_Plans(selectedItems) {
         var data = selectedItems.selectedRowsData[0];
+        var IdHDMB = document.getElementById("Id_HDMB").value;
         if (data) {
-           
+            $.post('/Plans/Fill_data_plans', { 'SystemId': data.SystemId, 'Id_HDMB': IdHDMB }, function (item) {
+                if (item == 1) {
+                    $.notify("Phương án này đã có hợp đồng bán. Bạn không thể thêm hợp đồng bán cho PAKD này","error");
+                }
+                else {
+                    document.getElementById("PlansId").value = item.SystemId;
+                    document.getElementById("SoPa").value = item.SoPa;
+                    document.getElementById("Trongluong").value = item.Trongluong;
+                    document.getElementById("TLCanGhep").value = item.TLCanGhep;
+                    $("#DataGrid_Plans").dxDataGrid("refresh");
+                }
+
+
+            })
         }
+    }
+    function close_Popup_Plans() {
+        $("#selected_Plans").modal('hide');
     }
 </script>
 
