@@ -1,4 +1,5 @@
-﻿using Application.Parameter;
+﻿using Application.AutoId;
+using Application.Parameter;
 using Data.Models.Trading_system;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
@@ -14,6 +15,7 @@ namespace Intimex_project.Controllers
 {
     public class PlansController : Controller
     {
+        double QuantityMaxHD = 0;
         private readonly tradingsystemContext _context = new tradingsystemContext(ConnectionParameter.connectionString);
         public IActionResult Index()
         {
@@ -47,6 +49,8 @@ namespace Intimex_project.Controllers
             ViewBag.TrongLuong = TrongLuongHD;
             ViewBag.MuaBan = hdmb.MuaBan;
             ViewBag.TrongLuongDuocGhep = TrongLuongHD - (decimal)_context.PairedPlans.Where(a => a.ContracId == id).Sum(a => a.Trongluong) != 0 ? (decimal)_context.PairedPlans.Where(a => a.ContracId == id).Sum(a => a.Trongluong) : 0;
+            var TrongLuongDuocGhep = TrongLuongHD - (decimal)_context.PairedPlans.Where(a => a.ContracId == id).Sum(a => a.Trongluong) != 0 ? (decimal)_context.PairedPlans.Where(a => a.ContracId == id).Sum(a => a.Trongluong) : 0;
+            QuantityMaxHD = (double)TrongLuongHD * (double)5 / 100 + (double)TrongLuongDuocGhep;
             return View("AddPlans");
             
         }
@@ -171,6 +175,92 @@ namespace Intimex_project.Controllers
                             }).FirstOrDefault();
                 return Json(data);
             }
+        }
+        [HttpPost]
+        public IActionResult Add_PairedPlans(string id,string txtIdHD_MUA, string txtTrongLuongHD_MUA,string txtDvtHD_MUA,string txtTrongLuongGhepHD_MUA, string txtIdHD_BAN,string txtTrongLuongHD_BAN,string txtDvtHD_BAN,string txtTrongLuongGhepHD_BAN,bool ChbHoangThanhGhepHd_MUA,bool ChbHoangThanhGhepHd_BAN)
+        {
+            var checkHopDong = txtIdHD_MUA == null ? txtIdHD_BAN : txtIdHD_MUA;
+            var hdmb = _context.Hdmbs.Where(a => a.Systemref == checkHopDong).FirstOrDefault();
+            if (hdmb.MuaBan == "MUA")
+            {
+
+                double quatity;
+                if (double.TryParse(txtTrongLuongHD_MUA,out quatity))
+                {
+                    if (quatity > QuantityMaxHD || quatity > double.Parse(txtTrongLuongGhepHD_MUA))
+                    {
+                        TempData["alertMessage"] = "Bạn nhập trọng lượng nhiều hơn trọng lượng trên hợp đồng hoặc nhiều hơn trọng lượng cần nhập cho phương án này";
+                        return RedirectToAction("hdmb", "Hopdong");
+                    }
+                    if (quatity <= 0)
+                    {
+                        TempData["alertMessage"] = "Số lượng phải lớn hơn 0";
+                        return RedirectToAction("hdmb", "Hopdong");
+                    }
+                }
+                else
+                    return RedirectToAction("hdmb", "Hopdong");
+                if (_context.PairedPlans.Any(a => a.ContracId == txtIdHD_MUA))
+                    return RedirectToAction("hdmb", "Hopdong");
+                try
+                {
+                    PairedPlan pairedPlan = new PairedPlan();
+                    pairedPlan.SystemId = AutoId.AutoIdFileStored("pairedplans");
+                    pairedPlan.PlansId = id;
+                    pairedPlan.ContracId = txtIdHD_MUA;
+                    pairedPlan.Trongluong = quatity;
+                    pairedPlan.Dvt = txtDvtHD_MUA;
+                    pairedPlan.Macn = HttpContext.Session.GetString("UnitName");
+                    hdmb.TrangthaiGhep = ChbHoangThanhGhepHd_MUA;
+                    _context.Hdmbs.Update(hdmb);
+                    _context.PairedPlans.Add(pairedPlan);
+                    _context.SaveChanges();
+                    TempData["alertMessage"] = "Ghép phương án thành công";
+                    return RedirectToAction("hdmb", "Hopdong");
+                }
+                catch(Exception ex)
+                {
+                    TempData["alertMessage"] = ex;
+                    return RedirectToAction("hdmb", "Hopdong");
+                }
+                
+            }
+            else
+            {
+                double quantity = 0;
+                if (double.TryParse(txtTrongLuongHD_BAN,out quantity))
+                {
+                    if (quantity > double.Parse(txtTrongLuongHD_BAN))
+                    {
+                        TempData["alertMessage"] = "Bạn nhập trọng lượng ghép nhiều hơn trọng lượng trên hợp đồng cho phương án này";
+                        return RedirectToAction("hdmb", "Hopdong");
+                    }
+                }
+                else
+                    return RedirectToAction("hdmb", "Hopdong");
+                try
+                {
+                    PairedPlan pairedPlan = new PairedPlan();
+                    pairedPlan.SystemId = AutoId.AutoIdFileStored("pairedplans");
+                    pairedPlan.PlansId = id;
+                    pairedPlan.ContracId = txtIdHD_BAN;
+                    pairedPlan.Trongluong = quantity;
+                    pairedPlan.Dvt = txtDvtHD_BAN;
+                    pairedPlan.Macn = HttpContext.Session.GetString("UnitName");
+                    hdmb.TrangthaiGhep = ChbHoangThanhGhepHd_BAN;
+                    _context.Hdmbs.Update(hdmb);
+                    _context.PairedPlans.Add(pairedPlan);
+                    _context.SaveChanges();
+                    TempData["alertMessage"] = "Ghép phương án thành công";
+                    return RedirectToAction("hdmb", "Hopdong");
+                }
+                catch(Exception ex)
+                {
+                    TempData["alertMessage"] = ex;
+                    return RedirectToAction("hdmb", "Hopdong");
+                }
+            }
+            
         }
 
     }

@@ -1043,7 +1043,7 @@
     function Selected_CTHD(selectedItems) {
         var data = selectedItems.selectedRowsData[0];
         if (data) {
-            document.getElementById("IdRow_CTHD").value = data.IdRow;
+            document.getElementById("idRow_CTHD").value = data.IdRow;
         }
     }
     function Selected_Annex(selectedItems) {
@@ -1121,7 +1121,7 @@
         
     }
     function EditDetail() {
-        var IdRow = document.getElementById("IdRow_CTHD").value;
+        var IdRow = document.getElementById("idRow_CTHD").value;
         if (IdRow == null || IdRow == "") {
             $.notify("Vui lòng chọn chi tiết hợp đồng muốn chỉnh sửa!", "error");
         } else {

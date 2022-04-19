@@ -38,113 +38,65 @@
                     <label class="col-form-label col-md-2 col-sm-2">Trọng lượng PA</label>
                     <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="Trongluong">
                     <label class="col-form-label col-md-2 col-sm-2">Trọng lượng cần ghép</label>
-                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="TLCanGhep"/>
+                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="TLCanGhep" />
                 </div>
                 <div class="form-group row" style="margin-bottom:0px">
                     <input type="checkbox" style="margin:10px 10px 0px 10px" value="true" id="Pakd" disabled>
                     <input type="hidden" value="false" hidden>
                     <label class="col-form-label">PA hoàn thành ghép</label>
                 </div>
-                @{
-                    if (ViewBag.checkMuaBan == "BAN")
-                    {
-                        <hr size="3">
-                        <div class="form-group row" style="margin-bottom:0px">
-                            <label class="col-form-label col-md-12 col-sm-12">Hợp đồng bán</label>
-                        </div>
-                        <div class="form-group row" style="margin-bottom:0px">
-                            <label class="col-form-label col-md-2 col-sm-2">Số HĐ</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" value="@ViewBag.Sohd">
-                            <label class="col-form-label col-md-2 col-sm-2">ID HĐ</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" value="@ViewBag.SystemRef"/>
-                        </div>
-                        <div class="form-group row" style="margin-bottom:0px">
-                            <label class="col-form-label col-md-2 col-sm-2">Trọng lượng HĐ</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" value="@ViewBag.TrongLuong">
-                            <label class="col-form-label col-md-2 col-sm-2">ĐVT</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" />
-                        </div>
-                        <div class="form-group row" style="margin-bottom:0px">
-                            <label class="col-form-label col-md-2 col-sm-2">Trọng lượng ghép</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" value="@ViewBag.TrongLuongDuocGhep">
-                            <input type="checkbox" style="margin:10px 10px 0px 10px" value="true" id="Pakd" disabled>
-                            <input type="hidden" value="false" hidden>
-                            <label class="col-form-label">HĐ hoàn thành ghép</label>
-                        </div>
-                        <hr size="3">
-                        <div class="form-group row" style="margin-bottom:0px">
-                            <label class="col-form-label col-md-12 col-sm-12">Hợp đồng mua</label>
-                        </div>
-                        <div class="form-group row" style="margin-bottom:0px">
-                            <label class="col-form-label col-md-2 col-sm-2">Số HĐ</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb">
-                            <label class="col-form-label col-md-2 col-sm-2">ID HĐ</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" />
-                        </div>
-                        <div class="form-group row" style="margin-bottom:0px">
-                            <label class="col-form-label col-md-2 col-sm-2">Trọng lượng HĐ</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb">
-                            <label class="col-form-label col-md-2 col-sm-2">ĐVT</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" />
-                        </div>
-                        <div class="form-group row" style="margin-bottom:0px">
-                            <label class="col-form-label col-md-2 col-sm-2">Trọng lượng ghép</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb">
-                            <input type="checkbox" style="margin:10px 10px 0px 10px" value="true" id="Pakd" disabled>
-                            <input type="hidden" value="false" hidden>
-                            <label class="col-form-label">HĐ hoàn thành ghép</label>
-                        </div>
-                    }
-                    else
-                    {
-                        <hr size="3">
-                        <div class="form-group row" style="margin-bottom:0px">
-                            <label class="col-form-label col-md-12 col-sm-12">Hợp đồng bán</label>
-                        </div>
-                        <div class="form-group row" style="margin-bottom:0px">
-                            <label class="col-form-label col-md-2 col-sm-2">Số HĐ</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb">
-                            <label class="col-form-label col-md-2 col-sm-2">ID HĐ</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" />
-                        </div>
-                        <div class="form-group row" style="margin-bottom:0px">
-                            <label class="col-form-label col-md-2 col-sm-2">Trọng lượng HĐ</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb">
-                            <label class="col-form-label col-md-2 col-sm-2">ĐVT</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" />
-                        </div>
-                        <div class="form-group row" style="margin-bottom:0px">
-                            <label class="col-form-label col-md-2 col-sm-2">Trọng lượng ghép</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb">
-                            <input type="checkbox" style="margin:10px 10px 0px 10px" value="true" id="Pakd" disabled>
-                            <input type="hidden" value="false" hidden>
-                            <label class="col-form-label">HĐ hoàn thành ghép</label>
-                        </div>
-                        <hr size="3">
-                        <div class="form-group row" style="margin-bottom:0px">
-                            <label class="col-form-label col-md-12 col-sm-12">Hợp đồng mua</label>
-                        </div>
-                        <div class="form-group row" style="margin-bottom:0px">
-                            <label class="col-form-label col-md-2 col-sm-2">Số HĐ</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" value="@ViewBag.Sohd">
-                            <label class="col-form-label col-md-2 col-sm-2">ID HĐ</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" value="@ViewBag.SystemRef"/>
-                        </div>
-                        <div class="form-group row" style="margin-bottom:0px">
-                            <label class="col-form-label col-md-2 col-sm-2">Trọng lượng HĐ</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" value="@ViewBag.TrongLuong">
-                            <label class="col-form-label col-md-2 col-sm-2">ĐVT</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" />
-                        </div>
-                        <div class="form-group row" style="margin-bottom:0px">
-                            <label class="col-form-label col-md-2 col-sm-2">Trọng lượng ghép</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" value="@ViewBag.TrongLuongDuocGhep">
-                            <input type="checkbox" style="margin:10px 10px 0px 10px" value="true" id="Pakd" disabled>
-                            <input type="hidden" value="false" hidden>
-                            <label class="col-form-label">HĐ hoàn thành ghép</label>
-                        </div>
-                    }
-                }
+                <input type="text" value="@ViewBag.checkMuaBan" hidden id="txtCheckMuaBan">
+                @*Hợp đồng bán*@
+                <form id="Form_PairedPlans" method="post">
+                    <hr size="3">
+                    <div class="form-group row" style="margin-bottom:0px">
+                        <label class="col-form-label col-md-12 col-sm-12">Hợp đồng bán</label>
+                    </div>
+                    <div class="form-group row" style="margin-bottom:0px">
+                        <label class="col-form-label col-md-2 col-sm-2">Số HĐ</label>
+                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="txtSoHD_BAN" name="txtSoHD_BAN">
+                        <label class="col-form-label col-md-2 col-sm-2">ID HĐ</label>
+                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="txtIdHD_BAN" name="txtIdHD_BAN" />
+                    </div>
+                    <div class="form-group row" style="margin-bottom:0px">
+                        <label class="col-form-label col-md-2 col-sm-2">Trọng lượng HĐ</label>
+                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="txtTrongLuongHD_BAN" name="txtTrongLuongHD_BAN">
+                        <label class="col-form-label col-md-2 col-sm-2">ĐVT</label>
+                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="txtDvtHD_BAN" name="txtDvtHD_BAN" />
+                    </div>
+                    <div class="form-group row" style="margin-bottom:0px">
+                        <label class="col-form-label col-md-2 col-sm-2">Trọng lượng ghép</label>
+                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="txtTrongLuongGhepHD_BAN" name="txtTrongLuongGhepHD_BAN">
+                        <input type="checkbox" style="margin:10px 10px 0px 10px" value="0" id="ChbHoangThanhGhepHd_BAN" name="ChbHoangThanhGhepHd_BAN">
+                        <input type="hidden" value="1" hidden id="ChbHoangThanhGhepHd_BAN" name="ChbHoangThanhGhepHd_BAN">
+                        <label class="col-form-label">HĐ hoàn thành ghép</label>
+                    </div>
+                    @*Hợp đồng mua*@
+                    <hr size="3">
+                    <div class="form-group row" style="margin-bottom:0px">
+                        <label class="col-form-label col-md-12 col-sm-12">Hợp đồng mua</label>
+                    </div>
+                    <div class="form-group row" style="margin-bottom:0px">
+                        <label class="col-form-label col-md-2 col-sm-2">Số HĐ</label>
+                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="txtSoHD_MUA" name="txtSoHD_MUA">
+                        <label class="col-form-label col-md-2 col-sm-2">ID HĐ</label>
+                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="txtIdHD_MUA" name="txtIdHD_MUA" />
+                    </div>
+                    <div class="form-group row" style="margin-bottom:0px">
+                        <label class="col-form-label col-md-2 col-sm-2">Trọng lượng HĐ</label>
+                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="txtTrongLuongHD_MUA" name="txtTrongLuongHD_MUA">
+                        <label class="col-form-label col-md-2 col-sm-2">ĐVT</label>
+                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="txtDvtHD_MUA" name="txtDvtHD_MUA" />
+                    </div>
+                    <div class="form-group row" style="margin-bottom:0px">
+                        <label class="col-form-label col-md-2 col-sm-2">Trọng lượng ghép</label>
+                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="txtTrongLuongGhepHD_MUA" name="txtTrongLuongGhepHD_MUA">
+                        <input type="checkbox" style="margin:10px 10px 0px 10px" value="0" id="ChbHoangThanhGhepHd_MUA" name="ChbHoangThanhGhepHd_MUA">
+                        <input type="hidden" value="1" hidden name="ChbHoangThanhGhepHd_MUA" id="ChbHoangThanhGhepHd_MUA">
+                        <label class="col-form-label">HĐ hoàn thành ghép</label>
+                    </div>
+                </form>
+                
 
                 @(Html.DevExtreme().DataGrid().ID("DataGrid_Plans")
                                     .DataSource(ds => ds.Mvc()
@@ -245,6 +197,11 @@
                                     .Grouping(group => group.AutoExpandAll(true))
                                     .Paging(paging => paging.PageSize(24))
                                 )
+                <div style="text-align:right">
+                    <button type="button" class="btn btn-secondary" onclick="Add_Pairedplans()">Add</button>
+                    <button type="button" class="btn btn-secondary" onclick="close_Popup_Plans()">Edit</button>
+                    <button type="button" class="btn btn-secondary" onclick="close_Popup_Plans()">Delete</button>
+                </div>
             </div>
         </div>
     </div>
@@ -276,6 +233,24 @@
 </div>
 @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
 <script>
+    window.onload = function () {
+        load_data_hdmb();
+    }
+    function load_data_hdmb() {
+        var txtCheckMuaBan = document.getElementById("txtCheckMuaBan").value;
+        if (txtCheckMuaBan == "MUA") {
+            document.getElementById("txtSoHD_MUA").value = '@ViewBag.Sohd';
+            document.getElementById("txtIdHD_MUA").value = '@ViewBag.SystemRef';
+            document.getElementById("txtTrongLuongHD_MUA").value = '@ViewBag.TrongLuong'
+            document.getElementById("txtTrongLuongGhepHD_MUA").value = '@ViewBag.TrongLuongDuocGhep';
+        }
+        else {
+            document.getElementById("txtSoHD_BAN").value = '@ViewBag.Sohd';
+            document.getElementById("txtIdHD_BAN").value = '@ViewBag.SystemRef';
+            document.getElementById("txtTrongLuongHD_BAN").value = '@ViewBag.TrongLuong'
+            document.getElementById("txtTrongLuongGhepHD_BAN").value = '@ViewBag.TrongLuongDuocGhep';
+        }
+    }
     function GetPlansId() {
         return document.getElementById("PlansId").value;
     }
@@ -287,6 +262,7 @@
     function Selected_Plans(selectedItems) {
         var data = selectedItems.selectedRowsData[0];
         var IdHDMB = document.getElementById("Id_HDMB").value;
+        var txtCheckMuaBan = document.getElementById("txtCheckMuaBan").value;
         if (data) {
             $.post('/Plans/Fill_data_plans', { 'SystemId': data.SystemId, 'Id_HDMB': IdHDMB }, function (item) {
                 if (item == 1) {
@@ -297,6 +273,12 @@
                     document.getElementById("SoPa").value = item.SoPa;
                     document.getElementById("Trongluong").value = item.Trongluong;
                     document.getElementById("TLCanGhep").value = item.TLCanGhep;
+                    if (txtCheckMuaBan == "MUA") {
+                        document.getElementById("txtDvtHD_MUA").value = item.Dvt;
+                    }
+                    else {
+                        document.getElementById("txtDvtHD_BAN").value = item.Dvt;
+                    }
                     $("#DataGrid_Plans").dxDataGrid("refresh");
                 }
 
@@ -306,6 +288,17 @@
     }
     function close_Popup_Plans() {
         $("#selected_Plans").modal('hide');
+    }
+    function Add_Pairedplans() {
+        var PlansId = document.getElementById("PlansId").value;
+        var txtSoHD_BAN = document.getElementById("txtSoHD_BAN").value;
+        var txtSoHD_MUA = document.getElementById("txtSoHD_MUA").value;
+        if (txtSoHD_BAN == "" && txtSoHD_MUA == "") {
+            $.notify("vui lòng chọn hợp đồng cần ghép", "error");
+        } else {
+            document.getElementById("Form_PairedPlans").action = '/Plans/Add_PairedPlans/' + PlansId;
+            document.getElementById("Form_PairedPlans").submit();
+        }
     }
 </script>
 
