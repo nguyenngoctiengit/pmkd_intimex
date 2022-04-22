@@ -32,13 +32,13 @@
                     <label class="col-form-label col-md-2 col-sm-2">Số PA</label>
                     <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="SoPa">
                     <label class="col-form-label col-md-2 col-sm-2">ID PAKD</label>
-                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="PlansId" />
+                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="PlansId" disabled />
                 </div>
                 <div class="form-group row" style="margin-bottom:0px">
                     <label class="col-form-label col-md-2 col-sm-2">Trọng lượng PA</label>
-                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="Trongluong">
+                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="Trongluong" disabled>
                     <label class="col-form-label col-md-2 col-sm-2">Trọng lượng cần ghép</label>
-                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="TLCanGhep" />
+                    <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="TLCanGhep" disabled />
                 </div>
                 <div class="form-group row" style="margin-bottom:0px">
                     <input type="checkbox" style="margin:10px 10px 0px 10px" value="true" id="Pakd" disabled>
@@ -96,7 +96,7 @@
                         <label class="col-form-label">HĐ hoàn thành ghép</label>
                     </div>
                 </form>
-                
+
 
                 @(Html.DevExtreme().DataGrid().ID("DataGrid_Plans")
                                     .DataSource(ds => ds.Mvc()
@@ -199,8 +199,8 @@
                                 )
                 <div style="text-align:right">
                     <button type="button" class="btn btn-secondary" onclick="Add_Pairedplans()">Add</button>
-                    <button type="button" class="btn btn-secondary" onclick="close_Popup_Plans()">Edit</button>
-                    <button type="button" class="btn btn-secondary" onclick="close_Popup_Plans()">Delete</button>
+                    <button type="button" class="btn btn-secondary" onclick="close_Popup_Plans()" id="btn_EditPairedPlans">Edit</button>
+                    <button type="button" class="btn btn-secondary" onclick="close_Popup_Plans()" id="btn_DeletePairedPlans">Delete</button>
                 </div>
             </div>
         </div>
@@ -232,23 +232,89 @@
     </div>
 </div>
 @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
+@*----------------------------------------------------Bootrap popup choose hợp đồng mua bán-------------------------------------------------------------------------------------------------------------------------------*@
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="selected_HD">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            @(Html.DevExtreme().DataGrid()
+                                    .DataSource(d => d.Mvc().Controller("Plans").LoadAction("GetHDMB").Key("systemref").LoadParams(new { id = new JS("Return_MuaBan") }))
+                                    .ID("dataGrid_hdmb")
+                                    .Columns(columns => {
+                                    columns.Add().DataField("mahang").Caption("Mã hàng");
+                                    columns.Add().DataField("tenhang").Caption("Tên hàng");
+                                    columns.Add().DataField("IsCheck").CellTemplate(@<text>@(Html.DevExtreme().CheckBox()
+                                                                                                .Value(new JS("data.IsCheck"))
+                                                                                            )</text>).Caption("Check Item");
+                                    columns.Add().DataField("dvt").Caption("ĐVT");
+                                    columns.Add().DataField("vat").Caption("VAT");
+                                    columns.Add().DataField("TLGD").Caption("TLGD");
+                                    })
+                                    .HoverStateEnabled(true)
+                                    .Paging(p => p.PageSize(10))
+                                    .FilterRow(f => f.Visible(true))
+                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                )
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="close_Popup_HangHoa()">Selected</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
 <script>
     window.onload = function () {
         load_data_hdmb();
+        load_disable_button();
+    }
+    function load_disable_button() {
+        var txtSoHD_BAN = document.getElementById("txtSoHD_BAN").value;
+        var txtSoHD_MUA = document.getElementById("txtSoHD_MUA").value;
+        if (txtSoHD_MUA == "" && txtSoHD_BAN == "") {
+            document.getElementById("btn_EditPairedPlans").disabled = false;
+            document.getElementById("btn_DeletePairedPlans").disabled = false;
+        }
+        else if (txtSoHD_BAN != "" || txtSoHD_MUA != "")
+        {
+            document.getElementById("btn_EditPairedPlans").disabled = true;
+            document.getElementById("btn_DeletePairedPlans").disabled = true;
+        }
+
+    }
+    function Disable_HDBan() {
+        document.getElementById("txtSoHD_BAN").disabled  = true;
+        document.getElementById("txtIdHD_BAN").disabled  = true;
+        document.getElementById("txtTrongLuongHD_BAN").disabled  = true;
+        document.getElementById("txtTrongLuongGhepHD_BAN").disabled = true;
+        document.getElementById("txtDvtHD_BAN").disabled = true;
+    }
+    function Disable_HDMua() {
+        document.getElementById("txtSoHD_MUA").disabled = true;
+        document.getElementById("txtIdHD_MUA").disabled = true;
+        document.getElementById("txtTrongLuongHD_MUA").disabled = true;
+        document.getElementById("txtTrongLuongGhepHD_MUA").disabled = true;
+        document.getElementById("txtDvtHD_MUA").disabled = true;
     }
     function load_data_hdmb() {
         var txtCheckMuaBan = document.getElementById("txtCheckMuaBan").value;
         if (txtCheckMuaBan == "MUA") {
             document.getElementById("txtSoHD_MUA").value = '@ViewBag.Sohd';
             document.getElementById("txtIdHD_MUA").value = '@ViewBag.SystemRef';
-            document.getElementById("txtTrongLuongHD_MUA").value = '@ViewBag.TrongLuong'
+            document.getElementById("txtTrongLuongHD_MUA").value = '@ViewBag.TrongLuong';
             document.getElementById("txtTrongLuongGhepHD_MUA").value = '@ViewBag.TrongLuongDuocGhep';
+            Disable_HDBan();
+            document.getElementById("txtIdHD_MUA").disabled = true;
+            document.getElementById("txtTrongLuongHD_MUA").disabled = true;
+            document.getElementById("txtDvtHD_MUA").disabled = true;
         }
         else {
             document.getElementById("txtSoHD_BAN").value = '@ViewBag.Sohd';
             document.getElementById("txtIdHD_BAN").value = '@ViewBag.SystemRef';
-            document.getElementById("txtTrongLuongHD_BAN").value = '@ViewBag.TrongLuong'
+            document.getElementById("txtTrongLuongHD_BAN").value = '@ViewBag.TrongLuong';
             document.getElementById("txtTrongLuongGhepHD_BAN").value = '@ViewBag.TrongLuongDuocGhep';
+            Disable_HDMua();
+            document.getElementById("txtIdHD_BAN").disabled = true;
+            document.getElementById("txtTrongLuongHD_BAN").disabled = true;
+            document.getElementById("txtDvtHD_BAN").disabled = true;
         }
     }
     function GetPlansId() {
@@ -259,6 +325,22 @@
             $("#selected_Plans").modal('show');
         }
     });
+    $("#txtSoHD_BAN").keyup(function (event) {
+        if (event.keyCode === 13) {
+            console.log(1);
+            $("#selected_HD").modal('show');
+        }
+    });
+    $("#txtSoHD_MUA").keyup(function (event) {
+        if (event.keyCode === 13) {
+            console.log(0);
+            $("#selected_HD").modal('show');
+        }
+    });
+    function Return_MuaBan() {
+        var MuaBan = "MUA"
+        return MuaBan;
+    }
     function Selected_Plans(selectedItems) {
         var data = selectedItems.selectedRowsData[0];
         var IdHDMB = document.getElementById("Id_HDMB").value;
