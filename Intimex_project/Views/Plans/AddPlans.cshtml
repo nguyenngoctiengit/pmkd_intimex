@@ -54,7 +54,7 @@
                     </div>
                     <div class="form-group row" style="margin-bottom:0px">
                         <label class="col-form-label col-md-2 col-sm-2">Số HĐ</label>
-                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="txtSoHD_BAN" name="txtSoHD_BAN">
+                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="txtSoHD_BAN" onclick="txtSoHD_BAN_Click()" name="txtSoHD_BAN">
                         <label class="col-form-label col-md-2 col-sm-2">ID HĐ</label>
                         <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="txtIdHD_BAN" name="txtIdHD_BAN" />
                     </div>
@@ -78,7 +78,7 @@
                     </div>
                     <div class="form-group row" style="margin-bottom:0px">
                         <label class="col-form-label col-md-2 col-sm-2">Số HĐ</label>
-                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="txtSoHD_MUA" name="txtSoHD_MUA">
+                        <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="txtSoHD_MUA" onclick="txtSoHD_MUA_Click()" name="txtSoHD_MUA">
                         <label class="col-form-label col-md-2 col-sm-2">ID HĐ</label>
                         <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="txtIdHD_MUA" name="txtIdHD_MUA" />
                     </div>
@@ -96,8 +96,6 @@
                         <label class="col-form-label">HĐ hoàn thành ghép</label>
                     </div>
                 </form>
-
-
                 @(Html.DevExtreme().DataGrid().ID("DataGrid_Plans")
                                     .DataSource(ds => ds.Mvc()
                                         .Controller("Plans")
@@ -240,26 +238,25 @@
                                     .DataSource(d => d.Mvc().Controller("Plans").LoadAction("GetHDMB").Key("systemref").LoadParams(new { id = new JS("Return_MuaBan") }))
                                     .ID("dataGrid_hdmb")
                                     .Columns(columns => {
-                                    columns.Add().DataField("mahang").Caption("Mã hàng");
-                                    columns.Add().DataField("tenhang").Caption("Tên hàng");
-                                    columns.Add().DataField("IsCheck").CellTemplate(@<text>@(Html.DevExtreme().CheckBox()
-                                                                                                .Value(new JS("data.IsCheck"))
-                                                                                            )</text>).Caption("Check Item");
-                                    columns.Add().DataField("dvt").Caption("ĐVT");
-                                    columns.Add().DataField("vat").Caption("VAT");
-                                    columns.Add().DataField("TLGD").Caption("TLGD");
+                                    columns.Add().DataField("systemref");
+                                    columns.Add().DataField("sohd");
+                                    columns.Add().DataField("makhach");
+                                    columns.Add().DataField("TrongluongHD");
+                                    columns.Add().DataField("TrongLuongDuocGhep");
                                     })
+                                    .OnSelectionChanged("SelectedHDMB")
                                     .HoverStateEnabled(true)
                                     .Paging(p => p.PageSize(10))
                                     .FilterRow(f => f.Visible(true))
                                     .Selection(s => s.Mode(SelectionMode.Single))
                                 )
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="close_Popup_HangHoa()">Selected</button>
+                <button type="button" class="btn btn-secondary" onclick="close_Popup_GetHDMB()">Selected</button>
             </div>
         </div>
     </div>
 </div>
+<input type="text" id="check_SelectedMuaBan" hidden>
 @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
 <script>
     window.onload = function () {
@@ -281,18 +278,18 @@
 
     }
     function Disable_HDBan() {
-        document.getElementById("txtSoHD_BAN").disabled  = true;
-        document.getElementById("txtIdHD_BAN").disabled  = true;
-        document.getElementById("txtTrongLuongHD_BAN").disabled  = true;
-        document.getElementById("txtTrongLuongGhepHD_BAN").disabled = true;
-        document.getElementById("txtDvtHD_BAN").disabled = true;
+        document.getElementById("txtSoHD_BAN").readOnly   = true;
+        document.getElementById("txtIdHD_BAN").readOnly   = true;
+        document.getElementById("txtTrongLuongHD_BAN").readOnly   = true;
+        document.getElementById("txtTrongLuongGhepHD_BAN").readOnly  = true;
+        document.getElementById("txtDvtHD_BAN").readOnly  = true;
     }
     function Disable_HDMua() {
-        document.getElementById("txtSoHD_MUA").disabled = true;
-        document.getElementById("txtIdHD_MUA").disabled = true;
-        document.getElementById("txtTrongLuongHD_MUA").disabled = true;
-        document.getElementById("txtTrongLuongGhepHD_MUA").disabled = true;
-        document.getElementById("txtDvtHD_MUA").disabled = true;
+        document.getElementById("txtSoHD_MUA").readOnly  = true;
+        document.getElementById("txtIdHD_MUA").readOnly  = true;
+        document.getElementById("txtTrongLuongHD_MUA").readOnly  = true;
+        document.getElementById("txtTrongLuongGhepHD_MUA").readOnly  = true;
+        document.getElementById("txtDvtHD_MUA").readOnly  = true;
     }
     function load_data_hdmb() {
         var txtCheckMuaBan = document.getElementById("txtCheckMuaBan").value;
@@ -302,9 +299,9 @@
             document.getElementById("txtTrongLuongHD_MUA").value = '@ViewBag.TrongLuong';
             document.getElementById("txtTrongLuongGhepHD_MUA").value = '@ViewBag.TrongLuongDuocGhep';
             Disable_HDBan();
-            document.getElementById("txtIdHD_MUA").disabled = true;
-            document.getElementById("txtTrongLuongHD_MUA").disabled = true;
-            document.getElementById("txtDvtHD_MUA").disabled = true;
+            document.getElementById("txtIdHD_MUA").readOnly = true;
+            document.getElementById("txtTrongLuongHD_MUA").readOnly  = true;
+            document.getElementById("txtDvtHD_MUA").readOnly  = true;
         }
         else {
             document.getElementById("txtSoHD_BAN").value = '@ViewBag.Sohd';
@@ -312,9 +309,9 @@
             document.getElementById("txtTrongLuongHD_BAN").value = '@ViewBag.TrongLuong';
             document.getElementById("txtTrongLuongGhepHD_BAN").value = '@ViewBag.TrongLuongDuocGhep';
             Disable_HDMua();
-            document.getElementById("txtIdHD_BAN").disabled = true;
-            document.getElementById("txtTrongLuongHD_BAN").disabled = true;
-            document.getElementById("txtDvtHD_BAN").disabled = true;
+            document.getElementById("txtIdHD_BAN").readOnly  = true;
+            document.getElementById("txtTrongLuongHD_BAN").readOnly  = true;
+            document.getElementById("txtDvtHD_BAN").readOnly  = true;
         }
     }
     function GetPlansId() {
@@ -325,20 +322,26 @@
             $("#selected_Plans").modal('show');
         }
     });
+    function txtSoHD_BAN_Click() {
+        document.getElementById("check_SelectedMuaBan").value = "BAN";
+    }
+    function txtSoHD_MUA_Click() {
+        document.getElementById("check_SelectedMuaBan").value = "MUA";
+    }
     $("#txtSoHD_BAN").keyup(function (event) {
         if (event.keyCode === 13) {
-            console.log(1);
             $("#selected_HD").modal('show');
+            $("#dataGrid_hdmb").dxDataGrid("refresh");
         }
     });
     $("#txtSoHD_MUA").keyup(function (event) {
         if (event.keyCode === 13) {
-            console.log(0);
             $("#selected_HD").modal('show');
+            $("#dataGrid_hdmb").dxDataGrid("refresh");
         }
     });
     function Return_MuaBan() {
-        var MuaBan = "MUA"
+        var MuaBan = document.getElementById("check_SelectedMuaBan").value;
         return MuaBan;
     }
     function Selected_Plans(selectedItems) {
@@ -362,14 +365,35 @@
                         document.getElementById("txtDvtHD_BAN").value = item.Dvt;
                     }
                     $("#DataGrid_Plans").dxDataGrid("refresh");
+                    $("#dataGrid_hdmb").dxDataGrid("refresh");
                 }
 
 
             })
         }
     }
+    function SelectedHDMB(selectedItems) {
+        var data = selectedItems.selectedRowsData[0];
+        var check_SelectedMuaBan = document.getElementById("check_SelectedMuaBan").value;
+        if (data) {
+            if (check_SelectedMuaBan == "MUA") {
+                document.getElementById("txtSoHD_MUA").value = data.sohd;
+                document.getElementById("txtIdHD_MUA").value = data.systemref;
+                document.getElementById("txtTrongLuongHD_MUA").value = data.TrongluongHD;
+                document.getElementById("txtTrongLuongGhepHD_MUA").value = data.TrongLuongDuocGhep;
+            } else {
+                document.getElementById("txtSoHD_BAN").value = data.sohd;
+                document.getElementById("txtIdHD_BAN").value = data.systemref;
+                document.getElementById("txtTrongLuongHD_BAN").value = data.TrongluongHD;
+                document.getElementById("txtTrongLuongGhepHD_BAN").value = data.TrongLuongDuocGhep;
+            }
+        }
+    }
     function close_Popup_Plans() {
         $("#selected_Plans").modal('hide');
+    }
+    function close_Popup_GetHDMB() {
+        $("#selected_HD").modal('hide');
     }
     function Add_Pairedplans() {
         var PlansId = document.getElementById("PlansId").value;

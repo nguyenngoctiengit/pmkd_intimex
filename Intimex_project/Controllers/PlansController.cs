@@ -93,8 +93,7 @@ namespace Intimex_project.Controllers
         [HttpGet]
         public object GetHDMB(string id, DataSourceLoadOptions loadOptions)
         {
-            var Sp = "";
-            Sp = "exec [dbo].[UdscGhepPAKD];2 @SoHD = ''," +
+            var Sp = "exec [dbo].[UdscGhepPAKD];2 @SoHD = ''," +
                        "@macn = '" + HttpContext.Session.GetString("UnitName") + "'," +
                        "@mua_ban = '" + id + "'";
             var item = _context.Sp_GetHDMB_Plans.FromSqlRaw(Sp).ToList();

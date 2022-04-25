@@ -654,7 +654,7 @@
                 <div class="col-md-9 col-sm-9" style="text-align:center">
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="ExportWord()">Export word</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small">E Document</button>
-                    <button type="button" class="btn btn-secondary" style="font-size:small">Deli Detail</button>
+                    <button type="button" class="btn btn-secondary" style="font-size:small" onclick="History_HDMB()">Delivery Detail</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="AddAnnex()">Add Annex</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="AddPlans()">Add plan</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="AddDetail()">Add Detail</button>
@@ -1194,7 +1194,6 @@
         } else {
             document.getElementById("Form_CTHD").action = "/Hopdong/Add_CTHD/" + document.getElementById("SystemId_CTHD").value;
             document.getElementById("Form_CTHD").submit();
-            console.log(document.getElementById("SystemId_CTHD_hidden").value);
         }
     }
     function DeleteDetail() {
@@ -1239,7 +1238,13 @@
         }
         
     }
-    
+    function History_HDMB() {
+        if (GetSystemRef() != 0) {
+            location.href = '/Hopdong/History/' + GetSystemRef();
+        } else {
+            $.notify("Vui lòng chọn hợp đồng muốn xem", "error");
+        }
+    }
 </script>
 
 <!-- /page content -->

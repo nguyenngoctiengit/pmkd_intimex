@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewData["Title"] = "History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .text-box-hdmb {
+        height: 28px;
+        position: relative;
+        min-height: 1px;
+        float: left;
+        padding-right: 10px;
+        padding-left: 10px;
+        font-size: small;
+    }
+</style>
+<div class="right_col" role="main">
+    <div class="">
+        @{
+            if (TempData["alertMessage"] != null)
+            {
+                <div style="color:red;font-size:30px">
+                    @TempData["alertMessage"].ToString()
+                </div>
+            }
+        }
+        <div class="clearfix"></div>
+        <div class="row" id="row">
+            <div class="col-md-12 col-sm-12" style="height:auto;border:2px solid black">
+                <div class="col-md-6 col-sm-6" style="margin-left:0px">
+                    <div class="form-group row">
+                        <select class="form-select col-md-6 col-sm-6 text-box-hdmb">
+                            <option selected value="MUA">MUA</option>
+                            <option selected value="BAN">BÁN</option>
+                            <option selected value="MUON">MƯỢN</option>
+                            <option selected value="CMUON">CHO MƯỢN</option>
+                            <option selected value="KTRA">KHÁCH TRẢ</option>
+                        </select>
+                        <select class="form-select col-md-6 col-sm-6 text-box-hdmb">
+                            <option selected value="HOPDONG">Theo hợp đồng</option>
+                            <option selected value="NGAY">Theo ngày giao hàng</option>
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label" style="margin-right:2px">Số HĐ</label>
+                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
+                        <label class="col-form-label col-md-1 col-sm-1">Ref</label>
+                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
+                        <input type="checkbox" style="margin:10px 10px 0px 10px" value="true" id="Pakd" disabled>
+                        <input type="hidden" value="false" hidden>
+                        <label class="col-form-label">Đã kt giao nhận</label>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-2 col-sm-2">Ngày ký</label>
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                        <label class="col-form-label col-md-2 col-sm-2">Ngày giao</label>
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                        <label class="col-form-label col-md-2 col-sm-2">Ngày TL</label>
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-2 col-sm-2">ĐVT theo HĐ</label>
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                        <label class="col-form-label col-md-2 col-sm-2">Hàng hóa</label>
+                        <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb">
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-2 col-sm-2">SL HĐ</label>
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                        <label class="col-form-label col-md-2 col-sm-2">SL đã giao</label>
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                        <label class="col-form-label col-md-2 col-sm-2">Giá</label>
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-2 col-sm-2">Ghi chú</label>
+                        <input type="text" class="form-control col-md-10 col-sm-10 text-box-hdmb">
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

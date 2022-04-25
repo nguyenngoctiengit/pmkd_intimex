@@ -974,7 +974,12 @@ namespace Intimex_project.Controllers
                 return RedirectToAction("hdmb");
             }
         }
-        
+        public IActionResult History(string id)
+        {
+            return View("History");
+        }
+
+
     }
 }
 
