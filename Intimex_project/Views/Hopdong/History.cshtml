@@ -10,8 +10,8 @@
         position: relative;
         min-height: 1px;
         float: left;
-        padding-right: 10px;
-        padding-left: 10px;
+        padding-right: 0px;
+        padding-left: 5px;
         font-size: small;
     }
 </style>
@@ -27,15 +27,15 @@
         }
         <div class="clearfix"></div>
         <div class="row" id="row">
-            <div class="col-md-12 col-sm-12" style="height:auto;border:2px solid black">
+            <div class="col-md-12 col-sm-12" style="height:auto;border:2px solid black;padding-right:0px;padding-left:0px">
                 <div class="col-md-6 col-sm-6" style="margin-left:0px">
                     <div class="form-group row">
-                        <select class="form-select col-md-6 col-sm-6 text-box-hdmb">
+                        <select class="form-select col-md-6 col-sm-6 text-box-hdmb" id="Fill_Type_HDMB">
                             <option selected value="MUA">MUA</option>
-                            <option selected value="BAN">BÁN</option>
-                            <option selected value="MUON">MƯỢN</option>
-                            <option selected value="CMUON">CHO MƯỢN</option>
-                            <option selected value="KTRA">KHÁCH TRẢ</option>
+                            <option value="BAN">BÁN</option>
+                            <option value="MUON">MƯỢN</option>
+                            <option value="CMUON">CHO MƯỢN</option>
+                            <option value="KTRA">KHÁCH TRẢ</option>
                         </select>
                         <select class="form-select col-md-6 col-sm-6 text-box-hdmb">
                             <option selected value="HOPDONG">Theo hợp đồng</option>
@@ -43,13 +43,13 @@
                         </select>
                     </div>
                     <div class="form-group row">
-                        <label class="col-form-label" style="margin-right:2px">Số HĐ</label>
+                        <label class="col-form-label col-md-2 col-sm-2" style="margin-right:2px">Số HĐ</label>
                         <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
                         <label class="col-form-label col-md-1 col-sm-1">Ref</label>
-                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
                         <input type="checkbox" style="margin:10px 10px 0px 10px" value="true" id="Pakd" disabled>
                         <input type="hidden" value="false" hidden>
-                        <label class="col-form-label">Đã kt giao nhận</label>
+                        <label class="col-form-label col-md-3 col-sm-3">Đã kt giao nhận</label>
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-md-2 col-sm-2">Ngày ký</label>
@@ -82,9 +82,108 @@
 
                 </div>
             </div>
+            <div class="col-md-12 col-sm-12" style="border: 3px solid black;height:300px;padding:initial">
+                <div class="col-md-8 col-sm-8" style="border: 3px solid black">
+                    <div id="GiaoNhan">
+                        <label class="col-form-label">Giao nhận</label>
+                        <div class="col-md-12 col-sm-12" style="border:3px solid black;height:250px">
+
+                        </div>
+                    </div>
+                    <div id="GiaoNhan_ChungTu">
+                        <label class="col-form-label">Giao nhận</label>
+                        <div style="border:3px solid black;height:120px">
+                             
+                        </div>
+                        <label class="col-form-label">Chứng từ</label>
+                        <div style="border:3px solid black;height:100px">
+
+                        </div>
+                    </div>
+                    <div id="GiaoNhan_GiaoTraKhachHang">
+                        <label class="col-form-label">Giao nhận</label>
+                        <div style="border:3px solid black;height:120px">
+
+                        </div>
+                        <label class="col-form-label">Giao trả khách hàng</label>
+                        <div style="border:3px solid black;height:100px">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4" style="border:3px solid black;height:inherit" id="Invoice">
+
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12" style="border:3px solid black">
+                <div class="col-md-8 col-sm-8" style="border:3px solid black">
+                    <div id="TongBan">
+                        <label class="col-form-label col-md-2 col-sm-2">Tổng NW</label>
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                        <label class="col-form-label col-md-2 col-sm-2">Tổng GW</label>
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                        <label class="col-form-label col-md-2 col-sm-2">Tổng giá trị</label>
+                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                    </div>
+                    <div id="TongLuongHangTra">
+                        <label class="col-form-label">Tổng lượng hàng trả</label>
+                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
+                    </div>
+                    <div id="KhachHangTraHang">
+                        <label class="col-form-label">Khách hàng trả hàng</label>
+                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4" style="text-align:right">
+                    <button type="button" class="btn btn-secondary" onclick="Add_Pairedplans()">Excel</button>
+                    <button type="button" class="btn btn-secondary" onclick="close_Popup_Plans()" id="btn_EditPairedPlans">Search</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    window.onload = function () {
+        LoadDiv_Mua();
+    }
+    function LoadDiv_Mua() {
+        document.getElementById("GiaoNhan_ChungTu").style.display = "none";
+        document.getElementById("TongBan").style.display = "none";
+        document.getElementById("TongLuongHangTra").style.display = "none";
+        document.getElementById("KhachHangTraHang").style.display = "none";
+        document.getElementById("GiaoNhan").style.display = "block";
+        document.getElementById("Invoice").style.display = "block";
+        document.getElementById("GiaoNhan_GiaoTraKhachHang").style.display = "none";
+    }
+    function LoadDiv_Ban() {
+        document.getElementById("GiaoNhan").style.display = "none";
+        document.getElementById("TongLuongHangTra").style.display = "none";
+        document.getElementById("KhachHangTraHang").style.display = "none";
+        document.getElementById("TongBan").style.display = "block";
+        document.getElementById("GiaoNhan_ChungTu").style.display = "block";
+        document.getElementById("Invoice").style.display = "block";
+        document.getElementById("GiaoNhan_GiaoTraKhachHang").style.display = "none";
+    }
+    function LoadDiv_Muon() {
+        document.getElementById("GiaoNhan_GiaoTraKhachHang").style.display = "block";
+        document.getElementById("TongLuongHangTra").style.display = "block";
+        document.getElementById("GiaoNhan").style.display = "none";
+        document.getElementById("KhachHangTraHang").style.display = "none";
+        document.getElementById("TongBan").style.display = "none";
+        document.getElementById("Invoice").style.display = "none";
+    }
+    $("#Fill_Type_HDMB").on('change', function () {
+        if (this.value == 'MUA') {
+            LoadDiv_Mua();
+        }
+        else if (this.value == 'BAN') {
+            LoadDiv_Ban();
+        }
+        else if (this.value == 'MUON') {
+            LoadDiv_Muon();
+        }
+    })
+</script>
 
 
 
