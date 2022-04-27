@@ -37,76 +37,104 @@
                             <option value="CMUON">CHO MƯỢN</option>
                             <option value="KTRA">KHÁCH TRẢ</option>
                         </select>
-                        <select class="form-select col-md-6 col-sm-6 text-box-hdmb">
+                        <select class="form-select col-md-6 col-sm-6 text-box-hdmb" id="Fill_Date_HDMB">
                             <option selected value="HOPDONG">Theo hợp đồng</option>
-                            <option selected value="NGAY">Theo ngày giao hàng</option>
+                            <option value="NGAY">Theo ngày giao hàng</option>
                         </select>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-form-label col-md-2 col-sm-2" style="margin-right:2px">Số HĐ</label>
-                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
-                        <label class="col-form-label col-md-1 col-sm-1">Ref</label>
-                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
-                        <input type="checkbox" style="margin:10px 10px 0px 10px" value="true" id="Pakd" disabled>
-                        <input type="hidden" value="false" hidden>
-                        <label class="col-form-label col-md-3 col-sm-3">Đã kt giao nhận</label>
+                    <div id="TheoHopHong">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2" style="margin-right:2px">Số HĐ</label>
+                            <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
+                            <label class="col-form-label col-md-1 col-sm-1">Ref</label>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                            <input type="checkbox" style="margin:10px 10px 0px 10px" value="true" id="Pakd" disabled>
+                            <input type="hidden" value="false" hidden>
+                            <label class="col-form-label col-md-3 col-sm-3">Đã kt giao nhận</label>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Ngày ký</label>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                            <label class="col-form-label col-md-2 col-sm-2">Ngày giao</label>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                            <label class="col-form-label col-md-2 col-sm-2">Ngày TL</label>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">ĐVT theo HĐ</label>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                            <label class="col-form-label col-md-2 col-sm-2">Hàng hóa</label>
+                            <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb">
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">SL HĐ</label>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                            <label class="col-form-label col-md-2 col-sm-2">SL đã giao</label>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                            <label class="col-form-label col-md-2 col-sm-2">Giá</label>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Ghi chú</label>
+                            <input type="text" class="form-control col-md-10 col-sm-10 text-box-hdmb">
+                        </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-form-label col-md-2 col-sm-2">Ngày ký</label>
-                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
-                        <label class="col-form-label col-md-2 col-sm-2">Ngày giao</label>
-                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
-                        <label class="col-form-label col-md-2 col-sm-2">Ngày TL</label>
-                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-form-label col-md-2 col-sm-2">ĐVT theo HĐ</label>
-                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
-                        <label class="col-form-label col-md-2 col-sm-2">Hàng hóa</label>
-                        <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb">
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-form-label col-md-2 col-sm-2">SL HĐ</label>
-                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
-                        <label class="col-form-label col-md-2 col-sm-2">SL đã giao</label>
-                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
-                        <label class="col-form-label col-md-2 col-sm-2">Giá</label>
-                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-form-label col-md-2 col-sm-2">Ghi chú</label>
-                        <input type="text" class="form-control col-md-10 col-sm-10 text-box-hdmb">
+                    <div id="TheoNgayGiaoHang">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Ngày giao từ</label>
+                            <input type="date" class="form-control col-md-4 col-sm-4 text-box-hdmb">
+                            <label class="col-form-label col-md-2 col-sm-2">đến</label>
+                            <input type="date" class="form-control col-md-4 col-sm-4 text-box-hdmb">
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Tổng số bao giao</label>
+                            <input type="text" class="form-control col-md-10 col-sm-10 text-box-hdmb">
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2 col-sm-2">Tổng SL giao</label>
+                            <input type="text" class="form-control col-sm-10 col-md-10 text-box-hdmb">
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
 
                 </div>
             </div>
-            <div class="col-md-12 col-sm-12" style="border: 3px solid black;height:300px;padding:initial">
-                <div class="col-md-8 col-sm-8" style="border: 3px solid black">
+            <div class="col-md-12 col-sm-12" style="height:300px;padding:initial">
+                <div class="col-md-8 col-sm-8" style="border:3px solid black;padding: initial" id="dataGrid_left">
                     <div id="GiaoNhan">
                         <label class="col-form-label">Giao nhận</label>
-                        <div class="col-md-12 col-sm-12" style="border:3px solid black;height:250px">
+                        <div class="col-md-12 col-sm-12" style="height:250px">
 
                         </div>
                     </div>
                     <div id="GiaoNhan_ChungTu">
                         <label class="col-form-label">Giao nhận</label>
-                        <div style="border:3px solid black;height:120px">
-                             
+                        <div style="height:120px">
+
                         </div>
                         <label class="col-form-label">Chứng từ</label>
-                        <div style="border:3px solid black;height:100px">
+                        <div style="height:100px">
 
                         </div>
                     </div>
                     <div id="GiaoNhan_GiaoTraKhachHang">
                         <label class="col-form-label">Giao nhận</label>
-                        <div style="border:3px solid black;height:120px">
+                        <div style="height:120px">
 
                         </div>
                         <label class="col-form-label">Giao trả khách hàng</label>
-                        <div style="border:3px solid black;height:100px">
+                        <div style="height:100px">
+
+                        </div>
+                    </div>
+                    <div id="GiaoNhan_KhachHangTraHang">
+                        <label class="col-form-label">Giao nhận</label>
+                        <div style="height:120px">
+
+                        </div>
+                        <label class="col-form-label">Khách hàng trả hàng</label>
+                        <div style="height:100px">
 
                         </div>
                     </div>
@@ -115,8 +143,8 @@
 
                 </div>
             </div>
-            <div class="col-md-12 col-sm-12" style="border:3px solid black">
-                <div class="col-md-8 col-sm-8" style="border:3px solid black">
+            <div class="col-md-12 col-sm-12">
+                <div class="col-md-8 col-sm-8">
                     <div id="TongBan">
                         <label class="col-form-label col-md-2 col-sm-2">Tổng NW</label>
                         <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
@@ -126,11 +154,11 @@
                         <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
                     </div>
                     <div id="TongLuongHangTra">
-                        <label class="col-form-label">Tổng lượng hàng trả</label>
+                        <label class="col-form-label col-md-3 col-sm-3">Tổng lượng hàng trả</label>
                         <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
                     </div>
                     <div id="KhachHangTraHang">
-                        <label class="col-form-label">Khách hàng trả hàng</label>
+                        <label class="col-form-label col-md-3 col-sm-3">Khách hàng trả hàng</label>
                         <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
                     </div>
                 </div>
@@ -145,33 +173,75 @@
 <script type="text/javascript">
     window.onload = function () {
         LoadDiv_Mua();
+        LoadDiv_TheoHopDong();
+    }
+
+    function LoadDiv_TheoHopDong() {
+        document.getElementById("TheoHopHong").style.display = "block";
+        document.getElementById("TheoNgayGiaoHang").style.display = "none";
+    }
+    function LoadDiv_TheoNgayGiaoHang() {
+        document.getElementById("TheoHopHong").style.display = "none";
+        document.getElementById("TheoNgayGiaoHang").style.display = "block";
     }
     function LoadDiv_Mua() {
         document.getElementById("GiaoNhan_ChungTu").style.display = "none";
         document.getElementById("TongBan").style.display = "none";
         document.getElementById("TongLuongHangTra").style.display = "none";
         document.getElementById("KhachHangTraHang").style.display = "none";
+        document.getElementById("GiaoNhan_GiaoTraKhachHang").style.display = "none";
+        document.getElementById("GiaoNhan_KhachHangTraHang").style.display = "none";
         document.getElementById("GiaoNhan").style.display = "block";
         document.getElementById("Invoice").style.display = "block";
-        document.getElementById("GiaoNhan_GiaoTraKhachHang").style.display = "none";
+        document.getElementById("dataGrid_left").classList.remove("col-md-12");
+        document.getElementById("dataGrid_left").classList.add("col-md-8");
+        
     }
     function LoadDiv_Ban() {
         document.getElementById("GiaoNhan").style.display = "none";
         document.getElementById("TongLuongHangTra").style.display = "none";
         document.getElementById("KhachHangTraHang").style.display = "none";
+        document.getElementById("GiaoNhan_KhachHangTraHang").style.display = "none";
+        document.getElementById("GiaoNhan_GiaoTraKhachHang").style.display = "none"; 
+        document.getElementById("dataGrid_left").classList.remove("col-md-12");
+        document.getElementById("dataGrid_left").classList.add("col-md-8");
+        document.getElementById("Invoice").style.display = "block";
         document.getElementById("TongBan").style.display = "block";
         document.getElementById("GiaoNhan_ChungTu").style.display = "block";
-        document.getElementById("Invoice").style.display = "block";
-        document.getElementById("GiaoNhan_GiaoTraKhachHang").style.display = "none";
     }
     function LoadDiv_Muon() {
-        document.getElementById("GiaoNhan_GiaoTraKhachHang").style.display = "block";
-        document.getElementById("TongLuongHangTra").style.display = "block";
+        document.getElementById("GiaoNhan_ChungTu").style.display = "none";
         document.getElementById("GiaoNhan").style.display = "none";
         document.getElementById("KhachHangTraHang").style.display = "none";
         document.getElementById("TongBan").style.display = "none";
         document.getElementById("Invoice").style.display = "none";
+        document.getElementById("GiaoNhan_KhachHangTraHang").style.display = "none";
+        document.getElementById("GiaoNhan_GiaoTraKhachHang").style.display = "block";
+        document.getElementById("TongLuongHangTra").style.display = "block";
+        document.getElementById("dataGrid_left").classList.remove("col-md-8");
+        document.getElementById("dataGrid_left").classList.add("col-md-12");
     }
+    function LoadDiv_CMuon() {
+        document.getElementById("GiaoNhan_ChungTu").style.display = "none";
+        document.getElementById("GiaoNhan_GiaoTraKhachHang").style.display = "none";
+        document.getElementById("TongLuongHangTra").style.display = "none";
+        document.getElementById("GiaoNhan").style.display = "none";
+        document.getElementById("KhachHangTraHang").style.display = "none";
+        document.getElementById("TongBan").style.display = "none";
+        document.getElementById("Invoice").style.display = "none";
+        document.getElementById("GiaoNhan_KhachHangTraHang").style.display = "block";
+        document.getElementById("dataGrid_left").classList.remove("col-md-8");
+        document.getElementById("dataGrid_left").classList.add("col-md-12");
+    }
+    $('#Fill_Date_HDMB').on('change', function () {
+        if (this.value == 'HOPDONG') {
+            LoadDiv_TheoHopDong();
+        } else if (this.value == 'NGAY') {
+            LoadDiv_TheoNgayGiaoHang();
+        }
+
+
+    })
     $("#Fill_Type_HDMB").on('change', function () {
         if (this.value == 'MUA') {
             LoadDiv_Mua();
@@ -181,6 +251,12 @@
         }
         else if (this.value == 'MUON') {
             LoadDiv_Muon();
+        }
+        else if (this.value == 'CMUON') {
+            LoadDiv_CMuon();
+        }
+        else if (this.value == 'KTRA') {
+            LoadDiv_Mua();
         }
     })
 </script>

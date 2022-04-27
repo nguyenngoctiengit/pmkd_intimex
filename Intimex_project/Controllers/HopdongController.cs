@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Syncfusion.DocIO;
 using Syncfusion.DocIO.DLS;
 using Syncfusion.DocIORenderer;
@@ -318,6 +319,12 @@ namespace Intimex_project.Controllers
                     item.IsNoKhoDoi = hdmb.IsNoKhoDoi;
                     item.TypeKd = hdmb.TypeKd;
                     item.VanChuyen = hdmb.VanChuyen;
+                    _context.ChangeTracker.DetectChanges();
+                    var a = _context.ChangeTracker.DebugView.LongView;
+                    var lenghtCheckChange = a.Length;
+                    var a1 = _context.ChangeTracker.Entries();
+                    var a2 = _context.ChangeTracker.Entries();
+                    Display(_context.ChangeTracker.Entries());
                     _context.Hdmbs.Update(item);
                     _context.SaveChanges();
                     TempData["alertMessage"] = "Chỉnh sửa hợp đồng thành công";
@@ -327,6 +334,26 @@ namespace Intimex_project.Controllers
             }
 
 
+        }
+        public void Display(IEnumerable<Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry> entities)
+        {
+            var aaaa = _context.ChangeTracker.Entries().Where(a => a.State == EntityState.Modified).ToList();
+            foreach(var change in aaaa)
+            {
+
+            }
+            
+            foreach(var entry in entities)
+            {
+                foreach(var item in entry.OriginalValues.Properties)
+                {
+                    var test4 = entry.OriginalValues[item].ToString();
+                }
+                var test = entry.Entity.GetType().Name;
+                var test1 = entry.State.ToString();
+                var test3 = entry.OriginalValues;
+                var test2 = 1;
+            }
         }
         [HttpGet]
         public object getIntKy(DataSourceLoadOptions loadOptions)
@@ -445,6 +472,7 @@ namespace Intimex_project.Controllers
             }
 
         }
+
         [HttpPost]
         public IActionResult Add_CTHD_OutRight(string id, string MaHang_CTHD_OutRight, string DVT_CTHD_OutRight, int VAT_CTHD_OutRight,
             int SoLuong_CTHD_OutRight, int TrongLuong_CTHD_OutRight, decimal OutRight_TheoHD_CTHD_OutRight, int OutRight_CTHD_OutRight, int GiaThiTruong_CTHD_OutRight, int MucThuong_CTHD_OutRight)
