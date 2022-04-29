@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Syncfusion.DocIO;
 using Syncfusion.DocIO.DLS;
 using Syncfusion.DocIORenderer;
@@ -17,6 +16,9 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Data.Public_class;
+using System.Data.Entity.Core.Objects;
+using System.Reflection;
 
 namespace Intimex_project.Controllers
 {
@@ -278,6 +280,7 @@ namespace Intimex_project.Controllers
             }
             else
             {
+                
                 Hdmb item = _context.Hdmbs.Where(a => a.Systemref == id).FirstOrDefault();
                 var datetime = DateTime.Now;
                 if (_context.Hdmbs.Any(a => a.Ref == hdmb.Ref + "/" + datetime.ToString("yy")))
@@ -295,7 +298,7 @@ namespace Intimex_project.Controllers
                     item.TienUngHd = hdmb.TienUngHd;
                     item.TienUngTt = hdmb.TienUngTt;
                     item.Tenfull = hdmb.Tenfull;
-                    item.Ref = hdmb.Ref.Trim() + "/" + hdmb.Ngayky.Value.ToString("yy");
+                    item.Ref = hdmb.Ref.Trim();
                     item.Sohd = hdmb.Sohd.Trim();
                     item.Trangthai = 1;
                     item.MuaBan = hdmb.MuaBan;
@@ -320,11 +323,12 @@ namespace Intimex_project.Controllers
                     item.TypeKd = hdmb.TypeKd;
                     item.VanChuyen = hdmb.VanChuyen;
                     _context.ChangeTracker.DetectChanges();
-                    var a = _context.ChangeTracker.DebugView.LongView;
-                    var lenghtCheckChange = a.Length;
-                    var a1 = _context.ChangeTracker.Entries();
-                    var a2 = _context.ChangeTracker.Entries();
-                    Display(_context.ChangeTracker.Entries());
+                    List<DataLog> logs = new List<DataLog>();
+                    logs = SaveDataLog(_context);
+                    foreach(var a in logs)
+                    {
+
+                    }
                     _context.Hdmbs.Update(item);
                     _context.SaveChanges();
                     TempData["alertMessage"] = "Chỉnh sửa hợp đồng thành công";
@@ -335,25 +339,79 @@ namespace Intimex_project.Controllers
 
 
         }
-        public void Display(IEnumerable<Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry> entities)
+        public static List<DataLog> SaveDataLog(tradingsystemContext context)
         {
-            var aaaa = _context.ChangeTracker.Entries().Where(a => a.State == EntityState.Modified).ToList();
-            foreach(var change in aaaa)
-            {
-
-            }
             
-            foreach(var entry in entities)
+            List<DataLog> dataLogs = new List<DataLog>();
+            var changeTrack = context.ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Deleted || p.State == EntityState.Modified).ToList();
+            foreach(var entry in changeTrack)
             {
-                foreach(var item in entry.OriginalValues.Properties)
+                if (entry.Entity != null)
                 {
-                    var test4 = entry.OriginalValues[item].ToString();
+                    string entityName = string.Empty;
+                    string state = string.Empty;
+                    switch (entry.State)
+                    {
+                        case EntityState.Modified:
+                            entityName = ObjectContext.GetObjectType(entry.Entity.GetType()).Name;
+                            state = entry.State.ToString();
+                            foreach(var prop in entry.Entity.GetType().GetTypeInfo().DeclaredProperties)
+                            {
+                                object currentValue = entry.Property(prop.Name).CurrentValue;
+                                object OriginalValue = entry.Property(prop.Name).OriginalValue;
+                                if (currentValue.ToString() != OriginalValue.ToString())
+                                {
+                                    dataLogs.Add(new DataLog
+                                    {
+                                        TableName = entityName,
+                                        State = state,
+                                        ColumnName = Convert.ToString(prop),
+                                        OldValue = Convert.ToString(OriginalValue),
+                                        NewValue = Convert.ToString(currentValue),
+
+
+                                    });
+                                }
+                            }
+                            break;
+                        case EntityState.Added:
+                            entityName = ObjectContext.GetObjectType(entry.Entity.GetType()).Name;
+                            state = entry.State.ToString();
+                            foreach(var prop in entry.CurrentValues.Properties)
+                            {
+                                dataLogs.Add(new DataLog
+                                {
+                                    TableName = entityName,
+                                    State = state,
+                                    ColumnName = Convert.ToString(prop),
+                                    OldValue = string.Empty,
+                                    NewValue = Convert.ToString(entry.CurrentValues[prop])
+
+                                });
+                            }
+                            break;
+                        case EntityState.Deleted:
+                            entityName = ObjectContext.GetObjectType(entry.Entity.GetType()).Name;
+                            state = entry.State.ToString();
+                            foreach (var prop in entry.OriginalValues.Properties)
+                            {
+                                dataLogs.Add(new DataLog
+                                {
+                                    TableName = entityName,
+                                    State = state,
+                                    ColumnName = Convert.ToString(prop),
+                                    OldValue = Convert.ToString(entry.OriginalValues[prop]),
+                                    NewValue = string.Empty,
+                                });
+
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
-                var test = entry.Entity.GetType().Name;
-                var test1 = entry.State.ToString();
-                var test3 = entry.OriginalValues;
-                var test2 = 1;
             }
+            return dataLogs;
         }
         [HttpGet]
         public object getIntKy(DataSourceLoadOptions loadOptions)

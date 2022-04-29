@@ -43,6 +43,7 @@
           "DevExtreme.AspNet.Data": "2.8.2",
           "EntityFramework": "6.4.4",
           "GleamTech.FileUltimate": "8.0.0",
+          "Microsoft.EntityFrameworkCore": "5.0.9",
           "Microsoft.EntityFrameworkCore.Design": "5.0.9",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.9",
           "Microsoft.EntityFrameworkCore.Tools": "5.0.0",
