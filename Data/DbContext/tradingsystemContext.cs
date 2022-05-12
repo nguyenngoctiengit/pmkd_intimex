@@ -68,6 +68,7 @@ namespace Data.Models.Trading_system
         public virtual DbSet<DangKy4C> DangKy4Cs { get; set; }
         public virtual DbSet<DanhGium> DanhGia { get; set; }
         public virtual DbSet<DanhMucLo> DanhMucLos { get; set; }
+        public virtual DbSet<DataLog> DataLogs { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<DkctHdmb> DkctHdmbs { get; set; }
         public virtual DbSet<Dkfixgium> Dkfixgia { get; set; }
@@ -3071,6 +3072,33 @@ namespace Data.Models.Trading_system
                 entity.Property(e => e.TrangThai)
                     .HasColumnName("trang_Thai")
                     .HasComment("0 lô mới; 1 lo dang xuất; 2 lô đã hoàn thành (lo dang xuat se khong nhap, trừ trường hợp loại lô là xả máng hoặc không phân lô )");
+            });
+
+            modelBuilder.Entity<DataLog>(entity =>
+            {
+                entity.ToTable("DataLog");
+
+                entity.HasKey(e => e.SystemId);
+
+                entity.Property(e => e.SystemId).HasColumnName("SystemId");
+
+                entity.Property(e => e.TableName).HasColumnName("TableName");
+
+                entity.Property(e => e.ColumnName).HasColumnName("ColumnName");
+
+                entity.Property(e => e.RecordId).HasColumnName("RecordId");
+
+                entity.Property(e => e.state).HasColumnName("state");
+
+                entity.Property(e => e.OldValue).HasColumnName("OldValue");
+
+                entity.Property(e => e.NewValue).HasColumnName("NewValue");
+
+                entity.Property(e => e.DateCreate).HasColumnName("DateCreate");
+
+                entity.Property(e => e.UserCreate).HasColumnName("UserCreate");
+
+
             });
 
             modelBuilder.Entity<Department>(entity =>

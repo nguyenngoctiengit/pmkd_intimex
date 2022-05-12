@@ -271,16 +271,22 @@ namespace Intimex_project.Controllers
                     item.IsNoKhoDoi = hdmb.IsNoKhoDoi;
                     item.TypeKd = hdmb.TypeKd;
                     item.VanChuyen = hdmb.VanChuyen;
+                    Data.Models.Trading_system.DataLog dataLog = new Data.Models.Trading_system.DataLog();
+                    dataLog.SystemId = AutoId.AutoIdFileStored("DataLog");
+                    dataLog.TableName = "Hdmb";
+                    dataLog.RecordId = item.Systemref;
+                    dataLog.state = "Added";
+                    dataLog.DateCreate = DateTime.Now;
+                    dataLog.UserCreate = HttpContext.Session.GetString("UserName");
+                    _context.DataLogs.Add(dataLog);
                     _context.Hdmbs.Add(item);
                     _context.SaveChanges();
                     TempData["alertMessage"] = "Thêm hợp đồng thành công";
                     return RedirectToAction("hdmb");
-
                 }
             }
             else
             {
-                
                 Hdmb item = _context.Hdmbs.Where(a => a.Systemref == id).FirstOrDefault();
                 var datetime = DateTime.Now;
                 if (_context.Hdmbs.Any(a => a.Ref == hdmb.Ref + "/" + datetime.ToString("yy")))
@@ -309,8 +315,8 @@ namespace Intimex_project.Controllers
                     item.Ghichu = hdmb.Ghichu;
                     item.Pakd = hdmb.Pakd;
                     item.Thanhtoan = hdmb.Thanhtoan;
-                    item.IntKy = hdmb.IntKy;
-                    item.ClientKy = hdmb.ClientKy;
+                    item.IntKy = hdmb.IntKy == null ? "" : hdmb.IntKy;
+                    item.ClientKy = hdmb.ClientKy == null ? "" :hdmb.ClientKy;
                     item.Docstatus = false;
                     item.Tiente = hdmb.Tiente;
                     item.IsFix = hdmb.IsFix;
@@ -322,12 +328,22 @@ namespace Intimex_project.Controllers
                     item.IsNoKhoDoi = hdmb.IsNoKhoDoi;
                     item.TypeKd = hdmb.TypeKd;
                     item.VanChuyen = hdmb.VanChuyen;
-                    _context.ChangeTracker.DetectChanges();
-                    List<DataLog> logs = new List<DataLog>();
+                    List<Data.Public_class.DataLog> logs = new List<Data.Public_class.DataLog>();
                     logs = SaveDataLog(_context);
-                    foreach(var a in logs)
+                    foreach (var a in logs)
                     {
-
+                        Data.Models.Trading_system.DataLog dataLog = new Data.Models.Trading_system.DataLog();
+                        dataLog.SystemId = AutoId.AutoIdFileStored("DataLog");
+                        dataLog.TableName = a.TableName;
+                        dataLog.ColumnName = a.ColumnName;
+                        dataLog.RecordId = item.Systemref;
+                        dataLog.state = a.State;
+                        dataLog.OldValue = a.OldValue;
+                        dataLog.NewValue = a.NewValue;
+                        dataLog.DateCreate = DateTime.Now;
+                        dataLog.UserCreate = HttpContext.Session.GetString("UserName");
+                        _context.DataLogs.Add(dataLog);
+                        _context.SaveChanges();
                     }
                     _context.Hdmbs.Update(item);
                     _context.SaveChanges();
@@ -336,13 +352,11 @@ namespace Intimex_project.Controllers
 
                 }
             }
-
-
         }
-        public static List<DataLog> SaveDataLog(tradingsystemContext context)
+        public static List<Data.Public_class.DataLog> SaveDataLog(tradingsystemContext context)
         {
             
-            List<DataLog> dataLogs = new List<DataLog>();
+            List<Data.Public_class.DataLog> dataLogs = new List<Data.Public_class.DataLog>();
             var changeTrack = context.ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Deleted || p.State == EntityState.Modified).ToList();
             foreach(var entry in changeTrack)
             {
@@ -354,23 +368,47 @@ namespace Intimex_project.Controllers
                     {
                         case EntityState.Modified:
                             entityName = ObjectContext.GetObjectType(entry.Entity.GetType()).Name;
-                            state = entry.State.ToString();
+                            state = entry.State.ToString(); 
                             foreach(var prop in entry.Entity.GetType().GetTypeInfo().DeclaredProperties)
                             {
-                                object currentValue = entry.Property(prop.Name).CurrentValue;
-                                object OriginalValue = entry.Property(prop.Name).OriginalValue;
-                                if (currentValue.ToString() != OriginalValue.ToString())
+                                var currentValue = entry.Property(prop.Name).CurrentValue;
+                                var OriginalValue = entry.Property(prop.Name).OriginalValue;
+                                
+                                if (currentValue != null && OriginalValue != null)
                                 {
-                                    dataLogs.Add(new DataLog
+                                    if (currentValue.ToString() != "" && OriginalValue.ToString() != "")
                                     {
-                                        TableName = entityName,
-                                        State = state,
-                                        ColumnName = Convert.ToString(prop),
-                                        OldValue = Convert.ToString(OriginalValue),
-                                        NewValue = Convert.ToString(currentValue),
+                                        if (currentValue is decimal && OriginalValue is decimal)
+                                        {
+                                            if (double.Parse(currentValue.ToString().Split(',')[0]) != double.Parse(OriginalValue.ToString().Split(',')[0]))
+                                            {
+                                                dataLogs.Add(new Data.Public_class.DataLog
+                                                {
+                                                    TableName = entityName,
+                                                    State = state,
+                                                    ColumnName = Convert.ToString(prop).Substring(Convert.ToString(prop).IndexOf(' ')),
+                                                    OldValue = Convert.ToString(OriginalValue),
+                                                    NewValue = Convert.ToString(currentValue),
 
 
-                                    });
+                                                });
+                                            }
+                                        }
+                                        else if (currentValue.ToString().Trim() != OriginalValue.ToString().Trim())
+                                        {
+                                            dataLogs.Add(new Data.Public_class.DataLog
+                                            {
+                                                TableName = entityName,
+                                                State = state,
+                                                ColumnName = Convert.ToString(prop).Substring(Convert.ToString(prop).IndexOf(' ')),
+                                                OldValue = Convert.ToString(OriginalValue),
+                                                NewValue = Convert.ToString(currentValue),
+
+
+                                            });
+                                        }
+                                    }
+                                   
                                 }
                             }
                             break;
@@ -379,7 +417,7 @@ namespace Intimex_project.Controllers
                             state = entry.State.ToString();
                             foreach(var prop in entry.CurrentValues.Properties)
                             {
-                                dataLogs.Add(new DataLog
+                                dataLogs.Add(new Data.Public_class.DataLog
                                 {
                                     TableName = entityName,
                                     State = state,
@@ -395,7 +433,7 @@ namespace Intimex_project.Controllers
                             state = entry.State.ToString();
                             foreach (var prop in entry.OriginalValues.Properties)
                             {
-                                dataLogs.Add(new DataLog
+                                dataLogs.Add(new Data.Public_class.DataLog
                                 {
                                     TableName = entityName,
                                     State = state,
@@ -1062,9 +1100,23 @@ namespace Intimex_project.Controllers
         }
         public IActionResult History(string id)
         {
+            ViewBag.SystemRef_HDMB = id;
             return View("History");
         }
-
+        [HttpGet]
+        public object GetDataLog(string id, DataSourceLoadOptions loadOptions)
+        {
+            var item = (from a in _context.DataLogs
+                        where a.RecordId == id
+                        select new
+                        {
+                            a.SystemId,
+                            a.ColumnName,
+                            a.state,
+                            a.DateCreate
+                        }).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
+        }
 
     }
 }

@@ -97,7 +97,18 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
-
+                    @(Html.DevExtreme().DataGrid()
+                                .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("GetDataLog").Key("SystemId").LoadParams(new { id = new JS("ReturnSystemref_HDMB")}))
+                                .Columns(columns => {
+                                columns.Add().DataField("ColumnName").Caption("Mục sửa");
+                                columns.Add().DataField("state").Caption("Reason");
+                                columns.Add().DataField("DateCreate").Caption("Ngày sửa").SortOrder(SortOrder.Asc);
+                                })
+                                .HoverStateEnabled(true)
+                                .Paging(p => p.PageSize(10))
+                                .FilterRow(f => f.Visible(true))
+                                .Selection(s => s.Mode(SelectionMode.Single))
+                            )
                 </div>
             </div>
             <div class="col-md-12 col-sm-12" style="height:300px;padding:initial">
@@ -170,6 +181,7 @@
         </div>
     </div>
 </div>
+<input type="text" id="SystemRef_HDMB" value="@ViewBag.SystemRef_HDMB" hidden>
 <script type="text/javascript">
     window.onload = function () {
         LoadDiv_Mua();
@@ -259,6 +271,9 @@
             LoadDiv_Mua();
         }
     })
+    function ReturnSystemref_HDMB() {
+        return document.getElementById("SystemRef_HDMB").value;
+    }
 </script>
 
 
