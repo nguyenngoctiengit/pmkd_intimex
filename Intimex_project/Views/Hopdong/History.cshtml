@@ -45,38 +45,49 @@
                     <div id="TheoHopHong">
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2" style="margin-right:2px">Số HĐ</label>
-                            <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
+                            <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" value="@ViewBag.sohd">
                             <label class="col-form-label col-md-1 col-sm-1">Ref</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
-                            <input type="checkbox" style="margin:10px 10px 0px 10px" value="true" id="Pakd" disabled>
-                            <input type="hidden" value="false" hidden>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" value="@ViewBag.Ref">
+                            @{
+                                if (ViewBag.trangthai == 0)
+                                {
+                                    <input type="checkbox" style="margin:10px 10px 0px 10px" value="true" disabled checked>
+                                    <input type="hidden" value="false" hidden>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" style="margin:10px 10px 0px 10px" value="true" disabled>
+                                    <input type="hidden" value="false" hidden>
+                                }
+                            }
+
                             <label class="col-form-label col-md-3 col-sm-3">Đã kt giao nhận</label>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Ngày ký</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" value="@ViewBag.ngayky">
                             <label class="col-form-label col-md-2 col-sm-2">Ngày giao</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" value="@ViewBag.ngaygiao">
                             <label class="col-form-label col-md-2 col-sm-2">Ngày TL</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" value="@ViewBag.ngaytl">
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">ĐVT theo HĐ</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" value="@ViewBag.DVTTheoHD">
                             <label class="col-form-label col-md-2 col-sm-2">Hàng hóa</label>
-                            <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb">
+                            <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb" value="@ViewBag.hanghoa">
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">SL HĐ</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" value="@ViewBag.trongluong">
                             <label class="col-form-label col-md-2 col-sm-2">SL đã giao</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
-                            <label class="col-form-label col-md-2 col-sm-2">Giá</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" value="@ViewBag.TLGiao">
+                            <label class="col-form-label col-md-1 col-sm-1">Giá</label>
+                            <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" value="@ViewBag.Price">
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Ghi chú</label>
-                            <input type="text" class="form-control col-md-10 col-sm-10 text-box-hdmb">
+                            <input type="text" class="form-control col-md-10 col-sm-10 text-box-hdmb" value="@ViewBag.ghichu">
                         </div>
                     </div>
                     <div id="TheoNgayGiaoHang">
@@ -116,7 +127,18 @@
                     <div id="GiaoNhan">
                         <label class="col-form-label">Giao nhận</label>
                         <div class="col-md-12 col-sm-12" style="height:250px">
-
+                            @(Html.DevExtreme().DataGrid()
+                                .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("LoadGiaoNhan_HistoryHDMB").Key("SystemId").LoadParams(new { id = new JS("ReturnSystemref_HDMB")}))
+                                .Columns(columns => {
+                                columns.Add().DataField("ColumnName").Caption("Mục sửa");
+                                columns.Add().DataField("state").Caption("Reason");
+                                columns.Add().DataField("DateCreate").Caption("Ngày sửa").SortOrder(SortOrder.Asc);
+                                })
+                                .HoverStateEnabled(true)
+                                .Paging(p => p.PageSize(10))
+                                .FilterRow(f => f.Visible(true))
+                                .Selection(s => s.Mode(SelectionMode.Single))
+                            )
                         </div>
                     </div>
                     <div id="GiaoNhan_ChungTu">

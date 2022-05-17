@@ -14,6 +14,6 @@ namespace Data.Models.Models_StoredProcedure
         public string soPA { get; set; }
         public decimal Trongluong { get; set; }
         public double TLCanGhep { get; set; }
-        public string? dvt { get; set; }
+        public string dvt { get; set; }
     }
 }

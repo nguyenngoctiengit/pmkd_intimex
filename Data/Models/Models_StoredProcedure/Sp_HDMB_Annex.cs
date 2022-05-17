@@ -21,7 +21,7 @@ namespace Data.Models.Trading_system
         public string BaoBi { get; set; }
         public string KiemDinh { get; set; }
         public string ngayhl { get; set; }
-        public string? ToaKinhTe { get; set; }
+        public string ToaKinhTe { get; set; }
         public string phivanchuyen { get; set; }
         public string phibocxep { get; set; }
         [Key]

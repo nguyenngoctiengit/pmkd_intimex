@@ -316,6 +316,8 @@ namespace Data.Models.Trading_system
         public virtual DbSet<Sp_HDMB_Annex> Sp_HDMB_Annices { get; set; }
         public virtual DbSet<Sp_GetPlans> Sp_GetPlans { get; set; }
         public virtual DbSet<Sp_GetHDMB_Plans> Sp_GetHDMB_Plans { get; set; }
+        public virtual DbSet<Sp_Hdmb_HistoryHDMB> Sp_Hdmb_HistoryHDMBs { get; set; }
+        public virtual DbSet<Sp_GiaoNhan_HistoryHDMB> Sp_GiaoNhan_HistoryHDMBs { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

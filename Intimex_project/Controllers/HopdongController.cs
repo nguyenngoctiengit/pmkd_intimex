@@ -1101,6 +1101,27 @@ namespace Intimex_project.Controllers
         public IActionResult History(string id)
         {
             ViewBag.SystemRef_HDMB = id;
+            var hdmb = _context.Hdmbs.Where(a => a.Systemref == id).FirstOrDefault();
+            var Sp = "exec udsHdmb;9 @mua_ban = '"+ hdmb.MuaBan +"'," +
+                        "@sohd = '" + hdmb.Sohd + "'," +
+                        "@macn = '" + HttpContext.Session.GetString("UnitName") + "'," +
+                        "@Ref = ''";
+            var Sp_Hdmb_HistoryHDMBs = _context.Sp_Hdmb_HistoryHDMBs.FromSqlRaw(Sp).ToList();
+            foreach(var item in Sp_Hdmb_HistoryHDMBs)
+            {
+                ViewBag.sohd = item.sohd;
+                ViewBag.Ref = item.Ref;
+                ViewBag.trangthai = item.trangthai;
+                ViewBag.ngayky = item.ngayky.ToString("dd/MM/yyyy");
+                ViewBag.ngaygiao = item.ngaygiao.ToString("dd/MM/yyyy");
+                ViewBag.ngaytl = item.ngaytl;
+                ViewBag.DVTTheoHD = item.DVTTheoHD;
+                ViewBag.hanghoa = item.hanghoa;
+                ViewBag.trongluong = item.trongluong;
+                ViewBag.TLGiao = item.TLGiao;
+                ViewBag.Price = item.Price;
+                ViewBag.ghichu = item.ghichu;
+            }
             return View("History");
         }
         [HttpGet]
@@ -1115,6 +1136,15 @@ namespace Intimex_project.Controllers
                             a.state,
                             a.DateCreate
                         }).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
+        }
+        [HttpGet]
+        public object LoadGiaoNhan_HistoryHDMB(string id, DataSourceLoadOptions loadOptions)
+        {
+            var Sp = "exec [dbo].[UdscCt_hdmb];6 @macn = '"+ HttpContext.Session.GetString("UnitName") + "'," +
+                        "@Systemref = '" + id + "'," +
+                        "@macn = '" + HttpContext.Session.GetString("UnitName") + "'";
+            var item = _context.Sp_GetHangHoa_CtHDmbs.FromSqlRaw(Sp).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
 
