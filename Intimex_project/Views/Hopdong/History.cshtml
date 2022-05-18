@@ -127,7 +127,7 @@
                     <div id="GiaoNhan">
                         <label class="col-form-label">Giao nhận</label>
                         <div class="col-md-12 col-sm-12" style="height:250px">
-                            @(Html.DevExtreme().DataGrid()
+@*                            @(Html.DevExtreme().DataGrid()
                                 .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("LoadGiaoNhan_HistoryHDMB").Key("SystemId").LoadParams(new { id = new JS("ReturnSystemref_HDMB")}))
                                 .Columns(columns => {
                                 columns.Add().DataField("ColumnName").Caption("Mục sửa");
@@ -138,7 +138,7 @@
                                 .Paging(p => p.PageSize(10))
                                 .FilterRow(f => f.Visible(true))
                                 .Selection(s => s.Mode(SelectionMode.Single))
-                            )
+                            )*@
                         </div>
                     </div>
                     <div id="GiaoNhan_ChungTu">

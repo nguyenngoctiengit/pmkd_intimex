@@ -19,16 +19,15 @@ namespace Intimex_project.Controllers
 {
     public class KhachhangController : Controller
     {
-        private readonly tradingsystemContext _context = new tradingsystemContext(ConnectionParameter.connectionString);
+        public tradingsystemContext _context = new tradingsystemContext(ConnectionParameter.connectionString);
         public KhachhangController()
         {
         }
-        public IActionResult khachhang(string id)
+        public IActionResult khachhang()
         {
             ViewBag.khuvuc = _context.Khuvucs.ToList();
             ViewBag.tenqg = _context.Quocgia.ToList();
-            var model = _context.KhachHangs.Where(a => a.Visible == true).ToList();
-            return View("khachhang", model);
+            return View("khachhang");
         }
         //View thêm khách hàng
         public IActionResult themkhachhang()

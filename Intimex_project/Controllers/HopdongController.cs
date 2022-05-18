@@ -1138,7 +1138,7 @@ namespace Intimex_project.Controllers
                         }).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
-        [HttpGet]
+/*        [HttpGet]
         public object LoadGiaoNhan_HistoryHDMB(string id, DataSourceLoadOptions loadOptions)
         {
             var Sp = "exec [dbo].[UdscCt_hdmb];6 @macn = '"+ HttpContext.Session.GetString("UnitName") + "'," +
@@ -1146,7 +1146,7 @@ namespace Intimex_project.Controllers
                         "@macn = '" + HttpContext.Session.GetString("UnitName") + "'";
             var item = _context.Sp_GetHangHoa_CtHDmbs.FromSqlRaw(Sp).ToList();
             return DataSourceLoader.Load(item, loadOptions);
-        }
+        }*/
 
     }
 }
