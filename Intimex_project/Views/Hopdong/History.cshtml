@@ -122,58 +122,146 @@
                             )
                 </div>
             </div>
-            <div class="col-md-12 col-sm-12" style="height:300px;padding:initial">
-                <div class="col-md-8 col-sm-8" style="border:3px solid black;padding: initial" id="dataGrid_left">
+            <div class="col-md-12 col-sm-12" style="height:auto;padding:initial">
+                <div class="col-md-12 col-sm-12" style="border:3px solid black;padding: initial" id="dataGrid_left">
                     <div id="GiaoNhan">
                         <label class="col-form-label">Giao nhận</label>
-                        <div class="col-md-12 col-sm-12" style="height:250px">
-@*                            @(Html.DevExtreme().DataGrid()
-                                .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("LoadGiaoNhan_HistoryHDMB").Key("SystemId").LoadParams(new { id = new JS("ReturnSystemref_HDMB")}))
+                        <div class="col-md-12 col-sm-12" style="height:auto">
+                            @(Html.DevExtreme().DataGrid()
+                                .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("LoadGiaoNhan_HistoryHDMB").Key("Id").LoadParams(new { id = new JS("ReturnSystemref_HDMB")}))
                                 .Columns(columns => {
-                                columns.Add().DataField("ColumnName").Caption("Mục sửa");
-                                columns.Add().DataField("state").Caption("Reason");
-                                columns.Add().DataField("DateCreate").Caption("Ngày sửa").SortOrder(SortOrder.Asc);
+                                    columns.Add().DataField("sohdmua").Caption("Hợp đồng mua");
+                                    columns.Add().DataField("sohdban").Caption("Hợp đồng bán");
+                                    columns.Add().DataField("ngayky").Caption("Ngày ký");
+                                    columns.Add().DataField("ItemCode").Caption("Mã hàng");
+                                    columns.Add().DataField("SLGiao").Caption("Số lượng giao");
+                                    columns.Add().DataField("SoBao").Caption("Số bao giao");
+                                    columns.Add().DataField("NgayGiaoHang").Caption("Ngày giao hàng");
+                                    columns.Add().DataField("ten_khach").Caption("Khách hàng");
+                                    columns.Add().DataField("xe_vc").Caption("Số xe");
+                                    columns.Add().DataField("NoiGiaoHang").Caption("Nơi giao hàng");
+
                                 })
+                                .ColumnAutoWidth(true)
                                 .HoverStateEnabled(true)
                                 .Paging(p => p.PageSize(10))
                                 .FilterRow(f => f.Visible(true))
                                 .Selection(s => s.Mode(SelectionMode.Single))
-                            )*@
+                            )
                         </div>
                     </div>
                     <div id="GiaoNhan_ChungTu">
                         <label class="col-form-label">Giao nhận</label>
-                        <div style="height:120px">
+                        <div style="height:auto">
+                            @(Html.DevExtreme().DataGrid()
+                                .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("LoadGiaoNhan_HistoryHDMB").Key("Id").LoadParams(new { id = new JS("ReturnSystemref_HDMB")}))
+                                .Columns(columns => {
+                                    columns.Add().DataField("sohdmua").Caption("Hợp đồng mua");
+                                    columns.Add().DataField("sohdban").Caption("Hợp đồng bán");
+                                    columns.Add().DataField("ngayky").Caption("Ngày ký");
+                                    columns.Add().DataField("ItemCode").Caption("Mã hàng");
+                                    columns.Add().DataField("SLGiao").Caption("Số lượng giao");
+                                    columns.Add().DataField("SoBao").Caption("Số bao giao");
+                                    columns.Add().DataField("NgayGiaoHang").Caption("Ngày giao hàng");
+                                    columns.Add().DataField("ten_khach").Caption("Khách hàng");
+                                    columns.Add().DataField("xe_vc").Caption("Số xe");
+                                    columns.Add().DataField("NoiGiaoHang").Caption("Nơi giao hàng");
 
+                                })
+                                .ColumnAutoWidth(true)
+                                .HoverStateEnabled(true)
+                                .Paging(p => p.PageSize(10))
+                                .FilterRow(f => f.Visible(true))
+                                .Selection(s => s.Mode(SelectionMode.Single))
+                            )
                         </div>
                         <label class="col-form-label">Chứng từ</label>
-                        <div style="height:100px">
+                        <div style="height:auto">
+                            @(Html.DevExtreme().DataGrid()
+                                .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("LoadChungtu_HDBan_HistoryHDMB").Key("id").LoadParams(new { id = new JS("ReturnSystemref_HDMB")}))
+                                .Columns(columns => {
+                                    columns.Add().DataField("invoice");
+                                    columns.Add().DataField("date_iv");
+                                    columns.Add().DataField("bill_no");
+                                    columns.Add().DataField("date_bill");
+                                    columns.Add().DataField("LoaiIV");
+                                    columns.Add().DataField("NW");
+                                    columns.Add().DataField("GW");
+                                    columns.Add().DataField("Bag");
+                                    columns.Add().DataField("Amount");
+                                    columns.Add().DataField("cbuyer");
+                                    columns.Add().DataField("goods");
+                                    columns.Add().DataField("DocumentType");
 
+                                })
+                                .ColumnAutoWidth(true)
+                                .HoverStateEnabled(true)
+                                .Paging(p => p.PageSize(10))
+                                .FilterRow(f => f.Visible(true))
+                                .Selection(s => s.Mode(SelectionMode.Single))
+                            )
                         </div>
                     </div>
                     <div id="GiaoNhan_GiaoTraKhachHang">
                         <label class="col-form-label">Giao nhận</label>
-                        <div style="height:120px">
+                        <div style="height:auto">
+                            @(Html.DevExtreme().DataGrid()
+                                .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("LoadGiaoNhan_HistoryHDMB").Key("Id").LoadParams(new { id = new JS("ReturnSystemref_HDMB")}))
+                                .Columns(columns => {
+                                    columns.Add().DataField("sohdmua").Caption("Hợp đồng mua");
+                                    columns.Add().DataField("sohdban").Caption("Hợp đồng bán");
+                                    columns.Add().DataField("ngayky").Caption("Ngày ký");
+                                    columns.Add().DataField("ItemCode").Caption("Mã hàng");
+                                    columns.Add().DataField("SLGiao").Caption("Số lượng giao");
+                                    columns.Add().DataField("SoBao").Caption("Số bao giao");
+                                    columns.Add().DataField("NgayGiaoHang").Caption("Ngày giao hàng");
+                                    columns.Add().DataField("ten_khach").Caption("Khách hàng");
+                                    columns.Add().DataField("xe_vc").Caption("Số xe");
+                                    columns.Add().DataField("NoiGiaoHang").Caption("Nơi giao hàng");
 
+                                })
+                                .ColumnAutoWidth(true)
+                                .HoverStateEnabled(true)
+                                .Paging(p => p.PageSize(10))
+                                .FilterRow(f => f.Visible(true))
+                                .Selection(s => s.Mode(SelectionMode.Single))
+                            )
                         </div>
                         <label class="col-form-label">Giao trả khách hàng</label>
                         <div style="height:100px">
 
                         </div>
                     </div>
-                    <div id="GiaoNhan_KhachHangTraHang">
+                    <div id="GiaoNhan_KhachHangTraHang">  
                         <label class="col-form-label">Giao nhận</label>
-                        <div style="height:120px">
+                        <div style="height:auto">
+                            @(Html.DevExtreme().DataGrid()
+                                .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("LoadGiaoNhan_HistoryHDMB").Key("Id").LoadParams(new { id = new JS("ReturnSystemref_HDMB")}))
+                                .Columns(columns => {
+                                    columns.Add().DataField("sohdmua").Caption("Hợp đồng mua");
+                                    columns.Add().DataField("sohdban").Caption("Hợp đồng bán");
+                                    columns.Add().DataField("ngayky").Caption("Ngày ký");
+                                    columns.Add().DataField("ItemCode").Caption("Mã hàng");
+                                    columns.Add().DataField("SLGiao").Caption("Số lượng giao");
+                                    columns.Add().DataField("SoBao").Caption("Số bao giao");
+                                    columns.Add().DataField("NgayGiaoHang").Caption("Ngày giao hàng");
+                                    columns.Add().DataField("ten_khach").Caption("Khách hàng");
+                                    columns.Add().DataField("xe_vc").Caption("Số xe");
+                                    columns.Add().DataField("NoiGiaoHang").Caption("Nơi giao hàng");
 
+                                })
+                                .ColumnAutoWidth(true)
+                                .HoverStateEnabled(true)
+                                .Paging(p => p.PageSize(10))
+                                .FilterRow(f => f.Visible(true))
+                                .Selection(s => s.Mode(SelectionMode.Single))
+                            )
                         </div>
                         <label class="col-form-label">Khách hàng trả hàng</label>
                         <div style="height:100px">
 
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 col-sm-4" style="border:3px solid black;height:inherit" id="Invoice">
-
                 </div>
             </div>
             <div class="col-md-12 col-sm-12">
@@ -204,9 +292,19 @@
     </div>
 </div>
 <input type="text" id="SystemRef_HDMB" value="@ViewBag.SystemRef_HDMB" hidden>
+<input type="text" id="Muaban_HDMB" value="@ViewBag.MuaBan" hidden>
 <script type="text/javascript">
     window.onload = function () {
-        LoadDiv_Mua();
+        var MuaBan = document.getElementById("Muaban_HDMB").value;
+        if (MuaBan == "MUA" || MuaBan == "KTRA") {
+            LoadDiv_Mua();
+        } else if (MuaBan == "BAN") {
+            LoadDiv_Ban();
+        } else if (MuaBan == "MUON") {
+            LoadDiv_Muon();
+        } else if (MuaBan == "CMUON") {
+            LoadDiv_CMuon();
+        }
         LoadDiv_TheoHopDong();
     }
 
@@ -226,20 +324,18 @@
         document.getElementById("GiaoNhan_GiaoTraKhachHang").style.display = "none";
         document.getElementById("GiaoNhan_KhachHangTraHang").style.display = "none";
         document.getElementById("GiaoNhan").style.display = "block";
-        document.getElementById("Invoice").style.display = "block";
         document.getElementById("dataGrid_left").classList.remove("col-md-12");
-        document.getElementById("dataGrid_left").classList.add("col-md-8");
-        
+        document.getElementById("dataGrid_left").classList.add("col-md-12");
+
     }
     function LoadDiv_Ban() {
         document.getElementById("GiaoNhan").style.display = "none";
         document.getElementById("TongLuongHangTra").style.display = "none";
         document.getElementById("KhachHangTraHang").style.display = "none";
         document.getElementById("GiaoNhan_KhachHangTraHang").style.display = "none";
-        document.getElementById("GiaoNhan_GiaoTraKhachHang").style.display = "none"; 
+        document.getElementById("GiaoNhan_GiaoTraKhachHang").style.display = "none";
         document.getElementById("dataGrid_left").classList.remove("col-md-12");
-        document.getElementById("dataGrid_left").classList.add("col-md-8");
-        document.getElementById("Invoice").style.display = "block";
+        document.getElementById("dataGrid_left").classList.add("col-md-12");
         document.getElementById("TongBan").style.display = "block";
         document.getElementById("GiaoNhan_ChungTu").style.display = "block";
     }
@@ -248,11 +344,10 @@
         document.getElementById("GiaoNhan").style.display = "none";
         document.getElementById("KhachHangTraHang").style.display = "none";
         document.getElementById("TongBan").style.display = "none";
-        document.getElementById("Invoice").style.display = "none";
         document.getElementById("GiaoNhan_KhachHangTraHang").style.display = "none";
         document.getElementById("GiaoNhan_GiaoTraKhachHang").style.display = "block";
         document.getElementById("TongLuongHangTra").style.display = "block";
-        document.getElementById("dataGrid_left").classList.remove("col-md-8");
+        document.getElementById("dataGrid_left").classList.remove("col-md-12");
         document.getElementById("dataGrid_left").classList.add("col-md-12");
     }
     function LoadDiv_CMuon() {
@@ -262,9 +357,8 @@
         document.getElementById("GiaoNhan").style.display = "none";
         document.getElementById("KhachHangTraHang").style.display = "none";
         document.getElementById("TongBan").style.display = "none";
-        document.getElementById("Invoice").style.display = "none";
         document.getElementById("GiaoNhan_KhachHangTraHang").style.display = "block";
-        document.getElementById("dataGrid_left").classList.remove("col-md-8");
+        document.getElementById("dataGrid_left").classList.remove("col-md-12");
         document.getElementById("dataGrid_left").classList.add("col-md-12");
     }
     $('#Fill_Date_HDMB').on('change', function () {

@@ -11,7 +11,7 @@ namespace Data.Models.Models_StoredProcedure
     {
         public string sohd { get; set; }
         public string hanghoa { get; set; }
-        public decimal? TLGiao { get; set; }
+        public double? TLGiao { get; set; }
         public DateTime ngayky { get; set; }
         public DateTime ngaygiao { get; set; }
         [Key]

@@ -52,7 +52,7 @@ namespace Intimex_project.Controllers
         [HttpGet]
         public object GetHopdong(DataSourceLoadOptions loadOptions)
         {
-            var item = (from a in _context.Hdmbs
+            var item = (from a in _context.Hdmbs where a.Macn == HttpContext.Session.GetString("UnitName")
                         select new
                         {
                             a.Systemref,
@@ -1102,6 +1102,7 @@ namespace Intimex_project.Controllers
         {
             ViewBag.SystemRef_HDMB = id;
             var hdmb = _context.Hdmbs.Where(a => a.Systemref == id).FirstOrDefault();
+            ViewBag.MuaBan = hdmb.MuaBan;
             var Sp = "exec udsHdmb;9 @mua_ban = '"+ hdmb.MuaBan +"'," +
                         "@sohd = '" + hdmb.Sohd + "'," +
                         "@macn = '" + HttpContext.Session.GetString("UnitName") + "'," +
@@ -1138,15 +1139,29 @@ namespace Intimex_project.Controllers
                         }).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
-/*        [HttpGet]
+        [HttpGet]
         public object LoadGiaoNhan_HistoryHDMB(string id, DataSourceLoadOptions loadOptions)
         {
-            var Sp = "exec [dbo].[UdscCt_hdmb];6 @macn = '"+ HttpContext.Session.GetString("UnitName") + "'," +
+            var hdmb = _context.Hdmbs.Where(a => a.Systemref == id).FirstOrDefault();
+            var mahang = _context.CtHdmbs.Where(a => a.Systemref == id).Select(a => a.Mahang).FirstOrDefault();
+            var Sp = "exec [dbo].[UdscCt_hdmb];6 @macn = '" + HttpContext.Session.GetString("UnitName") + "'," +
                         "@Systemref = '" + id + "'," +
-                        "@macn = '" + HttpContext.Session.GetString("UnitName") + "'";
-            var item = _context.Sp_GetHangHoa_CtHDmbs.FromSqlRaw(Sp).ToList();
+                        "@mahang = '" + mahang + "'," +
+                        "@TheoHD = '1'," +
+                        "@ngaygiaofrom = ''," +
+                        "@ngaygiaoto = ''";
+            var item = _context.Sp_GiaoNhan_HistoryHDMBs.FromSqlRaw(Sp).ToList();
             return DataSourceLoader.Load(item, loadOptions);
-        }*/
+        }
+        [HttpGet]
+        public object LoadChungtu_HDBan_HistoryHDMB(string id,DataSourceLoadOptions loadOptions)
+        {
+            var mahang = _context.CtHdmbs.Where(a => a.Systemref == id).Select(a => a.Mahang).FirstOrDefault();
+            var Sp = "exec UdscVoucher;30 @Systemref = '" + id + "'," +
+                        "@mahang = '" + mahang + "'";
+            var item = _context.Sp_GetChungtu_HDBan_HistoryHDMBs.FromSqlRaw(Sp).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
+        }
 
     }
 }
