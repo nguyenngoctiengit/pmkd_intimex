@@ -7,24 +7,19 @@ using System.Threading.Tasks;
 
 namespace Data.Models.Models_StoredProcedure
 {
-    public class Sp_GiaoNhan_HistoryHDMB
+    public class Sp_GetHdTraHang_HistoryHDMB
     {
-        public string sohdmua { get; set; }
         [Key]
-        public string sohdban { get; set; }
+        public string sohdmua { get; set; }
         public string ngayky { get; set; }
         public string ItemCode { get; set; }
         public decimal SLHD { get; set; }
         public int SoBaoHD { get; set; }
         public double SLGiao { get; set; }
         public int SoBao { get; set; }
-        public string NgayGiaoHang { get; set; }
+        public string NgayGiaohang { get; set; }
         public string ten_khach { get; set; }
         public string NgayGiaoTrenHD { get; set; }
-        public string Gia { get; set; }
-        public string xe_vc { get; set; }
-        public string NoiGiaoHang { get; set; }
-        public string Id { get; set; }
-
+        public string systemref { get; set; }
     }
 }

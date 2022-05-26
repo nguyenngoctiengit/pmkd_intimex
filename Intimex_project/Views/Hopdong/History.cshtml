@@ -206,7 +206,7 @@
                         <label class="col-form-label">Giao nhận</label>
                         <div style="height:auto">
                             @(Html.DevExtreme().DataGrid()
-                                .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("LoadGiaoNhan_HistoryHDMB").Key("Id").LoadParams(new { id = new JS("ReturnSystemref_HDMB")}))
+                                .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("LoadGiaoNhan_HistoryHDMB").Key("sohdban").LoadParams(new { id = new JS("ReturnSystemref_HDMB")}))
                                 .Columns(columns => {
                                     columns.Add().DataField("sohdmua").Caption("Hợp đồng mua");
                                     columns.Add().DataField("sohdban").Caption("Hợp đồng bán");
@@ -228,8 +228,29 @@
                             )
                         </div>
                         <label class="col-form-label">Giao trả khách hàng</label>
-                        <div style="height:100px">
+                        <div style="height:auto">
+                            @(Html.DevExtreme().DataGrid()
+                                .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("LoadHDTraHang_HistoryHDMB").Key("sohdmua").LoadParams(new { id = new JS("ReturnSystemref_HDMB")}))
+                                .Columns(columns => {
+                                    columns.Add().DataField("sohdmua").Caption("Hợp đồng mua");
+                                    columns.Add().DataField("ngayky").Caption("Ngày ký");
+                                    columns.Add().DataField("ItemCode").Caption("Mã hàng");
+                                    columns.Add().DataField("SLHD").Caption("Số lượng HĐ");
+                                    columns.Add().DataField("SoBaoHD").Caption("Số bao HĐ");
+                                    columns.Add().DataField("SLGiao").Caption("Số lượng giao");
+                                    columns.Add().DataField("SoBao").Caption("Số bao");
+                                    columns.Add().DataField("NgayGiaoHang").Caption("Ngày giao hàng");
+                                    columns.Add().DataField("ten_khach").Caption("Tên khách");
+                                    columns.Add().DataField("NgayGiaoTrenHD").Caption("Ngày giao trên HĐ");
+                                    columns.Add().DataField("systemref").Caption("Systemref");
 
+                                })
+                                .ColumnAutoWidth(true)
+                                .HoverStateEnabled(true)
+                                .Paging(p => p.PageSize(10))
+                                .FilterRow(f => f.Visible(true))
+                                .Selection(s => s.Mode(SelectionMode.Single))
+                            )
                         </div>
                     </div>
                     <div id="GiaoNhan_KhachHangTraHang">  
@@ -258,8 +279,8 @@
                             )
                         </div>
                         <label class="col-form-label">Khách hàng trả hàng</label>
-                        <div style="height:100px">
-
+                        <div style="height:auto">
+                           
                         </div>
                     </div>
                 </div>

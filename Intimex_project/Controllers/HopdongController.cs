@@ -1162,6 +1162,17 @@ namespace Intimex_project.Controllers
             var item = _context.Sp_GetChungtu_HDBan_HistoryHDMBs.FromSqlRaw(Sp).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
+        [HttpGet]
+        public object LoadHDTraHang_HistoryHDMB(string id,DataSourceLoadOptions loadOptions)
+        {
+            var mahang = _context.CtHdmbs.Where(a => a.Systemref == id).Select(a => a.Mahang).FirstOrDefault();
+            var Sp = "exec UdscCt_hdmb;8 @Systemref = '" + id + "'," +
+                        "@mahang = '" + mahang + "'," +
+                        "@macn = '" + HttpContext.Session.GetString("UnitName") + "'," +
+                        "@user = '"+ HttpContext.Session.GetString("UserName") + "'";
+            var item = _context.Sp_GetHdTraHang_HistoryHDMBs.FromSqlRaw(Sp).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
+        }
 
     }
 }
