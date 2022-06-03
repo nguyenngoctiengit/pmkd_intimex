@@ -596,7 +596,6 @@ namespace Intimex_project.Controllers
             ctHdmb.Giathitruong = GiaThiTruong_CTHD_OutRight;
             ctHdmb.Mucthuong = MucThuong_CTHD_OutRight;
             ctHdmb.GiaTheoHd = OutRight_TheoHD_CTHD_OutRight;
-            _context.Entry(ctHdmb).State = EntityState.Added;
             _context.CtHdmbs.Add(ctHdmb);
             _context.SaveChanges();
             TempData["alertMessage"] = "Thêm chi tiết hợp đồng OutRight thành công";
@@ -1144,14 +1143,28 @@ namespace Intimex_project.Controllers
         {
             var hdmb = _context.Hdmbs.Where(a => a.Systemref == id).FirstOrDefault();
             var mahang = _context.CtHdmbs.Where(a => a.Systemref == id).Select(a => a.Mahang).FirstOrDefault();
-            var Sp = "exec [dbo].[UdscCt_hdmb];6 @macn = '" + HttpContext.Session.GetString("UnitName") + "'," +
+            var muaban = hdmb.MuaBan;
+            var Sp = "";
+            if (muaban == "BAN" || muaban == "CMUON")
+            {
+                Sp = "exec [dbo].[UdscCt_hdmb];7 @macn = '" + HttpContext.Session.GetString("UnitName") + "'," +
                         "@Systemref = '" + id + "'," +
                         "@mahang = '" + mahang + "'," +
                         "@TheoHD = '1'," +
                         "@ngaygiaofrom = ''," +
                         "@ngaygiaoto = ''";
+            }
+            else if (muaban == "MUA" || muaban == "MUON" || muaban == "KTRA")
+            {
+                Sp = "exec [dbo].[UdscCt_hdmb];6 @macn = '" + HttpContext.Session.GetString("UnitName") + "'," +
+                        "@Systemref = '" + id + "'," +
+                        "@mahang = '" + mahang + "'," +
+                        "@TheoHD = '1'," +
+                        "@ngaygiaofrom = ''," +
+                        "@ngaygiaoto = ''";
+            }
             var item = _context.Sp_GiaoNhan_HistoryHDMBs.FromSqlRaw(Sp).ToList();
-            return DataSourceLoader.Load(item, loadOptions);
+            return DataSourceLoader.Load(item, loadOptions);                                                             
         }
         [HttpGet]
         public object LoadChungtu_HDBan_HistoryHDMB(string id,DataSourceLoadOptions loadOptions)
@@ -1171,6 +1184,17 @@ namespace Intimex_project.Controllers
                         "@macn = '" + HttpContext.Session.GetString("UnitName") + "'," +
                         "@user = '"+ HttpContext.Session.GetString("UserName") + "'";
             var item = _context.Sp_GetHdTraHang_HistoryHDMBs.FromSqlRaw(Sp).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
+        }
+        [HttpGet]
+        public object LoadHDKhachTra_HistoryHDMB(string id,DataSourceLoadOptions loadOptions)
+        {
+            var mahang = _context.CtHdmbs.Where(a => a.Systemref == id).Select(a => a.Mahang).FirstOrDefault();
+            var Sp = "exec UdscCt_hdmb;9 @Systemref = '" + id + "'," +
+                        "@mahang = '" + mahang + "'," +
+                        "@macn = '" + HttpContext.Session.GetString("UnitName") + "'," +
+                        "@user = '" + HttpContext.Session.GetString("UserName") + "'";
+            var item = _context.Sp_GetHdKhachTra_HistoryHDMBs.FromSqlRaw(Sp).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
 

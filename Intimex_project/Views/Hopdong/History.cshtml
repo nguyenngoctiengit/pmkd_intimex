@@ -194,6 +194,16 @@
                                     columns.Add().DataField("DocumentType");
 
                                 })
+                                .Summary(s => s.TotalItems(items => {
+                                    items.Add().Column("NW").SummaryType(SummaryType.Sum).CustomizeText(@<text> function(data) {return "Tổng NW: " + data.value}</text>);
+
+                                    items.Add().Column("GW").SummaryType(SummaryType.Sum).CustomizeText(@<text>function(data) {return "Tổng GW: " + data.value}</text>);
+
+                                    items.Add().Column("Amount").SummaryType(SummaryType.Sum).CustomizeText(@<text>function(data) {return "Tổng giá trị: " + data.value}</text>);
+                                
+                                
+                                
+                                }))
                                 .ColumnAutoWidth(true)
                                 .HoverStateEnabled(true)
                                 .Paging(p => p.PageSize(10))
@@ -245,6 +255,7 @@
                                     columns.Add().DataField("systemref").Caption("Systemref");
 
                                 })
+                                .Summary(s => s.TotalItems(items => items.Add().Column("SLGiao").SummaryType(SummaryType.Sum).CustomizeText(@<text>function(data){return "Tổng lượng hàng trả: " + data.value}</text>)))
                                 .ColumnAutoWidth(true)
                                 .HoverStateEnabled(true)
                                 .Paging(p => p.PageSize(10))
@@ -280,33 +291,30 @@
                         </div>
                         <label class="col-form-label">Khách hàng trả hàng</label>
                         <div style="height:auto">
-                           
+                            @(Html.DevExtreme().DataGrid()
+                                .DataSource(d => d.Mvc().Controller("Hopdong").LoadAction("LoadHDKhachTra_HistoryHDMB").Key("systemref").LoadParams(new { id = new JS("ReturnSystemref_HDMB")}))
+                                .Columns(columns => {
+                                    columns.Add().DataField("ref_hdmb").Caption("Ref HDMB");
+                                    columns.Add().DataField("sohd").Caption("Số hợp đồng");
+                                    columns.Add().DataField("ngayky").Caption("Ngày ký");
+                                    columns.Add().DataField("SLHD").Caption("Số lượng HĐ");
+                                    columns.Add().DataField("SoBaoHD").Caption("Số bao HĐ");
+                                    columns.Add().DataField("ten_khach").Caption("Tên khách");
+                                    columns.Add().DataField("NgayGiao").Caption("Ngày giao");
+                                    columns.Add().DataField("SLGiao").Caption("Số lượng giao");
+                                    columns.Add().DataField("SoBaoGiao").Caption("Số bao giao");
+                                    columns.Add().DataField("mahang").Caption("Mã hàng");
+                                    columns.Add().DataField("systemref").Caption("Systemref");
+
+                                })
+                                .ColumnAutoWidth(true)
+                                .HoverStateEnabled(true)
+                                .Paging(p => p.PageSize(10))
+                                .FilterRow(f => f.Visible(true))
+                                .Selection(s => s.Mode(SelectionMode.Single))
+                            )
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-12 col-sm-12">
-                <div class="col-md-8 col-sm-8">
-                    <div id="TongBan">
-                        <label class="col-form-label col-md-2 col-sm-2">Tổng NW</label>
-                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
-                        <label class="col-form-label col-md-2 col-sm-2">Tổng GW</label>
-                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
-                        <label class="col-form-label col-md-2 col-sm-2">Tổng giá trị</label>
-                        <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb">
-                    </div>
-                    <div id="TongLuongHangTra">
-                        <label class="col-form-label col-md-3 col-sm-3">Tổng lượng hàng trả</label>
-                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
-                    </div>
-                    <div id="KhachHangTraHang">
-                        <label class="col-form-label col-md-3 col-sm-3">Khách hàng trả hàng</label>
-                        <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb">
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4" style="text-align:right">
-                    <button type="button" class="btn btn-secondary" onclick="Add_Pairedplans()">Excel</button>
-                    <button type="button" class="btn btn-secondary" onclick="close_Popup_Plans()" id="btn_EditPairedPlans">Search</button>
                 </div>
             </div>
         </div>
@@ -339,9 +347,6 @@
     }
     function LoadDiv_Mua() {
         document.getElementById("GiaoNhan_ChungTu").style.display = "none";
-        document.getElementById("TongBan").style.display = "none";
-        document.getElementById("TongLuongHangTra").style.display = "none";
-        document.getElementById("KhachHangTraHang").style.display = "none";
         document.getElementById("GiaoNhan_GiaoTraKhachHang").style.display = "none";
         document.getElementById("GiaoNhan_KhachHangTraHang").style.display = "none";
         document.getElementById("GiaoNhan").style.display = "block";
@@ -351,33 +356,24 @@
     }
     function LoadDiv_Ban() {
         document.getElementById("GiaoNhan").style.display = "none";
-        document.getElementById("TongLuongHangTra").style.display = "none";
-        document.getElementById("KhachHangTraHang").style.display = "none";
         document.getElementById("GiaoNhan_KhachHangTraHang").style.display = "none";
         document.getElementById("GiaoNhan_GiaoTraKhachHang").style.display = "none";
         document.getElementById("dataGrid_left").classList.remove("col-md-12");
         document.getElementById("dataGrid_left").classList.add("col-md-12");
-        document.getElementById("TongBan").style.display = "block";
         document.getElementById("GiaoNhan_ChungTu").style.display = "block";
     }
     function LoadDiv_Muon() {
         document.getElementById("GiaoNhan_ChungTu").style.display = "none";
         document.getElementById("GiaoNhan").style.display = "none";
-        document.getElementById("KhachHangTraHang").style.display = "none";
-        document.getElementById("TongBan").style.display = "none";
         document.getElementById("GiaoNhan_KhachHangTraHang").style.display = "none";
         document.getElementById("GiaoNhan_GiaoTraKhachHang").style.display = "block";
-        document.getElementById("TongLuongHangTra").style.display = "block";
         document.getElementById("dataGrid_left").classList.remove("col-md-12");
         document.getElementById("dataGrid_left").classList.add("col-md-12");
     }
     function LoadDiv_CMuon() {
         document.getElementById("GiaoNhan_ChungTu").style.display = "none";
         document.getElementById("GiaoNhan_GiaoTraKhachHang").style.display = "none";
-        document.getElementById("TongLuongHangTra").style.display = "none";
         document.getElementById("GiaoNhan").style.display = "none";
-        document.getElementById("KhachHangTraHang").style.display = "none";
-        document.getElementById("TongBan").style.display = "none";
         document.getElementById("GiaoNhan_KhachHangTraHang").style.display = "block";
         document.getElementById("dataGrid_left").classList.remove("col-md-12");
         document.getElementById("dataGrid_left").classList.add("col-md-12");

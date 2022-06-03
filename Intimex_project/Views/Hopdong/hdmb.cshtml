@@ -14,6 +14,15 @@
         padding-left: 10px;
         font-size: small;
     }
+    .dx-show-invalid-badge dx-datebox dx-textbox dx-texteditor dx-dropdowneditor-button-visible dx-editor-outlined dx-widget dx-state-disabled dx-visibility-change-handler dx-auto-width dx-dropdowneditor dx-datebox-date dx-datebox-calendar {
+        height: 28px;
+        position: relative;
+        min-height: 1px;
+        float: left;
+        padding-right: 10px;
+        padding-left: 10px;
+        font-size: small;
+    }
 </style>
 <div class="right_col" role="main">
     <div class="">
@@ -62,11 +71,11 @@
 
                                         columns.AddFor(m => m.Systemref).Caption("Systemref");
 
-                                        columns.AddFor(m => m.Sohd).Caption("Số HĐ").Width(120);
+                                        columns.AddFor(m => m.Sohd).Caption("Số HĐ");
 
                                         columns.AddFor(m => m.Trangthai).Caption("Tt");
 
-                                        columns.AddFor(m => m.Ngaylam).Visible(false);
+                                        columns.AddFor(m => m.Ngaylam).Visible(false).SortOrder(SortOrder.Asc);
 
                                         columns.AddFor(m => m.MuaBan).Visible(false);
 
@@ -90,7 +99,7 @@
                                     .AllowColumnReordering(true)
                                     .ShowBorders(true)
                                     .Grouping(group => group.AutoExpandAll(true))
-                                    .Paging(paging => paging.PageSize(15))
+                                    .Paging(paging => paging.PageSize(18))
                                 )
 
 
@@ -505,6 +514,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">System ID</label>
                             <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Systemref" disabled>
+
                             <div class="col-md-8 col-sm-8" style="text-align:left">
                                 <input type="checkbox" style="margin-right:10px;margin-left:10px" name="@Html.NameFor(a => a.Pakd)" value="true" id="Pakd" disabled>
                                 <input type="hidden" name="@Html.NameFor(a => a.Pakd)" value="false" hidden>
@@ -568,13 +578,22 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-1 col-sm-1">Ngày hđ</label>
-                            <input type="date" class="form-control text-box-hdmb col-md-2 col-sm-2" id="Ngayky" asp-for="Ngayky" disabled>
+                            <div class="col-md-2 col-sm-2 text-box-hdmb">
+                                @(Html.DevExtreme().DateBoxFor(a => a.Ngayky).Type(DateBoxType.Date).DisplayFormat("dd/MM/yyyy").ID("Ngayky").Disabled(true))
+                            </div>
                             <label class="col-form-label col-md-1 col-sm-1" style="padding-left:0px;padding-right:0px">Ngày g.hàng</label>
-                            <input type="date" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Ngaygiao" asp-for="Ngaygiao" disabled>
+                            <div class="col-md-2 col-sm-2 text-box-hdmb">
+                                @(Html.DevExtreme().DateBoxFor(a => a.Ngaygiao).Type(DateBoxType.Date).DisplayFormat("dd/MM/yyyy").ID("Ngaygiao").Disabled(true))
+                            </div>
                             <label class="col-form-label col-md-1 col-sm-1" style="padding-left:0px;padding-right:0px">Ngày h.lực</label>
-                            <input type="date" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Ngayhl" asp-for="Ngayhl" disabled>
+                            <div class="col-md-2 col-sm-2 text-box-hdmb">
+                                @(Html.DevExtreme().DateBoxFor(a => a.Ngayhl).Type(DateBoxType.Date).DisplayFormat("dd/MM/yyyy").ID("Ngayhl").Disabled(true))
+                            </div>
                             <label class="col-form-label col-md-1 col-sm-1" style="padding-left:0px;padding-right:0px;display:none" id="label_ngaytra">Ngày trả</label>
-                            <input type="date" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="NgayTraPhaitra" asp-for="NgayTraPhaitra" style="display:none" disabled>
+                            <div class="col-md-2 col-sm-2 text-box-hdmb">
+                                @(Html.DevExtreme().DateBoxFor(a => a.NgayTraPhaitra).Type(DateBoxType.Date).DisplayFormat("dd/MM/yyyy").ID("NgayTraPhaitra").Disabled(true).Visible(false))
+                            </div>
+                            
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-1 col-sm-1">Ghi chú</label>
@@ -600,19 +619,19 @@
 
                                         columns.AddFor(m => m.Soluong).Caption("Số lượng");
 
-                                        columns.AddFor(m => m.Trongluong).Caption("Trọng lượng");
+                                        columns.AddFor(m => m.Trongluong).Caption("Trọng lượng").Format("#,###.###");
 
                                         columns.AddFor(m => m.Dvt).Caption("ĐVT");
 
                                         columns.AddFor(m => m.Vat).Caption("VAT");
 
-                                        columns.AddFor(m => m.Giact).Caption("Giá");
+                                        columns.AddFor(m => m.Giact).Caption("Giá").Format("#,###.###");
 
-                                        columns.AddFor(m => m.Giatt).Caption("Giá tạm tính");
+                                        columns.AddFor(m => m.Giatt).Caption("Giá tạm tính").Format("#,###.###");
 
                                         columns.AddFor(m => m.Solot).Caption("Số LOT");
 
-                                        columns.AddFor(m => m.Giathang).Caption("Giá tháng");
+                                        columns.AddFor(m => m.Giathang).Caption("Giá tháng").Format("#,###.###");
 
                                         columns.AddFor(m => m.Gianam).Caption("Giá năm");
 
@@ -653,7 +672,6 @@
                 </div>
                 <div class="col-md-9 col-sm-9" style="text-align:center">
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="ExportWord()">Export word</button>
-                    <button type="button" class="btn btn-secondary" style="font-size:small">E Document</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="History_HDMB()">Delivery Detail</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="AddAnnex()">Add Annex</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="AddPlans()">Add plan</button>
@@ -699,10 +717,10 @@
                 document.getElementById("Tenfull").value = array.Tenfull;
                 document.getElementById("DiaDiemGiaoHang").value = array.DiaDiemGiaoHang;
                 document.getElementById("Ghichu").value = array.Ghichu;
-                document.getElementById("Ngayky").value = new Date(array.Ngayky).toString("yyyy-MM-dd");
-                document.getElementById("Ngaygiao").value = new Date(array.Ngaygiao).toString("yyyy-MM-dd");
-                document.getElementById("Ngayhl").value = new Date(array.Ngayhl).toString("yyyy-MM-dd");
-                document.getElementById("NgayTraPhaitra").value = new Date(array.NgayTraPhaitra).toString("yyyy-MM-dd");
+                $("#Ngayky").dxDateBox({ value: array.Ngayky });
+                $("#Ngaygiao").dxDateBox({ value: array.Ngaygiao });
+                $("#Ngayhl").dxDateBox({ value: array.Ngayhl });
+                $("#NgayTraPhaitra").dxDateBox({ value: array.NgayTraPhaitra })
                 document.getElementById("TienUngHd").value = array.TienUngHd;                                                        
                 document.getElementById("TienUngTt").value = array.TienUngTt;
                 document.getElementById("Nguoilam").value = array.Nguoilam;
@@ -741,31 +759,31 @@
                     case "MUA":
                         document.getElementById("MUA").checked = true;
                         document.getElementById("label_ngaytra").style.display = "none";
-                        document.getElementById("NgayTraPhaitra").style.display = "none";
+                        $("#NgayTraPhaitra").dxDateBox({ visible: false });
                         document.getElementById("hdmb_chomuon").style.display = "none";
                         break;
                     case "BAN":
                         document.getElementById("BAN").checked = true;
                         document.getElementById("label_ngaytra").style.display = "none";
-                        document.getElementById("NgayTraPhaitra").style.display = "none";
+                        $("#NgayTraPhaitra").dxDateBox({ visible: false });
                         document.getElementById("hdmb_chomuon").style.display = "none";
                         break;
                     case "MUON":
                         document.getElementById("MUON").checked = true;
                         document.getElementById("label_ngaytra").style.display = "block";
-                        document.getElementById("NgayTraPhaitra").style.display = "block";
+                        $("#NgayTraPhaitra").dxDateBox({ visible: true });
                         document.getElementById("hdmb_chomuon").style.display = "none";
                         break;
                     case "CMUON":
                         document.getElementById("CMUON").checked = true;
                         document.getElementById("label_ngaytra").style.display = "none";
-                        document.getElementById("NgayTraPhaitra").style.display = "none";
+                        $("#NgayTraPhaitra").dxDateBox({ visible: false });
                         document.getElementById("hdmb_chomuon").style.display = "none";
                         break;
                     case "KTRA":
                         document.getElementById("KTRA").checked = true;
                         document.getElementById("label_ngaytra").style.display = "none";
-                        document.getElementById("NgayTraPhaitra").style.display = "none";
+                        $("#NgayTraPhaitra").dxDateBox({ visible: false });
                         document.getElementById("hdmb_chomuon").style.display = "block";
                         break;
                 }
@@ -799,10 +817,10 @@
         document.getElementById("Tenfull").disabled = false;
         document.getElementById("DiaDiemGiaoHang").disabled = false;
         document.getElementById("Ghichu").disabled = false;
-        document.getElementById("Ngayky").disabled = false;
-        document.getElementById("Ngaygiao").disabled = false;
-        document.getElementById("Ngayhl").disabled = false;
-        document.getElementById("NgayTraPhaitra").disabled = false;
+        $("#Ngayky").dxDateBox("instance").option("disabled", false);
+        $("#Ngaygiao").dxDateBox("instance").option("disabled", false);
+        $("#Ngayhl").dxDateBox("instance").option("disabled", false);
+        $("#NgayTraPhaitra").dxDateBox("instance").option("disabled", false);
         document.getElementById("TienUngHd").disabled = false;
         document.getElementById("TienUngTt").disabled = false;
         document.getElementById("Nguoilam").disabled = false;
@@ -816,7 +834,6 @@
         document.getElementById("Name_IntKy").disabled = false;
         document.getElementById("Name_ClientKy").disabled = false;
         document.getElementById("label_ngaytra").disabled = false;
-        document.getElementById("NgayTraPhaitra").disabled = false;
         document.getElementById("hdmb_chomuon").disabled = false;
         document.getElementById("MUA").disabled = false;
         document.getElementById("BAN").disabled = false;
@@ -843,10 +860,10 @@
         document.getElementById("Tenfull").disabled = true;
         document.getElementById("DiaDiemGiaoHang").disabled = true;
         document.getElementById("Ghichu").disabled = true;
-        document.getElementById("Ngayky").disabled = true;
-        document.getElementById("Ngaygiao").disabled = true;
-        document.getElementById("Ngayhl").disabled = true;
-        document.getElementById("NgayTraPhaitra").disabled = true;
+        $("#Ngayky").dxDateBox("instance").option("disabled", true);
+        $("#Ngaygiao").dxDateBox("instance").option("disabled", true);
+        $("#Ngayhl").dxDateBox("instance").option("disabled", true);
+        $("#NgayTraPhaitra").dxDateBox("instance").option("disabled", true);
         document.getElementById("TienUngHd").disabled = true;
         document.getElementById("TienUngTt").disabled = true;
         document.getElementById("Nguoilam").disabled = true;
@@ -860,7 +877,6 @@
         document.getElementById("Name_IntKy").disabled = true;
         document.getElementById("Name_ClientKy").disabled = true;
         document.getElementById("label_ngaytra").disabled = true;
-        document.getElementById("NgayTraPhaitra").disabled = true;
         document.getElementById("hdmb_chomuon").disabled = true;
         document.getElementById("MUA").disabled = true;
         document.getElementById("BAN").disabled = true;
@@ -1090,14 +1106,14 @@
     $('input[name="MuaBan"]').click(function () {
         if ($(this).attr("value") == "KTRA") {
             $("#hdmb_chomuon").show('slow');
-            $("#NgayTraPhaitra").hide('slow'); 
+            $("#NgayTraPhaitra").dxDateBox({ visible: false });
             $("#label_ngaytra").hide('slow');
         } else if ($(this).attr("value") == "MUON") {
-            $("#NgayTraPhaitra").show('slow');
+            $("#NgayTraPhaitra").dxDateBox({ visible: true });
             $("#label_ngaytra").show('slow');
             $("#hdmb_chomuon").hide('slow');
         } else {
-            $("#NgayTraPhaitra").hide('slow');
+            $("#NgayTraPhaitra").dxDateBox({ visible: false });
             $("#hdmb_chomuon").hide('slow');
             $("#label_ngaytra").hide('slow');
         }

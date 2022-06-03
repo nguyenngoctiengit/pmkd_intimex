@@ -268,9 +268,7 @@ namespace Intimex_project.Controllers
                     TempData["alertMessage"] = ex;
                     return RedirectToAction("hdmb", "Hopdong");
                 }
-            }
-            
+            }   
         }
-
     }
 }
