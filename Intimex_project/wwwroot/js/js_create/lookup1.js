@@ -169,5 +169,12 @@ var LOAIHD = [{
 }
 ];
 
+var THUCHIEN = [{
+    "id": "ALL", "name": "Tất cả"
+}, {
+    "id": "0", "name": "Đang thực hiện"
+}, {
+    "id": "1", "name": "Đã hủy"
+}]
 
 

@@ -270,5 +270,23 @@ namespace Intimex_project.Controllers
                 }
             }   
         }
+        public IActionResult pakd()
+        {
+            return View("pakd");
+        }
+        public object GetPAKD(DataSourceLoadOptions loadOptions)
+        {
+            var item = (from a in _context.Plans
+                        where a.IsNew == true && a.Macn == HttpContext.Session.GetString("UnitName")
+                        select new
+                        {
+                            SystemId = a.SystemId.Trim(),
+                            SoPa = a.SoPa.Trim(),
+                            LaiRong = a.LaiRong,
+                            NgayPa = a.NgayPa,
+                            Trangthai = a.Trangthai
+                        }).ToList();
+            return DataSourceLoader.Load(item, loadOptions);
+        }
     }
 }
