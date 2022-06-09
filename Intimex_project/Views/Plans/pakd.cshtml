@@ -78,6 +78,7 @@
                                                 .Offset(0, 10)
                                         )
                                     )
+                                    .OnSelectionChanged("Selected_Plans")
                                     .Selection(s => s.Mode(SelectionMode.Single))
                                     .HoverStateEnabled(true)
                                     .FilterRow(filter => filter.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
@@ -91,6 +92,7 @@
 
 
                 </div>
+                
                 @*----------------------------------------------------Bootrap popup choose khách hàng-------------------------------------------------------------------------------------------------------------------------------*@
                 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="selected_KH">
                     <div class="modal-dialog modal-lg">
@@ -479,45 +481,44 @@
                                 <input type="radio" style="display: inline-block; margin: 5px 10px 5px 10px " name="isfix" id="0"><label for="BAN">Out right</label>
                             </div>
                             <label class="col-form-label col-md-1 col-sm-1">System ID</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="SystemId" disabled>
                             <label class="col-form-label col-md-1 col-sm-1">Số PA</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="SoPa" disabled>
                             <label class="col-form-label col-md-1 col-sm-1">Ngày</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" disabled>
+                            <input type="date" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="NgayPa" disabled>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">1-Đối tác INT bán</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="DoiTacMua" disabled>
                             <label class="col-form-label col-md-1 col-sm-1">2-HĐ bán</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="HdMua" disabled>
                             <label class="col-form-label col-md-2 col-sm-2">Đánh giá KH INT bán</label>
-                            <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" disabled>
+                            <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" id="DanhGiaMua" disabled>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">3-Đối tác INT mua</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="DoiTacBan" disabled>
                             <label class="col-form-label col-md-1 col-sm-1">4-HĐ mua</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="HdBan" disabled>
                             <label class="col-form-label col-md-2 col-sm-2">Đánh giá KH INT mua</label>
-                            <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" disabled>
+                            <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" id="DanhGiaBan" disabled>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">5-Mặt hàng</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="HangHoa" disabled>
                             <label class="col-form-label col-md-1 col-sm-1">6-Trọng lượng</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" disabled>
-                            <input type="text" class="form-control col-md-1 col-sm-1 text-box-hdmb" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Trongluong" disabled>
+                            <input type="text" class="form-control col-md-1 col-sm-1 text-box-hdmb" id="Dvt" disabled>
                             <label class="col-form-label col-md-1 col-sm-1">7-Tỷ giá dự tính</label>
-                            <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" disabled>
+                            <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" id="TyGia" disabled>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">8-Nguồn vốn sử dụng</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="NguonVon" disabled>
                             <label class="col-form-label col-md-1 col-sm-1" style="font-size:11px">9-Tổng TGSD vốn</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" disabled>
-                            <input type="text" class="form-control col-md-1 col-sm-1 text-box-hdmb" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Songay" disabled>
                             <label class="col-form-label col-md-2 col-sm-2">9.1-TGSD vốn(g/h -> tiền về)</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" disabled>
+                            <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" id="Songay1" disabled>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">9.2-Lãi suất(% năm)</label>
@@ -592,7 +593,7 @@
                                 <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" disabled>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2 col-sm-2">B-Chênh lệch giá bán và mua tạm tính</label>
+                                <label class="col-form-label col-md-2 col-sm-2" style="font-size:smaller">B-Chênh lệch giá bán và mua tạm tính</label>
                                 <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" disabled>
                                 <label class="col-form-label col-md-1 col-sm-1">Tiền tệ</label>
                                 <input type="text" class="form-control col-md-1 col-sm-1 text-box-hdmb" disabled>
@@ -732,17 +733,42 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        var div_Trului = document.getElementById("div_Trului");
+        var div_outright = document.getElementById("div_outright");
         $('input[type="radio"]').click(function () {
             if ($(this).attr('id') == '0') {
-                $('#div_trului').hide()
-                $('#div_outright').show();
+                div_outright.style.display = "block";
+                div_Trului.style.display = "none";
             }
-
             else {
-                $('#div_outright').hide();
-                $('#div_trului').show();
+                div_outright.style.display = "none";
+                div_Trului.style.display = "block";
             }
         });
     });
+    function Selected_Plans(selectedItems) {
+        var data = selectedItems.selectedRowsData[0];
+        if (data) {
+            $.post('/Plans/Fill_Form_Plans', { 'Systemref': data.SystemId }, function (array) {
+                document.getElementById("SystemId").value = array.SystemId;
+                document.getElementById("SoPa").value = array.SoPa;
+                document.getElementById("NgayPa").value = new Date(array.NgayPa).toString("yyyy-MM-dd");
+                document.getElementById("DoiTacMua").value = array.DoiTacMua;
+                document.getElementById("HdMua").value = array.HdMua;
+                document.getElementById("DanhGiaMua").value = array.DanhGiaMua;
+                document.getElementById("DoiTacBan").value = array.DoiTacBan;
+                document.getElementById("HdBan").value = array.HdBan;
+                document.getElementById("DanhGiaBan").value = array.DanhGiaBan;
+                document.getElementById("HangHoa").value = array.HangHoa;
+                document.getElementById("Trongluong").value = array.Trongluong;
+                document.getElementById("Dvt").value = array.Dvt;
+                document.getElementById("TyGia").value = array.TyGia;
+                document.getElementById("NguonVon").value = array.NguonVon;
+                document.getElementById("Songay").value = array.Songay;
+                document.getElementById("Songay1").value = array.Songay1;
+            })
+        }
+
+    }
 </script>
 

@@ -288,5 +288,18 @@ namespace Intimex_project.Controllers
                         }).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
+        [HttpPost]
+        public IActionResult Fill_Form_Plans(string Systemref)
+        {
+            var data = (from a in _context.Plans where a.SystemId == Systemref select new { 
+                a.SystemId,a.SoPa,a.NgayPa,a.DoiTacMua,a.DoiTacBan,a.DanhGiaMua,a.DanhGiaBan,a.HangHoa,a.Trongluong,
+                a.TyGia,a.NguonVon,a.LaiSuat,a.Songay,a.Dieukiengiao,a.ThanhToanMua,a.ThanhToanBan,a.GhiChu,a.Dvt,a.HdBan,
+                a.HdMua,a.CtTinhLaiVay,a.DienGiaiNguonVon,a.CangGiaoHang,a.NoiNhanHang,a.Ngaygiao,a.Tientechenhlech,a.TriGiaBanU,
+                a.Chenhlechmuaban,a.TriGiaMua,a.Tienteban,a.Tientemua,a.GiaMuaU,a.GiaBanU,a.TienTeGn,a.TienTeHh,a.TienTeVc,a.TienTeCuocTau,
+                a.TienTeBaoHiem,a.TienTeQly,a.TienTeThc,a.TienTeKhuTrung,a.TienTeLaiVay,a.TienTeKhac,a.DvtBh,a.DvtCt,a.DvtGd,a.DvtGn,a.DvtHh,
+                a.DvtKhac,a.DvtKt,a.DvtLv,a.DvtThc,a.DvtVcnd
+            }).FirstOrDefault();
+            return Json(data);
+        }
     }
 }
