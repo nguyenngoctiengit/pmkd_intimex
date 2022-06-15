@@ -291,13 +291,40 @@ namespace Intimex_project.Controllers
         [HttpPost]
         public IActionResult Fill_Form_Plans(string Systemref)
         {
-            var data = (from a in _context.Plans where a.SystemId == Systemref select new { 
-                a.SystemId,a.SoPa,a.NgayPa,a.DoiTacMua,a.DoiTacBan,a.DanhGiaMua,a.DanhGiaBan,a.HangHoa,a.Trongluong,
-                a.TyGia,a.NguonVon,a.LaiSuat,a.Songay,a.Dieukiengiao,a.ThanhToanMua,a.ThanhToanBan,a.GhiChu,a.Dvt,a.HdBan,
-                a.HdMua,a.CtTinhLaiVay,a.DienGiaiNguonVon,a.CangGiaoHang,a.NoiNhanHang,a.Ngaygiao,a.Tientechenhlech,a.TriGiaBanU,
-                a.Chenhlechmuaban,a.TriGiaMua,a.Tienteban,a.Tientemua,a.GiaMuaU,a.GiaBanU,a.TienTeGn,a.TienTeHh,a.TienTeVc,a.TienTeCuocTau,
-                a.TienTeBaoHiem,a.TienTeQly,a.TienTeThc,a.TienTeKhuTrung,a.TienTeLaiVay,a.TienTeKhac,a.DvtBh,a.DvtCt,a.DvtGd,a.DvtGn,a.DvtHh,
-                a.DvtKhac,a.DvtKt,a.DvtLv,a.DvtThc,a.DvtVcnd
+
+            var data = (from a in _context.Plans where a.SystemId == Systemref select new {
+                a.SystemId, a.SoPa, a.NgayPa, a.DoiTacMua, a.DoiTacBan, a.DanhGiaMua, a.DanhGiaBan, a.HangHoa, a.Trongluong,
+                a.TyGia, a.NguonVon, a.LaiSuat, a.Songay, a.Dieukiengiao, a.ThanhToanMua, a.ThanhToanBan, a.GhiChu, a.Dvt, a.HdBan,
+                a.HdMua, a.CtTinhLaiVay, a.DienGiaiNguonVon, a.CangGiaoHang, a.NoiNhanHang, a.Ngaygiao, a.Tientechenhlech, a.TriGiaBanU,
+                a.Chenhlechmuaban, a.TriGiaMua, a.Tienteban, a.Tientemua, a.GiaMuaU, a.GiaBanU, a.TienTeGn, a.TienTeHh, a.TienTeVc, a.TienTeCuocTau,
+                a.TienTeBaoHiem, a.TienTeQly, a.TienTeThc, a.TienTeKhuTrung, a.TienTeLaiVay, a.TienTeKhac, a.DvtBh, a.DvtCt, a.DvtGd, a.DvtGn, a.DvtHh,
+                a.DvtKhac, a.DvtKt, a.DvtLv, a.DvtThc, a.DvtVcnd, a.SoCont, a.TriGiaBan, a.GiaBan, a.TriGiaMuaU, a.GiaMua, a.LaiGop,
+                CpCuocTau = string.Format("{0:N" + (a.TienTeCuocTau == "VND" ? "0}" : "4}"), (Convert.ToDecimal(a.CpCuocTau))),
+                CpVanTai = string.Format("{0:N" + (a.TienTeVc == "VND" ? "0}" : "4}"), (Convert.ToDecimal(a.CpVanTai))),
+                CpBaoHiem = string.Format("{0:N" + (a.TienTeBaoHiem == "VND" ? "0}" : "4}"), (Convert.ToDecimal(a.CpBaoHiem))),
+                CpHoaHong = string.Format("{0:N" + (a.TienTeHh == "VND" ? "0}" : "4}"), (Convert.ToDecimal(a.CpHoaHong))),
+                CpGiaoNhan = string.Format("{0:N" + (a.TienTeGn == "VND" ? "0}" : "4}"), (Convert.ToDecimal(a.CpGiaoNhan))),
+                CpQuanLy = string.Format("{0:N" + (a.TienTeQly == "VND" ? "0}" : "4}"), (Convert.ToDecimal(a.CpQuanLy))),
+                CpThc = string.Format("{0:N" + (a.TienTeThc == "VND" ? "0}" : "4}"), (Convert.ToDecimal(a.CpThc))),
+                CpKhuTrung = string.Format("{0:N" + (a.TienTeKhuTrung == "VND" ? "0}" : "4}"), (Convert.ToDecimal(a.CpKhuTrung))),
+                CpLaiVay = string.Format("{0:N" + (a.TienTeLaiVay == "VND" ? "0}" : "4}"), (Convert.ToDecimal(a.CpLaiVay))),
+                CpKhac = string.Format("{0:N" + (a.TienTeKhac == "VND" ? "0}" : "4}"), (Convert.ToDecimal(a.CpKhac))),
+                a.Tongchiphi,
+                a.LaiRong,
+                CuocTau_U = a.TienTeCuocTau == "VND" ? "0" : string.Format("{0:N4}", (a.CpCuocTau * a.SoCont)),
+                CuocTau_V = a.TienTeCuocTau == "VND" ? string.Format("{0:N0}", (a.CpCuocTau * a.SoCont)) : string.Format("{0:N0}", ((decimal)a.CpCuocTau * a.SoCont * a.TyGia)),
+                VanTai_U = a.TienTeVc == "VND" ? "0" : string.Format("{0:N4}", ((decimal)a.CpVanTai * a.Trongluong / (a.DvtVcnd == "KG" ? 1 : 1000))),
+                VanTai_V = a.TienTeVc == "VND" ? string.Format("{0:N0}", (decimal)a.CpVanTai * a.Trongluong / (a.DvtVcnd == "KG" ? 1 : 1000)) : string.Format("{0:N0}", ((decimal)a.CpVanTai * a.Trongluong / (a.DvtVcnd == "KG" ? 1 : 1000) * a.TyGia)),
+                BaoHiem_U = a.Tienteban == "VND" ? "0" : string.Format("{0:N4}", ((decimal)a.CpBaoHiem * a.Trongluong * (decimal)a.GiaBanU / (a.DvtBh == "KG" ? 1 : 1000) / 100)),
+                BaoHiem_V = a.Tienteban == "VND" ? string.Format("{0:N0}", ((decimal)a.CpBaoHiem * a.Trongluong * (decimal)a.GiaBanU / (a.DvtBh == "KG" ? 1 : 1000) / 100)) : string.Format("{0:N0}", ((decimal)a.CpBaoHiem * a.Trongluong * (decimal)a.GiaBanU / (a.DvtBh == "KG" ? 1 : 1000) * a.TyGia / 100)),
+                HoaHong_U = a.TienTeHh == "VND" ? "0" : string.Format("{0:N4}", ((decimal)a.CpHoaHong * a.Trongluong / (a.DvtHh == "KG" ? 1 : 1000))),
+                HoaHong_V = a.TienTeHh == "VND" ? string.Format("{0:N0}", ((decimal)a.CpHoaHong * a.Trongluong / (a.DvtHh == "KG" ? 1 : 1000))) : string.Format("{0:N0}", ((decimal)a.CpHoaHong * a.Trongluong / (a.DvtHh == "KG" ? 1 : 1000) * a.TyGia)),
+                GiaoNhan_U = a.TienTeGn == "VND" ? "0" : (a.DvtGn == "CONT" ? string.Format("{0:N4}", (a.CpGiaoNhan * a.SoCont)) : string.Format("{0:N4}", (decimal)a.CpGiaoNhan * a.Trongluong / (a.DvtGn == "KG" ? 1 : 1000))),
+                GiaoNhan_V = a.TienTeGn == "VND" ? (a.TienTeGn == "CONT" ? string.Format("{0:N0}", a.CpGiaoNhan * a.SoCont) : string.Format("{0:N0}", ((decimal)a.CpGiaoNhan * a.Trongluong / (a.DvtGn == "KG" ? 1 : 1000)))) : (a.DvtGn == "CONT" ? string.Format("{0:N0}", ((decimal)a.CpGiaoNhan * a.SoCont * a.TyGia)) : string.Format("{0:N0}", ((decimal)a.CpGiaoNhan * a.Trongluong / (a.DvtGn == "KG" ? 1 : 1000) * a.TyGia))),
+                GiamDinh_U = a.TienTeQly == "VND" ? "0" : (a.DvtGd == "CONT" ? string.Format("{0:N4}", (a.CpQuanLy * a.SoCont)) : string.Format("{0:N4}", ((decimal)a.CpQuanLy * a.Trongluong / (a.DvtGd == "KG" ? 1 : 1000)))),
+                GiamDinh_V = a.TienTeQly == "VND" ? (a.DvtGd == "CONT" ? string.Format("{0:N0}", (a.CpQuanLy * a.SoCont)) : string.Format("{0:N0}", ((decimal)a.CpQuanLy * a.Trongluong / (a.DvtGd == "KG" ? 1 : 1000)))) : (a.DvtGd == "CONT" ? string.Format("{0:N0}", (decimal)a.CpQuanLy * a.SoCont * (decimal)a.TyGia) : string.Format("{0:N0}", (decimal)a.CpQuanLy * a.Trongluong / (a.DvtGd == "KG" ? 1 : 1000) * a.TyGia)),
+                THC_U = a.TienTeThc == "VND" ? "0" : (a.DvtThc == "CONT" ? string.Format("{0:N4}", a.CpThc * a.SoCont) : string.Format("0:N4", ((decimal)a.CpThc * a.Trongluong / (a.DvtThc == "KG" ? 1 : 1000)))),
+
             }).FirstOrDefault();
             return Json(data);
         }
