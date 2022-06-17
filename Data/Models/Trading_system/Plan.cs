@@ -23,6 +23,7 @@ namespace Data.Models.Trading_system
         public string NguonVon { get; set; }
         public decimal? LaiSuat { get; set; }
         public int? Songay { get; set; }
+        public int? Songay1 { get; set; }
         public string Dieukiengiao { get; set; }
         public DateTime? Ngaygiao { get; set; }
         public string ThanhToanMua { get; set; }

@@ -12749,6 +12749,7 @@ namespace Data.Models.Trading_system
                 entity.Property(e => e.SoPa)
                     .HasMaxLength(50)
                     .HasColumnName("soPA");
+                entity.Property(e => e.Songay1).HasColumnName("songay1");
 
                 entity.Property(e => e.Songay).HasColumnName("songay");
 
