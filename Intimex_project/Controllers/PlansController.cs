@@ -293,7 +293,7 @@ namespace Intimex_project.Controllers
         {
 
             var data = (from a in _context.Plans where a.SystemId == Systemref select new {
-                a.SystemId, a.SoPa, a.NgayPa, a.DoiTacMua, a.DoiTacBan, a.DanhGiaMua, a.DanhGiaBan, a.HangHoa, a.Trongluong,
+                a.SystemId, a.SoPa, a.NgayPa, a.DoiTacMua, a.DoiTacBan, a.DanhGiaMua, a.DanhGiaBan, a.HangHoa, a.Trongluong,a.Isfix,
                 a.TyGia, a.NguonVon, a.LaiSuat, a.Songay, a.Dieukiengiao, a.ThanhToanMua, a.ThanhToanBan, a.GhiChu, a.Dvt, a.HdBan,
                 a.HdMua, a.CtTinhLaiVay, a.DienGiaiNguonVon, a.CangGiaoHang, a.NoiNhanHang, a.Ngaygiao, a.Tientechenhlech,
                 TriGiaBanU = string.Format("{0:N4}", a.TriGiaBanU),
@@ -341,6 +341,47 @@ namespace Intimex_project.Controllers
                 Khac_V = a.TienTeKhac == "VND" ? string.Format("{0:N0}",((decimal)a.CpKhac * a.Trongluong / (a.DvtKhac == "KG" ? 1 :1000))) : string.Format("{0:N0}",((decimal)a.CpKhac * a.Trongluong / (a.DvtKhac == "KG" ? 1 : 1000) * a.TyGia)),
             }).FirstOrDefault();
             return Json(data);
+        }
+        [HttpGet]
+        public object GetDoiTacMua(DataSourceLoadOptions loadOptions)
+        {
+
+            var Sp = (from a in _context.KhachHangs where a.MaCn == HttpContext.Session.GetString("UnitName") && a.GiaoDich == 1 select new {
+                MaKhach = a.MaKhach,
+                TenKhach = a.TenKhach,
+                CheckItem = a.CheckItem,
+                ValueNorm = a.CheckItem == true ? (_context.CustomerNorms.Where(b => b.Makhach == a.MaKhach && b.Macn == HttpContext.Session.GetString("UnitName")).Sum(a => a.ValueNorm) == 0 ? 0 : (_context.CustomerNorms.Where(b => b.Makhach == a.MaKhach && b.Macn == HttpContext.Session.GetString("UnitName")).Sum(a => a.ValueNorm))) : 0,
+                Vanchuyen = a.Vanchuyen,
+                MaHd = a.MaHd
+            });
+            return DataSourceLoader.Load(Sp, loadOptions);
+        }
+        [HttpGet]
+        public object GetHangHoa(DataSourceLoadOptions loadOptions)
+        {
+            var Sp = (from a in _context.Hanghoas
+                      select new
+                      {
+                          a.Mahang,
+                          a.Tenhang,
+                          a.Vat,
+                          a.Dvt
+                      }).ToList();
+            return DataSourceLoader.Load(Sp, loadOptions);
+        }
+        [HttpGet]
+        public object getThanhToan(DataSourceLoadOptions loadOptions)
+        {
+            var Sp = (from a in _context.PortfolioPayments
+                      select new
+                      {
+
+                          a.Matt,
+                          a.TenTt,
+                          a.Mucung,
+                          a.ReportName
+                      }).ToList();
+            return DataSourceLoader.Load(Sp, loadOptions);
         }
     }
 }
