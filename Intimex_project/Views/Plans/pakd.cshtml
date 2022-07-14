@@ -3,7 +3,7 @@
     ViewData["Title"] = "pakd";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@model Data.Models.Trading_system.Plan
 <style>
     .text-box-hdmb {
         height: 28px;
@@ -177,74 +177,74 @@
                     <form id="Form_Hdmb" method="post">
                         <div class="form-group row">
                             <div class="col-md-3 col-sm-3" style="border: 1px solid; border-color: black;text-align:center">
-                                <input type="radio" style="display: inline-block; margin: 5px 10px 5px 10px" name="isfix" checked id="TruLui" value="1" disabled><label for="MUA">Trừ lùi</label>
-                                <input type="radio" style="display: inline-block; margin: 5px 10px 5px 10px" name="isfix" id="OutRight" value="0" disabled><label for="BAN">Out right</label>
+                                <input type="radio" style="display: inline-block; margin: 5px 10px 5px 10px" asp-for="Isfix" name="isfix" checked id="TruLui" value="1" disabled><label for="MUA">Trừ lùi</label>
+                                <input type="radio" style="display: inline-block; margin: 5px 10px 5px 10px" asp-for="Isfix" name="isfix" id="OutRight" value="0" disabled><label for="BAN">Out right</label>
                             </div>
                             <label class="col-form-label col-md-1 col-sm-1">System ID</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="SystemId" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="SystemId" id="SystemId" disabled>
                             <label class="col-form-label col-md-1 col-sm-1">Số PA</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="SoPa" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="SoPa" id="SoPa" disabled>
                             <label class="col-form-label col-md-1 col-sm-1">Ngày</label>
-                            <input type="date" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="NgayPa" disabled>
+                            <input type="date" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="NgayPa" id="NgayPa" disabled>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">1-Đối tác INT bán</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="DoiTacMua" placeholder="Press Enter to selected" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="DoiTacMua" id="DoiTacMua" placeholder="Press Enter to selected" disabled>
                             <label class="col-form-label col-md-1 col-sm-1">2-HĐ bán</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="HdMua" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="HdMua" id="HdMua" disabled>
                             <label class="col-form-label col-md-2 col-sm-2">Đánh giá KH INT bán</label>
-                            <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" id="DanhGiaMua" disabled>
+                            <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" asp-for="DanhGiaMua" id="DanhGiaMua" disabled>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">3-Đối tác INT mua</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="DoiTacBan" placeholder="Press Enter to selected" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="DoiTacBan" id="DoiTacBan" placeholder="Press Enter to selected" disabled>
                             <label class="col-form-label col-md-1 col-sm-1">4-HĐ mua</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="HdBan" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="HdBan" id="HdBan" disabled>
                             <label class="col-form-label col-md-2 col-sm-2">Đánh giá KH INT mua</label>
-                            <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" id="DanhGiaBan" disabled>
+                            <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" asp-for="DanhGiaBan" id="DanhGiaBan" disabled>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">5-Mặt hàng</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="HangHoa" placeholder="Press Enter to selected" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="HangHoa" id="HangHoa" placeholder="Press Enter to selected" disabled>
                             <label class="col-form-label col-md-1 col-sm-1">6-Trọng lượng</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Trongluong" disabled>
-                            <input type="text" class="form-control col-md-1 col-sm-1 text-box-hdmb" id="Dvt" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="Trongluong" id="Trongluong" disabled>
+                            <input type="text" class="form-control col-md-1 col-sm-1 text-box-hdmb" asp-for="Dvt" id="Dvt" disabled>
                             <label class="col-form-label col-md-1 col-sm-1">7-Tỷ giá dự tính</label>
-                            <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" id="TyGia" disabled>
+                            <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" asp-for="TyGia" id="TyGia" disabled>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">8-Nguồn vốn sử dụng</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="NguonVon" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="NguonVon" id="NguonVon" disabled>
                             <label class="col-form-label col-md-1 col-sm-1" style="font-size:11px">9-Tổng TGSD vốn</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Songay" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="Songay" id="Songay" disabled>
                             <label class="col-form-label col-md-2 col-sm-2">9.1-TGSD vốn(g/h -> tiền về)</label>
-                            <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" id="Songay1" disabled>
+                            <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" asp-for="Songay1" id="Songay1" disabled>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">9.2-Lãi suất(% năm)</label>
-                            <input type="text" class="form-control col-md-1 col-sm-1 text-box-hdmb" id="LaiSuat" disabled>
+                            <input type="text" class="form-control col-md-1 col-sm-1 text-box-hdmb" asp-for="LaiSuat" id="LaiSuat" disabled>
                             <label class="col-form-label col-md-1 col-sm-1" style="font-size:12px">10-ĐK bán hàng</label>
-                            <input type="text" class="form-control col-md-1 col-sm-1 text-box-hdmb" id="Dieukiengiao" disabled>
+                            <input type="text" class="form-control col-md-1 col-sm-1 text-box-hdmb" asp-for="Dieukiengiao" id="Dieukiengiao" disabled>
                             <label class="col-form-label col-md-1 col-sm-1">11-Cảng gh</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="CangGiaoHang" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="CangGiaoHang" id="CangGiaoHang" disabled>
                             <label class="col-form-label col-md-2 col-sm-2">9.2-Diễn giải NVSD</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="DienGiaiNguonVon" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="DienGiaiNguonVon" id="DienGiaiNguonVon" disabled>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">12-Tg giao hàng</label>
-                            <input type="date" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Ngaygiao" disabled>
+                            <input type="date" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="Ngaygiao" id="Ngaygiao" disabled>
                             <label class="col-form-label col-md-1 col-sm-1">Số cont</label>
-                            <input type="text" class="form-control col-md-1 col-sm-1 text-box-hdmb" id="SoCont" disabled>
+                            <input type="text" class="form-control col-md-1 col-sm-1 text-box-hdmb" asp-for="SoCont" id="SoCont" disabled>
                             <label class="col-form-label col-md-1 col-sm-1" style="font-size:smaller">13-Nơi nhận hàng</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="NoiNhanHang" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="NoiNhanHang" id="NoiNhanHang" disabled>
                             <label class="col-form-label col-md-1 col-sm-1">14-PTT MUA</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="ThanhToanMua" placeholder="Press Enter to selected" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="ThanhToanMua" id="ThanhToanMua" placeholder="Press Enter to selected" disabled>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">15-PTT BÁN</label>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="ThanhToanBan" placeholder="Press Enter to selected" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="ThanhToanBan" id="ThanhToanBan" placeholder="Press Enter to selected" disabled>
                             <label class="col-form-label col-md-1 col-sm-1">Ghi chú</label>
-                            <input type="text" class="form-control col-md-7 col-sm-7 text-box-hdmb" id="GhiChu" disabled>
+                            <input type="text" class="form-control col-md-7 col-sm-7 text-box-hdmb" asp-for="GhiChu" id="GhiChu" disabled>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-12 col-sm-12">Các chỉ tiêu theo PA</label>
@@ -253,28 +253,28 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-1 col-sm-1">A-Trị giá bán</label>
                                 <label class="col-form-label col-md-2 col-sm-2" style="text-align:center">Nguyên tệ</label>
-                                <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" id="TriGiaBanU" disabled>
+                                <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" asp-for="TriGiaBanU" id="TriGiaBanU" disabled>
                                 <label class="col-form-label col-md-2 col-sm-2" style="text-align:center">Qui VNĐ</label>
-                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="TriGiaBan" disabled>
+                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" asp-for="TriGiaBan" id="TriGiaBan" disabled>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-1 col-sm-1">Đơn giá bán</label>
                                 <label class="col-form-label col-md-2 col-sm-2" style="text-align:center">(Tấn)</label>
-                                <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="GiaBanU" disabled>
-                                <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="Tienteban" disabled>
+                                <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="GiaBanU" id="GiaBanU" disabled>
+                                <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="Tienteban" id="Tienteban" disabled>
                                     <option value="VND">VND</option>
                                     <option value="USD">USD</option>
                                     <option value="YND">YND</option>
                                 </select>
                                 <label class="col-form-label col-md-2 col-sm-2" style="text-align:center"></label>
-                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="GiaBan" disabled>
+                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" asp-for="GiaBan" id="GiaBan" disabled>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-1 col-sm-1">B-Trị giá mua</label>
                                 <label class="col-form-label col-md-2 col-sm-2" style="text-align:center"></label>
-                                <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" id="TriGiaMuaU" disabled>
+                                <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" asp-for="TriGiaMuaU" id="TriGiaMuaU" disabled>
                                 <label class="col-form-label col-md-2 col-sm-2" style="text-align:center"></label>
-                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="TriGiaMua" disabled>
+                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" asp-for="TriGiaMua" id="TriGiaMua" disabled>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-1 col-sm-1">Đơn giá mua</label>
@@ -552,7 +552,7 @@
         var TyGia = document.getElementById("TyGia").value;
         if (TienTeLaiVay == "VND") {
             document.getElementById("LaiVay_U").value = "0";
-            document.getElementById("LaiVay_V").value = numberWithCommas(CpLaiVay * Trongluong / (DvtLv == "KG" ? 1 : 1000));
+            document.getElementById("LaiVay_V").value = CpLaiVay * Trongluong / (DvtLv == "KG" ? 1 : 1000);
         } else {
             document.getElementById("LaiVay_U").value = CpLaiVay * Trongluong / (DvtLv == "KG" ? 1 : 1000)
             document.getElementById("LaiVay_V").value = CpVanTai * Trongluong / (DvtLv == "KG" ? 1 : 1000) * TyGia;
@@ -574,7 +574,7 @@
     function TinhLaiGop() {
         var TriGiaMua = document.getElementById("TriGiaMua").value;
         var TriGiaBan = document.getElementById("TriGiaBan").value;
-        document.getElementById("LaiGop").value = numberWithCommas(TriGiaBan - TriGiaMua);
+        document.getElementById("LaiGop").value = TriGiaBan - TriGiaMua;
     }
     function TinhGiaMua() {
         var TienTeMua = document.getElementById("Tientemua").value;
@@ -600,11 +600,11 @@
         var Cont = document.getElementById("SoCont").value;
         var TyGia = document.getElementById("TyGia").value;
         if (TienTeCuocTau == "VND") {
-            document.getElementById("CuocTau_V").value = numberWithCommas(CuocTau * Cont);
+            document.getElementById("CuocTau_V").value = CuocTau * Cont;
             document.getElementById("CuocTau_U").value = "0";
 
         } else {
-            document.getElementById("CuocTau_V").value = numberWithCommas(CuocTau * Cont * TyGia);
+            document.getElementById("CuocTau_V").value = CuocTau * Cont * TyGia;
             document.getElementById("CuocTau_U").value = CuocTau * Cont;
         }
     }
@@ -616,10 +616,10 @@
         var TyGia = document.getElementById("TyGia").value;
         if (TienTeVc == "VND") {
             document.getElementById("VanTai_U").value = "0";
-            document.getElementById("VanTai_V").value = numberWithCommas(CpVanTai * TrongLuong / (DvtVcnd == "KG" ? 1 : 1000))
+            document.getElementById("VanTai_V").value = CpVanTai * TrongLuong / (DvtVcnd == "KG" ? 1 : 1000);
         } else {
             document.getElementById("VanTai_U").value = CpVanTai * TrongLuong / (DvtVcnd == "KG" ? 1 : 1000);
-            document.getElementById("VanTai_V").value = numberWithCommas(CpVanTai * TrongLuong / (DvtVcnd == "KG" ? 1 : 1000) * TyGia);
+            document.getElementById("VanTai_V").value = CpVanTai * TrongLuong / (DvtVcnd == "KG" ? 1 : 1000) * TyGia;
         }
     }
     function TinhCpKhuTrung() {
@@ -630,16 +630,16 @@
         var TyGia = document.getElementById("TyGia").value;
         if (TienTeKhuTrung == "VND") {
             if (DvtKt == "CONT") {
-                document.getElementById("KhuTrung_V").value = numberWithCommas(CpKhuTrung * SoCont);
+                document.getElementById("KhuTrung_V").value = CpKhuTrung * SoCont;
             } else {
-                document.getElementById("KhuTrung_V").value = numberWithCommas(CpKhuTrung * Trongluong / (DvtKt == "KG" ? 1 : 1000));
+                document.getElementById("KhuTrung_V").value = CpKhuTrung * Trongluong / (DvtKt == "KG" ? 1 : 1000);
             }
             document.getElementById("KhuTrung_U").value = "0";
         }
         else {
             if (DvtKt == "CONT") {
                 document.getElementById("KhuTrung_U").value = CpKhuTrung * SoCont;
-                document.getElementById("KhuTrung_V").value = numberWithCommas(CpKhuTrung * SoCont * TyGia);
+                document.getElementById("KhuTrung_V").value = CpKhuTrung * SoCont * TyGia;
             }
             else {
                 document.getElementById("KhuTrung_U").value = CpKhuTrung * Trongluong / (DvtKt == "KG" ? 1 : 1000);
@@ -656,20 +656,20 @@
         var TyGia = document.getElementById("TyGia").value;
         if (TienTeThc == "CONT") {
             if (DvtThc == "CONT") {
-                document.getElementById("THC_V").value = numberWithCommas(CpThc * SoCont);
+                document.getElementById("THC_V").value = CpThc * SoCont;
             } else {
-                document.getElementById("THC_V").value = numberWithCommas(CpThc * Trongluong / (DvtThc == "KG" ? 1 : 1000));
+                document.getElementById("THC_V").value = CpThc * Trongluong / (DvtThc == "KG" ? 1 : 1000);
             }
             document.getElementById("THC_U").value = "0";
         } else {
             if (DvtThc == "CONT") {
                 document.getElementById("THC_U").value = CpThc * SoCont;
-                document.getElementById("THC_V").value = numberWithCommas(CpThc * SoCont * TyGia);
+                document.getElementById("THC_V").value = CpThc * SoCont * TyGia;
 
 
             } else {
                 document.getElementById("THC_U").value = CpThc * Trongluong / (DvtThc == "KG" ? 1 : 1000);
-                document.getElementById("THC_V").value = numberWithCommas(CpThc * Trongluong / (DvtThc == "KG" ? 1 : 1000) * TyGia);
+                document.getElementById("THC_V").value = CpThc * Trongluong / (DvtThc == "KG" ? 1 : 1000) * TyGia;
             }
         }
     }
@@ -683,11 +683,11 @@
         var TyGia = document.getElementById("TyGia").value;
         if (TienTeHh == "VND") {
             document.getElementById("HoaHong_U").value = "0";
-            document.getElementById("HoaHong_V").value = numberWithCommas(CpHoaHong * Trongluong / (DvtHh == "KG" ? 1 : 1000));
+            document.getElementById("HoaHong_V").value = CpHoaHong * Trongluong / (DvtHh == "KG" ? 1 : 1000);
         }
         else {
             document.getElementById("HoaHong_U").value = CpHoaHong * Trongluong / (DvtHh == "KG" ? 1 : 1000);
-            document.getElementById("HoaHong_V").value = numberWithCommas(CpHoaHong * Trongluong / (DvtHh == "KG" ? 1 : 1000) * TyGia);
+            document.getElementById("HoaHong_V").value = CpHoaHong * Trongluong / (DvtHh == "KG" ? 1 : 1000) * TyGia;
         }
     }
     function TinhCpBaoHiem() {
@@ -698,11 +698,11 @@
         var TyGia = document.getElementById("TyGia").value;
         if (Tienteban == "VND") {
             document.getElementById("BaoHiem_U").value = "0";
-            document.getElementById("BaoHiem_V").value = CpBaoHiem * Trongluong * GiaBanU / 10;
+            document.getElementById("BaoHiem_V").value = CpBaoHiem * Trongluong * GiaBanU / 1000 / 100;
 
         } else {
-            document.getElementById("BaoHiem_U").value = CpBaoHiem * Trongluong * GiaBanU / 10;
-            document.getElementById("BaoHiem_V").value = CpBaoHiem * Trongluong * GiaBanU / 10 * TyGia;
+            document.getElementById("BaoHiem_U").value = CpBaoHiem * Trongluong * GiaBanU / 1000 / 100;
+            document.getElementById("BaoHiem_V").value = CpBaoHiem * Trongluong * GiaBanU / 1000 * TyGia / 100;
         }
     }
     function TinhCpGiaoNhan() {
@@ -714,19 +714,19 @@
         var SoCont = document.getElementById("SoCont").value;
         if (TienTeGn == "VND") {
             if (DvtGn == "CONT") {
-                document.getElementById("GiaoNhan_V").value = numberWithCommas(CpGiaoNhan * SoCont);
+                document.getElementById("GiaoNhan_V").value = CpGiaoNhan * SoCont;
             } else {
-                document.getElementById("GiaoNhan_V").value = numberWithCommas(CpGiaoNhan * Trongluong / (DvtGn == "KG" ? 1 : 1000));
+                document.getElementById("GiaoNhan_V").value = CpGiaoNhan * Trongluong / (DvtGn == "KG" ? 1 : 1000);
             }
             document.getElementById("GiaoNhan_U").value = "0";
 
         } else {
             if (DvtGn == "CONT") {
                 document.getElementById("GiaoNhan_U").value = CpGiaoNhan * SoCont;
-                document.getElementById("GiaoNhan_V").value = numberWithCommas(CpGiaoNhan * SoCont * TyGia);
+                document.getElementById("GiaoNhan_V").value = CpGiaoNhan * SoCont * TyGia;
             } else {
                 document.getElementById("GiaoNhan_U").value = CpGiaoNhan * Trongluong / (DvtGn == "KG" ? 1 : 1000);
-                document.getElementById("GiaoNhan_V").value = numberWithCommas(CpGiaoNhan * Trongluong / (DvtGn == "KG" ? 1 : 1000) * TyGia);
+                document.getElementById("GiaoNhan_V").value = CpGiaoNhan * Trongluong / (DvtGn == "KG" ? 1 : 1000) * TyGia;
             }
         }
     }
@@ -741,16 +741,16 @@
             if (DvtGd == "CONT") {
                 document.getElementById("GiamDinh_V").value = CpQuanLy * SoCont;
             } else {
-                document.getElementById("GiamDinh_V").value = numberWithCommas(CpQuanLy * Trongluong / (DvtGd == "KG" ? 1 : 1000));
+                document.getElementById("GiamDinh_V").value = CpQuanLy * Trongluong / (DvtGd == "KG" ? 1 : 1000);
             }
             document.getElementById("GiamDinh_U").value = "0";
         } else {
             if (DvtGd == "CONT") {
                 document.getElementById("GiamDinh_U").value = CpQuanLy * SoCont;
-                document.getElementById("GiamDinh_V").value = numberWithCommas(CpQuanLy * SoCont * TyGia);
+                document.getElementById("GiamDinh_V").value = CpQuanLy * SoCont * TyGia;
             } else {
                 document.getElementById("GiamDinh_U").value = CpQuanLy * Trongluong / (DvtGd == "KG" ? 1 : 1000);
-                document.getElementById("GiamDinh_V").value = numberWithCommas(CpQuanLy * Trongluong / (DvtGd == "KG" ? 1 : 1000) * TyGia);
+                document.getElementById("GiamDinh_V").value = CpQuanLy * Trongluong / (DvtGd == "KG" ? 1 : 1000) * TyGia;
             }
         }
     }
@@ -761,14 +761,15 @@
         var Trongluong = document.getElementById("Trongluong").value;
         var TyGia = document.getElementById("TyGia").value;
         if (TienTeKhac == "VND") {
-            document.getElementById("Khac_V").value = numberWithCommas(CpKhac * Trongluong / (DvtKhac == "KG" ? 1 : 1000))
+            document.getElementById("Khac_V").value = CpKhac * Trongluong / (DvtKhac == "KG" ? 1 : 1000);
             document.getElementById("Khac_U").value = "0";
         } else {
-            document.getElementById("Khac_V").value = numberWithCommas(CpKhac * Trongluong / (DvtKhac == "KG" ? 1 : 1000) * TyGia);
+            document.getElementById("Khac_V").value = CpKhac * Trongluong / (DvtKhac == "KG" ? 1 : 1000) * TyGia;
             document.getElementById("Khac_U").value = CpKhac * Trongluong / (DvtKhac == "KG" ? 1 : 1000);
         }
     }
-    document.getElementById("CtTinhLaiVay").addEventListener("focusout", function () {  
+    document.getElementById("CtTinhLaiVay").addEventListener("focusout", function () {
+        TinhCplaiVay();
         TinhCpLaivayU();
     })
     $("#GiaMuaU").on('input', function (e) {
