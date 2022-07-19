@@ -174,7 +174,7 @@
                 </div>
                 @*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
                 <div class="col-md-9 col-sm-9" id="rightdiv" style="height:auto;min-height:auto">
-                    <form id="Form_Hdmb" method="post">
+                    <form id="Form_Pakd" method="post">
                         <div class="form-group row">
                             <div class="col-md-3 col-sm-3" style="border: 1px solid; border-color: black;text-align:center">
                                 <input type="radio" style="display: inline-block; margin: 5px 10px 5px 10px" asp-for="Isfix" name="isfix" checked id="TruLui" value="1" disabled><label for="MUA">Trừ lùi</label>
@@ -279,14 +279,14 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-1 col-sm-1">Đơn giá mua</label>
                                 <label class="col-form-label col-md-2 col-sm-2" style="text-align:center">(KG)</label>
-                                <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="GiaMuaU" disabled>
-                                <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="Tientemua" disabled>
+                                <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="GiaMuaU" id="GiaMuaU" disabled>
+                                <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="Tientemua" id="Tientemua" disabled>
                                     <option value="VND">VND</option>
                                     <option value="USD">USD</option>
                                     <option value="YND">YND</option>
                                 </select>
                                 <label class="col-form-label col-md-2 col-sm-2" style="text-align:center"></label>
-                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="GiaMua" disabled>
+                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" asp-for="GiaMua" id="GiaMua" disabled>
                             </div>
                         </div>
                         <div id="div_Trului" style="display:none">
@@ -312,7 +312,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">C-Lãi gộp dự kiến</label>
                             <label class="col-form-label col-md-6 col-sm-6" style="text-align:center"></label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="LaiGop" disabled>
+                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" asp-for="LaiGop" id="LaiGop" disabled>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">D-Chi phí phát sinh</label>
@@ -324,11 +324,11 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Cước tàu XK(nếu có)</label>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="DvtCt" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="DvtCt" id="DvtCt" disabled>
                                 <option value="CONT">CONT</option>
                             </select>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="CpCuocTau" disabled>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="TienTeCuocTau" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="CpCuocTau" id="CpCuocTau" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="TienTeCuocTau" id="TienTeCuocTau" disabled>
                                 <option value="VND">VND</option>
                                 <option value="USD">USD</option>
                                 <option value="YND">YND</option>
@@ -338,12 +338,12 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Vận chuyển nội địa(nếu có)</label>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="DvtVcnd" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="DvtVcnd" id="DvtVcnd" disabled>
                                 <option value="KG">KG</option>
                                 <option value="TẤN">TẤN</option>
                             </select>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="CpVanTai" disabled>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="TienTeVc" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="CpVanTai" id="CpVanTai" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="TienTeVc" id="TienTeVc" disabled>
                                 <option value="VND">VND</option>
                                 <option value="USD">USD</option>
                                 <option value="YND">YND</option>
@@ -353,11 +353,11 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Bảo hiểm(nếu có)</label>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="DvtBh" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="DvtBh" id="DvtBh" disabled>
                                 <option value="%">%</option>
                             </select>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="CpBaoHiem" disabled>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="TienTeBaoHiem" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="CpBaoHiem" id="CpBaoHiem" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="TienTeBaoHiem" id="TienTeBaoHiem" disabled>
                                 <option value="VND">VND</option>
                                 <option value="USD">USD</option>
                                 <option value="YND">YND</option>
@@ -367,12 +367,12 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Hoa hồng theo HĐ(nếu có)</label>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="DvtHh" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="DvtHh" id="DvtHh" disabled>
                                 <option value="KG">KG</option>
                                 <option value="TẤN">TẤN</option>
                             </select>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="CpHoaHong" disabled>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="TienTeHh" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="CpHoaHong" id="CpHoaHong" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="TienTeHh" id="TienTeHh" disabled>
                                 <option value="VND">VND</option>
                                 <option value="USD">USD</option>
                                 <option value="YND">YND</option>
@@ -382,12 +382,12 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Chi phí giao nhận</label>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="DvtGn" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="DvtGn" id="DvtGn" disabled>
                                 <option value="CONT">CONT</option>
                                 <option value="TẤN">TẤN</option>
                             </select>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="CpGiaoNhan" disabled>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="TienTeGn" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="CpGiaoNhan" id="CpGiaoNhan" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="TienTeGn" id="TienTeGn" disabled>
                                 <option value="VND">VND</option>
                                 <option value="USD">USD</option>
                                 <option value="YND">YND</option>
@@ -397,12 +397,12 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Chi phí giám định</label>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="DvtGd" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="DvtGd" id="DvtGd" disabled>
                                 <option value="CONT">CONT</option>
                                 <option value="TẤN">TẤN</option>
                             </select>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="CpQuanLy" disabled>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="TienTeQly" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="CpQuanLy" id="CpQuanLy" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="TienTeQly" id="TienTeQly" disabled>
                                 <option value="VND">VND</option>
                                 <option value="USD">USD</option>
                                 <option value="YND">YND</option>
@@ -412,12 +412,12 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Chi phí THC</label>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="DvtThc" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="DvtThc" id="DvtThc" disabled>
                                 <option value="CONT">CONT</option>
                                 <option value="TẤN">TẤN</option>
                             </select>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="CpThc" disabled>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="TienTeThc" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="CpThc" id="CpThc" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="TienTeThc" id="TienTeThc" disabled>
                                 <option value="VND">VND</option>
                                 <option value="USD">USD</option>
                                 <option value="YND">YND</option>
@@ -427,12 +427,12 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Chi phí khử trùng</label>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="DvtKt" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="DvtKt" id="DvtKt" disabled>
                                 <option value="CONT">CONT</option>
                                 <option value="TẤN">TẤN</option>
                             </select>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="CpKhuTrung" disabled>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="TienTeKhuTrung" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="CpKhuTrung" id="CpKhuTrung" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="TienTeKhuTrung" id="TienTeKhuTrung" disabled>
                                 <option value="VND">VND</option>
                                 <option value="USD">USD</option>
                                 <option value="YND">YND</option>
@@ -442,17 +442,17 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Công thức tính lãi vay NH</label>
-                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="CtTinhLaiVay" disabled>
+                            <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" asp-for="CtTinhLaiVay" id="CtTinhLaiVay" disabled>
                             <label class="col-form-label col-md-6 col-sm-6"></label>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Lãi vay ngân hàng</label>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="DvtLv" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="DvtLv" id="DvtLv" disabled>
                                 <option value="KG">KG</option>
                                 <option value="TẤN">TẤN</option>
                             </select>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="CpLaiVay" disabled>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="TienTeLaiVay" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="CpLaiVay" id="CpLaiVay" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="TienTeLaiVay" id="TienTeLaiVay" disabled>
                                 <option value="VND">VND</option>
                                 <option value="USD">USD</option>
                                 <option value="YND">YND</option>
@@ -462,29 +462,28 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">Chi phí khác</label>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="DvtKhac" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="DvtKhac" id="DvtKhac" disabled>
                                 <option value="KG">KG</option>
                                 <option value="TẤN">TẤN</option>
                             </select>
-                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="CpKhac" disabled>
-                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" id="TienTeKhac" disabled>
+                            <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="CpKhac" id="CpKhac" disabled>
+                            <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="TienTeKhac" id="TienTeKhac" disabled>
                                 <option value="VND">VND</option>
                                 <option value="USD">USD</option>
                                 <option value="YND">YND</option>
                             </select>
                             <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" id="Khac_U" disabled>
                             <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" id="Khac_V" disabled>
-
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">E-Tổng chi phí phát sinh</label>
                             <label class="col-form-label col-md-4 col-sm-4"></label>
-                            <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb" id="Tongchiphi" disabled>
+                            <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb" asp-for="Tongchiphi" id="Tongchiphi" disabled>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">F-Lãi ròng dự kiến</label>
                             <label class="col-form-label col-md-4 col-sm-4"></label>
-                            <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb" id="LaiRong" disabled>
+                            <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb" asp-for="LaiRong" id="LaiRong" disabled>
                         </div>
                     </form>
                     <input type="text" id="Systemref" hidden>
@@ -821,6 +820,40 @@
         CalculatorGiaTri();
     });
     $("#Trongluong").on('input', function (e) {
+        TinhGiaBan();
+        TinhGiaMua();
+        TinhLaiGop();
+        TinhCpCuocTau();
+        TinhCpVCND();
+        TinhCpBaoHiem();
+        TinhCpHoaHong();
+        TinhCpGiaoNhan();
+        TinhCpGiamDinh();
+        TinhCpKhuTrung();
+        TinhCpTHC();
+        TinhCpLaivayU();
+        TinhCplaiVay();
+        TinhCpKhac();
+        CalculatorGiaTri();
+    });
+    $("#TyGia").on('input', function (e) {
+        TinhGiaBan();
+        TinhGiaMua();
+        TinhLaiGop();
+        TinhCpCuocTau();
+        TinhCpVCND();
+        TinhCpBaoHiem();
+        TinhCpHoaHong();
+        TinhCpGiaoNhan();
+        TinhCpGiamDinh();
+        TinhCpKhuTrung();
+        TinhCpTHC();
+        TinhCpLaivayU();
+        TinhCplaiVay();
+        TinhCpKhac();
+        CalculatorGiaTri();
+    });
+    $("#SoCont").on('input', function (e) {
         TinhGiaBan();
         TinhGiaMua();
         TinhLaiGop();
@@ -1174,6 +1207,11 @@
             document.getElementById("Button_New").innerHTML = "Save";
             Enable_form();
             Clear_form();
+        }
+        else if (text == "Save") {
+            document.getElementById("Button_New").innerHTML = "New";
+            document.getElementById("Form_Pakd").action = "/Plans/AddPakd";
+            document.getElementById("Form_Pakd").submit();
         }
     } 
     $("#DoiTacMua").keyup(function (event) {

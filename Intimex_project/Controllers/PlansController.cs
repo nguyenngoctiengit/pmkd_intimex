@@ -383,5 +383,45 @@ namespace Intimex_project.Controllers
                       }).ToList();
             return DataSourceLoader.Load(Sp, loadOptions);
         }
+        [HttpPost]
+        public IActionResult AddPakd(Plan plan)
+        {
+            var plans = new Plan();
+            plans.SystemId = AutoId.AutoIdFileStored("Plans");
+            plans.SoPa = plan.SoPa;
+            plans.NgayPa = plan.NgayPa;
+            plans.DoiTacBan = plan.DoiTacBan;
+            plans.DanhGiaBan = plan.DanhGiaBan;
+            plans.DoiTacMua = plan.DoiTacMua;
+            plans.DanhGiaMua = plan.DanhGiaMua;
+            plans.HangHoa = plan.HangHoa;
+            plans.Trongluong = plan.Trongluong;
+            plans.TyGia = plan.TyGia;
+            plans.NguonVon = plan.NguonVon;
+            plans.LaiSuat = plan.LaiSuat;
+            plans.Songay = plan.Songay;
+            plans.Dieukiengiao = plan.Dieukiengiao;
+            plans.Ngaygiao = plan.Ngaygiao;
+            plans.ThanhToanMua = plan.ThanhToanMua;
+            plans.ThanhToanBan = plan.ThanhToanBan;
+            plans.GiaBan = plan.GiaBan;
+            plans.GiaMua = plan.GiaMua;
+            plans.LaiGop = plan.LaiGop;
+            plans.CpVanTai = plan.CpVanTai;
+            plans.CpHoaHong = plan.CpHoaHong;
+            plans.CpGiaoNhan = plan.CpGiaoNhan;
+            plans.CpLaiVay = plan.CpLaiVay;
+            plans.CpQuanLy = plan.CpQuanLy;
+            plans.CpKhac = plan.CpKhac;
+            plans.LaiRong = plan.LaiRong;
+            plans.Duyet = true;
+            plans.Macn = HttpContext.Session.GetString("UnitName");
+            plans.Tongchiphi = plan.Tongchiphi;
+            plans.Tientemua = plan.Tientemua;
+            plans.Tienteban = plan.Tienteban;
+
+            TempData["alertMessage"] = "Thêm phương án kinh doanh thành công";
+            return RedirectToAction("pakd");
+        }
     }
 }
