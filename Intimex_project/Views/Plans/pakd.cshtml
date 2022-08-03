@@ -255,58 +255,58 @@
                                 <label class="col-form-label col-md-2 col-sm-2" style="text-align:center">Nguyên tệ</label>
                                 <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" asp-for="TriGiaBanU" id="TriGiaBanU" disabled>
                                 <label class="col-form-label col-md-2 col-sm-2" style="text-align:center">Qui VNĐ</label>
-                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" asp-for="TriGiaBan" id="TriGiaBan" disabled>
+                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" asp-for="TriGiaBan" id="TriGiaBan" readonly>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-1 col-sm-1">Đơn giá bán</label>
                                 <label class="col-form-label col-md-2 col-sm-2" style="text-align:center">(Tấn)</label>
                                 <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="GiaBanU" id="GiaBanU" disabled>
-                                <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="Tienteban" id="Tienteban" disabled>
+                                <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="Tienteban" id="Tienteban" readonly>
                                     <option value="VND">VND</option>
                                     <option value="USD">USD</option>
                                     <option value="YND">YND</option>
                                 </select>
                                 <label class="col-form-label col-md-2 col-sm-2" style="text-align:center"></label>
-                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" asp-for="GiaBan" id="GiaBan" disabled>
+                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" asp-for="GiaBan" id="GiaBan" readonly>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-1 col-sm-1">B-Trị giá mua</label>
                                 <label class="col-form-label col-md-2 col-sm-2" style="text-align:center"></label>
                                 <input type="text" class="form-control col-md-3 col-sm-3 text-box-hdmb" asp-for="TriGiaMuaU" id="TriGiaMuaU" disabled>
                                 <label class="col-form-label col-md-2 col-sm-2" style="text-align:center"></label>
-                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" asp-for="TriGiaMua" id="TriGiaMua" disabled>
+                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" asp-for="TriGiaMua" id="TriGiaMua" readonly>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-1 col-sm-1">Đơn giá mua</label>
                                 <label class="col-form-label col-md-2 col-sm-2" style="text-align:center">(KG)</label>
                                 <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" asp-for="GiaMuaU" id="GiaMuaU" disabled>
-                                <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="Tientemua" id="Tientemua" disabled>
+                                <select class="form-control col-md-1 col-sm-1 text-box-hdmb" aria-label="Default select example" asp-for="Tientemua" id="Tientemua" readonly>
                                     <option value="VND">VND</option>
                                     <option value="USD">USD</option>
                                     <option value="YND">YND</option>
                                 </select>
                                 <label class="col-form-label col-md-2 col-sm-2" style="text-align:center"></label>
-                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" asp-for="GiaMua" id="GiaMua" disabled>
+                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" asp-for="GiaMua" id="GiaMua" readonly>
                             </div>
                         </div>
                         <div id="div_Trului" style="display:none">
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2">A-Giá bán tạm tính</label>
-                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="TriGiaBanU" disabled>
+                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="TriGiaBanU_" disabled>
                                 <label class="col-form-label col-md-2 col-sm-2" style="text-align:center">Qui VNĐ</label>
-                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" disabled>
+                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="TriGiaBan_" disabled>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2">Giá trị tạm ứng</label>
-                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="TriGiaMua" disabled>
+                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="TriGiaTamUng_" disabled>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 col-sm-2" style="font-size:smaller">B-Chênh lệch giá bán và mua tạm tính</label>
-                                <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="Chenhlechmuaban" disabled>
+                                <input type="text" class="form-control col-md-2 col-sm-2 text-box-hdmb" id="GiaChenhLechU" disabled>
                                 <label class="col-form-label col-md-1 col-sm-1">Tiền tệ</label>
                                 <input type="text" class="form-control col-md-1 col-sm-1 text-box-hdmb" disabled>
                                 <label class="col-form-label col-md-2 col-sm-2"></label>
-                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="Chenhlechmuaban" disabled>
+                                <input type="text" class="form-control col-md-4 col-sm-4 text-box-hdmb" id="GiaChenhLech" disabled>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -478,12 +478,12 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">E-Tổng chi phí phát sinh</label>
                             <label class="col-form-label col-md-4 col-sm-4"></label>
-                            <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb" asp-for="Tongchiphi" id="Tongchiphi" disabled>
+                            <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb" asp-for="Tongchiphi" id="Tongchiphi" readonly>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 col-sm-2">F-Lãi ròng dự kiến</label>
                             <label class="col-form-label col-md-4 col-sm-4"></label>
-                            <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb" asp-for="LaiRong" id="LaiRong" disabled>
+                            <input type="text" class="form-control col-md-6 col-sm-6 text-box-hdmb" asp-for="LaiRong" id="LaiRong" readonly>
                         </div>
                     </form>
                     <input type="text" id="Systemref" hidden>
@@ -494,8 +494,7 @@
                 </div>
                 <div class="col-md-9 col-sm-9" style="text-align:center">
                     <button type="button" class="btn btn-secondary" style="font-size:small" id="Button_New" onclick="AddPAKD()">New</button>
-                    <button type="button" class="btn btn-secondary" style="font-size:small" onclick="History_HDMB()">Save as</button>
-                    <button type="button" class="btn btn-secondary" style="font-size:small" onclick="AddAnnex()">Edit</button>
+                    <button type="button" class="btn btn-secondary" style="font-size:small" id="Button_Edit" onclick="EditPAKD()">Edit</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="AddPlans()">Delete</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="AddDetail()">Print</button>
                 </div>
@@ -504,7 +503,7 @@
     </div>
     <input type="text" id="macn" value="@ViewBag.macn" hidden>
     <input type="text" id="checkKH" hidden>
-    <input type="text" id="checkTT" hidden>
+    <input type="text" id="checkTT" hidden> 
 </div>
 <script type="text/javascript">
     function numberWithCommas(x) {
@@ -521,13 +520,28 @@
         var KhuTrung_V = document.getElementById("KhuTrung_V").value == "" ? 0 : document.getElementById("KhuTrung_V").value;
         var LaiVay_V = document.getElementById("LaiVay_V").value == "" ? 0 : document.getElementById("LaiVay_V").value;
         var Khac_V = document.getElementById("Khac_V").value == "" ? 0 : document.getElementById("Khac_V").value;
+        if (CuocTau_V.includes(',') || VanTai_V.includes(',') || BaoHiem_V.includes(',') || HoaHong_V.includes(',') || GiaoNhan_V.includes(',') || GiamDinh_V.includes(',') || THC_V.includes(',') || KhuTrung_V.includes(',') || LaiVay_V.includes(',') || Khac_V.includes(',')) {
+            CuocTau_V = CuocTau_V.replace(/\,/g, '');
+            CuocTau_V = Math.floor(CuocTau_V);
+            VanTai_V = VanTai_V.replace(/\,/g, '');
+            VanTai_V = Math.floor(VanTai_V);
+            BaoHiem_V = BaoHiem_V.replace(/\,/g, '');
+            BaoHiem_V = Math.floor(BaoHiem_V);
+            HoaHong_V = HoaHong_V.replace(/\,/g, '');
+            HoaHong_V = Math.floor(HoaHong_V);  
+            GiaoNhan_V = GiaoNhan_V.replace(/\,/g, '');
+            GiaoNhan_V = Math.floor(GiaoNhan_V);
+
+        }
         var Tongchiphi = Math.floor(CuocTau_V) + Math.floor(VanTai_V) + Math.floor(BaoHiem_V) + Math.floor(HoaHong_V) + Math.floor(GiaoNhan_V) + Math.floor(GiamDinh_V) + Math.floor(THC_V) + Math.floor(KhuTrung_V) + Math.floor(LaiVay_V) + Math.floor(Khac_V);
+        
         var LaiGop = document.getElementById("LaiGop").value == "" ? 0 : document.getElementById("LaiGop").value;
-        document.getElementById("Tongchiphi").value = Tongchiphi;
+        document.getElementById("Tongchiphi").value = Tongchiphi1;
         document.getElementById("LaiRong").value = Math.floor(LaiGop) - Tongchiphi;
+        console.log(Math.round(GiaoNhan_V) + Math.round(GiamDinh_V) );
     }
     function evil(fn) {
-        return new Function('return ' + fn)();
+        return new Function('return ' + fn)();                                                                                                                                                                                            
     }
     function TinhCpLaivayU() {
         var SoNgay = document.getElementById("Songay").value;
@@ -541,6 +555,7 @@
             var str = congthuc.replace("%", "/100").replace(":", "/");
             document.getElementById("CpLaiVay").value = Math.round(evil(str));
         }
+
         CalculatorGiaTri();
     }
     function TinhCplaiVay() {
@@ -555,7 +570,7 @@
         } else {
             document.getElementById("LaiVay_U").value = CpLaiVay * Trongluong / (DvtLv == "KG" ? 1 : 1000)
             document.getElementById("LaiVay_V").value = CpVanTai * Trongluong / (DvtLv == "KG" ? 1 : 1000) * TyGia;
-        }
+        } 
     }
     function TinhGiaBan() {
         var TienTeBan = document.getElementById("Tienteban").value;
@@ -870,7 +885,7 @@
         TinhCpKhac();
         CalculatorGiaTri();
     });
-     $("#TyGia").on('input', function (e) {
+    $("#TyGia").on('input', function (e) {
         TinhGiaBan();
         TinhLaiGop();
     });
@@ -988,7 +1003,6 @@
                 document.getElementById("LaiVay_V").value = array.LaiVay_V;
                 document.getElementById("Khac_U").value = array.Khac_U;
                 document.getElementById("Khac_V").value = array.Khac_V;
-                document.getElementById("Chenhlechmuaban").value = array.Chenhlechmuaban;
                 Disable_form();
                 document.getElementById("Button_New").innerHTML = "New";
             })
@@ -1213,7 +1227,25 @@
             document.getElementById("Form_Pakd").action = "/Plans/AddPakd";
             document.getElementById("Form_Pakd").submit();
         }
-    } 
+    }
+    function EditPAKD() {
+        var SystemId = document.getElementById("SystemId").value;
+        if (SystemId == "") {
+            $.notify("Vui lòng chọn phương án kinh doanh muốn chỉnh sửa", "error");
+        }
+        else {
+            var text = document.getElementById("Button_Edit").innerHTML;
+            if (text == "Edit") {
+                document.getElementById("Button_Edit").innerHTML = "Save";
+                Enable_form();
+            }
+            else if (text == "Save") {
+                document.getElementById("Button_Edit").innerHTML = "Edit";
+                document.getElementById("Form_Pakd").action = "/Plans/EditPakd/" + SystemId;
+                document.getElementById("Form_Pakd").submit();
+            }
+        }
+    }
     $("#DoiTacMua").keyup(function (event) {
         if (event.keyCode === 13) {
             document.getElementById("checkKH").value = 1;
