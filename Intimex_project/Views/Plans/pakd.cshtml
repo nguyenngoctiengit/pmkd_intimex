@@ -495,7 +495,7 @@
                 <div class="col-md-9 col-sm-9" style="text-align:center">
                     <button type="button" class="btn btn-secondary" style="font-size:small" id="Button_New" onclick="AddPAKD()">New</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" id="Button_Edit" onclick="EditPAKD()">Edit</button>
-                    <button type="button" class="btn btn-secondary" style="font-size:small" onclick="AddPlans()">Delete</button>
+                    <button type="button" class="btn btn-secondary" style="font-size:small" id="Button_Delete" onclick="DeletePAKD()">Delete</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" onclick="AddDetail()">Print</button>
                 </div>
             </div>
@@ -510,6 +510,7 @@
         return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     }
     function CalculatorGiaTri() {
+        var Tongchiphi = 0;
         var CuocTau_V = document.getElementById("CuocTau_V").value == "" ? 0 : document.getElementById("CuocTau_V").value;
         var VanTai_V = document.getElementById("VanTai_V").value == "" ? 0 : document.getElementById("VanTai_V").value;
         var BaoHiem_V = document.getElementById("BaoHiem_V").value == "" ? 0 : document.getElementById("BaoHiem_V").value;
@@ -520,7 +521,8 @@
         var KhuTrung_V = document.getElementById("KhuTrung_V").value == "" ? 0 : document.getElementById("KhuTrung_V").value;
         var LaiVay_V = document.getElementById("LaiVay_V").value == "" ? 0 : document.getElementById("LaiVay_V").value;
         var Khac_V = document.getElementById("Khac_V").value == "" ? 0 : document.getElementById("Khac_V").value;
-        if (CuocTau_V.includes(',') || VanTai_V.includes(',') || BaoHiem_V.includes(',') || HoaHong_V.includes(',') || GiaoNhan_V.includes(',') || GiamDinh_V.includes(',') || THC_V.includes(',') || KhuTrung_V.includes(',') || LaiVay_V.includes(',') || Khac_V.includes(',')) {
+        var LaiGop = document.getElementById("LaiGop").value == "" ? 0 : document.getElementById("LaiGop").value;
+        if (CuocTau_V.includes(',') || VanTai_V.includes(',') || BaoHiem_V.includes(',') || HoaHong_V.includes(',') || GiaoNhan_V.includes(',') || GiamDinh_V.includes(',') || THC_V.includes(',') || KhuTrung_V.includes(',') || LaiVay_V.includes(',') || Khac_V.includes(',') || LaiGop.includes(',')) {
             CuocTau_V = CuocTau_V.replace(/\,/g, '');
             CuocTau_V = Math.floor(CuocTau_V);
             VanTai_V = VanTai_V.replace(/\,/g, '');
@@ -528,17 +530,30 @@
             BaoHiem_V = BaoHiem_V.replace(/\,/g, '');
             BaoHiem_V = Math.floor(BaoHiem_V);
             HoaHong_V = HoaHong_V.replace(/\,/g, '');
-            HoaHong_V = Math.floor(HoaHong_V);  
+            HoaHong_V = Math.floor(HoaHong_V);
             GiaoNhan_V = GiaoNhan_V.replace(/\,/g, '');
             GiaoNhan_V = Math.floor(GiaoNhan_V);
-
+            GiamDinh_V = GiamDinh_V.replace(/\,/g, '');
+            GiamDinh_V = Math.floor(GiamDinh_V);
+            THC_V = THC_V.replace(/\,/g, '');
+            THC_V = Math.floor(THC_V);
+            KhuTrung_V = KhuTrung_V.replace(/\,/g, '');
+            KhuTrung_V = Math.floor(KhuTrung_V);
+            LaiVay_V = LaiVay_V.replace(/\,/g, '');
+            LaiVay_V = Math.floor(LaiVay_V);
+            Khac_V = Khac_V.replace(/\,/g, '');
+            Khac_V = Math.floor(Khac_V);
+            LaiGop = LaiGop.replace(/\,/g, '');
+            LaiGop = Math.floor(LaiGop)
+            Tongchiphi = CuocTau_V + VanTai_V + BaoHiem_V + HoaHong_V + GiaoNhan_V + GiamDinh_V + THC_V + KhuTrung_V + LaiVay_V + Khac_V;
+            document.getElementById("LaiRong").value = LaiGop - Tongchiphi;
         }
-        var Tongchiphi = Math.floor(CuocTau_V) + Math.floor(VanTai_V) + Math.floor(BaoHiem_V) + Math.floor(HoaHong_V) + Math.floor(GiaoNhan_V) + Math.floor(GiamDinh_V) + Math.floor(THC_V) + Math.floor(KhuTrung_V) + Math.floor(LaiVay_V) + Math.floor(Khac_V);
+        else {
+            Tongchiphi = Math.floor(CuocTau_V) + Math.floor(VanTai_V) + Math.floor(BaoHiem_V) + Math.floor(HoaHong_V) + Math.floor(GiaoNhan_V) + Math.floor(GiamDinh_V) + Math.floor(THC_V) + Math.floor(KhuTrung_V) + Math.floor(LaiVay_V) + Math.floor(Khac_V);
+            document.getElementById("LaiRong").value = Math.floor(LaiGop) - Tongchiphi;
+        }
+        document.getElementById("Tongchiphi").value = Tongchiphi;
         
-        var LaiGop = document.getElementById("LaiGop").value == "" ? 0 : document.getElementById("LaiGop").value;
-        document.getElementById("Tongchiphi").value = Tongchiphi1;
-        document.getElementById("LaiRong").value = Math.floor(LaiGop) - Tongchiphi;
-        console.log(Math.round(GiaoNhan_V) + Math.round(GiamDinh_V) );
     }
     function evil(fn) {
         return new Function('return ' + fn)();                                                                                                                                                                                            
@@ -1244,6 +1259,15 @@
                 document.getElementById("Form_Pakd").action = "/Plans/EditPakd/" + SystemId;
                 document.getElementById("Form_Pakd").submit();
             }
+        }
+    }
+    function DeletePAKD() {
+        var SystemId = document.getElementById("SystemId").value;
+        if (SystemId == "") {
+            $.notify("Vui lòng chọn phương án kinh doanh muốn xóa", "error");
+        } else {
+            document.getElementById("Form_Pakd").action = "/Plans/DeletePAKD/" + SystemId;
+            document.getElementById("Form_Pakd").submit();
         }
     }
     $("#DoiTacMua").keyup(function (event) {

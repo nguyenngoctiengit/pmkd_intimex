@@ -558,6 +558,25 @@ namespace Intimex_project.Controllers
             TempData["alertMessage"] = "Cập nhật phương án kinh doanh thành công";
             return RedirectToAction("pakd");
         } 
+        [HttpPost]
+        public IActionResult DeletePAKD(string id)
+        {
+            if (_context.PairedPlans.Any(a => a.PlansId == id))
+            {
+                TempData["alertMessage"] = "Phương án kinh doanh đã có ghép hợp đồng nên không thể xóa";
+                return RedirectToAction("pakd");
+            }
+            else
+            {
+                var Plans = _context.Plans.Where(a => a.SystemId == id).FirstOrDefault();
+                Plans.Trangthai = 1;
+                _context.Plans.Update(Plans);
+                _context.SaveChanges();
+                TempData["alertMessage"] = "Xóa phương án kinh doanh thành công";
+                return RedirectToAction("pakd");
+            }
+            
+        }
     } 
 }
  
