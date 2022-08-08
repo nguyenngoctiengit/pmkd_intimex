@@ -783,7 +783,6 @@ namespace Intimex_project.Controllers
             var Sp = "exec [re_hdmb];5 @systemref = '" + id + "'," +
                         "@macn = '" + HttpContext.Session.GetString("UnitName") + "'";
             var re_hdmb = _context.Sp_Report_HDMBs.FromSqlRaw(Sp).ToList();
-
             var hdmb = _context.Hdmbs.Where(a => a.Systemref == id).FirstOrDefault();
             var ReportNameId = (from a in _context.Hdmbs join b in _context.PortfolioPayments on a.ThanhtoanId equals b.Id where a.Systemref == id select b.ReportName).FirstOrDefault();
             var ReportName = (from a in _context.ReportHdmbs where a.Id == ReportNameId select a.ReportName).FirstOrDefault();
@@ -1197,7 +1196,7 @@ namespace Intimex_project.Controllers
             var item = _context.Sp_GetHdKhachTra_HistoryHDMBs.FromSqlRaw(Sp).ToList();
             return DataSourceLoader.Load(item, loadOptions);
         }
-
+        
     }
 }
 

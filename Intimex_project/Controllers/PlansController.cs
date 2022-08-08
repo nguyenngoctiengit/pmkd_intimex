@@ -577,6 +577,11 @@ namespace Intimex_project.Controllers
             }
             
         }
+        public IActionResult PrintPAKD(string id)
+        {
+            var Sp = "exec [dbo].[UdscPAKD];10 @SystemId = '" + id + "'";
+
+        }
     } 
 }
  

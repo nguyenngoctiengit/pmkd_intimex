@@ -496,7 +496,7 @@
                     <button type="button" class="btn btn-secondary" style="font-size:small" id="Button_New" onclick="AddPAKD()">New</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" id="Button_Edit" onclick="EditPAKD()">Edit</button>
                     <button type="button" class="btn btn-secondary" style="font-size:small" id="Button_Delete" onclick="DeletePAKD()">Delete</button>
-                    <button type="button" class="btn btn-secondary" style="font-size:small" onclick="AddDetail()">Print</button>
+                    <button type="button" class="btn btn-secondary" style="font-size:small" id="Button_Print" onclick="PrintPAKD()">Print</button>
                 </div>
             </div>
         </div>
@@ -1267,6 +1267,16 @@
             $.notify("Vui lòng chọn phương án kinh doanh muốn xóa", "error");
         } else {
             document.getElementById("Form_Pakd").action = "/Plans/DeletePAKD/" + SystemId;
+            document.getElementById("Form_Pakd").submit();
+        }
+    }
+    function PrintPAKD() {
+        var SystemId = document.getElementById("SystemId").value;
+        if (SystemId == "") {
+            $.notify("Vui lòng chọn phương án kinh doanh muốn in", "error");
+
+        } else {
+            document.getElementById("Form_Pakd").action = "/Plans/PrintPAKD/" + SystemId;
             document.getElementById("Form_Pakd").submit();
         }
     }
