@@ -3,11 +3,15 @@ using Application.Parameter;
 using Data.Models.Trading_system;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Syncfusion.DocIO;
+using Syncfusion.DocIO.DLS;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,8 +19,13 @@ namespace Intimex_project.Controllers
 {
     public class PlansController : Controller
     {
+        IWebHostEnvironment _hostingEnvironment;
         double QuantityMaxHD = 0;
         private readonly tradingsystemContext _context = new tradingsystemContext(ConnectionParameter.connectionString);
+        public PlansController(IWebHostEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+        }
         public IActionResult Index()
         {
             return View();
@@ -579,8 +588,104 @@ namespace Intimex_project.Controllers
         }
         public IActionResult PrintPAKD(string id)
         {
+            var CurrentPath = "";
             var Sp = "exec [dbo].[UdscPAKD];10 @SystemId = '" + id + "'";
-
+            var Pakd = _context.Sp_GetInfoPlans_PrintReports.FromSqlRaw(Sp).ToList();
+            CurrentPath = _hostingEnvironment.WebRootPath + "\\Template\\PAKD\\" + "MauPA11" + ".doc";
+            Stream docStream = new FileStream(CurrentPath, FileMode.Open);
+            using (WordDocument wordDocument = new WordDocument())
+            {
+                wordDocument.Open(docStream, FormatType.Doc);
+                docStream.Dispose();
+                wordDocument.Replace("«soPA»", Pakd[0].soPA, true, true);
+                wordDocument.Replace("«NgayPA»", Pakd[0].NgayPA, true, true);
+                wordDocument.Replace("«DoiTacMua»", Pakd[0].DoiTacMua, true, true);
+                wordDocument.Replace("«HD_Mua»", Pakd[0].HD_Mua, true, true);
+                wordDocument.Replace("««DanhGiaMua»", Pakd[0].DanhGiaMua, true, true);
+                wordDocument.Replace("«DoiTacBan»", Pakd[0].DoiTacBan, true, true);
+                wordDocument.Replace("«HD_Ban»", Pakd[0].HD_Ban, true, true);
+                wordDocument.Replace("«DanhGiaBan»", Pakd[0].DanhGiaBan, true, true);
+                wordDocument.Replace("«HangHoa»", Pakd[0].HangHoa, true, true);
+                wordDocument.Replace("«Trongluong»", Pakd[0].Trongluong, true, true);
+                wordDocument.Replace("«dvt»", Pakd[0].dvt, true, true);
+                wordDocument.Replace("«TyGia»", Pakd[0].TyGia, true, true);
+                wordDocument.Replace("«LaiSuat»", Pakd[0].LaiSuat, true, true);
+                wordDocument.Replace("«DienGiai_NguonVon»", Pakd[0].DienGiai_NguonVon, true, true);
+                wordDocument.Replace("«dieukiengiao»", Pakd[0].dieukiengiao, true, true);
+                wordDocument.Replace("«CangGiaoHang»", Pakd[0].CangGiaoHang, true, true);
+                wordDocument.Replace("«NoiNhanHang»", Pakd[0].NoiNhanHang, true, true);
+                wordDocument.Replace("«ngaygiao»", Pakd[0].ngaygiao, true, true);
+                wordDocument.Replace("«ThanhToanBan»", Pakd[0].ThanhToanBan, true, true);
+                wordDocument.Replace("«ThanhToanMua»", Pakd[0].ThanhToanMua, true, true);
+                wordDocument.Replace("«tienteban»", Pakd[0].tienteban, true, true);
+                wordDocument.Replace("«GiaBanU»", Pakd[0].GiaBanU, true, true);
+                wordDocument.Replace("«TriGiaBanU»", Pakd[0].TriGiaBanU, true, true);
+                wordDocument.Replace("«TriGiaBanV»", Pakd[0].TriGiaBanV, true, true);
+                wordDocument.Replace("«tientemua»", Pakd[0].tientemua, true, true);
+                wordDocument.Replace("«GiaMuaU»", Pakd[0].GiaMuaU, true, true);
+                wordDocument.Replace("«TriGiaMuaV»", Pakd[0].TriGiaMuaV, true, true);
+                wordDocument.Replace("«LaiGop»", Pakd[0].LaiGop, true, true);
+                wordDocument.Replace("«TienTe_CuocTau»", Pakd[0].TienTe_CuocTau, true, true);
+                wordDocument.Replace("«Dvt_CT»", Pakd[0].Dvt_CT, true, true);
+                wordDocument.Replace("«CpCuocTau»", Pakd[0].CpCuocTau, true, true);
+                wordDocument.Replace("«CpCuocTau_U»", Pakd[0].CpCuocTau_U, true, true);
+                wordDocument.Replace("«CpCuocTau_V»", Pakd[0].CpCuocTau_V, true, true);
+                wordDocument.Replace("«TienTe_Vc»", Pakd[0].TienTe_Vc, true, true);
+                wordDocument.Replace("«Dvt_Vcnd»", Pakd[0].Dvt_Vcnd, true, true);
+                wordDocument.Replace("«CpVanTai»", Pakd[0].CpVanTai, true, true);
+                wordDocument.Replace("«CpVanTai_U»", Pakd[0].CpVanTai_U, true, true);
+                wordDocument.Replace("«CpVanTai_V»", Pakd[0].CpVanTai_V, true, true);
+                wordDocument.Replace("«TienTe_BaoHiem»", Pakd[0].TienTe_BaoHiem, true, true);
+                wordDocument.Replace("«Dvt_BH»", Pakd[0].Dvt_BH, true, true);
+                wordDocument.Replace("«CpBaoHiem»", Pakd[0].CpBaoHiem, true, true);
+                wordDocument.Replace("«CpBaoHiem_U»", Pakd[0].CpBaoHiem_U, true, true);
+                wordDocument.Replace("«CpBaoHiem_V»", Pakd[0].CpBaoHiem_V, true, true);
+                wordDocument.Replace("«TienTe_Hh»", Pakd[0].TienTe_Hh, true, true);
+                wordDocument.Replace("«Dvt_HH»", Pakd[0].Dvt_HH, true, true);
+                wordDocument.Replace("«CpHoaHong»", Pakd[0].CpHoaHong, true, true);
+                wordDocument.Replace("«CpHoaHong_U»", Pakd[0].CpHoaHong_U, true, true);
+                wordDocument.Replace("«CpHoaHong_V»", Pakd[0].CpHoaHong_V, true, true);
+                wordDocument.Replace("«TienTe_Gn»", Pakd[0].TienTe_Gn, true, true);
+                wordDocument.Replace("«Dvt_GN»", Pakd[0].Dvt_GN, true, true);
+                wordDocument.Replace("«CpGiaoNhan»", Pakd[0].CpGiaoNhan, true, true);
+                wordDocument.Replace("«CpGiaoNhan_U»", Pakd[0].CpGiaoNhan_U, true, true);
+                wordDocument.Replace("«CpGiaoNhan_V»", Pakd[0].CpGiaoNhan_V, true, true);
+                wordDocument.Replace("«TienTe_Qly»", Pakd[0].TienTe_Qly, true, true);
+                wordDocument.Replace("«Dvt_GD»", Pakd[0].Dvt_GD, true, true);
+                wordDocument.Replace("«CpQuanLy»", Pakd[0].CpQuanLy, true, true);
+                wordDocument.Replace("«CpQuanLy_U»", Pakd[0].CpQuanLy_U, true, true);
+                wordDocument.Replace("«CpQuanLy_V»", Pakd[0].CpQuanLy_V, true, true);
+                wordDocument.Replace("«TienTe_THC»", Pakd[0].TienTe_THC, true, true);
+                wordDocument.Replace("«Dvt_THC»", Pakd[0].Dvt_THC, true, true);
+                wordDocument.Replace("«CpTHC»", Pakd[0].CpTHC, true, true);
+                wordDocument.Replace("«CpTHC_U»", Pakd[0].CpTHC_U, true, true);
+                wordDocument.Replace("«CpTHC_V»", Pakd[0].CpTHC_V, true, true);
+                wordDocument.Replace("«TienTe_KhuTrung»", Pakd[0].TienTe_KhuTrung, true, true);
+                wordDocument.Replace("«Dvt_KT»", Pakd[0].Dvt_KT, true, true);
+                wordDocument.Replace("«CpKhuTrung»", Pakd[0].CpKhuTrung, true, true);
+                wordDocument.Replace("«CpKhuTrung_U»", Pakd[0].CpKhuTrung_U, true, true);
+                wordDocument.Replace("«CpKhuTrung_V»", Pakd[0].CpKhuTrung_V, true, true);
+                wordDocument.Replace("«TienTe_LaiVay»", Pakd[0].TienTe_LaiVay, true, true);
+                wordDocument.Replace("«Dvt_LV»", Pakd[0].Dvt_LV, true, true);
+                wordDocument.Replace("«CpLaiVay»", Pakd[0].CpLaiVay, true, true);
+                wordDocument.Replace("«CpLaiVay_U»", Pakd[0].CpLaiVay_U, true, true);
+                wordDocument.Replace("«CpLaiVay_V»", Pakd[0].CpLaiVay_V, true, true);
+                wordDocument.Replace("«TienTe_Khac»", Pakd[0].TienTe_Khac, true, true);
+                wordDocument.Replace("«Dvt_Khac»", Pakd[0].Dvt_Khac, true, true);
+                wordDocument.Replace("«CpKhac»", Pakd[0].CpKhac, true, true);
+                wordDocument.Replace("«CpKhac_U»", Pakd[0].CpKhac_U, true, true);
+                wordDocument.Replace("«CpKhac_V»", Pakd[0].CpKhac_V, true, true);
+                wordDocument.Replace("«TongChiPhi»", Pakd[0].TongChiPhi, true, true);
+                wordDocument.Replace("«ChiPhi_SX»", Pakd[0].ChiPhi_SX.ToString(), true, true);
+                wordDocument.Replace("«LoiNhuan_SX»", Pakd[0].LoiNhuan_SX.ToString(), true, true);
+                wordDocument.Replace("«LaiRong»", Pakd[0].LaiRong, true, true);
+                wordDocument.Replace("«TL_LoiNhuan»", Pakd[0].TL_LoiNhuan, true, true);
+                wordDocument.Replace("«GhiChu»", Pakd[0].GhiChu, true, true);
+                MemoryStream stream = new MemoryStream();
+                wordDocument.Save(stream, FormatType.Docx);
+                stream.Position = 0;
+                return File(stream, "application/msword", Pakd[0].soPA + ".docx");
+            }
         }
     } 
 }

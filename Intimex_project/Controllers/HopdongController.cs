@@ -813,8 +813,8 @@ namespace Intimex_project.Controllers
                 wordDocument.Replace("«chucvuB»", re_hdmb[0].chucvuB, true, true);
                 wordDocument.Replace("«TongTien»", re_hdmb[0].TongTien, true, true);
                 wordDocument.Replace("«quycach»", re_hdmb[0].quycach, true, true);
-                wordDocument.Replace("«BaoBi»", re_hdmb[0].quycach, true, true);
-                wordDocument.Replace("«KiemDinh»", re_hdmb[0].quycach, true, true);
+                wordDocument.Replace("«BaoBi»", re_hdmb[0].BaoBi, true, true);
+                wordDocument.Replace("«KiemDinh»", re_hdmb[0].KiemDinh, true, true);
                 wordDocument.Replace("«DiaDiemGiaoHang»", re_hdmb[0].DiaDiemGiaoHang, true, true);
                 wordDocument.Replace("«ngaygiaohang»", re_hdmb[0].ngaygiaohang, true, true);
                 wordDocument.Replace("«phivanchuyen»", re_hdmb[0].phivanchuyen, true, true);
