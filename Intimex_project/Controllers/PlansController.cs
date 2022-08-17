@@ -302,8 +302,9 @@ namespace Intimex_project.Controllers
         {
 
             var data = (from a in _context.Plans where a.SystemId == Systemref select new {
-                a.SystemId, a.SoPa, a.NgayPa, a.DoiTacMua, a.DoiTacBan, a.DanhGiaMua, a.DanhGiaBan, a.HangHoa, a.Trongluong,a.Isfix,
-                a.TyGia, a.NguonVon, a.LaiSuat, a.Songay, a.Dieukiengiao, a.ThanhToanMua, a.ThanhToanBan, a.GhiChu, a.Dvt, a.HdBan,
+                a.SystemId, a.SoPa, a.NgayPa, a.DoiTacMua, a.DoiTacBan, a.DanhGiaMua, a.DanhGiaBan, a.HangHoa,
+                Trongluong = Convert.ToDecimal(a.Trongluong).ToString("#,###.##") ,a.Isfix,
+                TyGia = Convert.ToDecimal(a.TyGia).ToString("#,###.##"), a.NguonVon, a.LaiSuat, a.Songay, a.Dieukiengiao, a.ThanhToanMua, a.ThanhToanBan, a.GhiChu, a.Dvt, a.HdBan,
                 a.HdMua, a.CtTinhLaiVay, a.DienGiaiNguonVon, a.CangGiaoHang, a.NoiNhanHang, a.Ngaygiao, a.Tientechenhlech,
                 TriGiaBanU = string.Format("{0:N4}", a.TriGiaBanU),
                 a.Chenhlechmuaban,
@@ -313,7 +314,7 @@ namespace Intimex_project.Controllers
                 TriGiaBan = string.Format("{0:N0}", a.TriGiaBan),
                 GiaBan = string.Format("{0:N0}", a.GiaBan),
                 TriGiaMuaU = string.Format("{0:N0}", a.TriGiaMuaU),
-                GiaMua = string.Format("{0:N0}", a.GiaMua),
+                GiaMua = string.Format("{0:N0}", a.GiaMua), 
                 LaiGop = string.Format("{0:N0}", a.LaiGop),
                 CpCuocTau = string.Format("{0:N" + (a.TienTeCuocTau == "VND" ? "0}" : "4}"), (Convert.ToDecimal(a.CpCuocTau))),
                 CpVanTai = string.Format("{0:N" + (a.TienTeVc == "VND" ? "0}" : "4}"), (Convert.ToDecimal(a.CpVanTai))),
@@ -365,7 +366,7 @@ namespace Intimex_project.Controllers
             });
             return DataSourceLoader.Load(Sp, loadOptions);
         }
-        [HttpGet]
+        [HttpGet]   
         public object GetHangHoa(DataSourceLoadOptions loadOptions)
         {
             var Sp = (from a in _context.Hanghoas
