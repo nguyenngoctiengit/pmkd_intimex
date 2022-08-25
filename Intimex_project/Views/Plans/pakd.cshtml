@@ -506,6 +506,15 @@
     <input type="text" id="checkTT" hidden> 
 </div>
 <script type="text/javascript">
+    function RemoveComma(string) {
+        if (string.includes(',')) {
+            var StringFormat = string.replace(/\,/g, '');
+            var itemReturn = Math.floor(StringFormat);
+            return itemReturn;
+        } else {
+            return string;
+        }
+    }
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     }
@@ -563,7 +572,7 @@
         var LaiSuat = document.getElementById("LaiSuat").value;
         var GiaMuaV = document.getElementById("GiaMua").value;
         if (document.getElementById("CtTinhLaiVay").value == "") {
-            document.getElementById("CpLaiVay").value = ((SoNgay * LaiSuat * GiaMuaV) / 36000);
+            document.getElementById("CpLaiVay").value = ((RemoveComma(SoNgay) * RemoveComma(LaiSuat) * RemoveComma(GiaMuaV)) / 36000);
         }
         else {
             var congthuc = document.getElementById("CtTinhLaiVay").value;
@@ -581,10 +590,10 @@
         var TyGia = document.getElementById("TyGia").value;
         if (TienTeLaiVay == "VND") {
             document.getElementById("LaiVay_U").value = "0";
-            document.getElementById("LaiVay_V").value = CpLaiVay * Trongluong / (DvtLv == "KG" ? 1 : 1000);
+            document.getElementById("LaiVay_V").value = RemoveComma(CpLaiVay) * RemoveComma(Trongluong) / (DvtLv == "KG" ? 1 : 1000);
         } else {
-            document.getElementById("LaiVay_U").value = CpLaiVay * Trongluong / (DvtLv == "KG" ? 1 : 1000)
-            document.getElementById("LaiVay_V").value = CpVanTai * Trongluong / (DvtLv == "KG" ? 1 : 1000) * TyGia;
+            document.getElementById("LaiVay_U").value = RemoveComma(CpLaiVay) * RemoveComma(Trongluong) / (DvtLv == "KG" ? 1 : 1000)
+            document.getElementById("LaiVay_V").value = RemoveComma(CpVanTai) * RemoveComma(Trongluong) / (DvtLv == "KG" ? 1 : 1000) * RemoveComma(TyGia);
         } 
     }
     function TinhGiaBan() {
@@ -593,17 +602,17 @@
         var TyGia = document.getElementById("TyGia").value;
         var TrongLuong = document.getElementById("Trongluong").value;
         if (TienTeBan == "VND") {
-            document.getElementById("GiaBan").value = GiaBanU / 1000;
+            document.getElementById("GiaBan").value = RemoveComma(GiaBanU) / 1000;
         } else {
-            document.getElementById("GiaBan").value = GiaBanU * TyGia / 1000;
+            document.getElementById("GiaBan").value = RemoveComma(GiaBanU) * RemoveComma(TyGia) / 1000;
         }
-        document.getElementById("TriGiaBanU").value = GiaBanU * TrongLuong / 1000;
-        document.getElementById("TriGiaBan").value = GiaBanU * TrongLuong * (TienTeBan == "VND" ? 1 : TyGia) / 1000;
+        document.getElementById("TriGiaBanU").value = RemoveComma(GiaBanU) * RemoveComma(TrongLuong) / 1000;
+        document.getElementById("TriGiaBan").value = RemoveComma(GiaBanU) * RemoveComma(TrongLuong) * (RemoveComma(TienTeBan) == "VND" ? 1 : RemoveComma(TyGia)) / 1000;
     }
     function TinhLaiGop() {
         var TriGiaMua = document.getElementById("TriGiaMua").value;
         var TriGiaBan = document.getElementById("TriGiaBan").value;
-        document.getElementById("LaiGop").value = TriGiaBan - TriGiaMua;
+        document.getElementById("LaiGop").value = RemoveComma(TriGiaBan) - RemoveComma(TriGiaMua);
     }
     function TinhGiaMua() {
         var TienTeMua = document.getElementById("Tientemua").value;
@@ -612,16 +621,16 @@
         var TyGia = document.getElementById("TyGia").value;
         var TrongLuong = document.getElementById("Trongluong").value;
         if (TienTeMua == "VND") {
-            document.getElementById("GiaMua").value = GiaMuaU;
+            document.getElementById("GiaMua").value = RemoveComma(GiaMuaU);
         } else {
-            document.getElementById("GiaMua").value = GiaMuaU * TyGia;
+            document.getElementById("GiaMua").value = RemoveComma(GiaMuaU) * RemoveComma(TyGia);
         }
         var SoNgay = document.getElementById("Songay").value;
         var LaiSuat = document.getElementById("LaiSuat").value;
         var GiaMuaV = document.getElementById("GiaMua").value;
         TinhCpLaivayU();
-        document.getElementById("TriGiaMuaU").value = GiaMuaU * TrongLuong;
-        document.getElementById("TriGiaMua").value = GiaMuaV * TrongLuong;
+        document.getElementById("TriGiaMuaU").value = RemoveComma(GiaMuaU) * RemoveComma(TrongLuong);
+        document.getElementById("TriGiaMua").value = RemoveComma(GiaMuaV) * RemoveComma(TrongLuong);
     }
     function TinhCpCuocTau() {
         var TienTeCuocTau = document.getElementById("TienTeCuocTau").value;
@@ -629,12 +638,12 @@
         var Cont = document.getElementById("SoCont").value;
         var TyGia = document.getElementById("TyGia").value;
         if (TienTeCuocTau == "VND") {
-            document.getElementById("CuocTau_V").value = CuocTau * Cont;
+            document.getElementById("CuocTau_V").value = RemoveComma(CuocTau) * RemoveComma(Cont);
             document.getElementById("CuocTau_U").value = "0";
 
         } else {
-            document.getElementById("CuocTau_V").value = CuocTau * Cont * TyGia;
-            document.getElementById("CuocTau_U").value = CuocTau * Cont;
+            document.getElementById("CuocTau_V").value = RemoveComma(CuocTau) * RemoveComma(Cont) * RemoveComma(TyGia);
+            document.getElementById("CuocTau_U").value = RemoveComma(CuocTau) * RemoveComma(Cont);
         }
     }
     function TinhCpVCND() {
@@ -727,11 +736,11 @@
         var TyGia = document.getElementById("TyGia").value;
         if (Tienteban == "VND") {
             document.getElementById("BaoHiem_U").value = "0";
-            document.getElementById("BaoHiem_V").value = CpBaoHiem * Trongluong * GiaBanU / 1000 / 100;
+            document.getElementById("BaoHiem_V").value = RemoveComma(CpBaoHiem) * RemoveComma(Trongluong) * RemoveComma(GiaBanU) / 1000 / 100;
 
         } else {
-            document.getElementById("BaoHiem_U").value = CpBaoHiem * Trongluong * GiaBanU / 1000 / 100;
-            document.getElementById("BaoHiem_V").value = CpBaoHiem * Trongluong * GiaBanU / 1000 * TyGia / 100;
+            document.getElementById("BaoHiem_U").value = RemoveComma(CpBaoHiem) * RemoveComma(Trongluong) * RemoveComma(GiaBanU) / 1000 / 100;
+            document.getElementById("BaoHiem_V").value = RemoveComma(CpBaoHiem) * RemoveComma(Trongluong) * RemoveComma(GiaBanU) / 1000 * RemoveComma(TyGia) / 100;
         }
     }
     function TinhCpGiaoNhan() {
@@ -743,23 +752,23 @@
         var SoCont = document.getElementById("SoCont").value;
         if (TienTeGn == "VND") {
             if (DvtGn == "CONT") {
-                document.getElementById("GiaoNhan_V").value = CpGiaoNhan * SoCont;
+                document.getElementById("GiaoNhan_V").value = RemoveComma(CpGiaoNhan) * RemoveComma(SoCont);
             } else {
-                document.getElementById("GiaoNhan_V").value = CpGiaoNhan * Trongluong / (DvtGn == "KG" ? 1 : 1000);
+                document.getElementById("GiaoNhan_V").value = RemoveComma(CpGiaoNhan) * RemoveComma(Trongluong) / (DvtGn == "KG" ? 1 : 1000);
             }
             document.getElementById("GiaoNhan_U").value = "0";
 
         } else {
             if (DvtGn == "CONT") {
-                document.getElementById("GiaoNhan_U").value = CpGiaoNhan * SoCont;
-                document.getElementById("GiaoNhan_V").value = CpGiaoNhan * SoCont * TyGia;
+                document.getElementById("GiaoNhan_U").value = RemoveComma(CpGiaoNhan) * RemoveComma(SoCont);
+                document.getElementById("GiaoNhan_V").value = RemoveComma(CpGiaoNhan) * RemoveComma(SoCont) * RemoveComma(TyGia);
             } else {
-                document.getElementById("GiaoNhan_U").value = CpGiaoNhan * Trongluong / (DvtGn == "KG" ? 1 : 1000);
-                document.getElementById("GiaoNhan_V").value = CpGiaoNhan * Trongluong / (DvtGn == "KG" ? 1 : 1000) * TyGia;
+                document.getElementById("GiaoNhan_U").value = RemoveComma(CpGiaoNhan) * RemoveComma(Trongluong) / (DvtGn == "KG" ? 1 : 1000);
+                document.getElementById("GiaoNhan_V").value = RemoveComma(CpGiaoNhan) * RemoveComma(Trongluong) / (DvtGn == "KG" ? 1 : 1000) * RemoveComma(TyGia);
             }
-        }
+        }   
     }
-    function TinhCpGiamDinh() {
+    function TinhCpGiamDinh() { 
         var CpQuanLy = document.getElementById("CpQuanLy").value;
         var TienTeQly = document.getElementById("TienTeQly").value;
         var DvtGd = document.getElementById("DvtGd").value;
@@ -768,7 +777,7 @@
         var SoCont = document.getElementById("SoCont").value;
         if (TienTeQly == "VND") {
             if (DvtGd == "CONT") {
-                document.getElementById("GiamDinh_V").value = CpQuanLy * SoCont;
+                document.getElementById("GiamDinh_V").value = RemoveComma(CpQuanLy) * RemoveComma(SoCont);
             } else {
                 document.getElementById("GiamDinh_V").value = CpQuanLy * Trongluong / (DvtGd == "KG" ? 1 : 1000);
             }
@@ -1020,6 +1029,7 @@
                 document.getElementById("Khac_V").value = array.Khac_V;
                 Disable_form();
                 document.getElementById("Button_New").innerHTML = "New";
+                document.getElementById("Button_Edit").innerHTML = "Edit";
             })
         }
     }

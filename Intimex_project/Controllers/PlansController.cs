@@ -11,8 +11,10 @@ using Syncfusion.DocIO;
 using Syncfusion.DocIO.DLS;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Intimex_project.Controllers
@@ -313,7 +315,7 @@ namespace Intimex_project.Controllers
                 a.DvtKhac, a.DvtKt, a.DvtLv, a.DvtThc, a.DvtVcnd, a.SoCont,
                 TriGiaBan = string.Format("{0:N0}", a.TriGiaBan),
                 GiaBan = string.Format("{0:N0}", a.GiaBan),
-                TriGiaMuaU = string.Format("{0:N0}", a.TriGiaMuaU),
+                TriGiaMuaU = string.Format("{0:N0}", a.TriGiaMuaU), 
                 GiaMua = string.Format("{0:N0}", a.GiaMua), 
                 LaiGop = string.Format("{0:N0}", a.LaiGop),
                 CpCuocTau = string.Format("{0:N" + (a.TienTeCuocTau == "VND" ? "0}" : "4}"), (Convert.ToDecimal(a.CpCuocTau))),
@@ -563,11 +565,126 @@ namespace Intimex_project.Controllers
             plans.DvtLv = plan.DvtLv;
             plans.DvtKhac = plan.DvtKhac;
             plans.IsNew = true;
+            List<Data.Public_class.DataLog> logs = new List<Data.Public_class.DataLog>();
+            logs = SaveDataLog(_context);
+            foreach (var a in logs)
+            {
+                Data.Models.Trading_system.DataLog dataLog = new Data.Models.Trading_system.DataLog();
+                dataLog.SystemId = AutoId.AutoIdFileStored("DataLog");
+                dataLog.TableName = a.TableName;
+                dataLog.ColumnName = a.ColumnName;
+                dataLog.RecordId = plans.SystemId;
+                dataLog.state = a.State;
+                dataLog.OldValue = a.OldValue;
+                dataLog.NewValue = a.NewValue;
+                dataLog.DateCreate = DateTime.Now;
+                dataLog.UserCreate = HttpContext.Session.GetString("UserName");
+                _context.DataLogs.Add(dataLog);
+                _context.SaveChanges();
+            }
             _context.Plans.Update(plans);
             _context.SaveChanges();
             TempData["alertMessage"] = "Cập nhật phương án kinh doanh thành công";
             return RedirectToAction("pakd");
-        } 
+        }
+        public static List<Data.Public_class.DataLog> SaveDataLog(tradingsystemContext context)
+        {
+
+            List<Data.Public_class.DataLog> dataLogs = new List<Data.Public_class.DataLog>();
+            var changeTrack = context.ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Deleted || p.State == EntityState.Modified).ToList();
+            foreach (var entry in changeTrack)
+            {
+                if (entry.Entity != null)
+                {
+                    string entityName = string.Empty;
+                    string state = string.Empty;
+                    switch (entry.State)
+                    {
+                        case EntityState.Modified:
+                            entityName = ObjectContext.GetObjectType(entry.Entity.GetType()).Name;
+                            state = entry.State.ToString();
+                            foreach (var prop in entry.Entity.GetType().GetTypeInfo().DeclaredProperties)
+                            {
+                                var currentValue = entry.Property(prop.Name).CurrentValue;
+                                var OriginalValue = entry.Property(prop.Name).OriginalValue;
+
+                                if (currentValue != null && OriginalValue != null)
+                                {
+                                    if (currentValue.ToString() != "" && OriginalValue.ToString() != "")
+                                    {
+                                        if (currentValue is decimal && OriginalValue is decimal)
+                                        {
+                                            if (double.Parse(currentValue.ToString().Split(',')[0]) != double.Parse(OriginalValue.ToString().Split(',')[0]))
+                                            {
+                                                dataLogs.Add(new Data.Public_class.DataLog
+                                                {
+                                                    TableName = entityName,
+                                                    State = state,
+                                                    ColumnName = Convert.ToString(prop).Substring(Convert.ToString(prop).IndexOf(' ')),
+                                                    OldValue = Convert.ToString(OriginalValue),
+                                                    NewValue = Convert.ToString(currentValue),
+
+
+                                                });
+                                            }
+                                        }
+                                        else if (currentValue.ToString().Trim() != OriginalValue.ToString().Trim())
+                                        {
+                                            dataLogs.Add(new Data.Public_class.DataLog
+                                            {
+                                                TableName = entityName,
+                                                State = state,
+                                                ColumnName = Convert.ToString(prop).Substring(Convert.ToString(prop).IndexOf(' ')),
+                                                OldValue = Convert.ToString(OriginalValue),
+                                                NewValue = Convert.ToString(currentValue),
+
+
+                                            });
+                                        }
+                                    }
+
+                                }
+                            }
+                            break;
+                        case EntityState.Added:
+                            entityName = ObjectContext.GetObjectType(entry.Entity.GetType()).Name;
+                            state = entry.State.ToString();
+                            foreach (var prop in entry.CurrentValues.Properties)
+                            {
+                                dataLogs.Add(new Data.Public_class.DataLog
+                                {
+                                    TableName = entityName,
+                                    State = state,
+                                    ColumnName = Convert.ToString(prop),
+                                    OldValue = string.Empty,
+                                    NewValue = Convert.ToString(entry.CurrentValues[prop])
+
+                                });
+                            }
+                            break;
+                        case EntityState.Deleted:
+                            entityName = ObjectContext.GetObjectType(entry.Entity.GetType()).Name;
+                            state = entry.State.ToString();
+                            foreach (var prop in entry.OriginalValues.Properties)
+                            {
+                                dataLogs.Add(new Data.Public_class.DataLog
+                                {
+                                    TableName = entityName,
+                                    State = state,
+                                    ColumnName = Convert.ToString(prop),
+                                    OldValue = Convert.ToString(entry.OriginalValues[prop]),
+                                    NewValue = string.Empty,
+                                });
+
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            return dataLogs;
+        }
         [HttpPost]
         public IActionResult DeletePAKD(string id)
         {
@@ -602,7 +719,7 @@ namespace Intimex_project.Controllers
                 wordDocument.Replace("«NgayPA»", Pakd[0].NgayPA, true, true);
                 wordDocument.Replace("«DoiTacMua»", Pakd[0].DoiTacMua, true, true);
                 wordDocument.Replace("«HD_Mua»", Pakd[0].HD_Mua, true, true);
-                wordDocument.Replace("««DanhGiaMua»", Pakd[0].DanhGiaMua, true, true);
+                wordDocument.Replace("«DanhGiaMua»", Pakd[0].DanhGiaMua, true, true);
                 wordDocument.Replace("«DoiTacBan»", Pakd[0].DoiTacBan, true, true);
                 wordDocument.Replace("«HD_Ban»", Pakd[0].HD_Ban, true, true);
                 wordDocument.Replace("«DanhGiaBan»", Pakd[0].DanhGiaBan, true, true);
