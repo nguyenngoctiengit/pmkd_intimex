@@ -503,9 +503,10 @@
     </div>
     <input type="text" id="macn" value="@ViewBag.macn" hidden>
     <input type="text" id="checkKH" hidden>
-    <input type="text" id="checkTT" hidden> 
+    <input type="text" id="checkTT" hidden>
 </div>
 <script type="text/javascript">
+    
     function RemoveComma(string) {
         if (string.includes(',')) {
             var StringFormat = string.replace(/\,/g, '');
@@ -777,18 +778,18 @@
         var SoCont = document.getElementById("SoCont").value;
         if (TienTeQly == "VND") {
             if (DvtGd == "CONT") {
-                document.getElementById("GiamDinh_V").value = RemoveComma(CpQuanLy) * RemoveComma(SoCont);
+                document.getElementById("GiamDinh_V").value = RemoveComma(CpQuanLy) * RemoveComma(SoCont);  
             } else {
-                document.getElementById("GiamDinh_V").value = CpQuanLy * Trongluong / (DvtGd == "KG" ? 1 : 1000);
+                document.getElementById("GiamDinh_V").value = RemoveComma(CpQuanLy) * RemoveComma(Trongluong) / (DvtGd == "KG" ? 1 : 1000);
             }
             document.getElementById("GiamDinh_U").value = "0";
         } else {
             if (DvtGd == "CONT") {
-                document.getElementById("GiamDinh_U").value = CpQuanLy * SoCont;
-                document.getElementById("GiamDinh_V").value = CpQuanLy * SoCont * TyGia;
+                document.getElementById("GiamDinh_U").value = RemoveComma(CpQuanLy) * SoCont;
+                document.getElementById("GiamDinh_V").value = RemoveComma(CpQuanLy) * SoCont * RemoveComma(TyGia);
             } else {
-                document.getElementById("GiamDinh_U").value = CpQuanLy * Trongluong / (DvtGd == "KG" ? 1 : 1000);
-                document.getElementById("GiamDinh_V").value = CpQuanLy * Trongluong / (DvtGd == "KG" ? 1 : 1000) * TyGia;
+                document.getElementById("GiamDinh_U").value = RemoveComma(CpQuanLy) * RemoveComma(Trongluong) / (DvtGd == "KG" ? 1 : 1000);
+                document.getElementById("GiamDinh_V").value = RemoveComma(CpQuanLy) * RemoveComma(Trongluong) / (DvtGd == "KG" ? 1 : 1000) * RemoveComma(TyGia);
             }
         }
     }
@@ -799,11 +800,11 @@
         var Trongluong = document.getElementById("Trongluong").value;
         var TyGia = document.getElementById("TyGia").value;
         if (TienTeKhac == "VND") {
-            document.getElementById("Khac_V").value = CpKhac * Trongluong / (DvtKhac == "KG" ? 1 : 1000);
+            document.getElementById("Khac_V").value = RemoveComma(CpKhac) * RemoveComma(Trongluong) / (DvtKhac == "KG" ? 1 : 1000);
             document.getElementById("Khac_U").value = "0";
         } else {
-            document.getElementById("Khac_V").value = CpKhac * Trongluong / (DvtKhac == "KG" ? 1 : 1000) * TyGia;
-            document.getElementById("Khac_U").value = CpKhac * Trongluong / (DvtKhac == "KG" ? 1 : 1000);
+            document.getElementById("Khac_V").value = RemoveComma(CpKhac) * RemoveComma(Trongluong) / (DvtKhac == "KG" ? 1 : 1000) * RemoveComma(TyGia);
+            document.getElementById("Khac_U").value = RemoveComma(CpKhac) * RemoveComma(Trongluong) / (DvtKhac == "KG" ? 1 : 1000);
         }
     }
     document.getElementById("CtTinhLaiVay").addEventListener("focusout", function () {
@@ -811,54 +812,80 @@
         TinhCpLaivayU();
     })
     $("#GiaMuaU").on('input', function (e) {
+        var n = parseInt($(this).val().replace(/\D/g, ''), 10);
+        $(this).val(n.toLocaleString());
         TinhGiaMua();
         TinhLaiGop();
     });
     $("#GiaBanU").on('input', function (e) {
+        var n = parseInt($(this).val().replace(/\D/g, ''), 10);
+        $(this).val(n.toLocaleString());
         TinhGiaBan();
         TinhLaiGop();
     });
     $("#CpKhac").on('input', function (e) {
+        var n = parseInt($(this).val().replace(/\D/g, ''), 10);
+        $(this).val(n.toLocaleString());
         TinhCpKhac();
         CalculatorGiaTri();
     });
     $("#CpLaiVay").on('input', function (e) {
+        var n = parseInt($(this).val().replace(/\D/g, ''), 10);
+        $(this).val(n.toLocaleString());
         TinhCplaiVay();
         CalculatorGiaTri();
     });
     $("#CpKhuTrung").on('input', function (e) {
+        var n = parseInt($(this).val().replace(/\D/g, ''), 10);
+        $(this).val(n.toLocaleString());
         TinhCpKhuTrung();
         CalculatorGiaTri();
     });
     $("#CpThc").on('input', function (e) {
+        var n = parseInt($(this).val().replace(/\D/g, ''), 10);
+        $(this).val(n.toLocaleString());
         TinhCpTHC();
         CalculatorGiaTri();
     });
     $("#CpQuanLy").on('input', function (e) {
+        var n = parseInt($(this).val().replace(/\D/g, ''), 10);
+        $(this).val(n.toLocaleString());
         TinhCpGiamDinh();
         CalculatorGiaTri();
     });
     $("#CpGiaoNhan").on('input', function (e) {
+        var n = parseInt($(this).val().replace(/\D/g, ''), 10);
+        $(this).val(n.toLocaleString());
         TinhCpGiaoNhan();
         CalculatorGiaTri();
     });
     $("#CpHoaHong").on('input', function (e) {
+        var n = parseInt($(this).val().replace(/\D/g, ''), 10);
+        $(this).val(n.toLocaleString());
         TinhCpHoaHong();
         CalculatorGiaTri();
     });
     $("#CpBaoHiem").on('input', function (e) {
+        var n = parseInt($(this).val().replace(/\D/g, ''), 10);
+        $(this).val(n.toLocaleString());
         TinhCpBaoHiem();
         CalculatorGiaTri();
     });
     $("#CpVanTai").on('input', function (e) {
+        var n = parseInt($(this).val().replace(/\D/g, ''), 10);
+        $(this).val(n.toLocaleString());
         TinhCpVCND();
         CalculatorGiaTri();
     });
     $("#CpCuocTau").on('input', function (e) {
+        var n = parseInt($(this).val().replace(/\D/g, ''), 10);
+        $(this).val(n.toLocaleString());
         TinhCpCuocTau();
         CalculatorGiaTri();
     });
     $("#Trongluong").on('input', function (e) {
+        var n = parseInt($(this).val().replace(/\D/g, ''), 10);
+        $(this).val(n.toLocaleString());
         TinhGiaBan();
         TinhGiaMua();
         TinhLaiGop();
@@ -876,6 +903,8 @@
         CalculatorGiaTri();
     });
     $("#TyGia").on('input', function (e) {
+        var n = parseInt($(this).val().replace(/\D/g, ''), 10);
+        $(this).val(n.toLocaleString());
         TinhGiaBan();
         TinhGiaMua();
         TinhLaiGop();
@@ -908,10 +937,6 @@
         TinhCplaiVay();
         TinhCpKhac();
         CalculatorGiaTri();
-    });
-    $("#TyGia").on('input', function (e) {
-        TinhGiaBan();
-        TinhLaiGop();
     });
     $(document).ready(function () {
         var div_Trului = document.getElementById("div_Trului");
