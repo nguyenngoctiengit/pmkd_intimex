@@ -27,10 +27,10 @@ namespace Intimex_project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration.GetConnectionString("SignalRChatConnection");  
+            var connectionString = Configuration.GetConnectionString("SignalRChatConnection");
             services.AddGleamTech();
             services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(30));
-            services.AddRazorPages().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null); 
+            services.AddRazorPages().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
             services.AddDbContextPool<SignalRChatContext>(options =>
             options.UseSqlServer(connectionString));
             services.AddControllersWithViews();
