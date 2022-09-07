@@ -595,7 +595,7 @@
         } else {
             document.getElementById("LaiVay_U").value = RemoveComma(CpLaiVay) * RemoveComma(Trongluong) / (DvtLv == "KG" ? 1 : 1000)
             document.getElementById("LaiVay_V").value = RemoveComma(CpVanTai) * RemoveComma(Trongluong) / (DvtLv == "KG" ? 1 : 1000) * RemoveComma(TyGia);
-        } 
+        }
     }
     function TinhGiaBan() {
         var TienTeBan = document.getElementById("Tienteban").value;
@@ -655,10 +655,10 @@
         var TyGia = document.getElementById("TyGia").value;
         if (TienTeVc == "VND") {
             document.getElementById("VanTai_U").value = "0";
-            document.getElementById("VanTai_V").value = CpVanTai * TrongLuong / (DvtVcnd == "KG" ? 1 : 1000);
+            document.getElementById("VanTai_V").value = RemoveComma(CpVanTai) * RemoveComma(TrongLuong) / (DvtVcnd == "KG" ? 1 : 1000);
         } else {
-            document.getElementById("VanTai_U").value = CpVanTai * TrongLuong / (DvtVcnd == "KG" ? 1 : 1000);
-            document.getElementById("VanTai_V").value = CpVanTai * TrongLuong / (DvtVcnd == "KG" ? 1 : 1000) * TyGia;
+            document.getElementById("VanTai_U").value = RemoveComma(CpVanTai) * RemoveComma(TrongLuong) / (DvtVcnd == "KG" ? 1 : 1000);
+            document.getElementById("VanTai_V").value = RemoveComma(CpVanTai) * RemoveComma(TrongLuong) / (DvtVcnd == "KG" ? 1 : 1000) * RemoveComma(TyGia);
         }
     }
     function TinhCpKhuTrung() {
@@ -669,20 +669,20 @@
         var TyGia = document.getElementById("TyGia").value;
         if (TienTeKhuTrung == "VND") {
             if (DvtKt == "CONT") {
-                document.getElementById("KhuTrung_V").value = CpKhuTrung * SoCont;
+                document.getElementById("KhuTrung_V").value = RemoveComma(CpKhuTrung) * SoCont;
             } else {
-                document.getElementById("KhuTrung_V").value = CpKhuTrung * Trongluong / (DvtKt == "KG" ? 1 : 1000);
+                document.getElementById("KhuTrung_V").value = RemoveComma(CpKhuTrung) * RemoveComma(Trongluong) / (DvtKt == "KG" ? 1 : 1000);
             }
             document.getElementById("KhuTrung_U").value = "0";
         }
         else {
             if (DvtKt == "CONT") {
-                document.getElementById("KhuTrung_U").value = CpKhuTrung * SoCont;
-                document.getElementById("KhuTrung_V").value = CpKhuTrung * SoCont * TyGia;
+                document.getElementById("KhuTrung_U").value = RemoveComma(CpKhuTrung) * SoCont;
+                document.getElementById("KhuTrung_V").value = RemoveComma(CpKhuTrung) * SoCont * RemoveComma(TyGia);
             }
             else {
-                document.getElementById("KhuTrung_U").value = CpKhuTrung * Trongluong / (DvtKt == "KG" ? 1 : 1000);
-                document.getElementById("KhuTrung_V").value = CpKhuTrung * TrongLuong / (DvtKt == "KG" ? 1 : 1000) * TyGia;
+                document.getElementById("KhuTrung_U").value = RemoveComma(CpKhuTrung) * RemoveComma(Trongluong) / (DvtKt == "KG" ? 1 : 1000);
+                document.getElementById("KhuTrung_V").value = RemoveComma(CpKhuTrung) * RemoveComma(TrongLuong) / (DvtKt == "KG" ? 1 : 1000) * RemoveComma(TyGia);
             }
         }
     }
@@ -695,20 +695,18 @@
         var TyGia = document.getElementById("TyGia").value;
         if (TienTeThc == "CONT") {
             if (DvtThc == "CONT") {
-                document.getElementById("THC_V").value = CpThc * SoCont;
+                document.getElementById("THC_V").value = RemoveComma(CpThc) * SoCont;
             } else {
-                document.getElementById("THC_V").value = CpThc * Trongluong / (DvtThc == "KG" ? 1 : 1000);
+                document.getElementById("THC_V").value = RemoveComma(CpThc) * RemoveComma(Trongluong) / (DvtThc == "KG" ? 1 : 1000);
             }
             document.getElementById("THC_U").value = "0";
         } else {
             if (DvtThc == "CONT") {
-                document.getElementById("THC_U").value = CpThc * SoCont;
-                document.getElementById("THC_V").value = CpThc * SoCont * TyGia;
-
-
+                document.getElementById("THC_U").value = RemoveComma(CpThc) * SoCont;
+                document.getElementById("THC_V").value = RemoveComma(CpThc) * SoCont * TyGia;
             } else {
                 document.getElementById("THC_U").value = CpThc * Trongluong / (DvtThc == "KG" ? 1 : 1000);
-                document.getElementById("THC_V").value = CpThc * Trongluong / (DvtThc == "KG" ? 1 : 1000) * TyGia;
+                document.getElementById("THC_V").value = CpThc * Trongluong / (DvtThc == "KG" ? 1 : 1000) * TyGia;  
             }
         }
     }
