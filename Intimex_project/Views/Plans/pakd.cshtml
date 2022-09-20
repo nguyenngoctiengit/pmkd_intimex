@@ -703,10 +703,10 @@
         } else {
             if (DvtThc == "CONT") {
                 document.getElementById("THC_U").value = RemoveComma(CpThc) * SoCont;
-                document.getElementById("THC_V").value = RemoveComma(CpThc) * SoCont * TyGia;
+                document.getElementById("THC_V").value = RemoveComma(CpThc) * SoCont * RemoveComma(TyGia);
             } else {
-                document.getElementById("THC_U").value = CpThc * Trongluong / (DvtThc == "KG" ? 1 : 1000);
-                document.getElementById("THC_V").value = CpThc * Trongluong / (DvtThc == "KG" ? 1 : 1000) * TyGia;  
+                document.getElementById("THC_U").value = RemoveComma(CpThc) * RemoveComma(Trongluong) / (DvtThc == "KG" ? 1 : 1000);
+                document.getElementById("THC_V").value = RemoveComma(CpThc) * RemoveComma(Trongluong) / (DvtThc == "KG" ? 1 : 1000) * RemoveComma(TyGia);
             }
         }
     }
@@ -720,11 +720,11 @@
         var TyGia = document.getElementById("TyGia").value;
         if (TienTeHh == "VND") {
             document.getElementById("HoaHong_U").value = "0";
-            document.getElementById("HoaHong_V").value = CpHoaHong * Trongluong / (DvtHh == "KG" ? 1 : 1000);
+            document.getElementById("HoaHong_V").value = RemoveComma(CpHoaHong) * RemoveComma(Trongluong) / (DvtHh == "KG" ? 1 : 1000);
         }
         else {
-            document.getElementById("HoaHong_U").value = CpHoaHong * Trongluong / (DvtHh == "KG" ? 1 : 1000);
-            document.getElementById("HoaHong_V").value = CpHoaHong * Trongluong / (DvtHh == "KG" ? 1 : 1000) * TyGia;
+            document.getElementById("HoaHong_U").value = RemoveComma(CpHoaHong) * RemoveComma(Trongluong) / (DvtHh == "KG" ? 1 : 1000);
+            document.getElementById("HoaHong_V").value = RemoveComma(CpHoaHong) * RemoveComma(Trongluong) / (DvtHh == "KG" ? 1 : 1000) * RemoveComma(TyGia);
         }
     }
     function TinhCpBaoHiem() {

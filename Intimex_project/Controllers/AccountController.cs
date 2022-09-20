@@ -57,8 +57,9 @@ namespace Intimex_project.Controllers
                         HttpContext.Session.SetString("fullName", user.NormalizedUserName);
                         HttpContext.Session.SetString("UnitName", user.UnitName);
                         UserLoginParameter.Username1 = userRight.UserName1;
-                        UserLoginParameter.IsUnitLeader = userRight.IsUnitLeader;
+                        UserLoginParameter.IsUnitLeader = userRight.IsUnitLeader; 
                         UserLoginParameter.IsDeparmentLeader = userRight.IsDepartmentLeader;
+                        UserLoginParameter.GroupId = userRight.GroupId;
                         UpdateUserInfo.UserInfoUpdate(user.UserName);
                         return RedirectToAction("Index", "Home");
                     }
@@ -83,11 +84,11 @@ namespace Intimex_project.Controllers
             UserIdParameter.userId = user.Id;
             HttpContext.Session.SetString("userId", user.Id);
             HttpContext.Session.SetString("UserName", user.UserName);
-            HttpContext.Session.SetString("fullName", user.NormalizedUserName);
+            HttpContext.Session.SetString("fullName", user.NormalizedUserName); 
             UserLoginParameter.Username1 = userRight.UserName1;
             UserLoginParameter.IsUnitLeader = userRight.IsUnitLeader;
             UserLoginParameter.IsDeparmentLeader = userRight.IsDepartmentLeader;
-            
+            UserLoginParameter.GroupId = userRight.GroupId;
             if (userBranch == "INXBL")
             {
                 HttpContext.Session.SetString("UnitName", "INXBL");
@@ -136,7 +137,7 @@ namespace Intimex_project.Controllers
                 aspNetUser.UnitName = "INX";
                 _context.AspNetUsers.Add(aspNetUser);
                 _context.SaveChanges();
-                var mailHelper = new MailHelper(configuration);
+                var mailHelper = new MailHelper(configuration);     
                 string content = "Code kích hoạt tài khoản là" + aspNetUser.SecurityStamp;
                 mailHelper.Send("intimex.active@gmail.com", aspNetUser.Email, "Active account with code", content);
                 HttpContext.Session.SetString("username", aspNetUser.UserName);
@@ -160,7 +161,7 @@ namespace Intimex_project.Controllers
                 account.Status = true;
                 account.Online = true;
                 account.UnitName = aspNetUser.UnitName;
-                userBranch.UserName = userName;
+                userBranch.UserName = userName; 
                 userBranch.BranchId = aspNetUser.UnitName;
                 long maxId = _context.UserBranches.Max(a => a.UserBranchId);
                 userBranch.UserBranchId = maxId + 1;

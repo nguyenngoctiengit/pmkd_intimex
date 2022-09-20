@@ -1,6 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using GleamTech.AspNet.Core
 @using GleamTech.FileUltimate.AspNet.UI
+@using Data.Models.SignalR
+@model List<Data.Models.SignalR.Menu_test> 
+
 @{
     var ViewName = ViewData["title"];
 }
@@ -248,369 +251,41 @@
                         <div class="menu_section">
                             <h3>General</h3>
                             <ul class="nav side-menu">
-                                <li>
-                                    <a><i class="fa fa-edit"></i> Danh mục <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li>
-                                            <a asp-action="hanghoa" asp-controller="hanghoa">Hàng hóa</a>
-                                        </li>
-                                        <li>
-                                            <a asp-action="khachhang" asp-controller="khachhang">Khách hàng</a>
-                                        </li>
-                                        <li><a href="form_buttons.html">Nhóm trưởng</a></li>
-                                        <li><a href="form_buttons.html">KH đăng ký theo từng đơn vị</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a><i class="fa fa-warehouse"></i> Nhập - Xuất kho <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li>
-                                            <a>Số liệu<span class="fa fa-chevron-down"></span></a>
-                                            <ul class="nav child_menu">
-                                                <li>
-                                                    <a asp-action="kcs" asp-controller="kcs">Phiếu KCS</a>
-                                                </li>
-                                                <li>
-                                                    <a asp-action="cantrongluong" asp-controller="can">Cân trọng lượng</a>
-                                                </li>
-                                                <li><a href="form_validation.html">Cắt chuyển</a></li>
-                                                <li><a asp-action="dangkynhapkho" asp-controller="nhapkho">Đăng ký nhập kho</a></li>
-                                                <li><a href="form_upload.html">Thẻ kho</a></li>
-                                                <li><a asp-action="lenhgiaohang" asp-controller="lenhgiaohang">Lệnh giao hàng</a></li>
-                                                <li><a href="form_buttons.html">Tách phiếu Xuất</a></li>
-                                                <li><a asp-action="bangtinh" asp-controller="bangtinh">Tính giá trị hàng NK</a></li>
-                                                <li><a href="form_buttons.html">Phiếu Nhập kho</a></li>
-                                                <li><a href="form_buttons.html">Phiếu Xuất kho</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a>Báo biểu<span class="fa fa-chevron-down"></span></a>
-                                            <ul class="nav child_menu">
-                                                <li class="sub_menu">
-                                                    <a href="level2.html">Bảng kê nhập xuất kho</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_1">Tổng hợp chất lượng đầu vào</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Báo cáo KCS</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a><i class="fa fa-file-contract"></i>Hợp đồng<span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li>
-                                            <a>Số liệu<span class="fa fa-chevron-down"></span></a>
-                                            <ul class="nav child_menu">
-                                                <li class="sub_menu">
-                                                    <a asp-action="pakd" asp-controller="plans">Phương án kinh doanh mới</a>
-                                                </li>
-                                                <li>
-                                                    <a asp-action="hdmb" asp-controller="hopdong">Hợp đồng mua bán</a>
-                                                </li>
-                                                <li>
-                                                    <a asp-action="test" asp-controller="hopdong">Ghép phương án kinh doanh</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Giao nhận hàng hóa</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Fix giá hợp đồng</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Cập nhật dữ liệu điện tử</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Hoàn thành giao hàng</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Tra cứu HĐMB</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Phiếu KSC</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Cân trọng lượng</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Xử lí tồn kho</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Điều khoản chất lượng</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Tra cứu HĐMB từ invoice</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a>Báo biểu<span class="fa fa-chevron-down"></span></a>
-                                            <ul class="nav child_menu">
-                                                <li class="sub_menu">
-                                                    <a href="level2.html">BC PAKD</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_1">BC HĐ chưa giao - trễ hạn</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">BC cân đối hàng hóa</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">BC hợp đồng chưa fix giá</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">BC nhập xuất tồn</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">BC HĐMB</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">BC tổng hợp hàng hóa</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">BC HĐ Mượn - Cho mượn chưa trả hàng</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Đối chiếu hàng tồn kho với KH</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">BC tình hình HĐKD</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">BC nhập xuất sản xuất</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Bảng kê nhập xuất hàng hóa</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">BC cân xe</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">BC KSC</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">BC kim ngạch theo thị trường</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">BC tổng hợp nhập xuất sản xuất</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">BC nhập xuất tồn theo KH</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">BC phụ kiện hợp đồng</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">BC hợp đồng chưa giao - trễ hạn - Gạo</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a><i class="fa fa-id-badge"></i>Chứng từ<span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li>
-                                            <a>Số liệu<span class="fa fa-chevron-down"></span></a>
-                                            <ul class="nav child_menu">
-                                                <li class="sub_menu">
-                                                    <a asp-action="AddVoucher" asp-controller="Chungtu">Nhập chứng từ</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_1">Lập hóa đơn bán hàng</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Tra cứu chứng từ</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Nhập giao nhận</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a>Báo biểu<span class="fa fa-chevron-down"></span></a>
-                                            <ul class="nav child_menu">
-                                                <li class="sub_menu">
-                                                    <a href="level2.html">Bảng kê bộ chứng từ</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_1">BC Kim ngạch - Doanh thu</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">BC hóa đơn xuất nhập khẩu</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Bảng kê phân loại chứng từ</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Bảng kê bộ chứng từ - kế toán</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a><i class="fa fa-laptop-house"></i>Văn phòng điện tử<span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li>
-                                            <a>Số liệu<span class="fa fa-chevron-down"></span></a>
-                                            <ul class="nav child_menu">
-                                                <li class="sub_menu">
-                                                    <a asp-action="DocCome" asp-controller="DocCome">Văn bản đến</a>
-                                                </li>
-                                                <li>
-                                                    <a asp-action="DocGo" asp-controller="DocGo">Văn bản đi</a>
-                                                </li>
-                                                <li>
-                                                    <a asp-action="DocProcess" asp-controller="DocProcess">Quản lí văn bản</a>
-                                                </li>
-                                                <li>
-                                                    <a asp-action="DocDetails" asp-controller="DocDetails">Theo dõi văn bản</a>
-                                                </li>
-                                                <li>
-                                                    <a asp-action="Archives" asp-controller="Archives">Quản lí Hồ sơ - Công việc</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Giá cà phê</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Tài liệu họp</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Màn hình chiếu</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Lịch công tác ban giám đốc</a>
-                                                </li>
-                                                <li>
-                                                    <a asp-action="Document" asp-controller="Document">Tài liệu mẫu</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Thông báo</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Bản đánh giá hiệu quả làm việc</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a>Báo biểu<span class="fa fa-chevron-down"></span></a>
-                                            <ul class="nav child_menu">
-                                                <li class="sub_menu">
-                                                    <a href="level2.html">Báo cáo công việc</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_1">BC văn bản đi đến</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Lịch sử văn bản</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">BC tổng hợp đánh giá</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a><i class="fa fa-user"></i>Quản lí nhân sự<span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li>
-                                            <a>Số liệu<span class="fa fa-chevron-down"></span></a>
-                                            <ul class="nav child_menu">
-                                                <li class="sub_menu">
-                                                    <a asp-action="thongtinnhansu" asp-controller="quanlinhansu">Thông tin nhân sự</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_1">Phòng ban</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Chức danh</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Thông tin ứng viên</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Phiếu yêu cầu tuyển dụng</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Danh mục bậc lương</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Thông tin tiền lương</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Danh mục bậc lương 205</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a>Báo biểu<span class="fa fa-chevron-down"></span></a>
-                                            <ul class="nav child_menu">
-                                                <li class="sub_menu">
-                                                    <a href="level2.html">BC tổ chức NS</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_1">DSNV đến hạn kí hợp đồng</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Tình hình tăng giảm NS</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Thông kê nhân sự</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Thông tin đoàn đảng</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">BC kết quả phỏng vấn</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Danh sách ứng viên theo đợt</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">BC yêu cầu tuyển dụng</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">DS CBNV</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">DS tham gia BHYT, BHTN, BHXH</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a><i class="fa fa-folder-open"></i>Báo cáo giao ban<span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li>
-                                            <a>Số liệu<span class="fa fa-chevron-down"></span></a>
-                                            <ul class="nav child_menu">
-                                                <li class="sub_menu">
-                                                    <a href="level2.html">Kế hoạch năm</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_1">Số liệu báo cáo</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Tỷ giá giao ban</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a>Báo biểu<span class="fa fa-chevron-down"></span></a>
-                                            <ul class="nav child_menu">
-                                                <li class="sub_menu">
-                                                    <a href="level2.html">Tổng hợp báo cáo</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
+
+                                @{
+                                    var menu = Model.Where(a => a.ID_Parent == 0).ToList();
+                                    if (menu != null)
+                                    {
+                                        foreach (var item in menu)
+                                        {
+                                            <li class="">
+                                                <a><i class="@item.Icon"></i>@item.MenuName<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    @{
+                                                        var children_lv1 = Model.Where(a => a.ID_Parent == item.ID && a.Lv == 1).ToList();
+                                                        foreach (var itm in children_lv1)
+                                                        {
+                                                            <li class="">
+                                                                <a>@itm.MenuName<span class="fa fa-chevron-down"></span></a>
+                                                                <ul class="nav child_menu">
+                                                                    @{
+                                                                        var children_lv2 = Model.Where(a => a.ID_Parent == itm.ID && a.Lv == 2).ToList();
+                                                                        foreach (var it in children_lv2)
+                                                                        {
+                                                                            <li class="sub_menu">
+                                                                                <a asp-action="@it.Event" asp-controller="@it.Controller">@it.MenuName</a>
+                                                                            </li>
+                                                                        }
+                                                                    }
+                                                                </ul>
+                                                            </li>
+                                                        }
+                                                    }
+                                                </ul>
+                                            </li>
+                                        }
+                                    }
+                                }
                                 <li>
                                     <a asp-action="chat" asp-controller="home"><i class="fa fa-comment"></i>Chat</a>
                                 </li>

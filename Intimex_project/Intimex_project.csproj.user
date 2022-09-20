@@ -12,6 +12,9 @@
     <WebStackScaffolding_IsLayoutPageSelected>True</WebStackScaffolding_IsLayoutPageSelected>
     <WebStackScaffolding_IsPartialViewSelected>False</WebStackScaffolding_IsPartialViewSelected>
     <WebStackScaffolding_IsReferencingScriptLibrariesSelected>False</WebStackScaffolding_IsReferencingScriptLibrariesSelected>
+    <DevExtremeCreateAsPartial>False</DevExtremeCreateAsPartial>
+    <DevExtremeUseLayout>True</DevExtremeUseLayout>
+    <DevExtremeSelectedDataContextName>tradingsystemContext %28Data.Models.Trading_system%29</DevExtremeSelectedDataContextName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>

@@ -28,6 +28,7 @@ namespace Data.Models.SignalR
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<UserBranch> UserBranches { get; set; }
         public virtual DbSet<UserRight> UserRights { get; set; }
+        public virtual DbSet<Menu_test> Menu_Tests { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -240,6 +241,26 @@ namespace Data.Models.SignalR
                 entity.Property(e => e.UserName)
                     .IsRequired()
                     .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Menu_test>(entity =>
+            {
+                entity.HasKey(e => e.ID);
+
+                entity.ToTable("Menu_test");
+
+                entity.Property(e => e.ID_Parent).HasColumnName("ID_Parent");
+
+                entity.Property(e => e.MenuName).HasColumnName("MenuName");
+
+                entity.Property(e => e.Controller).HasColumnName("Controller");
+
+                entity.Property(e => e.Event).HasColumnName("Event");
+
+                entity.Property(e => e.Icon).HasColumnName("Icon");
+
+                entity.Property(e => e.Lv).HasColumnName("Lv");
+
             });
 
             modelBuilder.Entity<UserRight>(entity =>

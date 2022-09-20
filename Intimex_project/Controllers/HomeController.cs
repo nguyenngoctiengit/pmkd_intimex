@@ -42,7 +42,8 @@ namespace Intimex_project.Controllers
             {
                 ViewBag.CountUserOnline = (from a in _context.AspNetUsers where a.Online == true select a.NormalizedUserName).Count();
                 ViewBag.countuser = (from a in _context.UserRights select a.UserId).Count();
-                return View();
+                var model = _context.Menu_Tests.ToList();
+                return View(model);
             }
             else
             {

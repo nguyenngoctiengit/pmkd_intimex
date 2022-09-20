@@ -1,2 +1,0 @@
-NGOCTIEN||\4- Phòng Ban\11- Tổ chức - đoàn thể||System.String[]
-NGOCTIEN||\4- Phòng Ban\11- Tổ chức - đoàn thể||test.tif
