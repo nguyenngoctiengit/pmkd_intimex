@@ -253,42 +253,51 @@
                             <ul class="nav side-menu">
 
                                 @{
-                                    var menu = Model.Where(a => a.ID_Parent == 0).ToList();
-                                    if (menu != null)
+                                    foreach (var MenuId in ViewBag.listRight)
                                     {
-                                        foreach (var item in menu)
+                                        var menu = Model.Where(a => a.ID_Parent == 0 && a.ID.ToString() == MenuId).ToList();    
+                                        if (menu != null)
                                         {
-                                            <li class="">
-                                                <a><i class="@item.Icon"></i>@item.MenuName<span class="fa fa-chevron-down"></span></a>
-                                                <ul class="nav child_menu">
-                                                    @{
-                                                        var children_lv1 = Model.Where(a => a.ID_Parent == item.ID && a.Lv == 1).ToList();
-                                                        foreach (var itm in children_lv1)
-                                                        {
-                                                            <li class="">
-                                                                <a>@itm.MenuName<span class="fa fa-chevron-down"></span></a>
-                                                                <ul class="nav child_menu">
-                                                                    @{
-                                                                        var children_lv2 = Model.Where(a => a.ID_Parent == itm.ID && a.Lv == 2).ToList();
-                                                                        foreach (var it in children_lv2)
-                                                                        {
-                                                                            <li class="sub_menu">
-                                                                                <a asp-action="@it.Event" asp-controller="@it.Controller">@it.MenuName</a>
-                                                                            </li>
-                                                                        }
-                                                                    }
-                                                                </ul>
-                                                            </li>
+                                            foreach (var item in menu)
+                                            {
+                                                <li class="">
+                                                    <a><i class="@item.Icon"></i>@item.MenuName<span class="fa fa-chevron-down"></span></a>
+                                                    <ul class="nav child_menu">
+                                                        @{
+                                                            foreach (var MenuId_Lv1 in ViewBag.listRight)
+                                                            {
+                                                                var children_lv1 = Model.Where(a => a.ID_Parent == item.ID && a.Lv == 1 && a.ID.ToString() == MenuId_Lv1).ToList();
+                                                                foreach (var itm in children_lv1)
+                                                                {
+                                                                    <li class="">
+                                                                        <a>@itm.MenuName<span class="fa fa-chevron-down"></span></a>
+                                                                        <ul class="nav child_menu">
+                                                                            @{
+                                                                                foreach (var MenuId_Lv2 in ViewBag.listRight)
+                                                                                {
+                                                                                    var children_lv2 = Model.Where(a => a.ID_Parent == itm.ID && a.Lv == 2 && a.ID.ToString() == MenuId_Lv2).ToList();
+                                                                                    foreach (var it in children_lv2)
+                                                                                    {
+                                                                                        <li class="sub_menu">
+                                                                                            <a asp-action="@it.Event" asp-controller="@it.Controller">@it.MenuName</a>
+                                                                                        </li>
+                                                                                    }
+                                                                                }
+
+                                                                            }
+                                                                        </ul>
+                                                                    </li>
+                                                                }
+                                                            }
+
                                                         }
-                                                    }
-                                                </ul>
-                                            </li>
+                                                    </ul>
+                                                </li>
+                                            }
                                         }
                                     }
+
                                 }
-                                <li>
-                                    <a asp-action="chat" asp-controller="home"><i class="fa fa-comment"></i>Chat</a>
-                                </li>
                             </ul>
                         </div>
                     </div>

@@ -42,6 +42,8 @@ namespace Intimex_project.Controllers
             {
                 ViewBag.CountUserOnline = (from a in _context.AspNetUsers where a.Online == true select a.NormalizedUserName).Count();
                 ViewBag.countuser = (from a in _context.UserRights select a.UserId).Count();
+                var GroupRightUser = (from a in _context.UserRights where a.UserName1 == HttpContext.Session.GetString("UserName") select a.GroupId).FirstOrDefault();
+                ViewBag.listRight = (from a in _context.GroupRights where a.GroupId == GroupRightUser select a.MenuId).ToList();
                 var model = _context.Menu_Tests.ToList();
                 return View(model);
             }

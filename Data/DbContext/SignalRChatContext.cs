@@ -29,6 +29,7 @@ namespace Data.Models.SignalR
         public virtual DbSet<UserBranch> UserBranches { get; set; }
         public virtual DbSet<UserRight> UserRights { get; set; }
         public virtual DbSet<Menu_test> Menu_Tests { get; set; }
+        public virtual DbSet<GroupRight> GroupRights { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -260,6 +261,22 @@ namespace Data.Models.SignalR
                 entity.Property(e => e.Icon).HasColumnName("Icon");
 
                 entity.Property(e => e.Lv).HasColumnName("Lv");
+
+            });
+
+            modelBuilder.Entity<GroupRight>(entity =>
+            {
+                entity.HasKey(a => a.Id);
+
+                entity.ToTable("GroupRight");
+
+                entity.Property(a => a.GroupId).HasColumnName("GroupId");
+
+                entity.Property(a => a.Description).HasColumnName("Description");
+
+                entity.Property(a => a.MenuId).HasColumnName("MenuId");
+
+                entity.Property(a => a.DesCription1).HasColumnName("DesCription1");
 
             });
 
