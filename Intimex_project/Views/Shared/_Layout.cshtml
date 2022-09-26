@@ -263,7 +263,7 @@
                                                 <li class="">
                                                     <a><i class="@item.Icon"></i>@item.MenuName<span class="fa fa-chevron-down"></span></a>
                                                     <ul class="nav child_menu">
-                                                        @{
+                                                        @{  
                                                             foreach (var MenuId_Lv1 in ViewBag.listRight)
                                                             {
                                                                 var children_lv1 = Model.Where(a => a.ID_Parent == item.ID && a.Lv == 1 && a.ID.ToString() == MenuId_Lv1).ToList();
@@ -283,13 +283,11 @@
                                                                                         </li>
                                                                                     }
                                                                                 }
-
-                                                                            }
-                                                                        </ul>
+                                                                            }   
+                                                                        </ul>   
                                                                     </li>
                                                                 }
                                                             }
-
                                                         }
                                                     </ul>
                                                 </li>

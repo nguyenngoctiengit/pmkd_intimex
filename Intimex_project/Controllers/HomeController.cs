@@ -45,6 +45,11 @@ namespace Intimex_project.Controllers
                 var GroupRightUser = (from a in _context.UserRights where a.UserName1 == HttpContext.Session.GetString("UserName") select a.GroupId).FirstOrDefault();
                 ViewBag.listRight = (from a in _context.GroupRights where a.GroupId == GroupRightUser select a.MenuId).ToList();
                 var model = _context.Menu_Tests.ToList();
+                foreach(var item in model)
+                {
+                    ListMenu_test.menu_Tests.Add(item);
+                }
+                foreach()
                 return View(model);
             }
             else
