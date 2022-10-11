@@ -3,6 +3,7 @@
 @using GleamTech.FileUltimate.AspNet.UI
 @using Data.Models.SignalR
 @model List<Data.Models.SignalR.Menu_test> 
+@using Data.Public_class
 
 @{
     var ViewName = ViewData["title"];
@@ -251,7 +252,6 @@
                         <div class="menu_section">
                             <h3>General</h3>
                             <ul class="nav side-menu">
-
                                 @{
                                     foreach (var MenuId in ViewBag.listRight)
                                     {
@@ -273,7 +273,7 @@
                                                                         <a>@itm.MenuName<span class="fa fa-chevron-down"></span></a>
                                                                         <ul class="nav child_menu">
                                                                             @{
-                                                                                foreach (var MenuId_Lv2 in ViewBag.listRight)
+                                                                                 foreach (var MenuId_Lv2 in ViewBag.listRight)
                                                                                 {
                                                                                     var children_lv2 = Model.Where(a => a.ID_Parent == itm.ID && a.Lv == 2 && a.ID.ToString() == MenuId_Lv2).ToList();
                                                                                     foreach (var it in children_lv2)
@@ -281,7 +281,7 @@
                                                                                         <li class="sub_menu">
                                                                                             <a asp-action="@it.Event" asp-controller="@it.Controller">@it.MenuName</a>
                                                                                         </li>
-                                                                                    }
+                                                                                    }   
                                                                                 }
                                                                             }   
                                                                         </ul>   

@@ -81,6 +81,7 @@ namespace Intimex_project.Controllers
             user.Online = true;
             _context.AspNetUsers.Update(user).Property(a => a.Id).IsModified = false;
             _context.SaveChanges();
+            
             UserIdParameter.userId = user.Id;
             HttpContext.Session.SetString("userId", user.Id);
             HttpContext.Session.SetString("UserName", user.UserName);

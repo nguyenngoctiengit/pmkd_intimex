@@ -45,11 +45,20 @@ namespace Intimex_project.Controllers
                 var GroupRightUser = (from a in _context.UserRights where a.UserName1 == HttpContext.Session.GetString("UserName") select a.GroupId).FirstOrDefault();
                 ViewBag.listRight = (from a in _context.GroupRights where a.GroupId == GroupRightUser select a.MenuId).ToList();
                 var model = _context.Menu_Tests.ToList();
+                ViewBag.listMenuTest = model;
                 foreach(var item in model)
                 {
                     ListMenu_test.menu_Tests.Add(item);
                 }
-                foreach()
+                foreach(var items in ViewBag.listRight)
+                {
+                    ListUserRight.listUserRight.Add(items);
+                }
+                List<ListMenu_test> a1 = new List<ListMenu_test>();
+                foreach(var item1 in a1)
+                {
+                    var a2 = item1;
+                }
                 return View(model);
             }
             else

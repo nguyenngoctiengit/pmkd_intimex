@@ -8,6 +8,6 @@ namespace Data.Public_class
 {
     public class ListUserRight
     {
-        List<string> listUserRight = new List<string>();
+        public static List<string> listUserRight = new List<string>();
     }
 }
