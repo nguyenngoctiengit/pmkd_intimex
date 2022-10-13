@@ -7,7 +7,7 @@ using Data.Models.SignalR;
 
 namespace Data.Public_class
 {
-    public class ListMenu_test
+    public class ListMenu
     {
         public static List<Menu_test> menu_Tests { get; set; } = new List<Menu_test>();
     }

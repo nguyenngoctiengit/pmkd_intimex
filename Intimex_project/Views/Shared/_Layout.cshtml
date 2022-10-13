@@ -253,38 +253,36 @@
                             <h3>General</h3>
                             <ul class="nav side-menu">
                                 @{
-                                    foreach (var MenuId in ViewBag.listRight)
+                                    List<string> list_userRight = new List<string>();
+                                    list_userRight = ListMenuId.listUserRight;
+                                    foreach (var MenuId in list_userRight)
                                     {
-                                        var menu = Model.Where(a => a.ID_Parent == 0 && a.ID.ToString() == MenuId).ToList();    
-                                        if (menu != null)
+                                        List<Menu_test> list_Menutest = new List<Menu_test>();
+                                        list_Menutest = ListMenu.menu_Tests;
+                                        foreach (var item in list_Menutest)
                                         {
-                                            foreach (var item in menu)
+                                            List<Menu_test> _List_MenuTest = new List<Menu_test>();
+                                            if (item.ID_Parent == 0 && item.ID.ToString() == MenuId)
+                                            {
+                                                _List_MenuTest.Add(item);   
+                                            }
+                                            foreach (var menu_Test in _List_MenuTest)
                                             {
                                                 <li class="">
-                                                    <a><i class="@item.Icon"></i>@item.MenuName<span class="fa fa-chevron-down"></span></a>
+                                                    <a><i class="@menu_Test.Icon"></i>@menu_Test.MenuName<span class="fa fa-chevron-down"></span></a>
                                                     <ul class="nav child_menu">
                                                         @{  
-                                                            foreach (var MenuId_Lv1 in ViewBag.listRight)
+                                                            foreach (var MenuId_Lv1 in list_Menutest)
                                                             {
-                                                                var children_lv1 = Model.Where(a => a.ID_Parent == item.ID && a.Lv == 1 && a.ID.ToString() == MenuId_Lv1).ToList();
-                                                                foreach (var itm in children_lv1)
+                                                                List<Menu_test> _List_MenuTest_Lv1 = new List<Menu_test>();
+                                                                if (MenuId_Lv1.ID_Parent == menu_Test.ID && MenuId_Lv1.Lv == 1 && MenuId_Lv1.ID.ToString() == MenuId)
+                                                                {
+                                                                    _List_MenuTest_Lv1.Add(MenuId_Lv1);
+                                                                }
+                                                                foreach (var item1 in _List_MenuTest_Lv1)
                                                                 {
                                                                     <li class="">
-                                                                        <a>@itm.MenuName<span class="fa fa-chevron-down"></span></a>
-                                                                        <ul class="nav child_menu">
-                                                                            @{
-                                                                                 foreach (var MenuId_Lv2 in ViewBag.listRight)
-                                                                                {
-                                                                                    var children_lv2 = Model.Where(a => a.ID_Parent == itm.ID && a.Lv == 2 && a.ID.ToString() == MenuId_Lv2).ToList();
-                                                                                    foreach (var it in children_lv2)
-                                                                                    {
-                                                                                        <li class="sub_menu">
-                                                                                            <a asp-action="@it.Event" asp-controller="@it.Controller">@it.MenuName</a>
-                                                                                        </li>
-                                                                                    }   
-                                                                                }
-                                                                            }   
-                                                                        </ul>   
+                                                                        <a>@item1.MenuName<span class="fa fa-chevron-down"></span></a>
                                                                     </li>
                                                                 }
                                                             }
@@ -294,7 +292,6 @@
                                             }
                                         }
                                     }
-
                                 }
                             </ul>
                         </div>

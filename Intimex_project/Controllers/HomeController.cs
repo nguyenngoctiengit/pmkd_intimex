@@ -42,24 +42,20 @@ namespace Intimex_project.Controllers
             {
                 ViewBag.CountUserOnline = (from a in _context.AspNetUsers where a.Online == true select a.NormalizedUserName).Count();
                 ViewBag.countuser = (from a in _context.UserRights select a.UserId).Count();
-                var GroupRightUser = (from a in _context.UserRights where a.UserName1 == HttpContext.Session.GetString("UserName") select a.GroupId).FirstOrDefault();
-                ViewBag.listRight = (from a in _context.GroupRights where a.GroupId == GroupRightUser select a.MenuId).ToList();
-                var model = _context.Menu_Tests.ToList();
-                ViewBag.listMenuTest = model;
-                foreach(var item in model)
+
+
+                var GroupId = (from a in _context.UserRights where a.UserName1 == HttpContext.Session.GetString("UserName") select a.GroupId).FirstOrDefault();
+                var List_MenuId = (from a in _context.GroupRights where a.GroupId == GroupId select a.MenuId).ToList();
+                var Menu = _context.Menu_Tests.ToList();
+                foreach(var _list_menuId in List_MenuId)
                 {
-                    ListMenu_test.menu_Tests.Add(item);
+                    ListMenuId.listUserRight.Add(_list_menuId);
                 }
-                foreach(var items in ViewBag.listRight)
+                foreach(var item in Menu)
                 {
-                    ListUserRight.listUserRight.Add(items);
+                    ListMenu.menu_Tests.Add(item);
                 }
-                List<ListMenu_test> a1 = new List<ListMenu_test>();
-                foreach(var item1 in a1)
-                {
-                    var a2 = item1;
-                }
-                return View(model);
+                return View();
             }
             else
             {
