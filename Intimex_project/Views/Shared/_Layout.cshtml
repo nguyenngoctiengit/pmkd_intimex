@@ -261,29 +261,23 @@
                                         list_Menutest = ListMenu.menu_Tests;
                                         foreach (var item in list_Menutest)
                                         {
-                                            List<Menu_test> _List_MenuTest = new List<Menu_test>();
                                             if (item.ID_Parent == 0 && item.ID.ToString() == MenuId)
                                             {
-                                                _List_MenuTest.Add(item);   
-                                            }
-                                            foreach (var menu_Test in _List_MenuTest)
-                                            {
                                                 <li class="">
-                                                    <a><i class="@menu_Test.Icon"></i>@menu_Test.MenuName<span class="fa fa-chevron-down"></span></a>
-                                                    <ul class="nav child_menu">
-                                                        @{  
-                                                            foreach (var MenuId_Lv1 in list_Menutest)
+                                                    <a><i class="@item.Icon"></i>@item.MenuName<span class="fa fa-chevron-down"></span></a>
+                                                    <ul class="nav child_menu" style="display:none">
+                                                        @{
+                                                            foreach (var menuId_Lv1 in list_userRight)
                                                             {
-                                                                List<Menu_test> _List_MenuTest_Lv1 = new List<Menu_test>();
-                                                                if (MenuId_Lv1.ID_Parent == menu_Test.ID && MenuId_Lv1.Lv == 1 && MenuId_Lv1.ID.ToString() == MenuId)
+                                                                foreach (var MenuId_Lv1 in list_Menutest)
                                                                 {
-                                                                    _List_MenuTest_Lv1.Add(MenuId_Lv1);
-                                                                }
-                                                                foreach (var item1 in _List_MenuTest_Lv1)
-                                                                {
-                                                                    <li class="">
-                                                                        <a>@item1.MenuName<span class="fa fa-chevron-down"></span></a>
-                                                                    </li>
+                                                                    if (MenuId_Lv1.ID_Parent == item.ID && MenuId_Lv1.ID.ToString() == menuId_Lv1)
+                                                                    {
+                                                                        <li class="">
+                                                                            <a asp-action="@MenuId_Lv1.Event" asp-controller="@MenuId_Lv1.Controller">@MenuId_Lv1.MenuName</a>
+                                                                        </li>
+                                                                    }
+
                                                                 }
                                                             }
                                                         }
