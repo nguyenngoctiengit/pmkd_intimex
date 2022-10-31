@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
-    <PackageReference Include="DevExpress.AspNetCore.Core" Version="21.2.6" />
+    <PackageReference Include="DevExpress.AspNetCore.Core" Version="22.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />

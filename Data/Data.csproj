@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DevExpress.AspNetCore.Spreadsheet" Version="21.2.6" />
-    <PackageReference Include="DevExpress.Document.Processor" Version="21.2.6" />
+    <PackageReference Include="DevExpress.AspNetCore.Spreadsheet" Version="22.1.6" />
+    <PackageReference Include="DevExpress.Document.Processor" Version="22.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

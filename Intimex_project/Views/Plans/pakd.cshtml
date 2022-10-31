@@ -48,7 +48,7 @@
                                                 dataGrid.clearFilter();
                                             else
                                                 dataGrid.filter(["Trangthai", "=", data.value]);
-                                        }
+                                            }
                                     </text>)
                                 )
                     @(Html.DevExtreme().DataGrid<Data.Models.Trading_system.Plan>().ID("DataGrid_Plans")
@@ -68,6 +68,7 @@
 
                                         columns.AddFor(m => m.NgayPa).Visible(false);
 
+                                        
                                     })
                                     .FilterPanel(e => e.Visible(true))
                                     .FilterValue(filterValue)
